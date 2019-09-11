@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fr.univ_tours.info.im_olap.Expe1DOPAN</mainClass>
+                            <mainClass>com.olap3.cubeexplorer.Dev</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
