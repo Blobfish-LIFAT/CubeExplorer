@@ -3,8 +3,25 @@ package com.olap3.cubeexplorer;
 import java.util.List;
 
 /**
- * This is the interface the main class shall respect
+ * This is the 'main' class for the algorithm (Actual public void main elswhere ...)
  */
-public interface AutoCube {
-    public List<ECube> answer(IntentionalQuery q);
+public class AutoCube {
+    Optimizer optimizer;
+    Evaluator evaluator;
+    Sequencer sequencer;
+
+    public List<ECube> answer(IntentionalQuery q){
+        List<Plan> possiblePlans = optimizer.genPlans(q);
+
+        // TODO choose one maybe ....
+        List<ECube> result = evaluator.evaluate(possiblePlans.get(0));
+
+        result = sequencer.order(result, q);
+
+
+        return result;
+    }
+
+
+
 }
