@@ -3,6 +3,7 @@ package com.olap3.cubeexplorer.mondrian;
 import mondrian.olap.*;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -11,6 +12,8 @@ public class CubeUtils {
     private static final Logger LOGGER = Logger.getLogger( CubeUtils.class.getName() );
     Connection con;
     Cube cube;
+    static String defaultCubeName = "";
+    static CubeUtils defaultCube = null;
 
     public CubeUtils(Connection con, String cubeName) {
         this.con = con;
@@ -59,4 +62,31 @@ public class CubeUtils {
     public Cube getCube() {
         return cube;
     }
+
+    public  HashSet<Hierarchy> getHierarchies() {
+        Dimension[] cubeDims = cube.getDimensions();
+        HashSet<Hierarchy> hierachies = new HashSet<Hierarchy>();
+
+        for (int i = 0; i < cubeDims.length; i++) {
+            Hierarchy[] tmpH = cubeDims[i].getHierarchies();
+            hierachies.addAll(Arrays.asList(tmpH));
+        }
+
+        return hierachies;
+    }
+
+    public static CubeUtils getDefault(){
+        if (defaultCube == null){
+            if (defaultCubeName.equals(""))
+                defaultCube = new CubeUtils(MondrianConfig.getMondrianConnection(), MondrianConfig.getMondrianConnection().getSchema().getCubes()[0].getName());
+            else
+                defaultCube = new CubeUtils(MondrianConfig.getMondrianConnection(), defaultCubeName);
+        }
+        return defaultCube;
+    }
+
+    public static void setDefault(CubeUtils cubeUtils){
+        defaultCube = cubeUtils;
+    }
+
 }

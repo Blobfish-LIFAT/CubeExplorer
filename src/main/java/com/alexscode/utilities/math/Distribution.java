@@ -2,7 +2,7 @@ package com.alexscode.utilities.math;
 
 
 
-import com.alexsxode.utilities.collection.MultiSet;
+import com.alexscode.utilities.collection.MultiSet;
 
 import java.util.HashMap;
 import java.util.HashSet;
