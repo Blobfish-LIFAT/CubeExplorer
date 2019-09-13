@@ -122,17 +122,7 @@ public class EAB_Cube {
         this.memberList         = new HashMap<>();
     }
     
-    /**
-     * 
-     */
-    public void loadDataFromMondrianCube() {
-        this.loadCubeStructure();
-        this.loadCubeData();
-    }
 
-    /**
-     * 
-     */
     public void loadCubeStructure() {
         SchemaReader sr = this.getSchemaReader();
         

@@ -1,5 +1,7 @@
 package com.olap3.cubeexplorer;
 
+import com.olap3.cubeexplorer.optimize.Optimizer;
+
 import java.util.List;
 
 /**
