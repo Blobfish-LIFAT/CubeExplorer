@@ -26,15 +26,7 @@ public class Qfset implements java.io.Serializable {
      * A set of selection criteria: at most one for each dimension
      */
     protected HashSet<SelectionFragment> selectionPredicates;
-    /**
-     * Score assigned to the query for future recommendation
-     */
-    protected double score = 0;
-    /**
-     * Describes the alignment of the query with other queries. For debug
-     * purpose only).
-     */
-    protected String alignment = "";
+
 
     /**
      * This constructor creates new empty projection, selection and measure
@@ -1636,25 +1628,6 @@ public class Qfset implements java.io.Serializable {
         return result;
     }
 
-    public void addScore(double score) {
-        this.score += score;
-    }
-
-    public double getScore() {
-        return score;
-    }
-
-    public void resetScore() {
-        this.score = 0;
-    }
-
-    public void addAlignment(String alignment) {
-        this.alignment += alignment;
-    }
-
-    public String getAlignment() {
-        return alignment;
-    }
 
     @Override
     public int hashCode() {

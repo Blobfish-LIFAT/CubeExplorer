@@ -10,7 +10,7 @@ public class KnapsackManager implements BudgetManager {
     AprioriMetric metric;
     // resolution for discretization
     int res = 65536;
-    double epsilon = 0.9;
+    double epsilon = 0.25; // bound on divergence from optimal value
 
     public KnapsackManager(AprioriMetric value) {
         metric = value;
@@ -25,7 +25,7 @@ public class KnapsackManager implements BudgetManager {
 
         int i1 = 0;
         for (InfoCollector ic : candidates) {
-            value[i1] = (int) Math.round(metric.rate(ic) * res);
+            value[i1] = (int) Math.round(metric.rate(ic) * res); //discretization might need something smart
             weight[i1] = ic.timeEstimate();
         }
 
