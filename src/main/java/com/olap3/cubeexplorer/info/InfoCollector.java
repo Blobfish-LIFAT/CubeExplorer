@@ -15,7 +15,7 @@ public abstract class InfoCollector {
 
     }
 
-    public abstract double timeEstimate();
-    public abstract double realTime();
+    public abstract int timeEstimate();
+    public abstract int realTime();
     public abstract ECube execute();
 }
