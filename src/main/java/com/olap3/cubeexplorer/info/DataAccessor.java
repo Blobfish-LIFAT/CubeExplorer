@@ -1,4 +1,6 @@
 package com.olap3.cubeexplorer.info;
 
-public interface DataAccessor {
+import com.olap3.cubeexplorer.optimize.TimeableOp;
+
+public interface DataAccessor extends TimeableOp {
 }
