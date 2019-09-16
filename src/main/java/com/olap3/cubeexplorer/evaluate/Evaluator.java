@@ -1,4 +1,7 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.evaluate;
+
+import com.olap3.cubeexplorer.ECube;
+import com.olap3.cubeexplorer.Plan;
 
 import java.util.List;
 
