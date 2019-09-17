@@ -1,6 +1,11 @@
 package com.olap3.cubeexplorer.mondrian;
 
+import com.alexscode.utilities.Reflect;
 import mondrian.olap.*;
+import mondrian.rolap.RolapCube;
+import mondrian.rolap.RolapCubeHierarchy;
+import mondrian.rolap.RolapCubeLevel;
+import mondrian.rolap.RolapLevel;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,6 +17,7 @@ public class CubeUtils {
     private static final Logger LOGGER = Logger.getLogger( CubeUtils.class.getName() );
     Connection con;
     Cube cube;
+    String factTable = null ;
     static String defaultCubeName = "";
     static CubeUtils defaultCube = null;
 
@@ -33,6 +39,41 @@ public class CubeUtils {
         return null;
     }
 
+    public String getFactTableName(){
+        if (factTable == null) {
+            RolapCube actualCube = (RolapCube) cube;
+            MondrianDef.Table rel = (MondrianDef.Table) Reflect.getField(actualCube, "fact");
+            factTable = rel.name;
+        }
+        return factTable;
+
+    }
+
+    public String getForeignKey(Dimension dim){
+        MondrianDef.CubeDimension actualDim = (MondrianDef.CubeDimension) Reflect.getField(dim, "xmlDimension");
+        return actualDim.foreignKey;
+    }
+
+    public String getTableName(Hierarchy h){
+        MondrianDef.Hierarchy xmlHierarchy = (MondrianDef.Hierarchy) Reflect.getField(((RolapCubeHierarchy)h).getRolapHierarchy(), "xmlHierarchy");
+        return xmlHierarchy.relation.toString();
+    }
+
+    public String getPrimaryKey(Hierarchy h){
+        MondrianDef.Hierarchy xmlHierarchy = (MondrianDef.Hierarchy) Reflect.getField(((RolapCubeHierarchy)h).getRolapHierarchy(), "xmlHierarchy");
+        return xmlHierarchy.primaryKey;
+    }
+
+    public String getColumn(Level l){
+        RolapLevel actualLevel = ((RolapCubeLevel) l).getRolapLevel();
+        MondrianDef.Expression keyExp = (MondrianDef.Expression) Reflect.getField(actualLevel, "keyExp");
+        MondrianDef.Expression nameExp = (MondrianDef.Expression) Reflect.getField(actualLevel, "nameExp");
+        if (nameExp == null)
+            return keyExp.getGenericExpression();
+        else
+            return nameExp.getGenericExpression();
+    }
+
     public static Dimension getDimensionByName(Cube c, String name){
         for (Dimension d : c.getDimensions()){
             if (d.getName().equals(name))
@@ -49,6 +90,16 @@ public class CubeUtils {
         SchemaReader schemaReader = cube.getSchemaReader(null).withLocus();
         List<Member> levelMembers = schemaReader.getLevelMembers(l, true);
         return levelMembers;
+    }
+
+    public Member fetchMember(String dimName, String levelName, String name){
+        Level l = this.getLevel(levelName, dimName);
+        Member ret = null;
+        for (Member m : this.fetchMembers(l)){
+            if (m.getName().equals(name))
+                ret = m;
+        }
+        return ret;
     }
 
     public List<List<Member>> fetchMembers(Hierarchy h){
