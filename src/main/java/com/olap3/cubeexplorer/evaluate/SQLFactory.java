@@ -121,13 +121,14 @@ public class SQLFactory {
      * @return the formatted value (eg: 'WOMEN', 14.4, 34) ready to insert into the SQL
      */
     private static String formatted(Member value) {
+        //TODO handle data types other than string/numbers
         System.out.println(Arrays.toString(value.getProperties()));
         Pattern number = Pattern.compile("^[0-9\\.]*$");
         Matcher m = number.matcher(value.getName());
         if (m.matches())
             return value.getName();
         else
-            return "'" + value.getName() + "'"; //TODO handle data types other than string better
+            return "'" + value.getName() + "'";
     }
 
     /**

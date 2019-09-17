@@ -14,14 +14,23 @@ public class MDXAccessor implements DataAccessor {
         return null;//TODO
     }
 
-
     @Override
-    public int getTimeEstimate() {
+    public int aprioriTime() {
         return 0;
     }
 
     @Override
-    public int getRealTime() {
+    public int aposterioriTime() {
+        return 0;
+    }
+
+    @Override
+    public double aprioriInterest() {
+        return 0;
+    }
+
+    @Override
+    public double aposterioriInterest() {
         return 0;
     }
 }

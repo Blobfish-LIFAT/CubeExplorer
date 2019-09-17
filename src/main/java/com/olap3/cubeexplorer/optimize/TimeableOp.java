@@ -1,6 +1,8 @@
 package com.olap3.cubeexplorer.optimize;
 
 public interface TimeableOp {
-    public int getTimeEstimate();
-    public int getRealTime();
+    public int aprioriTime();
+    public int aposterioriTime();
+    public double aprioriInterest();
+    public double aposterioriInterest();
 }
