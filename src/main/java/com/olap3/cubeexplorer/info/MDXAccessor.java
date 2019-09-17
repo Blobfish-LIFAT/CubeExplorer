@@ -7,11 +7,18 @@ public class MDXAccessor implements DataAccessor {
 
     Qfset internal;
 
-
-
-
     public Result execute(){
         return null;//TODO
+    }
+
+    @Override
+    public int aprioriTuples() {
+        return 0;
+    }
+
+    @Override
+    public int aposterioriTuples() {
+        return 0;
     }
 
     @Override
