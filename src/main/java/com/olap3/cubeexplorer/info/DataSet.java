@@ -23,6 +23,25 @@ public class DataSet {
     }
 
 
+    public int[] getIntColumn(int column_index) {}
+    public double[] getDoubleColumn(int column_index) {}
+    // ...
+
+    public int[] getIntColumn(String col_name) {}
+    // ...
+
+    public String getColName(int column_index) {}
+
+    public Datatype getColDatatype(int column_index) {}
+    public Datatype getColDatatype(String column_name) {}
+
+    public SemanticDatatype getColSemanticDatatype(int column_index) {}
+    public SemanticDatatype getColSemanticDatatype(String column_name) {}
+
+    public enum SemanticDatatype {
+        Date, Currency //...
+    }
+
 
     public enum Datatype {
         STRING(0), INTEGER(1), REAL(2);
