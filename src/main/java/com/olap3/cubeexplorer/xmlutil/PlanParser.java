@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.xmlutil;
 
+import com.olap3.cubeexplorer.Plan;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 import org.dom4j.xpath.DefaultXPath;
@@ -15,25 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlanParser {
-
-
-    public static class Plan {
-        public final long estimated_tuples;
-        public final long estimated_time;
-        public final double total_cost;
-
-        public Plan(long estimated_tuples, long estimated_time, double total_cost) {
-            this.estimated_tuples = estimated_tuples;
-            this.estimated_time = estimated_time;
-            this.total_cost = total_cost;
-        }
-
-        @Override
-        public String toString() {
-            return String.format("estimated tuples: %d%nestimated cost: %f", this.estimated_tuples, this.total_cost);
-        }
-    }
-
 
     public static Plan xml_to_plan(String xml) throws DocumentException {
 

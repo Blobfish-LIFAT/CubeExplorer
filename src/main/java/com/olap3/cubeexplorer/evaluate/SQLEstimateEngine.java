@@ -2,11 +2,11 @@ package com.olap3.cubeexplorer.evaluate;
 
 
 import com.alexscode.utilities.collection.Pair;
+import com.olap3.cubeexplorer.Plan;
+import com.olap3.cubeexplorer.xmlutil.PlanParser;
+import org.dom4j.DocumentException;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Holds a parallel JDBC connection to mondrian on the DBMS hosting the cube to allow
@@ -14,6 +14,8 @@ import java.sql.SQLException;
  */
 public class SQLEstimateEngine {
     Connection con;
+
+    private int timeout = 500;
 
 
     public SQLEstimateEngine(String jdbcURL) {
@@ -29,10 +31,31 @@ public class SQLEstimateEngine {
 
     }
 
-    public Pair<Integer, Integer> estimates(String query){
-        //TODO
+    public boolean setTimeout(int timeout) {
+        if (timeout > 0) {
+            this.timeout = timeout;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
+    public Plan estimates(String query) throws SQLException, DocumentException {
 
-        return new Pair<>(1, 1);
+        Statement statement = con.createStatement();
+
+        ResultSet rs = statement.executeQuery(query);
+
+        Plan plan = null;
+
+        if (rs.next()) {
+            String xml_plan = rs.getString(0);
+            plan = PlanParser.xml_to_plan(xml_plan);
+        }
+
+        statement.close();
+
+        return plan;
     }
 }
