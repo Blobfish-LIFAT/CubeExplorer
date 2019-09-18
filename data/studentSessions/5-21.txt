@@ -1,0 +1,25 @@
+-- Expliquer le nombre d'individus, la durée minimale, moyenne et maximale domicile-travail par lieu de travail et de résidence
+
+
+--1
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members})} ON ROWS
+FROM [Cube1MobProInd]
+-- On remarque que les gens residant a agglopolys ont une moyenne faible pour le trajet maison-travail.
+
+--2
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus]}})} ON COLUMNS,
+NON EMPTY CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
+FROM [Cube1MobProInd]
+--on voit ici que une grande partie des gens résidant a agglopolys travaillent en fait dans la même ville et donc leur temps de trajet est très court (moyenne = 13 mins). On voit aussi que c'est la moyenne la plus faible ce qui est logique.
+
+--3
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
+FROM [Cube1MobProInd]
+--avec cette requete on observe que une grande partie des gens qui travaillent a blois , y habitent aussi.
+
+

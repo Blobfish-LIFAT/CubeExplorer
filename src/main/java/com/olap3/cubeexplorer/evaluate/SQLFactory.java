@@ -145,6 +145,8 @@ public class SQLFactory {
         } catch (ClassCastException e){
             RolapCalculatedMember calcMeasure = (RolapCalculatedMember) mf.getAttribute();
 
+            //System.out.println(calcMeasure.getFormula().getExpression());
+
             //TODO handle calculated measure (from other measures)
             func = "COUNT";
             inner = "*";

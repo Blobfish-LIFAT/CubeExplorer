@@ -59,7 +59,7 @@ public class Dev {
 
         Qfset test = new Qfset();
         test.add(new ProjectionFragment(utils.getLevel("Commune de residence", "Commune de residence")));
-        //test.add(new MeasureFragment(utils.getMeasure("Duree trajet domicile - travail (moyenne)")));
+        test.add(new MeasureFragment(utils.getMeasure("Duree trajet domicile - travail (moyenne)")));
         test.add(new MeasureFragment(utils.getMeasure("Nombre total d'individus")));
         test.add(new SelectionFragment(utils.fetchMember("Sexe", "Sexe", "Hommes")));
         test.add(new SelectionFragment(utils.fetchMember("Sexe", "Sexe", "Femmes")));

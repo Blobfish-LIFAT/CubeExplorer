@@ -1,0 +1,156 @@
+-- ATTENTION: FICHIER RECOPIÉ D'UN PDF. IL PEUT AVOIR DES ERREURS
+
+-- Besoin: Expliquer la durée moyenne domicile-travail par niveau d'instruction pour les
+déplacement en voiture, camion ou fourgonnette.
+
+-- 1
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+1].Members})} ON ROWS
+FROM [Cube1MobProInd]
+
+
+--2
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY {Hierarchize({{[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+1].Members}, {[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON
+ROWS
+FROM [Cube1MobProInd]
+
+
+--3
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+2].Members})} ON ROWS
+FROM [Cube1MobProInd]
+
+--Pertinente : On observe une différence dans le niveau d’instruction entre le ‘non sclarisé’ et le ‘bac +1 et plus’
+
+--4
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+1].Members, [Mode de transport.MODTRANS_Hierarchie].[Categorie].Members) ON ROWS
+FROM [Cube1MobProInd]
+
+--5
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY CrossJoin([Mode de transport.MODTRANS_Hierarchie].[Categorie].Members, [Niveau
+d'instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members) ON ROWS
+FROM [Cube1MobProInd]
+
+--6
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+2].Members, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members) ON ROWS
+FROM [Cube1MobProInd]
+
+--7
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+2].Members})} ON ROWS
+FROM [Cube1MobProInd]
+WHERE Order({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}, [Mode de transport.MODTRANS_Hierarchie].CurrentMember.Name, BASC)
+
+--8
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+1].Members})} ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+
+--9
+SELECT
+NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
+COLUMNS,
+NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+
+--10
+SELECT
+NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Duree trajet domicile
+- travail (moyenne)]}) ON COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie
+2].Members})} ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+--pertinent on observe que, dans l’ensemble, le femmes font, en moyenne, ont une durée moins –
+importantes.
+
+--11
+SELECT
+NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Duree trajet domicile
+- travail (moyenne)]}) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].
+[Niveau d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
+[CENTRE]}), CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
+d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[ILE-DEFRANCE]})))
+ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+– Pertiente : on remarque une grande différence entre les deux régions
+
+--12
+SELECT
+NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Duree trajet domicile
+- travail (moyenne)]}) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].
+[Niveau d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
+[ILE-DE-FRANCE]}), CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
+d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
+[BRETAGNE]}))) ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+– Pertinente : par rapport à la requête précédente, l’écart est moins important entre les deux régions.
+
+
+--13
+SELECT
+NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, CrossJoin({[Measures].[Duree
+trajet domicile - travail (moyenne)]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de
+niveau 1].Members)) ON COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
+d'instruction].Members})} ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+
+--14
+SELECT
+NON EMPTY Hierarchize(Union(CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].
+[Duree trajet domicile - travail (moyenne)]}), Union(CrossJoin([Sexe.Sexe_Hierarchie].
+[Sexe].Members, {[Measures].[Duree trajet domicile - travail (max)]}),
+CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Duree trajet domicile - travail
+(min)]})))) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].
+[Niveau d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
+[BRETAGNE]}), CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
+d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[ILE-DEFRANCE]})))
+ON ROWS
+FROM [Cube1MobProInd]
+WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
+fourgonnette]}
+
+

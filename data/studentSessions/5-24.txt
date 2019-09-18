@@ -1,0 +1,29 @@
+-- Besoin : Expliquer le nombre d'individus, la durée minimale, moyenne et maximale domicile-travail par lieu de travail et de résidence.
+
+--1
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({[Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members})} ON ROWS
+FROM [Cube1MobProInd]
+-- Pertinence : On peut voir que la plupart des personnes travaille dans la meme commune que celle où ils habitent.
+
+--2
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS
+FROM [Cube1MobProInd]
+-- Pertinence : On peut voir que les femmes ont moins de durée de trajet que les hommes. Les femmes privilegie un travail plus proche de leur domicile.
+
+--3
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members) ON ROWS
+FROM [Cube1MobProInd]
+-- Pertinence : On peut voir que les personnes sans diplomes choisissent en priorité un travail proche de leur domicile.
+
+--4
+SELECT
+NON EMPTY CrossJoin([Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members, {[Measures].[Duree trajet domicile - travail (moyenne)]}) ON COLUMNS,
+NON EMPTY {Hierarchize({[Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members})} ON ROWS
+FROM [Cube1MobProInd]
+-- Pertinence : On peut se rendre compte que plus une personne est âgée plus elle a de chance de s'éloigner de sa commune de résidence.

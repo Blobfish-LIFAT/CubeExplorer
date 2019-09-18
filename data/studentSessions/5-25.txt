@@ -1,0 +1,47 @@
+--Besoin 5 : Expliquer le nombre d'individus, la durée minimale, moyenne et maximale domicile-travail par lieu de travail et de résidence
+
+--1 Analysons dans un premier temps les durées minimale, moyenne et maximale domicile-travail par lieu de travail et par le nombre total d'individus
+
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (max)], 
+[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({[Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members})} ON ROWS
+FROM [Cube1MobProInd]
+-- Nous constatons que la plupart des individus de la région travaillent soit dans leur commune de résidence, soit dans une autre commune du département de résidence. Par contre, une petite partie de la population, soit 3,19% effectue la plus importante durée moyenne trajet domicile-travail. Ces constats nous permettent de supposer que de manière générale, les gens préferent avoir un boulot qui est relativement proche de leur lieu de résidence.
+
+--2 Allons plus loin dans notre analyse en croisant les données avec la nature de l'activité et le mode transport
+
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (max)], 
+[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin([Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members, 
+CrossJoin([Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members, 
+[Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members)) ON ROWS
+FROM [Cube1MobProInd]
+-- Pertinent : Il est interessant de remarquer que les individus qui effectuent plus de durée moyenne trajet domicile-travail
+sont ceux qui marchent à pied pour rejoindre leur lieu de travail, ce, quelque soit la nature de l'activite qu'ils exercent.
+Cela explique clairement pourquoi ils mettent beaucoup plus de temps.
+Ils sont suivis par les individus qui utilisent les voitures, camions, fourgonnettes et qui travaillent 
+pour la plupart hors de leur commune de résidence actuelle.
+
+--3 Croisons les données avec le sexe
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (max)],
+ [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin([Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members, 
+CrossJoin([Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members,
+CrossJoin([Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members))) ON ROWS
+FROM [Cube1MobProInd]
+-- Parmi les individus qui exercent leur activité professionnelle dans leur commune de résidence et qui pratiquent la marche à pied, les femmes sont plus représentatives contrairement aux individus qui exercent hors de leur commune de résidence.
+
+--4 Croisons les données avec la commune de résidence
+SELECT
+NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre total d'individus]}, [Sexe.Sexe_Hierarchie].[Sexe].Members),
+ Union(CrossJoin({[Measures].[Duree trajet domicile - travail (max)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), 
+ Union(CrossJoin({[Measures].[Duree trajet domicile - travail (min)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), 
+ CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members))))) ON COLUMNS,
+NON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, 
+[Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members) ON ROWS
+FROM [Cube1MobProInd]
+--Les individus qui effectuent une plus grande durée moyenne trajet domicile-travail sont ceux qui se déplacent vers la métropole. La plupart sont des hommes sauf dans certaines communes de résidence notamment : OZAIN, SAINT-DENIS-SUR-LOIRE, VILLEBAROU, VINEUL, CROUY SUR COSSON, MONTLIVAULT, SAINT-AUIT, SAINT-OUEN, LIGNIERES, NAUEIL, malgré une forte représentation des hommes dans ces communes.
+

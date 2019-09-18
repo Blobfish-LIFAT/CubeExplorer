@@ -1,0 +1,46 @@
+--Besoin utilisateur 5 : Expliquer le nombre d'individus, la durée minimale,
+--moyenne et maximale domicile-travail par lieu de travail et de résidence
+
+--1
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence].Members, [Commune de travail.CNELOCC_Hierarchie_administrative].[Commune d'occupation].Members) ON ROWS
+FROM [Cube1MobProInd]
+
+--Très dense, il faut un travail d'observation poussé pour s'apercevoir de
+--certain comportement.
+--Dans la très grande majorité des cas, les personnes ne travaillent pas dans
+--la commune dans laquelle ils habitent.
+--On remarque des comportements "étranges", comme une personne qui met 2537 minutes
+--pour aller à Sassy.
+--On peut déduire de ces informations que les personnes travaillent rarement là où 
+--elles habitent
+
+
+--2
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, CrossJoin([Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members)) ON ROWS
+FROM [Cube1MobProInd]
+
+--La majorité des personnes vont au travail en voiture/camion/camionette. Certaines --vont travailler à pieds
+
+
+--3
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, CrossJoin([Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members, CrossJoin([Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members, [Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members))) ON ROWS
+FROM [Cube1MobProInd]
+
+--Le niveau d'étude ne nous donne pas d'information supplémentaire sur le trajet 
+--domicile-travail
+
+
+--4
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS
+FROM [Cube1MobProInd]
+
+--On remarque que les hommes mettent plus de temps à arriver au travail que les 
+--femmes

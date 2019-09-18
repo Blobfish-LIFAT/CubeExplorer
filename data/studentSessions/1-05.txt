@@ -1,0 +1,54 @@
+-- Besoin : - Expliquer la distance moyenne domicile-travail dans l'Agglopolys pour les salariés.  
+ --1.  
+SELECT  
+NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (min)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,  
+NON EMPTY CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members) ON ROWS  
+FROM [Cube1MobProInd]  
+  
+ -  On remarque une distance moyenne domicile / travail, légèrement plus élevé pour les salariés, malgré que la distance max soit plus grande pour les non salarié. Cela s’explique car les salariés ont un travail  “stable”  et ils acceptent de parcourir plus de chemin pour aller travailler. Les non salariés sont probablement en grande partie liée aux boites d'intérim, elle propose des emploi proche de la boite d'intérim et donc proche du domicile du non salarié. Ce qui explique que la distance moyenne Travail / domicile est plus faible.  
+  
+--2.  
+  
+SELECT  
+NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (min)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,  
+NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members)))))) ON ROWS  
+FROM [Cube1MobProInd]  
+  
+-- Lorsque l’on croise les données d’Agglopolys avec ceux d’autres communes, on remarque que les résultats sont sensiblement les même. On voit donc qu’en regles general les salariés habitent plus loin de leur lieu de travail.  
+ 
+ 
+ 
+-- 3. 
+SELECT 
+NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Depense trajet domicile - travail (moyenne)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS, 
+NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Temps d'emploi.TEMPSEMP_Hierarchie].[Temps d'emploi].Members)), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Temps d'emploi.TEMPSEMP_Hierarchie].[Temps d'emploi].Members)), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES ETANGS]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Temps d'emploi.TEMPSEMP_Hierarchie].[Temps d'emploi].Members))))) ON ROWS 
+FROM [Cube1MobProInd] 
+ 
+-- Les salariés temps complet  ont une distance moyenne  travail/domicile plus élevé par  rapport au temps partiel. Cela peut s’expliquer financièrement car un salarié temps complet  à des revenus plus élevés  et il est donc prêt a payer plus pour le transport. 
+Un temps partiel travail par définition moins longtemps et effectue un trajet plus court pour avoir un ratio temps de trajet/ temps de travail plus intéressant. 
+ 
+ 
+--4. 
+SELECT 
+NON EMPTY {Hierarchize({[Measures].[Distance trajet domicile - travail (moyenne)]})} ON COLUMNS, 
+NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Beauce Val de Loire].[BEAUCE ORATORIENNE]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Beauce Val de Loire].[BEAUCE LIGÉRIENNE]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[GRAND CHAMBORD]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)))))) ON ROWS 
+FROM [Cube1MobProInd] 
+--On remarque que les hommes parcours en moyenne une distance plus grande que les femmes. Historiquement ce sont les femmes qui s’occupent du foyer ( enfants ect..) meme si cela commence a changer. La femme s’eloigne donc generalement moins du domicile pour pouvoir s’occuper plus facilement du domicile. 
+ 
+--5. 
+ 
+SELECT 
+NON EMPTY {Hierarchize({[Measures].[Distance trajet domicile - travail (moyenne)]})} ON COLUMNS, 
+NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Beauce Val de Loire].[BEAUCE ORATORIENNE]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members))), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Beauce Val de Loire].[BEAUCE LIGÉRIENNE]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members))), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members))), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[GRAND CHAMBORD]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members))))))) ON ROWS 
+FROM [Cube1MobProInd] 
+ 
+-- On remarque que si on ajoute l’age et l’on se concentre sur la portion de 30 à 50 ans,  qui correspond l’age moyen ou les enfants du foyer son élevé, la distance de l’homme est plus éleve ce qui confirme le supposition de la requete précedente. 
+ 
+--6. 
+ 
+SELECT 
+NON EMPTY {Hierarchize({[Measures].[Distance trajet domicile - travail (moyenne)]})} ON COLUMNS, 
+NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Beauce Val de Loire].[BEAUCE ORATORIENNE]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members))), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Beauce Val de Loire].[BEAUCE LIGÉRIENNE]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members))), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members))), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[GRAND CHAMBORD]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members))))))) ON ROWS 
+FROM [Cube1MobProInd] 
+ 
+--Une fois de plus en ajoutant les menage on remarque monoparental ou en couple on voit que l’homme parcours une distance travail/domicile plus grande, probablement pour les meme raison cité plus haut. 

@@ -1,0 +1,34 @@
+-- Expliquer la distance moyenne domicile-travail dans l'Aglopolys pour les salariés.
+
+--1
+SELECT
+NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[En contrat d'apprentissage]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[Stagiaires rémunérés en entreprise]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés non précaires].[Emplois sans limite de durée, CDI, titulaire de la fonction publique]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Emplois-jeunes, CES, contrats de qualification]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Placés par une agence d'intérim]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Statut inconnu].[Statut inconnu].[Statut  inconnu]}), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Sans objet].[Sans objet].[Sans objet]}))))))))) ON ROWS
+FROM [Cube1MobProInd]
+
+-- Dans cette analyse on observe que la distance moyenne des stagiaires est plus élevée que les salariés et le nombre de stagiaires est plus petit par rapport aux autres statuts. 
+
+--2
+SELECT
+NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]})) ON COLUMNS,
+NON EMPTY Order(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members), [Measures].[Distance trajet domicile - travail (moyenne)], BDESC) ON ROWS
+FROM [Cube1MobProInd]
+
+--Dans cette requête on remarque dans la Commune de Danze , Villeherviers, Vendôme et Saint-Laurent-Nouan les salaries qui vont à pied à leur lieu de travail ont des distances moyenne de 43-30 km, ces distances ne sont pas claires car ce sont des distances longues à parcourir à pied.
+
+--3
+SELECT
+NON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Deux roues]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, {[Measures].[Distance trajet domicile - travail (moyenne)]})), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, {[Measures].[Distance trajet domicile - travail (moyenne)]})), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, {[Measures].[Distance trajet domicile - travail (moyenne)]})), CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, {[Measures].[Distance trajet domicile - travail (moyenne)]})))))) ON COLUMNS,
+NON EMPTY Order(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)), [Measures].[Distance trajet domicile - travail (moyenne)], BDESC) ON ROWS
+FROM [Cube1MobProInd]
+
+--Dans la communauté Agglopolys on remarque la distance moyenne parcouru avec les différents moyens de transport par les hommes et femmes sont similaire 
+Dans la communauté Agglopolys, la distance moyenne parcouru par les hommes et les femmes en utilisant différent moyens de transport, sont à peu près identique avec un écart-type maximum de 0.210 km et un minimum 0.030 km
+
+--4
+SELECT
+NON EMPTY Order(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}), [Measures].[Distance trajet domicile - travail (moyenne)], BDESC) ON COLUMNS,
+NON EMPTY CrossJoin([Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}) ON ROWS
+FROM [Cube1MobProInd]
+
+--Dans cette analyse on remarque que les salaries dont l’Age varie entre 65 et 69 ans parcourent en moyenne 20 km à pied, sachant qu’à cet âge il est plus difficile de marcher des longues distances.  Qu’importe l’âge cette distance reste conséquent à parcourir à pied.

@@ -2,26 +2,18 @@ package com.olap3.cubeexplorer.info;
 
 import com.olap3.cubeexplorer.ECube;
 import com.olap3.cubeexplorer.QueryPart;
-import com.olap3.cubeexplorer.julien.Fragment;
-import com.olap3.cubeexplorer.julien.ProjectionFragment;
+import com.olap3.cubeexplorer.julien.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class CheckParents extends InfoCollector {
-    public CheckParents(Set<Fragment> dims, Set<Fragment> measures, Set<Fragment> selections) {
-        super(dims, measures, selections);
 
-        // We will check all hierarchies for possible parents
-        List<ProjectionFragment> parents = new ArrayList<>();
-        for (Fragment f : selections){
-            ProjectionFragment p = (ProjectionFragment) f;
-            parents.add(ProjectionFragment.newInstance(p.getLevel().getParentLevel()));
-        }
-
-        //TODO generate data accessors from the parents we found
-
+    public CheckParents(DataAccessor da, MLModel model) {
+        this.dataSource = da;
+        this.model = model;
     }
 
     @Override
@@ -37,5 +29,29 @@ public class CheckParents extends InfoCollector {
     @Override
     public ECube execute() {
         return null;
+    }
+
+    public static List<CheckParents> build(Set<ProjectionFragment> dims, Set<MeasureFragment> measures, Set<SelectionFragment> selections){
+        List<CheckParents> possibleICs = new ArrayList<>();
+
+        // We will check all hierarchies for possible parents
+        for (ProjectionFragment f : dims){
+            ProjectionFragment p  = ProjectionFragment.newInstance(f.getLevel().getParentLevel());
+
+            HashSet<ProjectionFragment> tmp = new HashSet<>(dims);
+            tmp.remove(f);
+            tmp.add(p);
+
+            Qfset query = new Qfset(tmp, new HashSet<>(selections), new HashSet<>(measures));
+            MDXAccessor src = new MDXAccessor(query);
+
+            CheckParents cp = new CheckParents(src, null);//TODO generate ML models
+
+            possibleICs.add(cp);
+        }
+
+
+        return possibleICs;
+
     }
 }

@@ -1,0 +1,50 @@
+﻿-- Besoin 4 (dibstudent16 à dibstudent20) : 
+-- Expliquer la durée moyenne domicile-travail par statut d'emplois et nature de l'activité économique
+
+
+--1
+SELECT
+NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members) ON COLUMNS,
+NON EMPTY {Hierarchize({{[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 2].Members}, {[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members}})} ON ROWS
+FROM [Cube1MobProInd]
+
+
+--Cette requête affiche la distance moyenne trajet-travail de personnes ayant différents statuts d'emploi dans différents domaines.
+
+
+--2
+
+SELECT
+NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members) ON COLUMNS,
+NON EMPTY {Hierarchize({{[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 2].Members}, {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}})} ON ROWS
+FROM [Cube1MobProInd]
+
+--On observe que les salariés ayant des emplois courts ou vacataires mettent nettement plus de temps à aller à leur lieu de travail lorsque ces derniers sont des emplois liés à la construction, ou encore en commerce, transports et services divers. En effet, ces natures d'activité économique concernent des emplois urbains.
+--Cependant, le Loir-et-Cher est une région rurale, et il semblerait que pour ces types de salariés, la durée soit plus longue car ces domaines sont principalements situés en lieu urbain, et leur contrat de travail ne dure pas assez longtemps pour qu'ils décident d'emménager près du lieu de travail. 
+
+--3
+SELECT
+NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members) ON COLUMNS,
+NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[Stagiaires rémunérés en entreprise]})} ON ROWS
+FROM [Cube1MobProInd]
+
+-Au contraire, on observe chez les stagiaires rémunérés, que le temps de trajet est plus court dans les secteurs du commerce et de la construction. En effet, ils mettent en moyenne 24.88 minutes de trajet pour les stages en commerce, transports et services divers, et 27.60 minutes
+--dans le domaine de la construction, tandis que dans les autres domaines la durée est beaucoup plus grande. On peut en déduire qu'il y a soit plus d'offres ou moins de demandes de stages dans ces domaines.
+
+
+--4
+SELECT
+NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members) ON COLUMNS,
+NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[tous les statuts confondus]})} ON ROWS
+FROM [Cube1MobProInd]
+
+--Sur cette requête, on observe que le temps de trajet moyen pour les emplois de nature "Agriculture, sylviculture et pêche" pour tout statut confondu, est inférieure à ceux des autres emplois de différentes natures. On peut conclure que beaucoup d'employés
+--agriculteurs, sylviculteurs ou pêcheurs travaillent à leur domicile, ce qui baisse nettement la moyenne.
+
+--5
+SELECT
+NON EMPTY Order(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, {[Nature l'activite economique.NATACTECO_Hierarchie].[Agriculture, sylviculture et pêche]}), [Nature l'activite economique.NATACTECO_Hierarchie].CurrentMember.Name, BDESC) ON COLUMNS,
+NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members})} ON ROWS
+FROM [Cube1MobProInd]
+--Par extension de la requête précédente, les stagiaires en agriculture, sylviculture et pêche ont un temps de trajet nettement plus long. En effet, les agriculteurs, sylviculteurs et pêcheurs non-stagiaires se sont installés à proximité puisque c'est leur lieu de travail,
+--tandis que les stagiaires découvrent l'emploi et habitent probablement en ville.

@@ -7,6 +7,10 @@ public class MDXAccessor implements DataAccessor {
 
     Qfset internal;
 
+    public MDXAccessor(Qfset query) {
+        this.internal = query;
+    }
+
     public Result execute(){
         return null;//TODO
     }
