@@ -9,9 +9,7 @@ import java.util.Set;
 public class CheckPast extends InfoCollector {
 
 
-    public CheckPast(Set<Fragment> dims, Set<Fragment> measures, Set<Fragment> selections) {
-        super(dims, measures, selections);
-    }
+
 
     @Override
     public int timeEstimate() {

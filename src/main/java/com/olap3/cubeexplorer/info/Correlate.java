@@ -6,11 +6,7 @@ import com.olap3.cubeexplorer.julien.Fragment;
 import java.util.Set;
 
 public class Correlate extends InfoCollector{
-    public Correlate(Set<Fragment> dims, Set<Fragment> measures, Set<Fragment> selections) {
-        super(dims, measures, selections);
 
-
-    }
 
     @Override
     public int timeEstimate() {
