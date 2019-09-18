@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class DataSet {
 
-    List<List> data
+    List<List> data;
 
 
     public DataSet(List<Pair<String, Datatype>> columnsDef, int size) {
@@ -23,20 +23,40 @@ public class DataSet {
     }
 
 
-    public int[] getIntColumn(int column_index) {}
-    public double[] getDoubleColumn(int column_index) {}
+    public int[] getIntColumn(int column_index) {
+        return new int[0];
+    }
+    public double[] getDoubleColumn(int column_index) {
+        return new double[0];
+    }
+    public long[] getLongColumn(int column_index) {
+        return new long[0];
+    }
     // ...
 
-    public int[] getIntColumn(String col_name) {}
+    public int[] getIntColumn(String col_name) {
+        return null;
+    }
     // ...
 
-    public String getColName(int column_index) {}
+    public String getColName(int column_index) {
+        return null;
+    }
 
-    public Datatype getColDatatype(int column_index) {}
-    public Datatype getColDatatype(String column_name) {}
+    public Datatype getColDatatype(int column_index) {
+        return null;
+    }
 
-    public SemanticDatatype getColSemanticDatatype(int column_index) {}
-    public SemanticDatatype getColSemanticDatatype(String column_name) {}
+    public Datatype getColDatatype(String column_name) {
+        return null;
+    }
+
+    public SemanticDatatype getColSemanticDatatype(int column_index) {
+        return null;
+    }
+    public SemanticDatatype getColSemanticDatatype(String column_name) {
+        return null;
+    }
 
     public enum SemanticDatatype {
         Date, Currency //...
