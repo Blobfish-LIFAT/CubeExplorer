@@ -17,11 +17,18 @@ public class DataSet {
         //TODO
     }
 
-
     public Object[] getLine(int i){
         return null; //TODO
     }
 
+
+    public int getNumberOfColumns(){
+        return -1;
+    }
+
+    public int getNumberOfRows(){
+        return -1;
+    }
 
     public int[] getIntColumn(int column_index) {
         return new int[0];
