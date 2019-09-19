@@ -1,7 +1,6 @@
 package com.olap3.cubeexplorer.info;
 
 import com.olap3.cubeexplorer.julien.Qfset;
-import mondrian.olap.Result;
 
 public class MDXAccessor implements DataAccessor {
 
@@ -11,8 +10,9 @@ public class MDXAccessor implements DataAccessor {
         this.internal = query;
     }
 
-    public Result execute(){
-        return null;//TODO
+    @Override
+    public DataSet execute() {
+        return null;
     }
 
     @Override

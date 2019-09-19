@@ -30,6 +30,7 @@ public class CheckParents extends InfoCollector {
         return null;
     }
 
+    //TODO change interface to return pairs
     public static List<CheckParents> build(Set<ProjectionFragment> dims, Set<MeasureFragment> measures, Set<SelectionFragment> selections){
         List<CheckParents> possibleICs = new ArrayList<>();
 
