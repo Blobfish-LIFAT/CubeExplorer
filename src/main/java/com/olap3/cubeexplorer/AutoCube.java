@@ -1,6 +1,7 @@
 package com.olap3.cubeexplorer;
 
 import com.olap3.cubeexplorer.evaluate.Evaluator;
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.optimize.Optimizer;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class AutoCube {
     Sequencer sequencer;
 
     public List<ECube> answer(IntentionalQuery q){
-        List<Plan> possiblePlans = optimizer.genPlans(q);
+        List<ExecutionPlan> possiblePlans = optimizer.genPlans(q);
 
         // TODO choose one maybe ....
         List<ECube> result = evaluator.evaluate(possiblePlans.get(0));

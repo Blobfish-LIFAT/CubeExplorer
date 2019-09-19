@@ -1,12 +1,9 @@
 package com.olap3.cubeexplorer.xmlutil;
 
-import com.olap3.cubeexplorer.Plan;
+import com.olap3.cubeexplorer.XMLPlan;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
-import org.dom4j.xpath.DefaultXPath;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class PlanParser {
 
-    public static Plan xml_to_plan(String xml) throws DocumentException {
+    public static XMLPlan xml_to_plan(String xml) throws DocumentException {
 
         StringReader stringReader = new StringReader(xml);
 
@@ -55,7 +52,7 @@ public class PlanParser {
             est_rows = Long.valueOf(val_rows);
         }
 
-        return new Plan(est_rows,-1, total_cost);
+        return new XMLPlan(est_rows,-1, total_cost);
     }
 
 
@@ -67,7 +64,7 @@ public class PlanParser {
 
         System.out.println(content);
 
-        Plan plan = PlanParser.xml_to_plan(content);
+        XMLPlan plan = PlanParser.xml_to_plan(content);
 
         System.out.println(plan.toString());
 

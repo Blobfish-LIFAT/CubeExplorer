@@ -1,8 +1,7 @@
 package com.olap3.cubeexplorer.evaluate;
 
 
-import com.alexscode.utilities.collection.Pair;
-import com.olap3.cubeexplorer.Plan;
+import com.olap3.cubeexplorer.XMLPlan;
 import com.olap3.cubeexplorer.xmlutil.PlanParser;
 import org.dom4j.DocumentException;
 
@@ -41,13 +40,13 @@ public class SQLEstimateEngine {
         }
     }
 
-    public Plan estimates(String query) throws SQLException, DocumentException {
+    public XMLPlan estimates(String query) throws SQLException, DocumentException {
 
         Statement statement = con.createStatement();
 
         ResultSet rs = statement.executeQuery(query);
 
-        Plan plan = null;
+        XMLPlan plan = null;
 
         if (rs.next()) {
             String xml_plan = rs.getString(0);
