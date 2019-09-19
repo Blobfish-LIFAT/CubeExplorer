@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.evaluate;
 
 
-import com.olap3.cubeexplorer.XMLPlan;
+import com.olap3.cubeexplorer.xmlutil.XMLPlan;
 import com.olap3.cubeexplorer.xmlutil.PlanParser;
 import org.dom4j.DocumentException;
 

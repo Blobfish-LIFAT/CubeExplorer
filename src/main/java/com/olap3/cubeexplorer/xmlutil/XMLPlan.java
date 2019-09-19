@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.xmlutil;
 
 import com.olap3.cubeexplorer.info.InfoCollector;
 

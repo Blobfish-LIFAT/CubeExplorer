@@ -1,7 +1,6 @@
 package com.olap3.cubeexplorer.info;
 
 import com.alexscode.utilities.collection.Pair;
-import com.olap3.cubeexplorer.QueryPart;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;

@@ -1,6 +1,5 @@
 package com.olap3.cubeexplorer.xmlutil;
 
-import com.olap3.cubeexplorer.XMLPlan;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
