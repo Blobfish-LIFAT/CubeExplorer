@@ -53,7 +53,7 @@ public class Dev {
 
         //System.out.println(exec.);
 
-        Result res = olap.execute(olapQuery);
+        var res = olap.execute(olapQuery);
 
 
 

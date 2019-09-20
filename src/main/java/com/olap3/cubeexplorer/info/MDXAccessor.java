@@ -12,6 +12,7 @@ public class MDXAccessor implements DataAccessor {
 
     @Override
     public DataSet execute() {
+        String mdxQuery = ""; //Todo Conversion to runnable MDX (or finish my star join thing)
         return null;
     }
 
