@@ -10,7 +10,7 @@ NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 2].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
---Les salariés précaire mettent plus de temps que les autres statue d’emplois, Ils habitent plus loin de leur travail ?
+--Les salariés précaire mettent plus de temps que les autres statue d’emplois, Ils habitent plus loin de leur travail ?
 
 --2--
 SELECT
@@ -33,7 +33,7 @@ NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
---Les stagiaires et les employés a durée limité mettent le plus de temps en moyenne pour rejoindre leur travail, Sont il salariés en situation de précarité ?
+--Les stagiaires et les employés a durée limité mettent le plus de temps en moyenne pour rejoindre leur travail, Sont il salariés en situation de précarité ?
 
 
 --5--
@@ -47,7 +47,7 @@ FROM [Cube1MobProInd]
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,
 NON EMPTY CrossJoin([Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members, [Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members) ON ROWS
-FROM [Cube1MobProInd] 
+FROM [Cube1MobProInd]
 
 --22--
 --Chez les stagiaires ( qui mettent le plus de temps en moyenne) le domaine le plus touché est Administration publique, enseignement, santé humaine et action sociale.
@@ -70,8 +70,8 @@ NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})
 NON EMPTY CrossJoin([Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members) ON ROWS
 FROM [Cube1MobProInd]
 
---Les emplois jeune en construction sont clairement les plus touché 
---Les jeunes en générale ?
+--Les emplois jeune en construction sont clairement les plus touché
+--Les jeunes en générale ?
 
 --9--
 SELECT
@@ -79,8 +79,8 @@ NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})
 NON EMPTY {Hierarchize({[Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
---Oui, les 15-29ans mettent plus de temps que les autres pour se rendre au travail ? 
---Habitent encore chez leur parent ? S’installe tout seul a partir de 30 car enfant a charge ?
+--Oui, les 15-29ans mettent plus de temps que les autres pour se rendre au travail ?
+--Habitent encore chez leur parent ? S’installe tout seul a partir de 30 car enfant a charge ?
 
 --10--
 SELECT
@@ -96,7 +96,7 @@ NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})
 NON EMPTY CrossJoin([Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members) ON ROWS
 FROM [Cube1MobProInd]
 
---Peut importe la nature de l'activité, les hommes se déplace plus longtemps que femme, famille monoparentale composé d’une femme ? 
+--Peut importe la nature de l'activité, les hommes se déplace plus longtemps que femme, famille monoparentale composé d’une femme ?
 
 --12--
 SELECT
@@ -149,8 +149,8 @@ NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})
 NON EMPTY CrossJoin([Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members, [Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members) ON ROWS
 FROM [Cube1MobProInd]
 
---Peut importe le statue d’emplois, les plus diplômés se déplace plus que les autres 
---Les jeunes sont plus diplomé vue qu’ils mettent plus de temps  ?
+--Peut importe le statue d’emplois, les plus diplômés se déplace plus que les autres
+--Les jeunes sont plus diplomé vue qu’ils mettent plus de temps  ?
 
 --19--
 SELECT

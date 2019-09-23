@@ -1,47 +1,47 @@
 --/*requete 1*/
 SELECT
-NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Measures].[Nombre de voitures des menages (moyenne)]})} ON ROWS
 FROM [Cube1MobProInd]
 
 --/*requete 2*/
 SELECT
-NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre total d'individus]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}), Union(CrossJoin({[Measures].[Nombre total d'individus]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}), CrossJoin({[Measures].[Nombre total d'individus]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})))) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre total d'individus]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}), Union(CrossJoin({[Measures].[Nombre total d'individus]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s]}), CrossJoin({[Measures].[Nombre total d'individus]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})))) ON COLUMNS,
 NON EMPTY {Hierarchize({{[Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Aucune voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Une seule voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Deux voitures], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Trois voitures ou plus]}})} ON ROWS
 FROM [Cube1MobProInd]
 
 --/*requete 3*/
 SELECT
-NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({{[Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON ROWS
 FROM [Cube1MobProInd]
 
 --/*requete 4*/
 SELECT
-NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}), Union(CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}), CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})))) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}), Union(CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s]}), CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})))) ON COLUMNS,
 NON EMPTY {Hierarchize({{[Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Aucune voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Une seule voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Deux voitures], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Trois voitures ou plus]}})} ON ROWS
 FROM [Cube1MobProInd]
 
 --/*requete 5*/
 SELECT
-NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre total d'individus]}, CrossJoin([Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]})), Union(CrossJoin({[Measures].[Nombre total d'individus]}, CrossJoin([Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]})), CrossJoin({[Measures].[Nombre total d'individus]}, CrossJoin([Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}))))) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre total d'individus]}, CrossJoin([Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]})), Union(CrossJoin({[Measures].[Nombre total d'individus]}, CrossJoin([Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s]})), CrossJoin({[Measures].[Nombre total d'individus]}, CrossJoin([Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}))))) ON COLUMNS,
 NON EMPTY {Hierarchize({{[Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Aucune voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Une seule voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Deux voitures], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Trois voitures ou plus]}})} ON ROWS
 FROM [Cube1MobProInd]
 
 --/*requete 6*/
 SELECT
-NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON COLUMNS,
+NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
 --/*requete 7*/
 SELECT
-NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Consommation carborant trajet domicile - travail (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}), Union(CrossJoin({[Measures].[Consommation carborant trajet domicile - travail (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}), CrossJoin({[Measures].[Consommation carborant trajet domicile - travail (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})))) ON COLUMNS,
+NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Consommation carborant trajet domicile - travail (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}), Union(CrossJoin({[Measures].[Consommation carborant trajet domicile - travail (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s]}), CrossJoin({[Measures].[Consommation carborant trajet domicile - travail (moyenne)]}, {[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})))) ON COLUMNS,
 NON EMPTY {Hierarchize({{[Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Aucune voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Une seule voiture], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Deux voitures], [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Trois voitures ou plus]}})} ON ROWS
 FROM [Cube1MobProInd]
 
---/*requête 8*/
+--/*requÃªte 8*/
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
-NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS
+NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[EmployÃ©s], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS
 FROM [Cube1MobProInd]

@@ -1,22 +1,22 @@
---Besoin : Expliquer la durée moyenne domicile-travail par statut d'emplois et nature de l'activité économique
+--Besoin : Expliquer la durée moyenne domicile-travail par statut d'emplois et nature de l'activité économique
 
 --1
 SELECT
 NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members) ON COLUMNS,
 NON EMPTY {Hierarchize({[Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members})} ON ROWS
 FROM [Cube1MobProInd]
---Pour le statut d’emploi de niveau 1, on remarque que la durée moyenne domicile-travail de salariés  est supérieure à celle des non-salariés et ça pour chaque nature de l’activité économique. Cela s’explique par le fait que les salariés sont plus en mobilité de parcourir une certaine durée que les non-salariés car sinon ces derniers risqueraient d’avoir un problème de transport pour se rendre à leur lieu de travail. 
+--Pour le statut d'emploi de niveau 1, on remarque que la durée moyenne domicile-travail de salariés  est supérieure à celle des non-salariés et ça pour chaque nature de l'activité économique. Cela s'explique par le fait que les salariés sont plus en mobilité de parcourir une certaine durée que les non-salariés car sinon ces derniers risqueraient d'avoir un problème de transport pour se rendre à leur lieu de travail. 
 
 --2
 SELECT
 NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 2].Members) ON COLUMNS,
 NON EMPTY {Hierarchize({[Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members})} ON ROWS
 FROM [Cube1MobProInd]
--- Pour le statut d’emploi de niveau 2, on remarque une variété de salariés. Pour le salariée en formation, les salariés non précaires et les salariés précaires, on note une différence acceptable pour leur durée moyenne, vu qu’ils sont tous salariés mais se différent seulement par leur durée de contrat. Par contre pour la nature de l’activité « Construction » on note une différence trop large pour les salariés précaires par rapport aux autres. Et pour les non-salariés, leur durée moyenne pour chaque nature de l’activité est inférieure à celle des autres salariés, ce qui est normal vu qu’ils ne perçoivent pas de salaire  pour pouvoir se payer une longue durée.
+-- Pour le statut d'emploi de niveau 2, on remarque une variété de salariés. Pour le salariée en formation, les salariés non précaires et les salariés précaires, on note une différence acceptable pour leur durée moyenne, vu qu'ils sont tous salariés mais se différent seulement par leur durée de contrat. Par contre pour la nature de l'activité « Construction » on note une différence trop large pour les salariés précaires par rapport aux autres. Et pour les non-salariés, leur durée moyenne pour chaque nature de l'activité est inférieure à celle des autres salariés, ce qui est normal vu qu'ils ne perçoivent pas de salaire  pour pouvoir se payer une longue durée.
 
 --3
 SELECT
 NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members) ON COLUMNS,
 NON EMPTY {Hierarchize({[Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members})} ON ROWS
 FROM [Cube1MobProInd]
--- Pour le statut d’emploi de niveau 3, on remarque que les stagiaires rémunérés en entreprise parcourent une durée moyenne beaucoup plus important que les autres statuts d’emploi, mais on note une exception par rapport aux emplois-jeunes, CES, contrats de qualification qui ont comme nature d’activité « Construction », qui font une durée moyenne très  élevé par rapport aux autres.
+-- Pour le statut d'emploi de niveau 3, on remarque que les stagiaires rémunérés en entreprise parcourent une durée moyenne beaucoup plus important que les autres statuts d'emploi, mais on note une exception par rapport aux emplois-jeunes, CES, contrats de qualification qui ont comme nature d'activité « Construction », qui font une durée moyenne très  élevé par rapport aux autres.

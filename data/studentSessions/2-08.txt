@@ -100,7 +100,7 @@ avec famille principale composée d'un couple]}, CrossJoin({[Niveau de motorisat
 menage.Niveau_motorisation_Hierarchie].[Deux voitures]}, {[Measures].[Nombre de voitures des
 menages (moyenne)]})), CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec
 famille principale composée d'un couple]}, CrossJoin({[Niveau de motorisation du
-menage.Niveau_motorisation_Hierarchie].[Deux voitures]}, {[Measures].[Nombre total
+menage.Niveau_motorisation_Hierarchie].[Deux voitures]}, {[Measures].[Nombre total
 d'individus]})))) ON COLUMNS,
 NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs
 exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie
