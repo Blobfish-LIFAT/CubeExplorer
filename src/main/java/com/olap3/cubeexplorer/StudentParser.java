@@ -87,6 +87,9 @@ public class StudentParser {
         }
     }
 
+    /**
+     * Test code
+     */
     public static void main(String[] args) {
         List<Session> sessions = loadDir("data/studentSessions");
         System.out.println(sessions.get(0));

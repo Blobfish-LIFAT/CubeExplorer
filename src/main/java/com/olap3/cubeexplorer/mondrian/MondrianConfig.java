@@ -14,12 +14,22 @@ public class MondrianConfig {
     private static java.sql.Connection jdbcConnection;
     private static String defaultConfigFile = "data/olap.properties";
     private static Properties config = new Properties();
+    private static boolean initConf = false;
 
     public static String getURL(){
+        if (!initConf) {
+            try {
+                loadConfig();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return "jdbc:mondrian:" +
                 "Jdbc="+config.getProperty("jdbcUrl")+";" +
                 "JdbcDrivers="+config.getProperty("driver")+";" +
-                "Catalog=file:" + config.getProperty("schemaFile") + ";";
+                "Catalog=file:" + config.getProperty("schemaFile")
+                + ";JdbcUser=" + config.getProperty("jdbcUser")
+                + ";JdbcPassword=" + config.getProperty("jdbcPassword");
     }
 
     private static void initConnection() throws ClassNotFoundException, SQLException {
@@ -77,7 +87,7 @@ public class MondrianConfig {
         if (path == null) path = defaultConfigFile;
 
         config.load(new FileInputStream(new File(path)));
-
+        initConf = true;
     }
 
     /**

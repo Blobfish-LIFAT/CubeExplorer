@@ -14,6 +14,8 @@ import org.olap4j.OlapStatement;
 import org.olap4j.OlapWrapper;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,11 +25,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FrontEndFormatter {
-    public String buildJson(List<ECube> inputSession){
+    public static String buildJson(List<ECube> inputSession){
         return "{}";//TODO
     }
 
-    public String buildJson(Session session) throws SQLException{
+    public static String buildJson(Session session) throws SQLException{
         Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
         OlapWrapper wrapper = (OlapWrapper) connection;
         OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
@@ -53,5 +55,14 @@ public class FrontEndFormatter {
 
             return gson.toJson(response);
 
+    }
+
+    /**
+     * Test code
+     */
+    public static void main(String[] args) throws Exception{
+        List<Session> sessions = StudentParser.loadDir("data/studentSessions");
+        String testJson = buildJson(sessions.get(0));
+        Files.write(Paths.get("data/test/test_ses.json"), testJson.getBytes());
     }
 }

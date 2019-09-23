@@ -130,10 +130,15 @@ function submit_file() {
             var cells = []
             for (let i = 0; i < data.length; i++) { // Build row headers and data
                 var tr = document.createElement("tr");
-                for (let j = 0; j < rowHeaders[i].length; j++) { // Row headers
-                    const header = rowHeaders[i][j];
-                    var th = createTableHeaderCell("row", header.span, 0, header.name);
-                    tr.appendChild(th);
+                // Row headers
+                try {
+                    for (let j = 0; j < rowHeaders[i].length; j++) {
+                        const header = rowHeaders[i][j];
+                        var th = createTableHeaderCell("row", header.span, 0, header.name);
+                        tr.appendChild(th);
+                    }
+                }catch (e) {
+                    console.log(e);
                 }
                 var cellRow = []
                 for (let j = 0; j < data[i].length; j++) { // Data
