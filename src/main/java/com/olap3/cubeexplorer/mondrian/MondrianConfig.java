@@ -15,6 +15,13 @@ public class MondrianConfig {
     private static String defaultConfigFile = "data/olap.properties";
     private static Properties config = new Properties();
 
+    public static String getURL(){
+        return "jdbc:mondrian:" +
+                "Jdbc="+config.getProperty("jdbcUrl")+";" +
+                "JdbcDrivers="+config.getProperty("driver")+";" +
+                "Catalog=file:" + config.getProperty("schemaFile") + ";";
+    }
+
     private static void initConnection() throws ClassNotFoundException, SQLException {
         Class.forName(config.getProperty("driver"));
         Class.forName("mondrian.olap4j.MondrianOlap4jDriver");
