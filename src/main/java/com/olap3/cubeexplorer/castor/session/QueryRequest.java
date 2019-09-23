@@ -28,11 +28,17 @@ public class QueryRequest {
      */
     private BigInteger duration;
 
+    private String comments;
+
     public QueryRequest(int id, String query, Date datetime, BigInteger duration) {
         this.id = id;
         this.query = query;
         this.datetime = datetime;
         this.duration = duration;
+    }
+
+    public QueryRequest(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -67,4 +73,19 @@ public class QueryRequest {
         this.duration = duration;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryRequest{" +
+                "id=" + id +
+                ", query='" + query + '\'' +
+                '}';
+    }
 }

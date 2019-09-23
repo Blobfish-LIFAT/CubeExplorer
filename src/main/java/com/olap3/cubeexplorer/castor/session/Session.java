@@ -1,6 +1,7 @@
 package com.olap3.cubeexplorer.castor.session;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,6 +42,14 @@ public class Session {
         this.queries = queries;
     }
 
+    public Session(User user, String cube, String title, String comment) {
+        this.user = user;
+        this.cube = cube;
+        this.title = title;
+        this.comment = comment;
+        queries = new ArrayList<>();
+    }
+
     public User getUser() {
         return user;
     }
@@ -79,5 +88,16 @@ public class Session {
 
     public void setQueries(List<QueryRequest> queries) {
         this.queries = queries;
+    }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "user=" + user +
+                ", cube='" + cube + '\'' +
+                ", title='" + title + '\'' +
+                ", comment='" + comment + '\'' +
+                ", queries=" + queries +
+                '}';
     }
 }
