@@ -1,0 +1,78 @@
+{
+  "castorTableList": [
+    {
+      "query": "SELECT\nNON EMPTY {Hierarchize({{[Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Nombre de voitures des menages (min)], [Measures].[Nombre de voitures des menages (max)]}})} ON COLUMNS,\nNON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "data": [
+        [
+          3.0,
+          0.0,
+          0.3584576273206845
+        ],
+        [
+          3.0,
+          0.0,
+          0.7030148545920457
+        ],
+        [
+          3.0,
+          0.0,
+          0.8959805695678666
+        ]
+      ],
+      "rowHeaders": {
+        "name": "root",
+        "span": 3,
+        "isMeasure": false,
+        "children": [
+          {
+            "name": "Agriculteurs exploitants",
+            "span": 1,
+            "isMeasure": false,
+            "children": null
+          },
+          {
+            "name": "Employés",
+            "span": 1,
+            "isMeasure": false,
+            "children": null
+          },
+          {
+            "name": "Ouvriers",
+            "span": 1,
+            "isMeasure": false,
+            "children": null
+          }
+        ]
+      },
+      "columnHeaders": {
+        "name": "root",
+        "span": 3,
+        "isMeasure": false,
+        "children": [
+          {
+            "name": "Nombre de voitures des menages (max)",
+            "span": 1,
+            "isMeasure": true,
+            "children": null
+          },
+          {
+            "name": "Nombre de voitures des menages (min)",
+            "span": 1,
+            "isMeasure": true,
+            "children": null
+          },
+          {
+            "name": "Consommation carborant trajet domicile - travail (moyenne)",
+            "span": 1,
+            "isMeasure": true,
+            "children": null
+          }
+        ]
+      },
+      "highlightedCellPositions": null,
+      "significanceScores": null,
+      "surpriseScores": null,
+      "clusters": null
+    }
+  ]
+}

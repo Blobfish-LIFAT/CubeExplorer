@@ -1,5 +1,5 @@
 //Config
-const server_domain = "demo.alexscode.com";
+const server_domain = "olap.alexscode.com";
 
 // Activate tooltips
 $(function () {
@@ -22,12 +22,15 @@ function remote_load_show() {
 function submit_file() {
     const selectedFile = document.getElementById("input").files[0];
     var reader = new FileReader();
-    reader.onload = loadData;
+    reader.onload = function (e) {
+        loadData(e.target.result);
+    }
     reader.readAsText(selectedFile);
 }
 
 function submit_code() {
-    //TODO
+    const code = document.getElementById("input_id").value;
+    fileRequest(code, loadData, console.log)
 }
 
 
@@ -229,9 +232,9 @@ function copyTextToClipboard(text) {
     }
 }
 
-function elsaRequest(body, callback, errorCallback) {
+function fileRequest(code, callback, errorCallback) {
     // construct server url for API request
-    const url = "http://" + server_domain + "/api";
+    const url = "http://" + server_domain + "/ressources/data/" + code + ".json";
     let xhr = new XMLHttpRequest();
 
     // modify callback to be executed when request completes
@@ -244,15 +247,17 @@ function elsaRequest(body, callback, errorCallback) {
             errorCallback(xhr.responseText, xhr.status);
         }
     }
-    xhr.open('POST', url);
+    xhr.open('GET', url);
+    //xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+
     // function to be called on state change
     xhr.onreadystatechange = internCallback;
     // send request
-    xhr.send(body);
+    xhr.send();
 }
 
-function loadData(e){
-    castorTableList = JSON.parse(e.target.result).castorTableList;
+function loadData(raw){
+    castorTableList = JSON.parse(raw).castorTableList;
     var castorTableListDiv = document.getElementById("castor_table_list");
     while (castorTableListDiv.lastChild) {
         castorTableListDiv.removeChild(castorTableListDiv.lastChild);
