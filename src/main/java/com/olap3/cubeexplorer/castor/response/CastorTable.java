@@ -64,6 +64,8 @@ public class CastorTable {
      */
     private Integer[][] clusters;
 
+    private String explanation;
+
     public CastorTable(String query, Double[][] data, HeaderTree rowHeaders, HeaderTree columnHeaders, List<List<Integer>> highlightedCellPositions, Double[][] significanceScores, Double[][] surpriseScores) {
         this.query = query;
         this.data = data;
@@ -136,5 +138,13 @@ public class CastorTable {
 
     public void setSurpriseScores(Double[][] surpriseScores) {
         this.surpriseScores = surpriseScores;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 }

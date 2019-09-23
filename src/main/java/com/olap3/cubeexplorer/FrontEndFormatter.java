@@ -62,7 +62,8 @@ public class FrontEndFormatter {
      */
     public static void main(String[] args) throws Exception{
         List<Session> sessions = StudentParser.loadDir("data/studentSessions");
-        String testJson = buildJson(sessions.get(0));
+        //System.out.println(sessions.get(1));
+        String testJson = buildJson(sessions.get(1));
         Files.write(Paths.get("data/test/test_ses.json"), testJson.getBytes());
     }
 }

@@ -66,13 +66,18 @@ public class StudentParser {
                 }
 
             }
+            if (current != null) {
+                current.setComments(Future.join(comments, "\n"));
+                current.setQuery(Future.join(request, "\n"));
+                reqs.add(current);
+            }
 
         } catch (IOException e){
             System.err.printf("Error parsing student session '%s' !%n", path.toAbsolutePath().toString());
         }
 
 
-        return new Session(usr, "Cube1MobProInd", "", Future.join(sesComments, "\n"), reqs);
+        return new Session(usr, "Cube1MobProInd", path.getFileName().toString(), Future.join(sesComments, "\n"), reqs);
     }
 
     public static List<Session> loadDir(String path){

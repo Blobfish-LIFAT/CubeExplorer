@@ -1,3 +1,6 @@
+//Config
+const server_domain = "demo.alexscode.com";
+
 // Activate tooltips
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
@@ -11,163 +14,20 @@ function local_demo_show() {
     div.classList.remove("d-none");
 }
 
+function remote_load_show() {
+    var div = document.getElementById("remote-file");
+    div.classList.remove("d-none");
+}
+
 function submit_file() {
     const selectedFile = document.getElementById("input").files[0];
     var reader = new FileReader();
-
-    reader.onload = function (e) {
-        castorTableList = JSON.parse(e.target.result).castorTableList;
-        var castorTableListDiv = document.getElementById("castor_table_list");
-        while (castorTableListDiv.lastChild) {
-            castorTableListDiv.removeChild(castorTableListDiv.lastChild);
-        }
-        gTableList = [];
-
-        // For each query result
-        for (let id = 0; id < castorTableList.length; id++) {
-            const result = castorTableList[id];
-
-            var section = document.createElement("section"); // Create section
-            section.classList = "container-fluid mt-5";
-            section.id = "section" + id;
-            section.appendChild(document.createElement("hr"))
-
-            var b = document.createElement("b"); // Build id label
-            b.classList = "mr-3"
-            b.textContent = id;
-            section.appendChild(b);
-
-            // Build left group
-            var leftButtonGroupDiv = document.createElement("div");
-            leftButtonGroupDiv.classList = "btn-group btn-group-toggle";
-            leftButtonGroupDiv.setAttribute("data-toggle", "buttons");
-            var dataButton = document.createElement("label"); // Data button
-            dataButton.classList = "btn btn-outline-primary active";
-            dataButton.textContent = "Data";
-            dataButton.onclick = function () { changeTableState(id, "data"); };
-            var dataInput = document.createElement("input");
-            dataInput.type = "radio";
-            dataInput.autocomplete = "off";
-            dataInput.checked = true;
-            dataButton.appendChild(dataInput);
-            var significanceButton = document.createElement("label"); // Significance Button
-            significanceButton.classList = "btn btn-outline-success";
-            significanceButton.textContent = "Significance";
-            significanceButton.onclick = function () { changeTableState(id, "significance"); };
-            var significanceInput = document.createElement("input");
-            significanceInput.type = "radio";
-            significanceInput.autocomplete = "off";
-            significanceButton.appendChild(significanceInput);
-            var surpriseButton = document.createElement("label"); // Surprise Button
-            surpriseButton.classList = "btn btn-outline-danger";
-            surpriseButton.textContent = "Surprise";
-            surpriseButton.onclick = function () { changeTableState(id, "surprise"); };
-            var surpriseInput = document.createElement("input");
-            surpriseInput.type = "radio";
-            surpriseInput.autocomplete = "off";
-            surpriseButton.appendChild(surpriseInput);
-            var switchDiv = document.createElement("div");
-            switchDiv.classList = "custom-control custom-switch custom-control-inline ml-3";
-            var switchInput = document.createElement("input");
-            switchInput.type = "checkbox";
-            switchInput.classList = "custom-control-input";
-            switchInput.id = "section" + id + "-switch";
-            switchInput.onclick = function () { switchColor(id); }
-            var switchLabel = document.createElement("label");
-            switchLabel.classList = "custom-control-label";
-            switchLabel.setAttribute("for", "section" + id + "-switch");
-            switchLabel.textContent = "Show clusters";
-            switchDiv.appendChild(switchInput);
-            switchDiv.appendChild(switchLabel);
-            leftButtonGroupDiv.appendChild(dataButton)
-            leftButtonGroupDiv.appendChild(significanceButton)
-            leftButtonGroupDiv.appendChild(surpriseButton)
-
-            section.appendChild(leftButtonGroupDiv);
-            section.appendChild(switchDiv);
-
-
-            // Build right button group
-            var rightGroupDiv = document.createElement("div");
-            rightGroupDiv.classList = "float-right";
-            var copyButton = document.createElement("button");
-            copyButton.classList = "btn btn-secondary";
-            copyButton.setAttribute("data-toggle", "tooltip");
-            copyButton.setAttribute("data-placement", "left");
-            copyButton.title = "Copy query to clipboard";
-            copyButton.onclick = function () { copyTextToClipboard(result.query); };
-            var span = document.createElement("span");
-            span.classList = "oi oi-clipboard";
-            copyButton.appendChild(span);
-            rightGroupDiv.appendChild(copyButton);
-            section.appendChild(rightGroupDiv);
-
-            var tableObj = {
-                state: "data"
-            };
-            // Build table
-            var table = document.createElement("table");
-            table.classList = "table table-sm table-bordered my-3";
-            var tbody = document.createElement("tbody");
-            var rowHeaders = buildHeaderList(result["rowHeaders"], "row", true);
-            var columnHeaders = buildHeaderList(result["columnHeaders"], "column", true);
-            var data = result["data"];
-            var highlightedPositionList = result["highlightedCellPositions"]; // FIXME: Normalize name
-
-            for (let i = 0; i < columnHeaders.length; i++) { // Build column headers
-                var tr = document.createElement("tr");
-                if (!i) {
-                    var th = createTableHeaderCell("col", getDepth(result["columnHeaders"]), getDepth(result["rowHeaders"]), "###");
-                    tr.appendChild(th);
-                }
-                for (let j = 0; j < columnHeaders[i].length; j++) {
-                    const header = columnHeaders[i][j];
-                    var th = createTableHeaderCell("col", 0, header.span, header.name);
-                    tr.appendChild(th);
-                }
-                tbody.appendChild(tr);
-            }
-            var cells = []
-            for (let i = 0; i < data.length; i++) { // Build row headers and data
-                var tr = document.createElement("tr");
-                // Row headers
-                try {
-                    for (let j = 0; j < rowHeaders[i].length; j++) {
-                        const header = rowHeaders[i][j];
-                        var th = createTableHeaderCell("row", header.span, 0, header.name);
-                        tr.appendChild(th);
-                    }
-                }catch (e) {
-                    console.log(e);
-                }
-                var cellRow = []
-                for (let j = 0; j < data[i].length; j++) { // Data
-                    var td = document.createElement("td");
-                    cellRow.push(td);
-                    if (data[i][j]) {
-                        td.textContent = +data[i][j].toFixed(2);
-                        if (highlightedPositionList && isPositionInList([i, j], highlightedPositionList)) {
-                            td.classList = "text-bold text-primary";
-                        }
-                    }
-                    tr.appendChild(td);
-                }
-                tbody.append(tr);
-                cells.push(cellRow);
-
-            }
-            table.appendChild(tbody);
-            section.appendChild(table);
-            tableObj.cells = cells;
-            gTableList.push(tableObj);
-
-            castorTableListDiv.appendChild(section);
-        }
-        //Activate tootips
-        $('[data-toggle="tooltip"]').tooltip()
-    }
-
+    reader.onload = loadData;
     reader.readAsText(selectedFile);
+}
+
+function submit_code() {
+    //TODO
 }
 
 
@@ -356,6 +216,7 @@ function fallbackCopyTextToClipboard(text) {
 
     document.body.removeChild(textArea);
 }
+
 function copyTextToClipboard(text) {
     if (!navigator.clipboard) {
         fallbackCopyTextToClipboard(text);
@@ -366,4 +227,178 @@ function copyTextToClipboard(text) {
             console.error('Async: Could not copy text: ', err);
         });
     }
+}
+
+function elsaRequest(body, callback, errorCallback) {
+    // construct server url for API request
+    const url = "http://" + server_domain + "/api";
+    let xhr = new XMLHttpRequest();
+
+    // modify callback to be executed when request completes
+    function internCallback() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            callback(xhr.responseText);
+        }
+        // if request fails (eg: network error)
+        else if (xhr.readyState === 4 && typeof errorCallback !== 'undefined') {
+            errorCallback(xhr.responseText, xhr.status);
+        }
+    }
+    xhr.open('POST', url);
+    // function to be called on state change
+    xhr.onreadystatechange = internCallback;
+    // send request
+    xhr.send(body);
+}
+
+function loadData(e){
+    castorTableList = JSON.parse(e.target.result).castorTableList;
+    var castorTableListDiv = document.getElementById("castor_table_list");
+    while (castorTableListDiv.lastChild) {
+        castorTableListDiv.removeChild(castorTableListDiv.lastChild);
+    }
+    gTableList = [];
+
+    // For each query result
+    for (let id = 0; id < castorTableList.length; id++) {
+        const result = castorTableList[id];
+
+        var section = document.createElement("section"); // Create section
+        section.classList = "container-fluid mt-5";
+        section.id = "section" + id;
+        section.appendChild(document.createElement("hr"))
+
+        var b = document.createElement("b"); // Build id label
+        b.classList = "mr-3"
+        b.textContent = id;
+        section.appendChild(b);
+
+        // Build left group
+        var leftButtonGroupDiv = document.createElement("div");
+        leftButtonGroupDiv.classList = "btn-group btn-group-toggle";
+        leftButtonGroupDiv.setAttribute("data-toggle", "buttons");
+        var dataButton = document.createElement("label"); // Data button
+        dataButton.classList = "btn btn-outline-primary active";
+        dataButton.textContent = "Data";
+        dataButton.onclick = function () { changeTableState(id, "data"); };
+        var dataInput = document.createElement("input");
+        dataInput.type = "radio";
+        dataInput.autocomplete = "off";
+        dataInput.checked = true;
+        dataButton.appendChild(dataInput);
+        var significanceButton = document.createElement("label"); // Significance Button
+        significanceButton.classList = "btn btn-outline-success";
+        significanceButton.textContent = "Significance";
+        significanceButton.onclick = function () { changeTableState(id, "significance"); };
+        var significanceInput = document.createElement("input");
+        significanceInput.type = "radio";
+        significanceInput.autocomplete = "off";
+        significanceButton.appendChild(significanceInput);
+        var surpriseButton = document.createElement("label"); // Surprise Button
+        surpriseButton.classList = "btn btn-outline-danger";
+        surpriseButton.textContent = "Surprise";
+        surpriseButton.onclick = function () { changeTableState(id, "surprise"); };
+        var surpriseInput = document.createElement("input");
+        surpriseInput.type = "radio";
+        surpriseInput.autocomplete = "off";
+        surpriseButton.appendChild(surpriseInput);
+        var switchDiv = document.createElement("div");
+        switchDiv.classList = "custom-control custom-switch custom-control-inline ml-3";
+        var switchInput = document.createElement("input");
+        switchInput.type = "checkbox";
+        switchInput.classList = "custom-control-input";
+        switchInput.id = "section" + id + "-switch";
+        switchInput.onclick = function () { switchColor(id); }
+        var switchLabel = document.createElement("label");
+        switchLabel.classList = "custom-control-label";
+        switchLabel.setAttribute("for", "section" + id + "-switch");
+        switchLabel.textContent = "Show clusters";
+        switchDiv.appendChild(switchInput);
+        switchDiv.appendChild(switchLabel);
+        leftButtonGroupDiv.appendChild(dataButton)
+        leftButtonGroupDiv.appendChild(significanceButton)
+        leftButtonGroupDiv.appendChild(surpriseButton)
+
+        section.appendChild(leftButtonGroupDiv);
+        section.appendChild(switchDiv);
+
+
+        // Build right button group
+        var rightGroupDiv = document.createElement("div");
+        rightGroupDiv.classList = "float-right";
+        var copyButton = document.createElement("button");
+        copyButton.classList = "btn btn-secondary";
+        copyButton.setAttribute("data-toggle", "tooltip");
+        copyButton.setAttribute("data-placement", "left");
+        copyButton.title = "Copy query to clipboard";
+        copyButton.onclick = function () { copyTextToClipboard(result.query); };
+        var span = document.createElement("span");
+        span.classList = "oi oi-clipboard";
+        copyButton.appendChild(span);
+        rightGroupDiv.appendChild(copyButton);
+        section.appendChild(rightGroupDiv);
+
+        var tableObj = {
+            state: "data"
+        };
+        // Build table
+        var table = document.createElement("table");
+        table.classList = "table table-sm table-bordered my-3";
+        var tbody = document.createElement("tbody");
+        var rowHeaders = buildHeaderList(result["rowHeaders"], "row", true);
+        var columnHeaders = buildHeaderList(result["columnHeaders"], "column", true);
+        var data = result["data"];
+        var highlightedPositionList = result["highlightedCellPositions"]; // FIXME: Normalize name
+
+        for (let i = 0; i < columnHeaders.length; i++) { // Build column headers
+            var tr = document.createElement("tr");
+            if (!i) {
+                var th = createTableHeaderCell("col", getDepth(result["columnHeaders"]), getDepth(result["rowHeaders"]), "###");
+                tr.appendChild(th);
+            }
+            for (let j = 0; j < columnHeaders[i].length; j++) {
+                const header = columnHeaders[i][j];
+                var th = createTableHeaderCell("col", 0, header.span, header.name);
+                tr.appendChild(th);
+            }
+            tbody.appendChild(tr);
+        }
+        var cells = []
+        for (let i = 0; i < data.length; i++) { // Build row headers and data
+            var tr = document.createElement("tr");
+            // Row headers
+            try {
+                for (let j = 0; j < rowHeaders[i].length; j++) {
+                    const header = rowHeaders[i][j];
+                    var th = createTableHeaderCell("row", header.span, 0, header.name);
+                    tr.appendChild(th);
+                }
+            }catch (e) {
+                console.log(e);
+            }
+            var cellRow = []
+            for (let j = 0; j < data[i].length; j++) { // Data
+                var td = document.createElement("td");
+                cellRow.push(td);
+                if (data[i][j]) {
+                    td.textContent = +data[i][j].toFixed(2);
+                    if (highlightedPositionList && isPositionInList([i, j], highlightedPositionList)) {
+                        td.classList = "text-bold text-primary";
+                    }
+                }
+                tr.appendChild(td);
+            }
+            tbody.append(tr);
+            cells.push(cellRow);
+
+        }
+        table.appendChild(tbody);
+        section.appendChild(table);
+        tableObj.cells = cells;
+        gTableList.push(tableObj);
+
+        castorTableListDiv.appendChild(section);
+    }
+    //Activate tootips
+    $('[data-toggle="tooltip"]').tooltip()
 }

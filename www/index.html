@@ -12,12 +12,13 @@
 
 <body>
     <div class="container text-center my-2">
-        <h1 class="display-3">CASTOR</h1>
-        <h4 class="text-muted mb-3">Automatic Storytelling for OLAP</h4>
-        <button type="button" class="btn btn-outline-primary" onclick="local_demo_show()">Local Demo</button>
-        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Not Available yet"
-            data-placement="right">
-            <button type="button" class="btn btn-outline-secondary" style="pointer-events: none;" disabled>Connect</button>
+        <h1 class="display-3">Cube Explorer</h1>
+        <h4 class="text-muted mb-3">A Narrative Engine for OLAP cubes</h4>
+        <p>Etude utilisateur du 1er Octobre 2019</p>
+        <button type="button" class="btn btn-outline-primary" onclick="local_demo_show()">Charger Fichier</button>
+
+        <span class="d-inline-block" tabindex="0"  data-placement="right">
+            <button type="button" class="btn btn-outline-primary" onclick="remote_load_show()">Ouvrir Session</button>
         </span>
     </div>
 
@@ -31,8 +32,23 @@
                 <button type="button" class="btn btn-primary" onclick="submit_file()">Submit</button>
             </form>
         </div>
-        <div id="castor_table_list"></div>
+        <!--<div id="castor_table_list"></div>-->
     </div>
+
+    <div id="remote-file" class="d-none">
+        <div class="container my-2">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Entrez le code de session</label>
+                    <input type="text" class="form-control-file" id="input_id">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submit_code()">Submit</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="castor_table_list"></div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
