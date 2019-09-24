@@ -6,9 +6,6 @@ import com.olap3.cubeexplorer.ECube;
 public abstract class InfoCollector {
     DataAccessor dataSource;
     MLModel model;
-    //Set<ProjectionFragment> dimensions;
-    //Set<MeasureFragment> measures;
-    //Set<SelectionFragment> selections;
 
 
     // We will decompose the intentional query as query parts to express the "subcube"
@@ -16,7 +13,11 @@ public abstract class InfoCollector {
 
     }
 
-    public abstract int timeEstimate();
-    public abstract int realTime();
+    public  int estimatedTime(){
+        return dataSource.aprioriTime() + model.aprioriTime();
+    }
+    public int realTime(){
+        return dataSource.aposterioriTime() + model.aposterioriTime();
+    }
     public abstract ECube execute();
 }

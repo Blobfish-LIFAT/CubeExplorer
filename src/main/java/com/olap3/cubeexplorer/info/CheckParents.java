@@ -17,16 +17,6 @@ public class CheckParents extends InfoCollector {
     }
 
     @Override
-    public int timeEstimate() {
-        return 0;
-    }
-
-    @Override
-    public int realTime() {
-        return 0;
-    }
-
-    @Override
     public ECube execute() {
         return null;
     }
