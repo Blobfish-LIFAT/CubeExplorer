@@ -24,7 +24,7 @@ public class AutoCube {
 
     public List<ECube> answer(IntentionalQuery q){
 
-
+        /*
         List<ExecutionPlan> possiblePlans = optimizer.genPlans(q);
 
         // TODO choose one maybe ....
@@ -34,6 +34,8 @@ public class AutoCube {
 
 
         return result;
+        */
+        return null;
     }
 
     /**

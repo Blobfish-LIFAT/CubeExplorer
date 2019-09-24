@@ -9,10 +9,7 @@ public class Optimizer {
     BudgetManager manager;
     PlanGenerator generator;
 
-    public List<ExecutionPlan> genPlans(IntentionalQuery q){
-        //TODO
-        return null;
-    }
+
 
 
 }

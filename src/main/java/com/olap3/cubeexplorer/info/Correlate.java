@@ -7,17 +7,6 @@ import java.util.Set;
 
 public class Correlate extends InfoCollector{
 
-
-    @Override
-    public int timeEstimate() {
-        return 0;
-    }
-
-    @Override
-    public int realTime() {
-        return 0;
-    }
-
     @Override
     public ECube execute() {
         return null;

@@ -1,7 +1,9 @@
 package com.olap3.cubeexplorer.optimize;
 
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.info.InfoCollector;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +19,7 @@ public class KnapsackManager implements BudgetManager {
     }
 
     @Override
-    public Set<InfoCollector> findPossibleSet(List<InfoCollector> candidates, int timeBudget) {
+    public ExecutionPlan findPossibleSet(List<InfoCollector> candidates, int timeBudget) {
         int n = candidates.size();
         int value[] = new int[n];
         int weight[] = new int[n];
@@ -26,7 +28,7 @@ public class KnapsackManager implements BudgetManager {
         int i1 = 0;
         for (InfoCollector ic : candidates) {
             value[i1] = (int) Math.round(metric.rate(ic) * res); //discretization might need something smart
-            weight[i1] = ic.timeEstimate();
+            weight[i1] = ic.estimatedTime();
         }
 
         // Source for the FPTAS algorithm https://github.com/hzxie/Algorithm
@@ -53,7 +55,9 @@ public class KnapsackManager implements BudgetManager {
                 solution.add(candidates.get(i));
         }
 
-        return solution;
+        var result = new ExecutionPlan();
+        result.setOperations(new ArrayList<>(solution));//FIXME order ....
+        return result;
     }
 
 

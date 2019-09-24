@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.optimize;
 
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.info.InfoCollector;
 
 import java.util.*;
@@ -12,11 +13,10 @@ public interface BudgetManager {
      * @param timeBudget
      * @return
      */
-    public Set<InfoCollector> findPossibleSet(List<InfoCollector> candidates, int timeBudget);
+    public ExecutionPlan findPossibleSet(List<InfoCollector> candidates, int timeBudget);
 
 
 
-    // TODO
     /**
      * Given an existing solution and a search space of info collectors find all equivalent solution by swapping 'identical'
      * items in the solution.
