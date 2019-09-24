@@ -3,6 +3,7 @@ package com.olap3.cubeexplorer.info;
 import com.olap3.cubeexplorer.ECube;
 import com.olap3.cubeexplorer.julien.*;
 
+import javax.management.loading.MLet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,24 +31,25 @@ public class CheckParents extends InfoCollector {
         return null;
     }
 
-    //TODO change interface to return pairs
-    public static List<CheckParents> build(Set<ProjectionFragment> dims, Set<MeasureFragment> measures, Set<SelectionFragment> selections){
+    public static List<CheckParents> build(Qfset q, List<String> models){
         List<CheckParents> possibleICs = new ArrayList<>();
 
         // We will check all hierarchies for possible parents
-        for (ProjectionFragment f : dims){
+        for (ProjectionFragment f : q.getAttributes()){
             ProjectionFragment p  = ProjectionFragment.newInstance(f.getLevel().getParentLevel());
 
-            HashSet<ProjectionFragment> tmp = new HashSet<>(dims);
+            HashSet<ProjectionFragment> tmp = new HashSet<>(q.getAttributes());
             tmp.remove(f);
             tmp.add(p);
 
-            Qfset query = new Qfset(tmp, new HashSet<>(selections), new HashSet<>(measures));
+            Qfset query = new Qfset(tmp, new HashSet<>(q.getSelectionPredicates()), new HashSet<>(q.getMeasures()));
             MDXAccessor src = new MDXAccessor(query);
 
-            CheckParents cp = new CheckParents(src, null);//TODO generate ML models
-
-            possibleICs.add(cp);
+            for (String alg : models) {
+                var ml = MLModelFactory.newInstance(alg);
+                CheckParents cp = new CheckParents(src, ml);
+                possibleICs.add(cp);
+            }
         }
 
 

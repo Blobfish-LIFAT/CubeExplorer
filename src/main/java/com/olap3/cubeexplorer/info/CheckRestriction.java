@@ -1,10 +1,8 @@
 package com.olap3.cubeexplorer.info;
 
 import com.olap3.cubeexplorer.ECube;
-import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
-import com.olap3.cubeexplorer.julien.SelectionFragment;
 import mondrian.olap.Level;
 
 import java.util.ArrayList;
@@ -36,16 +34,21 @@ public class CheckRestriction extends InfoCollector {
         return null;
     }
 
-    public static List<CheckRestriction> build(Set<ProjectionFragment> dims, Set<MeasureFragment> measures, Set<SelectionFragment> selections){
+    public static List<CheckRestriction> build(Qfset q, List<String> models){
         List<CheckRestriction> possibleICs = new ArrayList<>();
 
-        for (var sf : selections){
+        for (var sf : q.getAttributes()){
             Level target = sf.getLevel().getChildLevel();
-            var tmp = new HashSet<>(dims);
+            var tmp = new HashSet<>(q.getAttributes());
             tmp.add(new ProjectionFragment(target));
 
-            Qfset q = new Qfset(tmp, new HashSet<>(), new HashSet<>(measures));
-            possibleICs.add(new CheckRestriction(new MDXAccessor(q), null));//TODO missing ml stuff
+            Qfset req = new Qfset(tmp, new HashSet<>(), new HashSet<>(q.getMeasures()));
+            var da = new MDXAccessor(req);
+            for (String model : models){
+                var ml = MLModelFactory.newInstance(model);
+                possibleICs.add(new CheckRestriction(da, ml));
+            }
+
         }
 
         return possibleICs;

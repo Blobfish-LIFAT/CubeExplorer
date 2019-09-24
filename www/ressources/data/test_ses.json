@@ -72,7 +72,8 @@
       "highlightedCellPositions": null,
       "significanceScores": null,
       "surpriseScores": null,
-      "clusters": null
+      "clusters": null,
+      "explanation": " Remarque : Les ouvriers consomment beaucoup plus de carburant que les employés et les agriculteurs."
     }
   ]
 }

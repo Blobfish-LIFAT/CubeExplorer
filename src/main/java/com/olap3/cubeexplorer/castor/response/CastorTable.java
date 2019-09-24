@@ -15,8 +15,7 @@ import java.util.List;
 public class CastorTable {
 
     /**
-     * MDX query that produce the result (in {@link AlgorithmOne#compute(CellSet, CellSet) AlgorithmOne.compute(&hellip)}
-     * it's the query that have produced cellSetNew).
+     * MDX query that produce the result
      */
     private String query;
 

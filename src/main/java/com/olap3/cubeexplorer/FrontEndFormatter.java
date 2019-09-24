@@ -47,7 +47,7 @@ public class FrontEndFormatter {
             for (QueryRequest request : session.getQueries()) {
                 CellSet cellSet = new CellSet(statement.executeOlapQuery(request.getQuery()));
                 CastorTable castorTable = new CastorTable(request.getQuery(), cellSet.getData(), cellSet.getHeaderTree(Axis.ROWS.axisOrdinal()), cellSet.getHeaderTree(Axis.COLUMNS.axisOrdinal()), null, null, null);
-
+                castorTable.setExplanation(request.getComments());
                 castorTableList.add(castorTable);
                 oldCellset = cellSet;
             }

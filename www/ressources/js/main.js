@@ -4,7 +4,7 @@ const server_domain = "olap.alexscode.com";
 // Activate tooltips
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
-})
+});
 
 gTableList = [];
 
@@ -271,12 +271,19 @@ function loadData(raw){
         var section = document.createElement("section"); // Create section
         section.classList = "container-fluid mt-5";
         section.id = "section" + id;
-        section.appendChild(document.createElement("hr"))
+        section.appendChild(document.createElement("hr"));
 
         var b = document.createElement("b"); // Build id label
-        b.classList = "mr-3"
-        b.textContent = id;
+        b.classList = "mr-3";
+        b.textContent = "Query " + id;//id;
         section.appendChild(b);
+
+        // Add comments
+        if (result.explanation) {
+            let explanation = document.createElement("div");
+            explanation.textContent = result.explanation;
+            section.appendChild(explanation);
+        }
 
         // Build left group
         var leftButtonGroupDiv = document.createElement("div");
@@ -358,7 +365,7 @@ function loadData(raw){
         for (let i = 0; i < columnHeaders.length; i++) { // Build column headers
             var tr = document.createElement("tr");
             if (!i) {
-                var th = createTableHeaderCell("col", getDepth(result["columnHeaders"]), getDepth(result["rowHeaders"]), "###");
+                var th = createTableHeaderCell("col", getDepth(result["columnHeaders"]), getDepth(result["rowHeaders"]), "___");
                 tr.appendChild(th);
             }
             for (let j = 0; j < columnHeaders[i].length; j++) {
