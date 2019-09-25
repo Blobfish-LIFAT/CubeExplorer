@@ -13,7 +13,7 @@ public interface BudgetManager {
      * @param timeBudget
      * @return
      */
-    public ExecutionPlan findPossibleSet(List<InfoCollector> candidates, int timeBudget);
+    public ExecutionPlan findBestPlan(List<InfoCollector> candidates, int timeBudget);
 
 
 

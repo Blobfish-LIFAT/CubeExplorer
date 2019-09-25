@@ -1,9 +1,4 @@
-﻿
---Besoin
--- Expliquer la consommation moyenne de carburant et le nombre de voitures des
-ménages pour les Agriculteurs, Ouvriers, Employés
-
-
+﻿--Besoin: Expliquer la consommation moyenne de carburant et le nombre de voitures des ménages pour les Agriculteurs, Ouvriers, Employés
 
 --1
 SELECT
@@ -16,14 +11,14 @@ socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS
 FROM [Cube1MobProInd]
 
 -- Pertinente : Cette requête montre l'écart qu’il y a surtout entre les agriculteurs et les autres
-catégories au niveau de la consommation moyenne de carburant.On peut voir que les ouvriers et
-employés ont des consommations respectivement de 0,90 et 0,70 et les agriculteurs ont une
-consommation moyenne plus faible de 0,36.
-Le nombre moyen de voitures par ménage est sensiblement le même chez les trois catégories
-professionnelles(1,63,1,70 et 1,71) chez les agriculteurs, employés et ouvriers.
- Mais le nombre de moins élevé d'agriculteurs environ 12 fois moins élevé que les deux autres
-catégories fait qu'on ne peut établir de conclusion immédiate car les proportions ne sont pas les
-mêmes , d'autres associations de dimensions et de mesures nous renseignerons davantage.
+--catégories au niveau de la consommation moyenne de carburant.On peut voir que les ouvriers et
+--employés ont des consommations respectivement de 0,90 et 0,70 et les agriculteurs ont une
+--consommation moyenne plus faible de 0,36.
+--Le nombre moyen de voitures par ménage est sensiblement le même chez les trois catégories
+--professionnelles(1,63,1,70 et 1,71) chez les agriculteurs, employés et ouvriers.
+-- Mais le nombre de moins élevé d'agriculteurs environ 12 fois moins élevé que les deux autres
+--catégories fait qu'on ne peut établir de conclusion immédiate car les proportions ne sont pas les
+--mêmes , d'autres associations de dimensions et de mesures nous renseignerons davantage.
 
 
 --2
@@ -44,25 +39,22 @@ travail.CNELOCC_Hierarchie_administrative].[Departement].Members))))) ON ROWS
 FROM [Cube1MobProInd]
 
 --Pertinente: La requête répartit les 3 catégories professionnelles selon leur département de
-résidence et leur département de travail.Pour les agriculteurs presque 98% qui vivent en Loir-et-
-Cher y travaillent. Pour les employés c'est 89% et enfin pour les ouvriers on a 85% ce qui nous
-donne une idée sur le fait que les agriculteurs sont les premiers à ne pas effectuer de longs trajets
-domicile-travail , ce qui justifie leur plus faible consommation parmi les trois catégories.
+--résidence et leur département de travail.Pour les agriculteurs presque 98% qui vivent en Loir-et-
+--Cher y travaillent. Pour les employés c'est 89% et enfin pour les ouvriers on a 85% ce qui nous
+--donne une idée sur le fait que les agriculteurs sont les premiers à ne pas effectuer de longs trajets
+--domicile-travail , ce qui justifie leur plus faible consommation parmi les trois catégories.
 
 --3
-NON EMPTY {Hierarchize({{[Measures].[Nombre de voitures des menages (moyenne)],
-[Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Duree trajet
-domicile - travail (max)], [Measures].[Distance trajet domicile - travail (max)]}})} ON
+SELECT NON EMPTY {Hierarchize({{[Measures].[Nombre de voitures des menages (moyenne)],
+[Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (max)]}})} ON
 COLUMNS,
-NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs
-exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie
-socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS
+NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS
 FROM [Cube1MobProInd]
 
 -- Pertinente: la mesure durée de trajet maximale domicile-travail vient appuyer la tendance de
-la consommation de carburant plus élevée chez les ouvriers et les employés que chez les
-agriculteurs.En effet au moment où la durée maximale chez les agriculteurs est de 900, elle est de
-6617,32 chez les employés et 9506,74 chez les ouvriers.
+--la consommation de carburant plus élevée chez les ouvriers et les employés que chez les
+--agriculteurs.En effet au moment où la durée maximale chez les agriculteurs est de 900, elle est de
+--6617,32 chez les employés et 9506,74 chez les ouvriers.
 
 --4
 
@@ -107,10 +99,10 @@ exploitants], [Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés], [Ca
 socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}})} ON ROWS
 FROM [Cube1MobProInd]
 
-–- Pertinente: Cette requête nous permet de nous rendre compte que chez les trois catégories ,les
-familles composées d'un couple avec deux voitures ou trois voitures ou plus sont les plus
-représentées par une majorité , ce qui pourrait expliquer les chiffres assez proches trouvés pour le
-nombre moyen de voitures à la requête 1.
+-- Pertinente: Cette requête nous permet de nous rendre compte que chez les trois catégories ,les
+--familles composées d'un couple avec deux voitures ou trois voitures ou plus sont les plus
+--représentées par une majorité , ce qui pourrait expliquer les chiffres assez proches trouvés pour le
+--nombre moyen de voitures à la requête 1.
 
 --6
 SELECT
@@ -124,8 +116,8 @@ NON EMPTY {Hierarchize({{[Categorie socioprofessionnelle.CSP_Hierarchie_1].
 FROM [Cube1MobProInd]
 
 -- Assez pertinente:Pour en revenir à la consommation moyenne de carburant , on se rend compte
-qu'au niveau de la distance maximale les trois catégories professionnelles sont quasi au même
-niveau mais dès lors que la mesure de la distance moyenne est évaluée les agriculteurs ont une
-distance moyenne deux fois moins importante que les deux autres catégories . Combiné à ce que
-nous avons expliqué par rapport à la durée du trajet , ça confirme les résultats de la 1ère requête
-mais aussi sur les explications précédentes.
+--qu'au niveau de la distance maximale les trois catégories professionnelles sont quasi au même
+--niveau mais dès lors que la mesure de la distance moyenne est évaluée les agriculteurs ont une
+--distance moyenne deux fois moins importante que les deux autres catégories . Combiné à ce que
+--nous avons expliqué par rapport à la durée du trajet , ça confirme les résultats de la 1ère requête
+--mais aussi sur les explications précédentes.

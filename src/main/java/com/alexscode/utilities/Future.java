@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Reimplementation of useful methods from next versions of java
@@ -29,8 +31,36 @@ public final class Future {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < strings.size(); i++) {
             sb.append(strings.get(i));
-            if (i != strings.size() - 1)
+            if (i != strings.size() - 1) {
                 sb.append(separator);
+            }
+        }
+        return sb.toString();
+    }
+
+    static final String accentedCharacters = "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ";
+    private static final Pattern cutMeas = Pattern.compile("[\\w \\-"+accentedCharacters+"]*");
+    static String[] split = new String[]{"], \\[", "]\\.\\[", ", \\[", "\\(\\[", "\\{\\["};
+    public static String joinMDX(List<String> strings){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strings.size(); i++) {
+            String line = strings.get(i);
+            sb.append(line);
+            if (i != strings.size() - 1) {
+                boolean doSpace = false;
+                for (String sp : split){
+                    var test = line.split(sp);
+                    var m = cutMeas.matcher(test[test.length-1]);
+                    if (m.matches()) {
+                        doSpace = true;
+                        break;
+                    }
+                }
+                if (doSpace)
+                    sb.append(" ");
+                else
+                    sb.append("\n");
+            }
         }
         return sb.toString();
     }

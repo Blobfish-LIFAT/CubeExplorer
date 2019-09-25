@@ -23,7 +23,7 @@ NON EMPTY Order(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale
 FROM [Cube1MobProInd]
 
 --Dans la communauté Agglopolys on remarque la distance moyenne parcouru avec les différents moyens de transport par les hommes et femmes sont similaire 
-Dans la communauté Agglopolys, la distance moyenne parcouru par les hommes et les femmes en utilisant différent moyens de transport, sont à peu près identique avec un écart-type maximum de 0.210 km et un minimum 0.030 km
+--Dans la communauté Agglopolys, la distance moyenne parcouru par les hommes et les femmes en utilisant différent moyens de transport, sont à peu près identique avec un écart-type maximum de 0.210 km et un minimum 0.030 km
 
 --4
 SELECT

@@ -8,6 +8,7 @@ import com.olap3.cubeexplorer.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.castor.session.Session;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.olap.CellSet;
+import mondrian.parser.TokenMgrError;
 import org.olap4j.Axis;
 import org.olap4j.OlapConnection;
 import org.olap4j.OlapStatement;
@@ -22,6 +23,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class FrontEndFormatter {
@@ -43,13 +45,11 @@ public class FrontEndFormatter {
             List<CastorTable> castorTableList = new ArrayList<>();
 
 
-            CellSet oldCellset = null;
             for (QueryRequest request : session.getQueries()) {
                 CellSet cellSet = new CellSet(statement.executeOlapQuery(request.getQuery()));
                 CastorTable castorTable = new CastorTable(request.getQuery(), cellSet.getData(), cellSet.getHeaderTree(Axis.ROWS.axisOrdinal()), cellSet.getHeaderTree(Axis.COLUMNS.axisOrdinal()), null, null, null);
                 castorTable.setExplanation(request.getComments());
                 castorTableList.add(castorTable);
-                oldCellset = cellSet;
             }
             response = new CastorJsonResponse(castorTableList);
 
@@ -62,8 +62,19 @@ public class FrontEndFormatter {
      */
     public static void main(String[] args) throws Exception{
         List<Session> sessions = StudentParser.loadDir("data/studentSessions");
-        //System.out.println(sessions.get(1));
-        String testJson = buildJson(sessions.get(1));
-        Files.write(Paths.get("data/test/test_ses.json"), testJson.getBytes());
+        sessions.sort(Comparator.comparing(session -> session.getTitle()));
+
+        for (int i = 0; i < sessions.size(); i++) {
+            try {
+                String testJson = buildJson(sessions.get(i));
+                Files.write(Paths.get("data/test/K"+(char)(65+i)+"H.json"), testJson.getBytes());
+            } catch (Exception e){
+                System.err.printf("Error in file '%s'%n", sessions.get(i).getTitle());
+            } catch (TokenMgrError err){
+                System.err.printf("Error in file '%s'%n", sessions.get(i).getTitle());
+            }
+
+        }
+
     }
 }

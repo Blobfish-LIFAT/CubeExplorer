@@ -21,6 +21,11 @@ public class StudentParser {
     static Pattern rqNumber = Pattern.compile("--(\\d)");
 
 
+    public static Session loadFile(String path){
+        return loadFile(Paths.get(path));
+    }
+
+
     public static Session loadFile(Path path){
         var fname = path.getFileName().toString().replace(".txt", "").split("-");
         var usr = new User(fname[1], fname[1], fname[0]);
@@ -47,7 +52,7 @@ public class StudentParser {
                     if (nbMatch.matches()) {
                         if (!start){
                             current.setComments(Future.join(comments, "\n"));
-                            current.setQuery(Future.join(request, "\n"));
+                            current.setQuery(Future.joinMDX(request));
                             reqs.add(current);
                         }
                         start = false;
@@ -68,7 +73,7 @@ public class StudentParser {
             }
             if (current != null) {
                 current.setComments(Future.join(comments, "\n"));
-                current.setQuery(Future.join(request, "\n"));
+                current.setQuery(Future.joinMDX(request));
                 reqs.add(current);
             }
 
@@ -95,8 +100,12 @@ public class StudentParser {
     /**
      * Test code
      */
-    public static void main(String[] args) {
-        List<Session> sessions = loadDir("data/studentSessions");
-        System.out.println(sessions.get(0));
+    public static void main(String[] args) throws Exception{
+        Session session = loadFile("data/studentSessions/2-08.txt");
+        for (var q : session.getQueries()){
+            System.out.println("--- Query ---");
+            System.out.println(q.getQuery());
+        }
+        FrontEndFormatter.buildJson(session);
     }
 }

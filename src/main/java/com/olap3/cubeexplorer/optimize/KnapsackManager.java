@@ -19,7 +19,7 @@ public class KnapsackManager implements BudgetManager {
     }
 
     @Override
-    public ExecutionPlan findPossibleSet(List<InfoCollector> candidates, int timeBudget) {
+    public ExecutionPlan findBestPlan(List<InfoCollector> candidates, int timeBudget) {
         int n = candidates.size();
         int value[] = new int[n];
         int weight[] = new int[n];
