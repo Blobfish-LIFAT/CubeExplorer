@@ -66,12 +66,13 @@ public class FrontEndFormatter {
 
         for (int i = 0; i < sessions.size(); i++) {
             try {
+                System.out.printf("Parsing file '%s' session is %d queries.%n", sessions.get(i).getTitle(), sessions.get(i).getQueries().size());
                 String testJson = buildJson(sessions.get(i));
                 Files.write(Paths.get("data/test/K"+(char)(65+i)+"H.json"), testJson.getBytes());
             } catch (Exception e){
-                System.err.printf("Error in file '%s'%n", sessions.get(i).getTitle());
+                System.err.printf("Error in file '%s' : %s%n", sessions.get(i).getTitle(), e.getMessage());
             } catch (TokenMgrError err){
-                System.err.printf("Error in file '%s'%n", sessions.get(i).getTitle());
+                System.err.printf("Error in file '%s' : %s%n", sessions.get(i).getTitle(), err.getMessage());
             }
 
         }

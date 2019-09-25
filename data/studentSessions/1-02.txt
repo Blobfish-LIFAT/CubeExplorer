@@ -1,9 +1,8 @@
 -- ATTENTION: FICHIER RECOPIÉ D'UN PDF. IL PEUT AVOIR DES ERREURS
-
 --Besoin 1 : - Expliquer la distance moyenne domicile-travail dans l'Aglopolys pour les salariés. 
 
 --1 
-SELECT NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (min)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS, NON EMPTY CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin([Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members)) ON ROWS FROM [Cube1MobProInd] 
+SELECT NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (min)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS, NON EMPTY CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, CrossJoin([Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members)) ON ROWS FROM [Cube1MobProInd]
 
 --On remarque que les hommes font plus de trajet que les femmes, et cela s'explique car les femmes préfèrent être plus proches du domicile pour s'occuper de leurs enfants et la maison
 
