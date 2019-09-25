@@ -2,7 +2,7 @@
 -- pour les déplacement en voiture, camion ou fourgonette
 
 
--- 1
+--1
 
 SELECT
 NON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, 
@@ -15,7 +15,7 @@ FROM [Cube1MobProInd]
 -- est entre 18 et 28 minutes.
 
 
--- 2 
+--2
 
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,
@@ -29,7 +29,7 @@ FROM [Cube1MobProInd]
 -- qui commutent le plus
 
 
--- 3 
+--3
 
 SELECT
 NON EMPTY CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, 
@@ -41,7 +41,7 @@ FROM [Cube1MobProInd]
 -- Remarque : plus de durées de trajets réparties sur 3 catégories de personnes diplomés
 -- les cadres , les employées et les pratiquants de professions intermédiaires
 
--- 4
+--4
 
 SELECT
 NON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, 

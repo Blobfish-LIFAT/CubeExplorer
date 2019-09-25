@@ -1,10 +1,12 @@
-﻿--Requête MDX :
+﻿-- Test
+
+--1
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,
 NON EMPTY CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}) ON ROWS
 FROM [Cube1MobProInd]
 
-
+--2
 SELECT
 NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members) ON COLUMNS,
 NON EMPTY CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}) ON ROWS

@@ -3,7 +3,7 @@
 -- Besoin: Expliquer la durée moyenne domicile-travail par niveau d'instruction pour les
 --déplacement en voiture, camion ou fourgonnette.
 
--- 1
+--1
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON
 COLUMNS,

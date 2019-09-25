@@ -1,15 +1,14 @@
 --Besoin 5 (dibstudent21 et plus) :
 -- Expliquer le nombre d'individus, la durée minimale, moyenne et maximale domicile-travail par lieu de travail et de résidence
 
-
+--1
 -- Besoin : Analysons on premier lieu le nombre d'individus par lieu de travail et de résidence
-
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Nombre total d'individus]})} ON COLUMNS,
 NON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, [Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members) ON ROWS
 FROM [Cube1MobProInd]
 --On remarque qu'une grande partie des personnes travaillent en dehors de leur commune de résidence
-
+--2
 -- Besoin : Analysons le nombre d'individus ainsi que les durées minimale, maximale domicile-travail par lieu de travail et de résidence
 
 
@@ -17,7 +16,7 @@ SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)]}})} ON COLUMNS,
 NON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, [Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members) ON ROWS
 FROM [Cube1MobProInd]
-
+--3
 -- Besoin : Pour aller plus loin on va analyser le nombre d'individus ainsi que les durées minimale, maximale domicile-travail par lieu de travail et de résidence et par le sexe
 
 SELECT
@@ -27,7 +26,7 @@ FROM [Cube1MobProInd]
 
 -- Nous constatons que la plupart des individus qui exercent leur activité de travail dans une autre commune du département de résidence ce sont des femmes
 --Les individus qui effectuent une plus grande durée moyenne trajet domicile-travail sont ceux qui se déplacent vers la métropole. La plupart sont des hommes sauf dans certaines communes de résidence.
-
+--4
 -- Besoin : Analysons maintenant selon la nature de transport et la nature de l'activité
 
 SELECT

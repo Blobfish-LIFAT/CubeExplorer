@@ -1,14 +1,14 @@
 ﻿-- Alexandre Thiellin
 -- Besoin : Expliquer la durée moyenne domicile-travail par statut d'emplois et nature de l'activité économique
 
--- 1
+--1
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members})} ON ROWS
 FROM [Cube1MobProInd]
 -- Pertinence : On remarqueque la catégorie "Commerce, transports et services divers" a une durée moyenne plus élevée que les autres (28,60 mins) et on remarque que la catégorie "Agriculture, sylviculture et pêche" a une durée moyenne plus courte (15,22 mins) pour les autres catégories on est autour de 23 minutes.
 
--- 2
+--2
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus]}})} ON COLUMNS,
 NON EMPTY CrossJoin([Nature l'activite economique.NATACTECO_Hierarchie].[Nature de l'activite].Members, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members) ON ROWS
@@ -24,21 +24,21 @@ FROM [Cube1MobProInd]
 	
 --	- Pour la catégorie "Industrie manufacturière, industries extractives et autres" ~92% des personnes sont sous statut "Emplois sans limite de durée, CDI, titulaire de la fonction publique" ou "Autres emplois à durée limitée, CDD, contrat court, vacataire" avec respectivement 22,53 minutes et 23,08 minutes. En effet, on sait que l'industrie cherche à embaucher des gens qui habitent au plus près de l'entreprise.
 	
--- 3
+--3
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Nature l'activite economique.NATACTECO_Hierarchie].[Agriculture, sylviculture et pêche]}, CrossJoin([Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members)) ON ROWS
 FROM [Cube1MobProInd]
 -- Pertinence : on remarque que les personnes au statut précédemment cité sont soit ouvrier soit agriculteurs exploitants (dans la grande majorité des cas) ce qui pourrait expliquer qu'ils ont tendance à vivre près de leurs lieux de travail.
 	
--- 4
+--4
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Nature l'activite economique.NATACTECO_Hierarchie].[Commerce, transports et services divers]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members)) ON ROWS
 FROM [Cube1MobProInd]
 -- Pertinence : On remarque que les durées moyennes les plus élevé sont dues aux tanches d'âge 20-29 ans et 65-69 ans. Les 20-24 ans avec une moyenne de 91,64 minutes, les 25-29 ans avec une moyenne de 102,58 minutes et les 65-69 ans avec une moyenne de 391,81 minutes. Je prends en compte la tranche 65-69 ans car bien qu'elle ne possède que 15 individus leur durée moyenne est très supérieur à la durée moyenne de la catégorie, 391,81 contre ~50 minutes (approfondissement en "--5").
 
--- 5
+--5
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Nature l'activite economique.NATACTECO_Hierarchie].[Commerce, transports et services divers]}, CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}, CrossJoin([Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members))) ON ROWS

@@ -1,5 +1,5 @@
 
--- 1
+--1
 
 SELECT
 NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})} ON COLUMNS,
@@ -9,7 +9,7 @@ WHERE {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}
 
 -- La distance moyenne domicile/travail (pour les salariés, donc), au sein de l'Agglopolys est de 8,11km.
 
--- 2
+--2
 
 SELECT
 NON EMPTY CrossJoin({[Measures].[Nombre total d'individus]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}) ON COLUMNS,
@@ -19,7 +19,7 @@ WHERE {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}
 
 --	Il y a 32 578,09 (0,09 ???) salariés habitant et travaillant dans l'Agglopolys (noté SHTA pour la suite de ce document).
 
--- 3
+--3
 
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Nombre total d'individus]}})} ON COLUMNS,
@@ -28,9 +28,9 @@ FROM [Cube1MobProInd]
 WHERE CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}))
 
 --	Cette requête indique la répartition de l'utilisation des moyens de transport part les SHTAs. On remarque que 80,7% d'entre eux prenne la voiture, pour une distance de trajet moyen de 8,67 km. Cette distance est supérieure aux autres méthodes de transports, ce qui est logique car elles sont moins rapides et donc utilisé pour de plus petit trajet. La moyenne de distance de 8,11 km est donc très influencée par les automobilistes (mais légèrement baissé par les autres).
-Mais cette information n'a pas vraiment beaucoup d'intérêt pour expliquer pourquoi ce temps de trajet moyen est tel qu'il est.
+--Mais cette information n'a pas vraiment beaucoup d'intérêt pour expliquer pourquoi ce temps de trajet moyen est tel qu'il est.
 
--- 4
+--4
 
 SELECT
 NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, Filter({{[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  > 0))})} ON COLUMNS,
@@ -40,7 +40,7 @@ WHERE {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}
 
 -- 	On remarque que 1/3 des SHTAs (11 016 individus) habitent ET travaillent à Blois pour une distance de trajet moyenne de 6,98 km. 
 
--- 5
+--5
 
 SELECT
 NON EMPTY Hierarchize(Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d'individus]}))) ON COLUMNS,
@@ -50,7 +50,7 @@ WHERE {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}
 
 -- 	Cette même quantité (11 016) représente 80% des 13 627 SHTAs habitants à Blois, pour une distance de trajet moyenne de 6,81 (résultat étrangement inférieur au précédent), []
 
--- 6
+--6
 
 SELECT
 NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d'individus]}))) ON COLUMNS,
@@ -58,4 +58,4 @@ NON EMPTY Order({Hierarchize({{[Commune de travail.CNELOCC_Hierarchie_intercommu
 FROM [Cube1MobProInd]
 WHERE {[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}
 
--- 	[] mais seulement 50% des 21 698 SHTAs qui y travaillent. Ces derniers parcours en moyenne 8,44 km pour aller travailler, et ce sont donc eux qui font augmenter la distance de trajet moyenne.
+--mais seulement 50% des 21 698 SHTAs qui y travaillent. Ces derniers parcours en moyenne 8,44 km pour aller travailler, et ce sont donc eux qui font augmenter la distance de trajet moyenne.

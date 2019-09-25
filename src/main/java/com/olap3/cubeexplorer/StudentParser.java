@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StudentParser {
-    static Pattern rqNumber = Pattern.compile("--(\\d)");
+    static Pattern rqNumber = Pattern.compile("--(\\d*)");
 
 
     public static Session loadFile(String path){
@@ -101,7 +101,7 @@ public class StudentParser {
      * Test code
      */
     public static void main(String[] args) throws Exception{
-        Session session = loadFile("data/studentSessions/2-08.txt");
+        Session session = loadFile("data/studentSessions/3-14.txt");
         for (var q : session.getQueries()){
             System.out.println("--- Query ---");
             System.out.println(q.getQuery());

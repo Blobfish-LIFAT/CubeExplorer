@@ -1,75 +1,75 @@
 -- Besoin : expliquer la distance moyenne domicile-travail dans l'Agglopolys pour les salariés.
 
--- 1
+--1
 SELECT
 NON EMPTY CrossJoin({[Measures].[Nombre total d'individus]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON COLUMNS,
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]})} ON ROWS
 FROM [Cube1MobProInd]
 -- Pour commencer, quelques requêtes pour mieux connaître la population qui nous intéresse : ici, on voit que les salariés d'Agglopolys représentent environ 40% des salariés du Loir-et-Cher.
 
--- 2
+--2
 SELECT
 NON EMPTY CrossJoin({[Measures].[Nombre total d'individus]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}) ON COLUMNS,
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members})} ON ROWS
 FROM [Cube1MobProInd]
 -- Les salariés représentent plus de 90% des travailleurs sur Agglopolys.
 
--- 3
+--3
 SELECT
 NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON COLUMNS,
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]})} ON ROWS
 FROM [Cube1MobProInd]
 -- On constate que la distance moyenne domicile-travail dans Agglopolys (17 km) est nettement inférieure que dans les autres communautés de communes du Loir-et-Cher. Seul le Grand Chambord affiche le même ordre de grandeur.
 
--- 4
+--4
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Nombre total d'individus]})} ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
 FROM [Cube1MobProInd]
 
--- 5
+--5
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Nombre total d'individus]})} ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members) ON ROWS
 FROM [Cube1MobProInd]
 -- Les deux requêtes précédentes vérifient que Agglopolys, et tout particulièrement Blois, sont de loin le premier bassin d'emploi du Loir-et-Cher (Blois emploie un quart de tous les salariés). Cela ne démontre rien en soi, mais étant donné que l'agglomération blésoise est également la plus peuplée, on peut supposer que la majorité des habitants d'Agglopolys travaillent également dans Aggopolys, faisant baisser la distance moyenne.
 
--- 6
+--6
 SELECT
 NON EMPTY CrossJoin({[Measures].[Nombre total d'individus]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
 FROM [Cube1MobProInd]
 -- Pour vérifier l'hypothèse précédente, cette requête croise les communautés de communes de travail (rangées) avec celles de domicile (colonnes). Le tableau est difficile à lire en l'état, mais en affichant les vues "camembert" associées, on constate bien que les habitants d'Agglopolys sont ceux qui restent le plus dans leur agglomération pour travailler (83%), ce taux étant en moyenne aux alentours de 50% dans les autres communautés de communes. C'est la probablement l'une des principales raisons expliquant la faible distance de trajet moyenne depuis Agglopolys.
 
--- 7
+--7
 SELECT
 NON EMPTY Hierarchize(Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d'individus]}), Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(CrossJoin(Filter({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  > 0)), {[Measures].[Nombre total d'individus]}), CrossJoin(Filter({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  > 0)), {[Measures].[Distance trajet domicile - travail (moyenne)]}))))) ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}) ON ROWS
 FROM [Cube1MobProInd]
 -- La plupart des habitants d'Agglopolys travaillant dans Agglopolys, on étudie ici les tendances des trajets au sein même d'Agglopolys. Ce qui est important de constater ici, c'est que plus de 11 000 salariés d'Agglopolys (plus du quart) effectuent un simple trajet Blois-Blois, d'en moyenne 7 km. C'est un autre élément qui doit contribuer à considérablement baisser la distance moyenne, en comparaison avec les autres communautés de communes qui ne possèdent pas de centre urbain aussi important.
 
--- 8
+--8
 SELECT
 NON EMPTY CrossJoin({[Measures].[Nombre total d'individus]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
 FROM [Cube1MobProInd]
 -- Ici, on constate que Agglopolys concentre une part plus importante de cadres et de professions intermédiaires (46 et 37 %) que d'employés et d'ouvriers (32 et 26 %). On peut supposer que les cadres, ayant des moyens plus élevés, peuvent se loger en centre-ville et donc effectuer des trajets plus courts.
 
--- 9
+--9
 SELECT
 NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
 FROM [Cube1MobProInd]
 -- Cette requête vient contredire la précédente supposition : les cadres effectuent en moyenne des trajets bien plus élevés que les autres CSP, y compris pour ceux vivant dans Agglopolys.
 
--- 10
+--10
 SELECT
 NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members) ON COLUMNS,
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]})} ON ROWS
 FROM [Cube1MobProInd]
 -- On voit ici que les salariés de moins de 40 ans on tendance à parcourir plus de distance que les plus de 40 ans dans le Loir-et-Cher.
 
--- 11
+--11
 SELECT
 NON EMPTY CrossJoin({[Measures].[Nombre total d'individus]}, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members) ON COLUMNS,
 NON EMPTY CrossJoin({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS
