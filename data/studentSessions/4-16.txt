@@ -28,7 +28,7 @@ NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [N
 NON EMPTY {Hierarchize({[Statut d'emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[Stagiaires rémunérés en entreprise]})} ON ROWS
 FROM [Cube1MobProInd]
 
--Au contraire, on observe chez les stagiaires rémunérés, que le temps de trajet est plus court dans les secteurs du commerce et de la construction. En effet, ils mettent en moyenne 24.88 minutes de trajet pour les stages en commerce, transports et services divers, et 27.60 minutes
+--Au contraire, on observe chez les stagiaires rémunérés, que le temps de trajet est plus court dans les secteurs du commerce et de la construction. En effet, ils mettent en moyenne 24.88 minutes de trajet pour les stages en commerce, transports et services divers, et 27.60 minutes
 --dans le domaine de la construction, tandis que dans les autres domaines la durée est beaucoup plus grande. On peut en déduire qu'il y a soit plus d'offres ou moins de demandes de stages dans ces domaines.
 
 

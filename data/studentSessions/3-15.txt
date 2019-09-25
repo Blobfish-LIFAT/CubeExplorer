@@ -6,8 +6,8 @@ NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Duree trajet domicile - trava
 NON EMPTY {Hierarchize({{[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members}})} ON ROWS
 FROM [Cube1MobProInd]
   
---Supposition : Les personnes aient un emploie stable CDI qui ont plus tendance à faire des trajets domicile travail plus long peu importe le niveau dinstruction.
---Résultat :  Les données sur la durée du trajet domicile travail sur les personnes en CDI nest jamais celui qui à une durée de trajet grande par rapport au niveau détude. Il est plus disparate pour le reste de type de travail. Résultat étrange pour les stagiaires rémunérés aient un niveau de BEPC avec un résultat 342.54.
+--Supposition : Les personnes aient un emploie stable CDI qui ont plus tendance à faire des trajets domicile travail plus long peu importe le niveau d'instruction.
+--Résultat :  Les données sur la durée du trajet domicile travail sur les personnes en CDI n'est jamais celui qui à une durée de trajet grande par rapport au niveau d'étude. Il est plus disparate pour le reste de type de travail. Résultat étrange pour les stagiaires rémunérés aient un niveau de BEPC avec un résultat 342.54.
 
 --2
 SELECT
@@ -15,7 +15,7 @@ NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Cr
 NON EMPTY {Hierarchize({{[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members}})} ON ROWS
 FROM [Cube1MobProInd]
 
---Résultat : Disparité des données dans deux colonne : locataire et hors logement ordinaire peu importe au niveau détude. pour les autres colonne assez regroupé sauf pour les CEP.
+--Résultat : Disparité des données dans deux colonne : locataire et hors logement ordinaire peu importe au niveau d'étude. pour les autres colonne assez regroupé sauf pour les CEP.
 
 --3 
 SELECT
@@ -23,7 +23,7 @@ NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Cr
 NON EMPTY {Hierarchize({{[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members}})} ON ROWS
 FROM [Cube1MobProInd]
 
--- Résultat : les ménages avec plusieur personne ont temps de trajet plus grandes surtout pour les niveaux détude bas avec des disparités entre même catégorie de niveau détude. Alors que chez les autres type de ménage la durée du trajet augmente par rapport au niveau dinstruction.
+-- Résultat : les ménages avec plusieur personne ont temps de trajet plus grandes surtout pour les niveaux d'étude bas avec des disparités entre même catégorie de niveau d'étude. Alors que chez les autres type de ménage la durée du trajet augmente par rapport au niveau d'instruction.
 
 --4
 SELECT
@@ -31,7 +31,7 @@ NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Duree trajet domicile - trava
 NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
---Résultat  : Plu le niveau dinstruction est haut plus le temps de trajet est grand.
+--Résultat  : Plu le niveau d'instruction est haut plus le temps de trajet est grand.
 
 --5
 SELECT
@@ -39,7 +39,7 @@ NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Cr
 NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
--- Résultat : les homme ont plus tendance à avoir un temp de trajet plus élevé que celui des femmes. De plus le niveau dinstruction influe pareil chez les hommes que chez les femmes.
+-- Résultat : les homme ont plus tendance à avoir un temp de trajet plus élevé que celui des femmes. De plus le niveau d'instruction influe pareil chez les hommes que chez les femmes.
  
 --6
 SELECT
@@ -47,6 +47,5 @@ NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Cr
 NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members})} ON ROWS
 FROM [Cube1MobProInd]
 
---Commentaire : même constatation les hommes ont une durée de trajet plus grand quand leur lieu de travail est différent du lieu de résidence. De même pour le niveau dinstruction plus la personne à un niveau haut plus la durée est grande.
-
---De suite de ses analyse on peut dire que le niveau dinstruction influe sur la durée du trajet domicile travail  en véhicule motorisé. Que les hommes peu importe leur situation leur temps de trajet sera plus haut que celui des femmes. les personnes qui nont pas demploie fix auront tendances à avoir des temps de trajet plus élevés ainsi que les personnes qui sont locataires auront aussi tendances à avoir une durée plus longue.
+--Commentaire : même constatation les hommes ont une durée de trajet plus grand quand leur lieu de travail est différent du lieu de résidence. De même pour le niveau d'instruction plus la personne à un niveau haut plus la durée est grande.
+--De suite de ses analyse on peut dire que le niveau d'instruction influe sur la durée du trajet domicile travail  en véhicule motorisé. Que les hommes peu importe leur situation leur temps de trajet sera plus haut que celui des femmes. les personnes qui n'ont pas d'emploie fix auront tendances à avoir des temps de trajet plus élevés ainsi que les personnes qui sont locataires auront aussi tendances à avoir une durée plus longue.

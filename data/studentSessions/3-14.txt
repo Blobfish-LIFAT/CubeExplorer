@@ -1,7 +1,7 @@
 -- ATTENTION: FICHIER RECOPIÉ D'UN PDF. IL PEUT AVOIR DES ERREURS
 
 -- Besoin: Expliquer la durée moyenne domicile-travail par niveau d'instruction pour les
-déplacement en voiture, camion ou fourgonnette.
+--déplacement en voiture, camion ou fourgonnette.
 
 -- 1
 SELECT
@@ -95,7 +95,7 @@ FROM [Cube1MobProInd]
 WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
 fourgonnette]}
 --pertinent on observe que, dans lensemble, le femmes font, en moyenne, ont une durée moins 
-importantes.
+--importantes.
 
 --11
 SELECT
@@ -109,7 +109,7 @@ ON ROWS
 FROM [Cube1MobProInd]
 WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
 fourgonnette]}
- Pertiente : on remarque une grande différence entre les deux régions
+--Pertiente : on remarque une grande différence entre les deux régions
 
 --12
 SELECT
@@ -123,7 +123,7 @@ d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
 FROM [Cube1MobProInd]
 WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion,
 fourgonnette]}
- Pertinente : par rapport à la requête précédente, lécart est moins important entre les deux régions.
+--Pertinente : par rapport à la requête précédente, lécart est moins important entre les deux régions.
 
 
 --13

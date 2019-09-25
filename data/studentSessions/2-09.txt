@@ -1,21 +1,7 @@
--- COURS
-
--- Requête pour expliquer essayer de comprendre l'écart de la distance max parcourue entre hommes et femmes à Saint-Cyr-Du-Gault. Cela pourrais être expliqué par le fait que les 2/3 des femmes travaillent dans des communes éloignés comme TAVERNY et PARIS 9EM ARRONDISSEMENT
-
-SELECT
-NON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, CrossJoin({[Measures].[Nombre total d'individus]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)), CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, CrossJoin({[Measures].[Distance trajet domicile - travail (max)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)))) ON COLUMNS,
-NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members), CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))) ON ROWS
-FROM [Cube1MobProInd]
-
--- ************** Tp Rendu 
-
 -- Besoin 2 : Expliquer la consommation moyenne de carburant et le nombre de voiture des menages pour les Agriculteurs, Ouvriers, Employés
-
-
 -- A) Pour les Agriculteurs
 
 -- 1
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]})} ON ROWS
@@ -25,7 +11,6 @@ FROM [Cube1MobProInd]
 -- on remarque aussi une faible consommation moyenne de carburant
 
 --2
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}, [Mode de transport.MODTRANS_Hierarchie].[Categorie].Members))) ON ROWS
@@ -35,7 +20,6 @@ FROM [Cube1MobProInd]
 -- Ici on remarque que seulement 43 % de cette catégorie socio-professionnelle utilise une voiture, fourgonnette ou camion pour se rendre au travail. Donc ce qui peut expliquer le faible taux de consommation moyenne de carburant
 
 --3
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de voitures des menages (min)], [Measures].[Nombre de personnes des menages (min)]}})} ON COLUMNS,
 NON EMPTY Order({Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]})}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].CurrentMember.Name, BASC) ON ROWS
@@ -45,7 +29,6 @@ FROM [Cube1MobProInd]
 -- Et on remarque aussi que le nombre moyen de voitures par ménage est a peu près égal à l moitié du nombre moyen de personnes par ménage
 
 -- 4
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members) ON ROWS
@@ -56,7 +39,6 @@ FROM [Cube1MobProInd]
 -- A) Pour les Ouvriers
 
 -- 5
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})} ON ROWS
@@ -66,7 +48,6 @@ FROM [Cube1MobProInd]
 
 
 -- 6
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carburant trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members) ON ROWS
@@ -77,7 +58,6 @@ FROM [Cube1MobProInd]
 
 
 --7
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members) ON ROWS
@@ -85,7 +65,6 @@ FROM [Cube1MobProInd]
 
 
 -- 8
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members) ON ROWS
@@ -94,7 +73,6 @@ FROM [Cube1MobProInd]
 -- les ouvriers qui marchent pour aller au travail qui ne font que moins de 2000 personnes produisent le max de trajet.
 
 -- 9
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members)), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CORSE].[PAYS INCONNU].[CC INCONNUE].[CALVI]})))) ON ROWS
@@ -103,14 +81,12 @@ FROM [Cube1MobProInd]
 -- Peirtinent : ici on remarque que seulement 4 ouvres de la commune d'occupation de CALVI font au max 792 km pour se rendre au travail à Pieds
 
 -- 10
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))))) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 11
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))))) ON ROWS
@@ -121,7 +97,6 @@ FROM [Cube1MobProInd]
 -- Et que aussi les quelques rares ouvriers qui font de longs trajets tournent autour de 3 et 4 par ville.
 
 -- 12
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PERCHE ET HAUT-VENDÔMOIS].[ROMILLY]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members))))) ON ROWS
@@ -130,7 +105,6 @@ FROM [Cube1MobProInd]
 -- Ici on voit que seulement à peu près 4 ouvriers font la plus grande distance travail-trajet  712,13 et faisant ainsi une consommation significative : 41,65 , ce qui est insignifiant face au nombre total d'ouvriers véhiculés. Ceci explique la consommation moyenne faible de carburant.
 
 -- 13
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (min)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (min)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})} ON ROWS
@@ -138,8 +112,7 @@ FROM [Cube1MobProInd]
 
 -- ici on remarque que le nombre moyen de véhicule par ménage est presque égal à la moitié du nombres moyens de personnes par ménage. Il existe aussi des ménages sans véhicule. Et que le nombre max de personne est le double du nombre de véhicule max par ménage.
 
--- 14 
-
+-- 14
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (min)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (min)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members) ON ROWS
@@ -152,7 +125,6 @@ FROM [Cube1MobProInd]
 -- C ) Pour les Employers
 
 --15
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]})} ON ROWS
@@ -161,21 +133,18 @@ FROM [Cube1MobProInd]
 -- ici on observe que la consommation moyenne de carburant est faible par rapport au grand nombre d'ouvriers et de la distance max du trajet.
 
 -- 16
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members) ON ROWS
 FROM [Cube1MobProInd]
 
 --17
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 18
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members)) ON ROWS
@@ -183,7 +152,6 @@ FROM [Cube1MobProInd]
 
 
 -- 19
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]})))))))) ON ROWS
@@ -192,14 +160,12 @@ FROM [Cube1MobProInd]
 -- ici on filtre sur les communautés de commune ou la consommation de carburant max est importante
 
 -- 20
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]})), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE].[SELOMMES]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME].[VENDOME]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES].[SALBRIS]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE].[MONTRICHARD]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS].[ANGE]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)))), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)))))))))))))))) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 21
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Distance trajet domicile - travail (max)], [Measures].[Consommation carborant trajet domicile - travail (moyenne)], [Measures].[Consommation carborant trajet domicile - travail (max)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE].[SELOMMES]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME].[VENDOME]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES].[SALBRIS]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE].[MONTRICHARD]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS].[ANGE]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin(Filter({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[BEAUCE ET GÂTINE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[VAL-DE-CHER - CONTROIS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de Grande Sologne].[SOLOGNE DES RIVIÈRES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays de la Vallée du Cher et du Romorantinais].[CHER À LA LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays Vendômois].[PAYS DE VENDÔME]}).Count  > 0)), [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members))))))))))))))) ON ROWS
@@ -209,49 +175,42 @@ FROM [Cube1MobProInd]
 -- Donc ça explique la consommation faible de carburant sur le trajet domicile-travail par les employés.
 
 -- 22
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de voitures des menages (min)], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (min)]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]})} ON ROWS
 FROM [Cube1MobProInd]
 
 -- 23
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY {Hierarchize({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]})} ON ROWS
 FROM [Cube1MobProInd]
 
 --24
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de voitures des menages (min)], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (min)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 25
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 26
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members)) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 27
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de personnes des menages (max)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members)), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d'occupation].Members)))) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 28
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members) ON ROWS
@@ -259,28 +218,24 @@ FROM [Cube1MobProInd]
 
 
 -- 29
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin([Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members)) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 30
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)], [Measures].[Nombre de voitures des menages (max)], [Measures].[Nombre de personnes des menages (max)]}})} ON COLUMNS,
 NON EMPTY CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin([Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members)) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 31
-
 SELECT
 NON EMPTY {Hierarchize({{[Measures].[Nombre total d'individus], [Measures].[Nombre de voitures des menages (moyenne)], [Measures].[Nombre de personnes des menages (moyenne)]}})} ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d'un couple].[Famille principale composée d'un couple où l'homme et la femme ont tous les deux le statut d'actif ayant un emploi""]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members)), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d'un couple].[Famille principale composée d'un couple où l'homme et la femme ont tous les deux le statut d'actif ayant un emploi""]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members)), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}, CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d'un couple].[Famille principale composée d'un couple où l'homme et la femme ont tous les deux le statut d'actif ayant un emploi""]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members))))) ON ROWS
 FROM [Cube1MobProInd]
 
 -- 32
-
 SELECT
 NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Nombre total d'individus]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), Union(CrossJoin({[Measures].[Nombre de voitures des menages (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), Union(CrossJoin({[Measures].[Nombre de personnes des menages (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), CrossJoin({[Measures].[Distance trajet domicile - travail (max)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members))))) ON COLUMNS,
 NON EMPTY Hierarchize(Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Employés]}, CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d'un couple].[Famille principale composée d'un couple où l'homme et la femme ont tous les deux le statut d'actif ayant un emploi""]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members)), Union(CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Ouvriers]}, CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d'un couple].[Famille principale composée d'un couple où l'homme et la femme ont tous les deux le statut d'actif ayant un emploi""]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members)), CrossJoin({[Categorie socioprofessionnelle.CSP_Hierarchie_1].[Agriculteurs exploitants]}, CrossJoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d'un couple].[Famille principale composée d'un couple où l'homme et la femme ont tous les deux le statut d'actif ayant un emploi""]}, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members))))) ON ROWS
