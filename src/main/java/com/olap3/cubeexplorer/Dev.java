@@ -5,6 +5,7 @@ import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
+import com.olap3.cubeexplorer.mdxparser.MDXExpParser;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
@@ -68,5 +69,7 @@ public class Dev {
         SQLFactory factory = new SQLFactory(utils);
         String SQLquery = factory.getStarJoin(test);
         System.out.println(SQLquery);
+
+
     }
 }
