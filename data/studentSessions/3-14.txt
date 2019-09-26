@@ -100,7 +100,7 @@ NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Duree tr
 NON EMPTY Hierarchize(Union(CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].
 [Niveau d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
 [CENTRE]}), CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
-d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[ILE-DEFRANCE]})))
+d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[ILE-DE-FRANCE]})))
 ON ROWS
 FROM [Cube1MobProInd]
 WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}
@@ -123,10 +123,8 @@ WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, cami
 --13
 SELECT
 NON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, CrossJoin({[Measures].[Duree
-trajet domicile - travail (moyenne)]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de
-niveau 1].Members)) ON COLUMNS,
-NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
-d'instruction].Members})} ON ROWS
+trajet domicile - travail (moyenne)]}, [Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 1].Members)) ON COLUMNS,
+NON EMPTY {Hierarchize({[Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau d'instruction].Members})} ON ROWS
 FROM [Cube1MobProInd]
 WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}
 
@@ -140,7 +138,7 @@ CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Duree trajet domic
 NON EMPTY Hierarchize(Union(CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].
 [Niveau d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].
 [BRETAGNE]}), CrossJoin([Niveau d'instruction.Niveau_Instruction_Hierarchie].[Niveau
-d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[ILE-DEFRANCE]})))
+d'instruction].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[ILE-DE-FRANCE]})))
 ON ROWS
 FROM [Cube1MobProInd]
 WHERE {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}

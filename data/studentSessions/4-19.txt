@@ -136,7 +136,7 @@ FROM [Cube1MobProInd]
 --Pour les salarié : trajet  plus long quand la personne est diplomé
 
 
---18 –
+--18
 SELECT
 NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,
 NON EMPTY CrossJoin([Statut d'emploi.STATEMPL_Hierarchie].[Statut d'emploi de niveau 3].Members, [Niveau d'instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members) ON ROWS

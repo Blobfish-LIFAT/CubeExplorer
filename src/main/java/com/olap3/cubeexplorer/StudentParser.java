@@ -50,6 +50,7 @@ public class StudentParser {
 
                 if (line.startsWith("--")){
                     if (nbMatch.matches()) {
+                        //System.out.println(line);
                         if (!start){
                             current.setComments(Future.join(comments, "\n"));
                             current.setQuery(Future.joinMDX(request));
@@ -101,7 +102,8 @@ public class StudentParser {
      * Test code
      */
     public static void main(String[] args) throws Exception{
-        Session session = loadFile("data/studentSessions/3-14.txt");
+        Session session = loadFile("data/studentSessions/4-19.txt");
+        System.out.println("Session size = " + session.getQueries().size());
         for (var q : session.getQueries()){
             System.out.println("--- Query ---");
             System.out.println(q.getQuery());
