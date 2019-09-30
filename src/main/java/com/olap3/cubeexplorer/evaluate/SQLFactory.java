@@ -5,6 +5,8 @@ import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
+import com.olap3.cubeexplorer.mdxparser.MDXExpLexer;
+import com.olap3.cubeexplorer.mdxparser.MDXExpParser;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
@@ -13,6 +15,11 @@ import mondrian.rolap.RolapCalculatedMember;
 import mondrian.rolap.RolapCubeDimension;
 import mondrian.rolap.RolapMeasure;
 import mondrian.rolap.RolapStoredMeasure;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -66,13 +73,22 @@ public class SQLFactory {
 
             String gb = dimTable + "." + cube.getColumn(pf.getLevel());
             groupBys.add(gb);
-            selects.add(gb);
+
+            String name = pf.getLevel().toString();
+            name = name.split("]\\.\\[")[1];
+            name = name.substring(0, name.length() - 1);
+
+            selects.add(gb + " AS \"" + name + "\"");
         }
 
 
         //For each measure
         for (MeasureFragment mf : formalQuery.getMeasures()){
-            selects.add(buildAggregate(mf));
+            String name = mf.getAttribute().toString();
+            name = name.split("]\\.\\[")[1];
+            name = name.substring(0, name.length() - 1);
+
+            selects.add(buildAggregate(mf) + " AS \"" + name + "\"");
         }
 
         /*
@@ -145,16 +161,16 @@ public class SQLFactory {
         } catch (ClassCastException e){
             RolapCalculatedMember calcMeasure = (RolapCalculatedMember) mf.getAttribute();
 
-            //System.out.println(calcMeasure.getFormula().getExpression());
+            CharStream lineStream = CharStreams.fromString(calcMeasure.getFormula().getExpression().toString());
+            Lexer lexer = new MDXExpLexer(lineStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            MDXExpParser parser = new MDXExpParser(tokens);
+            ParseTree tree = parser.start();
 
-            //TODO handle calculated measure (from other measures)
-            func = "COUNT";
-            inner = "*";
-            //This should do the trick as we mainly want the EXPLAIN to give us a time estimate
-            //No need for the actual proper results
+            MDXtoSQLvisitor calculator = new MDXtoSQLvisitor(CubeUtils.getDefault());
+
+            return calculator.visit(tree);
         }
-
-
 
         return func + "(" + inner + ")";
     }

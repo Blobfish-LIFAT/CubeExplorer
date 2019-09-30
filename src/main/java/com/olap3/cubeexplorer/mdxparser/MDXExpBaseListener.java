@@ -16,6 +16,18 @@ public class MDXExpBaseListener implements MDXExpListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStart(MDXExpParser.StartContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStart(MDXExpParser.StartContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpression(MDXExpParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -23,30 +35,6 @@ public class MDXExpBaseListener implements MDXExpListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpression(MDXExpParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterValidtext(MDXExpParser.ValidtextContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitValidtext(MDXExpParser.ValidtextContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAtom(MDXExpParser.AtomContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAtom(MDXExpParser.AtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

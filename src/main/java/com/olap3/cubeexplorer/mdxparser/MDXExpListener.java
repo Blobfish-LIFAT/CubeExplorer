@@ -8,6 +8,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface MDXExpListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link MDXExpParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart(MDXExpParser.StartContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MDXExpParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart(MDXExpParser.StartContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MDXExpParser#expression}.
 	 * @param ctx the parse tree
 	 */
@@ -17,26 +27,6 @@ public interface MDXExpListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(MDXExpParser.ExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MDXExpParser#validtext}.
-	 * @param ctx the parse tree
-	 */
-	void enterValidtext(MDXExpParser.ValidtextContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MDXExpParser#validtext}.
-	 * @param ctx the parse tree
-	 */
-	void exitValidtext(MDXExpParser.ValidtextContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MDXExpParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void enterAtom(MDXExpParser.AtomContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MDXExpParser#atom}.
-	 * @param ctx the parse tree
-	 */
-	void exitAtom(MDXExpParser.AtomContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MDXExpParser#measure}.
 	 * @param ctx the parse tree

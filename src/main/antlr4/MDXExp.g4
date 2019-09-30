@@ -1,19 +1,24 @@
 grammar MDXExp;
+
+// [Measure].[Un truc - (moyen)]*[Measure].[Chose]
+
 /*
     Parser rules
 */
-expression : measure OP measure;
+start : LPAREN expression RPAREN;
 
-validtext : TEXT+(TEXT|TIRET|WS|LPAREN|RPAREN)*;
+expression : measure OP measure | expression OP expression | expression OP measure | measure OP expression | LPAREN measure OP measure RPAREN;
 
-atom : '[' validtext ']';
+Validtext : TEXT+(TEXT|TIRET|WS|LPAREN|RPAREN)*;
 
-measure : atom'.'atom | LPAREN measure OP measure RPAREN;
+Atom : '[' Validtext ']';
+
+measure : Atom'.'Atom;
 
 /*
     Lexer rules
 */
-fragment FRENCH : [éèàêôûâ];
+fragment FRENCH : [éèàêôûâ'];
 fragment LOWERCASE  : [a-z] ;
 fragment UPPERCASE  : [A-Z] ;
 TEXT : (LOWERCASE | UPPERCASE | FRENCH )+ ;

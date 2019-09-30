@@ -25,6 +25,7 @@ public class MDXAccessor extends DataAccessor {
         this.internal = query;
     }
 
+    //TODO finish query
     @Override
     public DataSet execute() {
         if (cached != null)

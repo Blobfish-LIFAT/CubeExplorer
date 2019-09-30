@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer;
 
+import com.olap3.cubeexplorer.evaluate.MDXtoSQLvisitor;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
@@ -15,8 +16,11 @@ import mondrian.olap.Result;
 import mondrian.rolap.sql.*;
 import mondrian.server.Execution;
 import mondrian.server.Statement;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -32,7 +36,19 @@ public class Dev {
         Connection olap = MondrianConfig.getMondrianConnection();
         CubeUtils utils = new CubeUtils(olap, "Cube1MobProInd");
         CubeUtils.setDefault(utils);
+/*
+        var line = "([Measures].[Nombre total d'individus]*[Measures].[Duree trajet domicile - travail (total)])";
+        CharStream lineStream = CharStreams.fromString(line);
+        Lexer lexer = new MDXExpLexer(lineStream);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        MDXExpParser parser = new MDXExpParser(tokens);
+        ParseTree tree = parser.start();
 
+        MDXtoSQLvisitor calculator = new MDXtoSQLvisitor(utils);
+
+        String sqlExp = calculator.visit(tree);
+        System.out.println("Final expresion: " + sqlExp);
+*/
         String testQuery = "SELECT\n" +
                 "NON EMPTY {Hierarchize({[Type de logement.TYPLOGT_Hierarchie].[Type regroupe].Members})} ON COLUMNS,\n" +
                 "NON EMPTY {Hierarchize({[Measures].[Nombre total d'individus]})} ON ROWS\n" +
@@ -74,5 +90,7 @@ public class Dev {
         String SQLquery = factory.getStarJoin(test);
         System.out.println(SQLquery);
 
+
     }
+
 }
