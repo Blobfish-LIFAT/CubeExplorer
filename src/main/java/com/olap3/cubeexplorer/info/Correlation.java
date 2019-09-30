@@ -1,6 +1,8 @@
 package com.olap3.cubeexplorer.info;
 
 import com.olap3.cubeexplorer.ECube;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,17 @@ public class Correlation implements MLModel {
 
     @Override
     public ECube process() {
-        return null;
+        DataSet ds = da.execute();
+        double[][] data = new double[1+others.size()][];
+        data[0] = ds.getDoubleColumn(ref);
+
+        for (int i = 0; i < others.size(); i++) {
+            data[i + 1] = ds.getDoubleColumn(others.get(i));
+        }
+
+        RealMatrix res = new PearsonsCorrelation().computeCorrelationMatrix(data);
+
+        return null;//Todo
     }
 
     @Override

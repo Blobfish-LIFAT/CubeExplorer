@@ -1,8 +1,25 @@
 package com.olap3.cubeexplorer.info;
 
 import com.olap3.cubeexplorer.julien.Qfset;
+import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import com.olap3.cubeexplorer.olap.CellSet;
+import mondrian.olap.Query;
+import org.olap4j.OlapConnection;
+import org.olap4j.OlapException;
+import org.olap4j.OlapStatement;
+import org.olap4j.OlapWrapper;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class MDXAccessor extends DataAccessor {
+    DataSet cached = null;
+
+    static Connection connection;
+    static OlapWrapper wrapper;
+    static OlapConnection olapConnection;
+
 
     public MDXAccessor(Qfset query) {
         this.internal = query;
@@ -10,8 +27,33 @@ public class MDXAccessor extends DataAccessor {
 
     @Override
     public DataSet execute() {
-        String mdxQuery = ""; //Todo Conversion to runnable MDX (or finish my star join thing)
-        return null;
+        if (cached != null)
+            return cached;
+
+        init();
+
+        try {
+            OlapStatement statement = olapConnection.createStatement();
+            String mdxQuery = internal.toMDXString();
+            CellSet cellSet = new CellSet(statement.executeOlapQuery(mdxQuery));
+
+        } catch (OlapException e) {
+            e.printStackTrace();
+        }
+        return cached;
+    }
+
+    static void init(){
+        if (connection == null){
+            try {
+                connection = DriverManager.getConnection(MondrianConfig.getURL());
+                wrapper = (OlapWrapper) connection;
+                olapConnection = wrapper.unwrap(OlapConnection.class);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.util.*;
 public class Qfset implements java.io.Serializable {
 
     Query mondrianQuery;
+    String mdx;
     /**
      * Set of measure with the corresponding aggregate function
      */
@@ -1123,6 +1124,7 @@ public class Qfset implements java.io.Serializable {
 
             mondrian.olap.Connection cnx = MondrianConfig.getMondrianConnection();
             Query query = cnx.parseQuery(queryString);
+            mdx = queryString;
 
             //RolapResult result = (RolapResult) cnx.execute(query);
             //System.out.println(result);
@@ -1130,6 +1132,11 @@ public class Qfset implements java.io.Serializable {
         } else {
             return mondrianQuery;
         }
+    }
+
+    public String toMDXString(){
+        this.toMDX();
+        return mdx;
     }
 
     public Query toMDX(HashSet<ProjectionFragment> projectionOnRows, HashSet<ProjectionFragment> projectionOnColumns) {
