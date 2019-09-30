@@ -1,6 +1,4 @@
 grammar MDXExp;
-
-
 /*
     Parser rules
 */

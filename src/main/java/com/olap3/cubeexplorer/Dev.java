@@ -5,6 +5,7 @@ import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
+import com.olap3.cubeexplorer.mdxparser.MDXExpLexer;
 import com.olap3.cubeexplorer.mdxparser.MDXExpParser;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
@@ -14,6 +15,8 @@ import mondrian.olap.Result;
 import mondrian.rolap.sql.*;
 import mondrian.server.Execution;
 import mondrian.server.Statement;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -24,6 +27,7 @@ import java.util.Arrays;
  */
 public class Dev {
     public static void main(String[] args) {
+
         // Init connection to our test cube
         Connection olap = MondrianConfig.getMondrianConnection();
         CubeUtils utils = new CubeUtils(olap, "Cube1MobProInd");
@@ -69,7 +73,6 @@ public class Dev {
         SQLFactory factory = new SQLFactory(utils);
         String SQLquery = factory.getStarJoin(test);
         System.out.println(SQLquery);
-
 
     }
 }

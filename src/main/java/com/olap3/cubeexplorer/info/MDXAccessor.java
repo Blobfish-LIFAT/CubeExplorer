@@ -2,9 +2,7 @@ package com.olap3.cubeexplorer.info;
 
 import com.olap3.cubeexplorer.julien.Qfset;
 
-public class MDXAccessor implements DataAccessor {
-
-    Qfset internal;
+public class MDXAccessor extends DataAccessor {
 
     public MDXAccessor(Qfset query) {
         this.internal = query;
