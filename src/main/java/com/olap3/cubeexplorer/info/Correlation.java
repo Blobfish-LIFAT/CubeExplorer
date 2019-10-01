@@ -30,8 +30,10 @@ public class Correlation implements MLModel {
         }
 
         RealMatrix res = new PearsonsCorrelation().computeCorrelationMatrix(data);
+        var cube = new ECube(da.getInternal(), "correlation");
+        cube.getExplProperties().put("corr_matrix", res);
 
-        return null;//Todo
+        return cube;
     }
 
     @Override

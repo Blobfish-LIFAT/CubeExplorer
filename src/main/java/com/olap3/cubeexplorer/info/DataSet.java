@@ -114,6 +114,10 @@ public class DataSet {
     }
 
     public void pushLine(Object[] input){
+        if (!allocated) {
+            allocated = true;
+            allocate();
+        }
         setLine(input, insert_index);
         insert_index++;
     }
@@ -155,6 +159,10 @@ public class DataSet {
     }
     public String[] getStringColumn(String column_name) {
         return dataStr[posString.get(column_name)];
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     public String getColName(int column_index) {
@@ -218,6 +226,8 @@ public class DataSet {
         public boolean isReal(){
             return value == 0;
         }
+
+
     }
 }
 

@@ -1,31 +1,27 @@
 package com.olap3.cubeexplorer.info;
 
+import com.alexscode.utilities.collection.Pair;
+import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.julien.Qfset;
+import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.olap.CellSet;
-import mondrian.olap.Query;
-import org.olap4j.OlapConnection;
-import org.olap4j.OlapException;
-import org.olap4j.OlapStatement;
-import org.olap4j.OlapWrapper;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MDXAccessor extends DataAccessor {
     DataSet cached = null;
 
     static Connection connection;
-    static OlapWrapper wrapper;
-    static OlapConnection olapConnection;
+    static SQLFactory sqlFactory;
 
 
     public MDXAccessor(Qfset query) {
         this.internal = query;
     }
 
-    //TODO finish query
     @Override
     public DataSet execute() {
         if (cached != null)
@@ -34,22 +30,60 @@ public class MDXAccessor extends DataAccessor {
         init();
 
         try {
-            OlapStatement statement = olapConnection.createStatement();
-            String mdxQuery = internal.toMDXString();
-            CellSet cellSet = new CellSet(statement.executeOlapQuery(mdxQuery));
 
-        } catch (OlapException e) {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(sqlFactory.getStarJoin(internal));
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            List<Pair<String, DataSet.Datatype>> cols = new ArrayList<>();
+            for (int i = 1; i < rsmd.getColumnCount() + 1; i++) {
+                var name = rsmd.getColumnName(i);
+                var typeRaw = rsmd.getColumnType(i);
+                cols.add(new Pair<>(name, getProperType(typeRaw)));
+            }
+
+            rs.last();
+            int count = rs.getRow();
+            rs.beforeFirst();
+
+            cached = new DataSet(cols, count);
+
+            while (rs.next()){
+                Object[] line = new Object[cols.size()];
+                for (int i = 0; i < cols.size(); i++) {
+                    switch (cols.get(i).right){
+                        case INTEGER -> line[i] = rs.getInt(cols.get(i).left);
+                        case REAL -> line[i] = rs.getDouble(cols.get(i).left);
+                        case STRING -> line[i] = rs.getString(cols.get(i).left);
+                    }
+                }
+                cached.pushLine(line);
+            }
+
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return cached;
+    }
+
+    private static HashMap<Integer, DataSet.Datatype> typeMap;
+    static {
+        typeMap = new HashMap<>();
+        typeMap.put(12, DataSet.Datatype.STRING);
+        typeMap.put(6, DataSet.Datatype.REAL);
+        typeMap.put(8, DataSet.Datatype.REAL);
+        typeMap.put(4, DataSet.Datatype.INTEGER);
+    }
+    private static DataSet.Datatype getProperType(int typeRaw) {
+        return typeMap.get(typeRaw);
     }
 
     static void init(){
         if (connection == null){
             try {
                 connection = DriverManager.getConnection(MondrianConfig.getURL());
-                wrapper = (OlapWrapper) connection;
-                olapConnection = wrapper.unwrap(OlapConnection.class);
+                sqlFactory = new SQLFactory(CubeUtils.getDefault());
             } catch (SQLException e){
                 e.printStackTrace();
             }
