@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * SQL datatype : https://www.tutorialspoint.com/java-resultsetmetadata-getcolumntype-method-with-example
+ */
 public class MDXAccessor extends DataAccessor {
     DataSet cached = null;
 

@@ -1,10 +1,26 @@
 package com.olap3.cubeexplorer.optimize;
 
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
+import com.olap3.cubeexplorer.info.InfoCollector;
+import com.olap3.cubeexplorer.optimize.stats.StatBasedMetric;
+
+import java.util.List;
+
 public class Optimizer {
+    public static Optimizer opt;
     BudgetManager manager;
-    ICGenerator generator;
 
+    static {
+        opt = new Optimizer(new KnapsackManager(new StatBasedMetric()));
+    }
 
+    private Optimizer(BudgetManager manager) {
+        this.manager = manager;
+    }
+
+    public ExecutionPlan getOptimalPlan(List<InfoCollector> ics, int timeBudget){
+        return manager.findBestPlan(ics, timeBudget);
+    }
 
 
 }
