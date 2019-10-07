@@ -1,6 +1,7 @@
 package com.olap3.cubeexplorer.evaluate;
 
 
+import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.xmlutil.XMLPlan;
 import com.olap3.cubeexplorer.xmlutil.PlanParser;
 import org.dom4j.DocumentException;
@@ -17,16 +18,11 @@ public class SQLEstimateEngine {
     private int timeout = 500;
 
 
-    public SQLEstimateEngine(String jdbcURL) {
+    public SQLEstimateEngine() {
 
-        try {
-            con = DriverManager.getConnection(jdbcURL);
-            PreparedStatement planON = con.prepareStatement("SET SHOWPLAN_XML ON;");
-            planON.execute();
-            planON.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            con = MondrianConfig.getJdbcConnection();
+
+
 
     }
 
@@ -40,21 +36,28 @@ public class SQLEstimateEngine {
         }
     }
 
-    public XMLPlan estimates(String query) throws SQLException, DocumentException {
+    public XMLPlan estimates(String query){
+        try {
+            Statement planON = con.createStatement();
+            planON.execute("SET SHOWPLAN_XML ON");
 
-        Statement statement = con.createStatement();
 
-        ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = planON.executeQuery(query);
 
-        XMLPlan plan = null;
+            XMLPlan plan = null;
+            if (rs.next()) {
+                String xml_plan = rs.getString(1);
+                System.out.println(xml_plan);
+                plan = PlanParser.xml_to_plan(xml_plan);
+            }
 
-        if (rs.next()) {
-            String xml_plan = rs.getString(0);
-            plan = PlanParser.xml_to_plan(xml_plan);
+            planON.close();
+
+
+            return plan;
+        } catch (SQLException | DocumentException e){
+            e.printStackTrace();
         }
-
-        statement.close();
-
-        return plan;
+        return new XMLPlan(-1, -1, -1);
     }
 }

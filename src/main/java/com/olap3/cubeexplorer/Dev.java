@@ -1,6 +1,7 @@
 package com.olap3.cubeexplorer;
 
 import com.olap3.cubeexplorer.evaluate.MDXtoSQLvisitor;
+import com.olap3.cubeexplorer.evaluate.SQLEstimateEngine;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
@@ -90,7 +91,10 @@ public class Dev {
         String SQLquery = factory.getStarJoin(test);
         System.out.println(SQLquery);
 
+        SQLEstimateEngine see = new SQLEstimateEngine();
+        var plan = see.estimates(SQLquery);
 
+        System.out.println(plan);
     }
 
 }
