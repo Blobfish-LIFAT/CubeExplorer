@@ -48,7 +48,7 @@ public class PlanParser {
         long est_rows = -1;
 
         if (val_rows != null && !val_rows.equals("")) {
-            est_rows = Long.valueOf(val_rows);
+            est_rows = Math.round(Double.valueOf(val_rows));
         }
 
         return new XMLPlan(est_rows,-1, total_cost);

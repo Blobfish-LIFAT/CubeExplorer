@@ -47,7 +47,7 @@ public class SQLEstimateEngine {
             XMLPlan plan = null;
             if (rs.next()) {
                 String xml_plan = rs.getString(1);
-                System.out.println(xml_plan);
+                //System.out.println(xml_plan);
                 plan = PlanParser.xml_to_plan(xml_plan);
             }
 

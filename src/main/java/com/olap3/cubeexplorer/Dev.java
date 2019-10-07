@@ -87,6 +87,7 @@ public class Dev {
         test.add(new SelectionFragment(utils.fetchMember("Sexe", "Sexe", "Femmes")));
 
         System.out.println("\n--- BEGIN Star Join test ---");
+
         SQLFactory factory = new SQLFactory(utils);
         String SQLquery = factory.getStarJoin(test);
         System.out.println(SQLquery);
