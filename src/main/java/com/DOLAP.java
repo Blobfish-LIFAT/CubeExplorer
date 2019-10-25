@@ -1,7 +1,11 @@
 package com;
 
+import com.olap3.cubeexplorer.Compatibility;
+import com.olap3.cubeexplorer.StudentParser;
 import com.olap3.cubeexplorer.castor.session.CrSession;
+import com.olap3.cubeexplorer.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.im_olap.model.Query;
+import com.olap3.cubeexplorer.im_olap.model.QueryPart;
 import com.olap3.cubeexplorer.im_olap.model.Session;
 import com.olap3.cubeexplorer.info.CheckParents;
 import com.olap3.cubeexplorer.info.CheckRestriction;
@@ -32,7 +36,8 @@ public class DOLAP {
         LOGGER.info("DB Connection init complete");
 
         LOGGER.info("Loading test data from " + testData);
-        //TODO
+        var rawSessions = StudentParser.loadDir(testData);
+        var sessions = convertFromCr(rawSessions);
 
         LOGGER.info("Computing interestigness scores");
         //TODO
@@ -89,9 +94,13 @@ public class DOLAP {
 
         for (CrSession in : sessions){
             ArrayList<Query> queries = new ArrayList<>(in.getQueries().size());
+            for (QueryRequest qr : in.getQueries()){
+                queries.add(new Query(Compatibility.partsFromQfset(Compatibility.QfsetFromMDX(qr.getQuery()))));
+            }
+            Session current = new Session(queries, in.getUser().getName(), in.getTitle()); // TODO check properties we want
+            outSess.add(current);
         }
 
-
-        return outSess;//TODO conversion code
+        return outSess;
     }
 }
