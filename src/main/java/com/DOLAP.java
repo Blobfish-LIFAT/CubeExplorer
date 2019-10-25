@@ -1,14 +1,15 @@
 package com;
 
+import com.alexscode.utilities.collection.Pair;
+import com.google.common.graph.MutableValueGraph;
+import com.google.common.graph.ValueGraphBuilder;
 import com.olap3.cubeexplorer.Compatibility;
 import com.olap3.cubeexplorer.StudentParser;
 import com.olap3.cubeexplorer.castor.session.CrSession;
 import com.olap3.cubeexplorer.castor.session.QueryRequest;
 
-import com.olap3.cubeexplorer.im_olap.model.Query;
-import com.olap3.cubeexplorer.im_olap.model.QueryPart;
-import com.olap3.cubeexplorer.im_olap.model.Session;
-import com.olap3.cubeexplorer.im_olap.model.SessionGraph;
+import com.olap3.cubeexplorer.im_olap.compute.PageRank;
+import com.olap3.cubeexplorer.im_olap.model.*;
 import com.olap3.cubeexplorer.info.CheckParents;
 import com.olap3.cubeexplorer.info.CheckRestriction;
 import com.olap3.cubeexplorer.info.MDXAccessor;
@@ -51,6 +52,19 @@ public class DOLAP {
 
         LOGGER.info("Computing interestigness scores");
 
+        //System.out.println("Building topology graph...");
+        MutableValueGraph<QueryPart, Double> topoGraph = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
+        DimensionsGraph.injectSchema(topoGraph, schemaPath);
+        FiltersGraph.injectCompressedFilters(topoGraph, utils);
+        //System.out.println("Building Logs graph...");
+        MutableValueGraph<QueryPart, Double> logGraph = SessionGraph.buildFromLog(sessions);
+        //System.out.println("Building user Graph...");
+
+        MutableValueGraph<QueryPart, Double> base = SessionEvaluator
+                .<QueryPart>linearInterpolation(0.5, true)
+                .interpolate(topoGraph, ValueGraphBuilder.directed().allowsSelfLoops(true).build(), logGraph);
+
+        Pair<INDArray, HashMap<QueryPart, Integer>> ref = PageRank.pagerank(base, 50);
 
         LOGGER.info("[BEGIN] Tests");
 
