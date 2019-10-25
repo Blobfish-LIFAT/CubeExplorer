@@ -15,18 +15,18 @@ public class Compatibility {
 
         // Handle projections
         for (var pf : q.getAttributes()){
-            parts.add(new QueryPart(QueryPart.Type.DIMENSION, pf.toString()));//TODO check if string is the proper one
+            //parts.add(new QueryPart(QueryPart.Type.DIMENSION, pf.toString()));//TODO check if string is the proper one
             System.out.println(projectionToDimension(pf));
         }
 
         // Handle measures
         for (var mf : q.getMeasures()){
-            parts.add(new QueryPart(QueryPart.Type.MEASURE, mf.toString()));//TODO check if string is the proper one
+            //parts.add(new QueryPart(QueryPart.Type.MEASURE, mf.toString()));//TODO check if string is the proper one
         }
 
         //Handle Selection predicates
         for (var sf : q.getSelectionPredicates()){
-            parts.add(new QueryPart(QueryPart.Type.MEASURE, sf.getLevel().toString()));//TODO check if string is the proper one
+            //parts.add(new QueryPart(QueryPart.Type.MEASURE, sf.getLevel().toString()));//TODO check if string is the proper one
         }
 
         return parts;
@@ -41,6 +41,6 @@ public class Compatibility {
     public static QueryPart projectionToDimension(ProjectionFragment pf){
         var dim = pf.toString().replace("].[", "");
         dim = dim.substring(1, dim.length()-1);
-        return new QueryPart(QueryPart.Type.DIMENSION, dim);
+        return QueryPart.newDimension(dim);
     }
 }

@@ -1,5 +1,7 @@
 package com.olap3.cubeexplorer.im_olap.graph;
 
+
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -25,6 +27,17 @@ public class NOGraph<E extends Comparable<E>, N extends Comparable<N>> implement
 	    this.nodes = new TreeSet<>();
 	}
 
+	@Override
+	public Graph<E, N> clone() {
+
+		NOGraph<E, N> graph = new NOGraph<>();
+
+		graph.hashMap = new HashMap<>(this.hashMap);
+		graph.nodes = new TreeSet<>(this.nodes);
+
+		return graph;
+	}
+
 	/**
 	 * Return the number of edges of the non oriented graph (double the result
 	 * to get the number of edges that would be counted in an oriented graph)
@@ -47,12 +60,8 @@ public class NOGraph<E extends Comparable<E>, N extends Comparable<N>> implement
     }
 
 	@Override
-	public boolean addNode(N node) {
-	    if (this.nodes.contains(node)){
-	        return false;
-        }
-	    nodes.add(node);
-		return true;
+	public void addNode(N node) {
+	    this.nodes.add(node);
 	}
 
 	@Override
@@ -71,6 +80,11 @@ public class NOGraph<E extends Comparable<E>, N extends Comparable<N>> implement
 		}
 
 		this.hashMap.put(new CPair<>(node1, node2), value);
+	}
+
+	@Override
+	public void removeNodeEdgesKeepNode(N node) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

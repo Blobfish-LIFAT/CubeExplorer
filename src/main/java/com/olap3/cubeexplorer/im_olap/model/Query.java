@@ -1,6 +1,7 @@
 package com.olap3.cubeexplorer.im_olap.model;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,11 +9,13 @@ public class Query {
     Set<QueryPart> dimensions;
     Set<QueryPart> filters;
     Set<QueryPart> measures;
+    HashMap<String, Object> properties;
 
-    Query(){
+    public Query(){
         dimensions = new HashSet<>();
         filters = new HashSet<>();
         measures = new HashSet<>();
+        properties = new HashMap<>();
     }
 
     public Query(Collection<QueryPart> parts){
@@ -31,6 +34,37 @@ public class Query {
             result[i++] = p;
         }
         return result;
+    }
+
+    public HashSet<QueryPart> getAllParts() {
+        HashSet<QueryPart> allParts = new HashSet<>(this.getDimensions());
+        allParts.addAll(this.getFilters());
+        allParts.addAll(this.getMeasures());
+        return allParts;
+    }
+
+    public Set<QueryPart> getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(Set<QueryPart> dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public Set<QueryPart> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(Set<QueryPart> filters) {
+        this.filters = filters;
+    }
+
+    public Set<QueryPart> getMeasures() {
+        return measures;
+    }
+
+    public void setMeasures(Set<QueryPart> measures) {
+        this.measures = measures;
     }
 
     @Override
@@ -56,5 +90,9 @@ public class Query {
                     break;
             }
         });
+    }
+
+    public HashMap<String, Object> getProperties() {
+        return properties;
     }
 }

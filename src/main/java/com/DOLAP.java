@@ -4,10 +4,7 @@ import com.olap3.cubeexplorer.Compatibility;
 import com.olap3.cubeexplorer.StudentParser;
 import com.olap3.cubeexplorer.castor.session.CrSession;
 import com.olap3.cubeexplorer.castor.session.QueryRequest;
-import com.olap3.cubeexplorer.im_olap.Nd4jUtils;
-import com.olap3.cubeexplorer.im_olap.graph.Graphs;
-import com.olap3.cubeexplorer.im_olap.graph.OGraph;
-import com.olap3.cubeexplorer.im_olap.graph.PageRank;
+
 import com.olap3.cubeexplorer.im_olap.model.Query;
 import com.olap3.cubeexplorer.im_olap.model.QueryPart;
 import com.olap3.cubeexplorer.im_olap.model.Session;
@@ -31,7 +28,6 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-import static com.olap3.cubeexplorer.im_olap.graph.PageRank.normalizeRowsi;
 
 public class DOLAP {
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
@@ -54,33 +50,7 @@ public class DOLAP {
         var sessions = convertFromCr(rawSessions);
 
         LOGGER.info("Computing interestigness scores");
-        OGraph<Double, QueryPart> base = SessionGraph.buildTopologyGraph(sessions, schemaPath);
-        SessionGraph.injectCousins(base, sessions);
 
-        //OGraph<Double, QueryPart> usage = SessionGraph.buildUsageGraph(base.getNodes(), user);
-
-        //usage.getNodes().forEach(base::addNode);
-        base.getNodes().forEach(n -> base.setEdge(n,n,1.0));
-
-        INDArray topology = Graphs.sortedINDMatrix(base);
-        //INDArray tp = Graphs.sortedINDMatrix(usage);
-
-        INDArray uniform = Nd4j.ones(topology.shape());
-
-        normalizeRowsi(topology);
-        //normalizeRowsi(tp);
-        normalizeRowsi(uniform);
-
-        // (1-e)*((1-a)*topo - a*tp) + e*uniform
-        //INDArray pr = topology.mul(1-alpha).add(tp.mul(alpha)).mul(1 - epsilon).add(uniform.mul(epsilon));
-        //INDArray pr = topology.mul(1-alpha).add(tp.mul(alpha));
-        // without user
-        INDArray pru = topology.mul(1 - epsilon).add(uniform.mul(epsilon));
-
-        //INDArray pinf = PageRank.pageRank(pr, 42);
-        //System.out.println(userProfile + ";" + df.format(alpha) + ";" + Nd4jUtils.vecToString(pinf, ","));
-        INDArray pinfu = PageRank.pageRank(pru, 42);
-        System.out.println("Page Rank" + ";" + df.format(alpha) + ";" + Nd4jUtils.vecToString(pinfu, ","));
 
         LOGGER.info("[BEGIN] Tests");
 

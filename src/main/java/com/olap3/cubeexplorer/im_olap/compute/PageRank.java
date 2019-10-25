@@ -1,7 +1,14 @@
-package com.olap3.cubeexplorer.im_olap.graph;
+package com.olap3.cubeexplorer.im_olap.compute;
 
+import com.alexscode.utilities.collection.Pair;
+import com.google.common.graph.MutableValueGraph;
+import com.olap3.cubeexplorer.im_olap.graph.Graph;
+import com.olap3.cubeexplorer.im_olap.graph.Graphs;
+import com.olap3.cubeexplorer.im_olap.graph.NOGraph;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
+
+import java.util.HashMap;
 
 public class PageRank {
     private PageRank(){}
@@ -34,14 +41,13 @@ public class PageRank {
      * Calculate the probability distribution for each node after convergence
      * @param weights the line-normalized transition matrix
      * @param iter number of iterration
-     * @param <N> type of nodes
      * @return a mapping from nodes to their probability of apparition after iter iterations
      */
-    public static <N extends Comparable<N>> INDArray pageRank(
+    public static INDArray pageRank(
             INDArray weights,
             int iter){
 
-        INDArray matrix = weights.dup();
+        INDArray matrix = weights; //weights.dup();
 
         INDArray vector = Nd4j.ones(1, matrix.size(0));
         vector.divi(matrix.size(0));
@@ -52,6 +58,39 @@ public class PageRank {
 
         return vector;
     }
+
+    /**
+     * Compute pageRank results for a compatible graph object
+     * @param graph
+     * @param iter number of page rank iterations (for convergence)
+     * @param <N> type of graph node, used for node mapping
+     * @return distribution vector with node to index mapping
+     */
+    public static <N extends Comparable<N>> Pair<INDArray, HashMap<N, Integer>> pagerank(
+            Graph<Double, N> graph,
+            int iter) {
+
+        Pair<INDArray, HashMap<N, Integer>> temp = Graphs.toINDMatrix(graph);
+
+        return new Pair<>(pageRank(temp.left, iter), temp.right);
+    }
+
+    /**
+     * Compute pageRank results for a compatible graph object
+     * @param graph
+     * @param iter number of page rank iterations (for convergence)
+     * @param <N> type of graph node, used for node mapping
+     * @return distribution vector with node to index mapping
+     */
+    public static <N> Pair<INDArray, HashMap<N, Integer>> pagerank(
+            MutableValueGraph<N, Double> graph,
+            int iter) {
+
+        Pair<INDArray, HashMap<N, Integer>> temp = Graphs.toINDMatrix(graph);
+
+        return new Pair<>(pageRank(temp.left, iter), temp.right);
+    }
+
 
     public static void main(String[] args){
 
