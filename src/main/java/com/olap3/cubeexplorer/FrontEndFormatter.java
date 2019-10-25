@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.olap3.cubeexplorer.castor.response.CastorJsonResponse;
 import com.olap3.cubeexplorer.castor.response.CastorTable;
 import com.olap3.cubeexplorer.castor.session.QueryRequest;
-import com.olap3.cubeexplorer.castor.session.Session;
+import com.olap3.cubeexplorer.castor.session.CrSession;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.olap.CellSet;
 import mondrian.parser.TokenMgrError;
@@ -14,7 +14,6 @@ import org.olap4j.OlapConnection;
 import org.olap4j.OlapStatement;
 import org.olap4j.OlapWrapper;
 
-import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -22,7 +21,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class FrontEndFormatter {
         return "{}";//TODO
     }
 
-    public static String buildJson(Session session) throws SQLException{
+    public static String buildJson(CrSession session) throws SQLException{
         Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
         OlapWrapper wrapper = (OlapWrapper) connection;
         OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
@@ -61,7 +59,7 @@ public class FrontEndFormatter {
      * Test code
      */
     public static void main(String[] args) throws Exception{
-        List<Session> sessions = StudentParser.loadDir("data/studentSessions");
+        List<CrSession> sessions = StudentParser.loadDir("data/studentSessions");
         sessions.sort(Comparator.comparing(session -> session.getTitle()));
 
         for (int i = 0; i < sessions.size(); i++) {

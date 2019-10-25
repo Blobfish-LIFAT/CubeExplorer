@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 /**
- * A user query from a {@link Session}
+ * A user query from a {@link CrSession}
  */
 public class QueryRequest {
 

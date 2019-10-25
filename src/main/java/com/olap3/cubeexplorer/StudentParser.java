@@ -2,16 +2,14 @@ package com.olap3.cubeexplorer;
 
 import com.alexscode.utilities.Future;
 import com.olap3.cubeexplorer.castor.session.QueryRequest;
-import com.olap3.cubeexplorer.castor.session.Session;
+import com.olap3.cubeexplorer.castor.session.CrSession;
 import com.olap3.cubeexplorer.castor.session.User;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,12 +19,12 @@ public class StudentParser {
     static Pattern rqNumber = Pattern.compile("--(\\d*)");
 
 
-    public static Session loadFile(String path){
+    public static CrSession loadFile(String path){
         return loadFile(Paths.get(path));
     }
 
 
-    public static Session loadFile(Path path){
+    public static CrSession loadFile(Path path){
         var fname = path.getFileName().toString().replace(".txt", "").split("-");
         var usr = new User(fname[1], fname[1], fname[0]);
 
@@ -83,10 +81,10 @@ public class StudentParser {
         }
 
 
-        return new Session(usr, "Cube1MobProInd", path.getFileName().toString(), Future.join(sesComments, "\n"), reqs);
+        return new CrSession(usr, "Cube1MobProInd", path.getFileName().toString(), Future.join(sesComments, "\n"), reqs);
     }
 
-    public static List<Session> loadDir(String path){
+    public static List<CrSession> loadDir(String path){
         if (!Files.isDirectory(Paths.get(path))){
             System.err.printf("Warning '%s' is not a valid directory !", path);
         }
@@ -102,7 +100,7 @@ public class StudentParser {
      * Test code
      */
     public static void main(String[] args) throws Exception{
-        Session session = loadFile("data/studentSessions/4-19.txt");
+        CrSession session = loadFile("data/studentSessions/4-19.txt");
         System.out.println("Session size = " + session.getQueries().size());
         for (var q : session.getQueries()){
             System.out.println("--- Query ---");

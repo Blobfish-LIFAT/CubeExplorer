@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.castor.session;
 
 /**
- * A user from a {@link Session}
+ * A user from a {@link CrSession}
  */
 public class User {
 

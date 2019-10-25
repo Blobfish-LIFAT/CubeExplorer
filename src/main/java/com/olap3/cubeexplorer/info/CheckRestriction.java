@@ -38,7 +38,6 @@ public class CheckRestriction extends InfoCollector {
                 var ml = MLModelFactory.newInstance(model);
                 possibleICs.add(new CheckRestriction(da, ml));
             }
-
         }
 
         return possibleICs;

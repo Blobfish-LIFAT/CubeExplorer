@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Json model for user session (see "resources/logs")
  */
-public class Session {
+public class CrSession {
 
     /**
      * User of the session
@@ -34,7 +34,7 @@ public class Session {
      */
     private List<QueryRequest> queries;
 
-    public Session(User user, String cube, String title, String comment, List<QueryRequest> queries) {
+    public CrSession(User user, String cube, String title, String comment, List<QueryRequest> queries) {
         this.user = user;
         this.cube = cube;
         this.title = title;
@@ -42,7 +42,7 @@ public class Session {
         this.queries = queries;
     }
 
-    public Session(User user, String cube, String title, String comment) {
+    public CrSession(User user, String cube, String title, String comment) {
         this.user = user;
         this.cube = cube;
         this.title = title;
