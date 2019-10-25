@@ -225,6 +225,11 @@ public class Qfset implements java.io.Serializable {
         Evaluator re = RolapEvaluator.create(mondrianQuery.getStatement());
         ExpCompiler c = mondrianQuery.createCompiler();
 
+        if (e.getClass().getName().equals("mondrian.olap.Literal")) {
+            //System.out.println(((Literal) e).getValue());
+            return;
+        }
+
         if (e.getCategory() == Category.Member) {	// single member, needed if {member1, member2, ...}
             processMember(e);
         } else {

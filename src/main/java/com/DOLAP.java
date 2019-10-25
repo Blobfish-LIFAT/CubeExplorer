@@ -4,9 +4,14 @@ import com.olap3.cubeexplorer.Compatibility;
 import com.olap3.cubeexplorer.StudentParser;
 import com.olap3.cubeexplorer.castor.session.CrSession;
 import com.olap3.cubeexplorer.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.im_olap.Nd4jUtils;
+import com.olap3.cubeexplorer.im_olap.graph.Graphs;
+import com.olap3.cubeexplorer.im_olap.graph.OGraph;
+import com.olap3.cubeexplorer.im_olap.graph.PageRank;
 import com.olap3.cubeexplorer.im_olap.model.Query;
 import com.olap3.cubeexplorer.im_olap.model.QueryPart;
 import com.olap3.cubeexplorer.im_olap.model.Session;
+import com.olap3.cubeexplorer.im_olap.model.SessionGraph;
 import com.olap3.cubeexplorer.info.CheckParents;
 import com.olap3.cubeexplorer.info.CheckRestriction;
 import com.olap3.cubeexplorer.info.MDXAccessor;
@@ -19,14 +24,23 @@ import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.factory.Nd4j;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
+import static com.olap3.cubeexplorer.im_olap.graph.PageRank.normalizeRowsi;
+
 public class DOLAP {
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
-    static final String testData = "./data/studentSessions";
+    static final String testData = "./data/studentSessions",
+            schemaPath  = "./data/cubeSchemas/DOPAN_DW3.xml";
     static CubeUtils utils;
+    static double alpha = 0.5, epsilon = 0.005;
+    static DecimalFormat df = new DecimalFormat("#.##");
+
 
     public static void main(String[] args) {
         LOGGER.info("Init Starting");
@@ -40,7 +54,33 @@ public class DOLAP {
         var sessions = convertFromCr(rawSessions);
 
         LOGGER.info("Computing interestigness scores");
-        //TODO
+        OGraph<Double, QueryPart> base = SessionGraph.buildTopologyGraph(sessions, schemaPath);
+        SessionGraph.injectCousins(base, sessions);
+
+        //OGraph<Double, QueryPart> usage = SessionGraph.buildUsageGraph(base.getNodes(), user);
+
+        //usage.getNodes().forEach(base::addNode);
+        base.getNodes().forEach(n -> base.setEdge(n,n,1.0));
+
+        INDArray topology = Graphs.sortedINDMatrix(base);
+        //INDArray tp = Graphs.sortedINDMatrix(usage);
+
+        INDArray uniform = Nd4j.ones(topology.shape());
+
+        normalizeRowsi(topology);
+        //normalizeRowsi(tp);
+        normalizeRowsi(uniform);
+
+        // (1-e)*((1-a)*topo - a*tp) + e*uniform
+        //INDArray pr = topology.mul(1-alpha).add(tp.mul(alpha)).mul(1 - epsilon).add(uniform.mul(epsilon));
+        //INDArray pr = topology.mul(1-alpha).add(tp.mul(alpha));
+        // without user
+        INDArray pru = topology.mul(1 - epsilon).add(uniform.mul(epsilon));
+
+        //INDArray pinf = PageRank.pageRank(pr, 42);
+        //System.out.println(userProfile + ";" + df.format(alpha) + ";" + Nd4jUtils.vecToString(pinf, ","));
+        INDArray pinfu = PageRank.pageRank(pru, 42);
+        System.out.println("Page Rank" + ";" + df.format(alpha) + ";" + Nd4jUtils.vecToString(pinfu, ","));
 
         LOGGER.info("[BEGIN] Tests");
 
@@ -88,6 +128,7 @@ public class DOLAP {
 
         return queries;
     }
+
 
     public static List<Session> convertFromCr(List<CrSession> sessions){
         ArrayList<Session> outSess = new ArrayList<>(sessions.size());
