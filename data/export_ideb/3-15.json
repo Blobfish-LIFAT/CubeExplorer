@@ -1,0 +1,42 @@
+{
+  "user": {
+    "id": "15",
+    "name": "15",
+    "group": "3"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "3-15.txt",
+  "comment": " Besoin : Expliquer la durée moyenne domicile-travail par niveau d\u0027instruction pour les déplacement en voiture, camion ou fourgonnette",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members))), CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members))))) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Supposition : Les personnes aient un emploie stable CDI qui ont plus tendance à faire des trajets domicile travail plus long peu importe le niveau d\u0027instruction.\nRésultat :  Les données sur la durée du trajet domicile travail sur les personnes en CDI n\u0027est jamais celui qui à une durée de trajet grande par rapport au niveau d\u0027étude. Il est plus disparate pour le reste de type de travail. Résultat étrange pour les stagiaires rémunérés aient un niveau de BEPC avec un résultat 342.54."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027occupation du logement.STOCLOGT_Hierarchie].[Statut d\u0027occupation].Members)) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Résultat : Disparité des données dans deux colonne : locataire et hors logement ordinaire peu importe au niveau d\u0027étude. pour les autres colonne assez regroupé sauf pour les CEP."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members)) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Résultat : les ménages avec plusieur personne ont temps de trajet plus grandes surtout pour les niveaux d\u0027étude bas avec des disparités entre même catégorie de niveau d\u0027étude. Alors que chez les autres type de ménage la durée du trajet augmente par rapport au niveau d\u0027instruction."
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Adultes d\u0027un couple avec enfant(s)]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Adultes d\u0027un couple sans enfant]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Adultes d\u0027une famille monoparentale]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Enfants d\u0027un couple]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Enfants d\u0027une famille monoparentale]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Hors famille dans ménage de plusieurs personnes]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation inconnu]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Personnes vivant seules]})), CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Sans objet]}))))))))))) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Résultat  : Plu le niveau d\u0027instruction est haut plus le temps de trajet est grand."
+    },
+    {
+      "id": 5,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members})} ON ROWS\nFROM [Cube1MobProInd]\n ",
+      "comments": " Résultat : les homme ont plus tendance à avoir un temp de trajet plus élevé que celui des femmes. De plus le niveau d\u0027instruction influe pareil chez les hommes que chez les femmes."
+    },
+    {
+      "id": 6,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members))) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Commentaire : même constatation les hommes ont une durée de trajet plus grand quand leur lieu de travail est différent du lieu de résidence. De même pour le niveau d\u0027instruction plus la personne à un niveau haut plus la durée est grande.\nDe suite de ses analyse on peut dire que le niveau d\u0027instruction influe sur la durée du trajet domicile travail  en véhicule motorisé. Que les hommes peu importe leur situation leur temps de trajet sera plus haut que celui des femmes. les personnes qui n\u0027ont pas d\u0027emploie fix auront tendances à avoir des temps de trajet plus élevés ainsi que les personnes qui sont locataires auront aussi tendances à avoir une durée plus longue."
+    }
+  ]
+}

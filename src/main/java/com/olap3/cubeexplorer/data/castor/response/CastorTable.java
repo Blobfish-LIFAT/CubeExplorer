@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.castor.response;
+package com.olap3.cubeexplorer.data.castor.response;
 
 
 

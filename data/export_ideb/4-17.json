@@ -1,0 +1,27 @@
+{
+  "user": {
+    "id": "17",
+    "name": "17",
+    "group": "4"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "4-17.txt",
+  "comment": "Besoin : Expliquer la durée moyenne domicile-travail par statut d\u0027emplois et nature de l\u0027activité économique",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Pour le statut d\u0027emploi de niveau 1, on remarque que la durée moyenne domicile-travail de salariés  est supérieure à celle des non-salariés et ça pour chaque nature de l\u0027activité économique. Cela s\u0027explique par le fait que les salariés sont plus en mobilité de parcourir une certaine durée que les non-salariés car sinon ces derniers risqueraient d\u0027avoir un problème de transport pour se rendre à leur lieu de travail. "
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pour le statut d\u0027emploi de niveau 2, on remarque une variété de salariés. Pour le salariée en formation, les salariés non précaires et les salariés précaires, on note une différence acceptable pour leur durée moyenne, vu qu\u0027ils sont tous salariés mais se différent seulement par leur durée de contrat. Par contre pour la nature de l\u0027activité « Construction » on note une différence trop large pour les salariés précaires par rapport aux autres. Et pour les non-salariés, leur durée moyenne pour chaque nature de l\u0027activité est inférieure à celle des autres salariés, ce qui est normal vu qu\u0027ils ne perçoivent pas de salaire  pour pouvoir se payer une longue durée."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pour le statut d\u0027emploi de niveau 3, on remarque que les stagiaires rémunérés en entreprise parcourent une durée moyenne beaucoup plus important que les autres statuts d\u0027emploi, mais on note une exception par rapport aux emplois-jeunes, CES, contrats de qualification qui ont comme nature d\u0027activité « Construction », qui font une durée moyenne très  élevé par rapport aux autres."
+    }
+  ]
+}

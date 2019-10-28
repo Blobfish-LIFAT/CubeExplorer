@@ -1,0 +1,122 @@
+{
+  "user": {
+    "id": "19",
+    "name": "19",
+    "group": "4"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "4-19.txt",
+  "comment": "Besoin : \nExpliquer la durée moyenne domicile-travail par statut d\u0027emplois et nature de l\u0027activité économique",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Les salariés précaire mettent plus de temps que les autres statue d’emplois, Ils habitent plus loin de leur travail ?"
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Deux roues]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Mode inconnu].[Mode inconnu]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Sans objet].[Sans objet]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members))))))) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Deux roues]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Mode inconnu].[Mode inconnu]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members), CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Sans objet].[Sans objet]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members))))))) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Les stagiaires et les employés a durée limité mettent le plus de temps en moyenne pour rejoindre leur travail, Sont il salariés en situation de précarité ?"
+    },
+    {
+      "id": 5,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({{[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 6,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 7,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 8,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Les emplois jeune en construction sont clairement les plus touché\nLes jeunes en générale ?"
+    },
+    {
+      "id": 9,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Oui, les 15-29ans mettent plus de temps que les autres pour se rendre au travail ?\nHabitent encore chez leur parent ? S’installe tout seul a partir de 30 car enfant a charge ?"
+    },
+    {
+      "id": 10,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Femme et homme entre 30 et 50 ans se déplace moins longtemps que femme autre age -\u003e Peut etre Enfant a partir de 30 ans et occupe jusqu\u0027a 50 ans donc habite plus près du travail"
+    },
+    {
+      "id": 11,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Peut importe la nature de l\u0027activité, les hommes se déplace plus longtemps que femme, famille monoparentale composé d’une femme ?"
+    },
+    {
+      "id": 12,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 13,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 14,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Un salarié met toujours plus de temps qu\u0027un non salarié"
+    },
+    {
+      "id": 15,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Temps d\u0027emploi.TEMPSEMP_Hierarchie].[Temps d\u0027emploi].Members, CrossJoin([Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1].Members)) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 16,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Temps d\u0027emploi.TEMPSEMP_Hierarchie].[Temps d\u0027emploi].Members, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 17,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1].Members, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Pour les salarié : trajet  plus long quand la personne est diplomé"
+    },
+    {
+      "id": 18,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Peut importe le statue d’emplois, les plus diplômés se déplace plus que les autres\nLes jeunes sont plus diplomé vue qu’ils mettent plus de temps  ?"
+    },
+    {
+      "id": 19,
+      "query": "SELECT NON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Les jeunes ne sont pas plus diplomé"
+    },
+    {
+      "id": 20,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 21,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 22,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Niveau de motorisation du menage.Niveau_motorisation_Hierarchie].[Niveau de motorisation].Members, [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Chez les stagiaires ( qui mettent le plus de temps en moyenne) le domaine le plus touché est Administration publique, enseignement, santé humaine et action sociale."
+    }
+  ]
+}

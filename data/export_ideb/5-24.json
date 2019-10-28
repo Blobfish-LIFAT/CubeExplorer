@@ -1,0 +1,32 @@
+{
+  "user": {
+    "id": "24",
+    "name": "24",
+    "group": "5"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "5-24.txt",
+  "comment": " Besoin : Expliquer le nombre d\u0027individus, la durée minimale, moyenne et maximale domicile-travail par lieu de travail et de résidence.",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus]}})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinence : On peut voir que la plupart des personnes travaille dans la meme commune que celle où ils habitent."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinence : On peut voir que les femmes ont moins de durée de trajet que les hommes. Les femmes privilegie un travail plus proche de leur domicile."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinence : On peut voir que les personnes sans diplomes choisissent en priorité un travail proche de leur domicile."
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY CrossJoin([Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members, {[Measures].[Duree trajet domicile - travail (moyenne)]}) ON COLUMNS,\nNON EMPTY {Hierarchize({[Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinence : On peut se rendre compte que plus une personne est âgée plus elle a de chance de s\u0027éloigner de sa commune de résidence."
+    }
+  ]
+}

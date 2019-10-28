@@ -1,0 +1,37 @@
+{
+  "user": {
+    "id": "16",
+    "name": "16",
+    "group": "4"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "4-16.txt",
+  "comment": " Expliquer la durée moyenne domicile-travail par statut d\u0027emplois et nature de l\u0027activité économique",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Cette requête affiche la distance moyenne trajet-travail de personnes ayant différents statuts d\u0027emploi dans différents domaines."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "On observe que les salariés ayant des emplois courts ou vacataires mettent nettement plus de temps à aller à leur lieu de travail lorsque ces derniers sont des emplois liés à la construction, ou encore en commerce, transports et services divers. En effet, ces natures d\u0027activité économique concernent des emplois urbains.\nCependant, le Loir-et-Cher est une région rurale, et il semblerait que pour ces types de salariés, la durée soit plus longue car ces domaines sont principalements situés en lieu urbain, et leur contrat de travail ne dure pas assez longtemps pour qu\u0027ils décident d\u0027emménager près du lieu de travail. "
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[Stagiaires rémunérés en entreprise]})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Au contraire, on observe chez les stagiaires rémunérés, que le temps de trajet est plus court dans les secteurs du commerce et de la construction. En effet, ils mettent en moyenne 24.88 minutes de trajet pour les stages en commerce, transports et services divers, et 27.60 minutes\ndans le domaine de la construction, tandis que dans les autres domaines la durée est beaucoup plus grande. On peut en déduire qu\u0027il y a soit plus d\u0027offres ou moins de demandes de stages dans ces domaines."
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[tous les statuts confondus]})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Sur cette requête, on observe que le temps de trajet moyen pour les emplois de nature \"Agriculture, sylviculture et pêche\" pour tout statut confondu, est inférieure à ceux des autres emplois de différentes natures. On peut conclure que beaucoup d\u0027employés\nagriculteurs, sylviculteurs ou pêcheurs travaillent à leur domicile, ce qui baisse nettement la moyenne."
+    },
+    {
+      "id": 5,
+      "query": "SELECT NON EMPTY Order(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, {[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Agriculture, sylviculture et pêche]}), [Nature l\u0027activite economique.NATACTECO_Hierarchie].CurrentMember.Name, BDESC) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Par extension de la requête précédente, les stagiaires en agriculture, sylviculture et pêche ont un temps de trajet nettement plus long. En effet, les agriculteurs, sylviculteurs et pêcheurs non-stagiaires se sont installés à proximité puisque c\u0027est leur lieu de travail,\ntandis que les stagiaires découvrent l\u0027emploi et habitent probablement en ville."
+    }
+  ]
+}

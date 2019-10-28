@@ -5,15 +5,12 @@ import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.olap3.cubeexplorer.Compatibility;
 import com.olap3.cubeexplorer.StudentParser;
-import com.olap3.cubeexplorer.castor.session.CrSession;
-import com.olap3.cubeexplorer.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.data.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 
 import com.olap3.cubeexplorer.im_olap.compute.PageRank;
 import com.olap3.cubeexplorer.im_olap.model.*;
-import com.olap3.cubeexplorer.info.CheckParents;
-import com.olap3.cubeexplorer.info.CheckRestriction;
 import com.olap3.cubeexplorer.info.MDXAccessor;
-import com.olap3.cubeexplorer.info.MLModelFactory;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
@@ -23,7 +20,6 @@ import mondrian.olap.Connection;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 import org.nd4j.linalg.api.ndarray.INDArray;
-import org.nd4j.linalg.factory.Nd4j;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -52,13 +48,13 @@ public class DOLAP {
 
         LOGGER.info("Computing interestigness scores");
 
-        //System.out.println("Building topology graph...");
+        System.out.println("Building topology graph...");
         MutableValueGraph<QueryPart, Double> topoGraph = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
         DimensionsGraph.injectSchema(topoGraph, schemaPath);
         FiltersGraph.injectCompressedFilters(topoGraph, utils);
-        //System.out.println("Building Logs graph...");
+        System.out.println("Building Logs graph...");
         MutableValueGraph<QueryPart, Double> logGraph = SessionGraph.buildFromLog(sessions);
-        //System.out.println("Building user Graph...");
+        System.out.println("Building user Graph...");
 
         MutableValueGraph<QueryPart, Double> base = SessionEvaluator
                 .<QueryPart>linearInterpolation(0.5, true)
@@ -67,6 +63,10 @@ public class DOLAP {
         Pair<INDArray, HashMap<QueryPart, Integer>> ref = PageRank.pagerank(base, 50);
 
         LOGGER.info("[BEGIN] Tests");
+        for (var node : topoGraph.nodes()){
+            if (node.isMeasure())
+                System.out.println(node);
+        }
 
     }
 

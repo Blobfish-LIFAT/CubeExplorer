@@ -1,9 +1,10 @@
-package com.olap3.cubeexplorer.im_olap.data;
+package com.olap3.cubeexplorer.data;
 
 import com.google.gson.Gson;
 import com.olap3.cubeexplorer.im_olap.model.Query;
 import com.olap3.cubeexplorer.im_olap.model.QueryPart;
 import com.olap3.cubeexplorer.im_olap.model.Session;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,7 +13,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.olap3.cubeexplorer.im_olap.model.QueryPart.Type.*;
 
 public class DopanLoader {
     static Gson gson = new Gson();

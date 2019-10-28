@@ -1,0 +1,32 @@
+{
+  "user": {
+    "id": "13",
+    "name": "13",
+    "group": "3"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "3-13.txt",
+  "comment": " Besoin : Expliquer la durée moyenne domicile-travail par niveau d\u0027instruction \n pour les déplacement en voiture, camion ou fourgonette",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, \n{[Measures].[Duree trajet domicile - travail (moyenne)]}), CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, \n{[Measures].[Distance trajet domicile - travail (moyenne)]}))) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinente : On remarque une faible disparité. La moyenne sur tout des niveau\n est entre 18 et 28 minutes."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, \nCrossJoin([Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members,\n [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members)) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Remarque : les durées de trajet varient aléatoirement entre les communes avec beaucoup\n de cas de personnes qui travaillent localement et c\u0027est les gens diplomés génréralement\n qui commutent le plus"
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, \n{[Measures].[Duree trajet domicile - travail (moyenne)]}) ON COLUMNS,\nNON EMPTY CrossJoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members, \n[Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Remarque : plus de durées de trajets réparties sur 3 catégories de personnes diplomés\n les cadres , les employées et les pratiquants de professions intermédiaires"
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, \n{[Measures].[Duree trajet domicile - travail (moyenne)]}), \nCrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Measures].[Nombre total d\u0027individus]}))) ON COLUMNS,\nNON EMPTY CrossJoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members,\n [Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Conclusion : l\u0027équilibre de durée de trajet par niveau d\u0027instruction est dû \n à la répartition des travailleurs sur des métiers qui nécessitent de la commutation\n et d\u0027autres qui nécessitent le travail local, avec une grande marge d\u0027excéption bien sûr."
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "queries": [
+    {
+      "mdx": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2].Members))), CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members))))) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 2]",
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 2]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        }
+      ]
+    },
+    {
+      "mdx": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Statut d\u0027occupation du logement.STOCLOGT_Hierarchie].[Statut d\u0027occupation].Members)) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Statut d\u0027occupation]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 2]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        }
+      ]
+    },
+    {
+      "mdx": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories].Members)) ON COLUMNS,\nNON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members}})} ON ROWS\nFROM [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 2]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        }
+      ]
+    },
+    {
+      "mdx": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Adultes d\u0027un couple avec enfant(s)]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Adultes d\u0027un couple sans enfant]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Adultes d\u0027une famille monoparentale]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Enfants d\u0027un couple]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Enfants d\u0027une famille monoparentale]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Hors famille dans ménage de plusieurs personnes]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation inconnu]})), Union(CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Personnes vivant seules]})), CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Sans objet]}))))))))))) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Adultes d\u0027un couple avec enfant(s)"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Personnes vivant seules"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Enfants d\u0027un couple"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Hors famille dans ménage de plusieurs personnes"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Sans objet"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Mode de cohabitation inconnu"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Adultes d\u0027une famille monoparentale"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Adultes d\u0027un couple sans enfant"
+        },
+        {
+          "level": "[Mode de cohabitation.MODCOHAB_Hierarchie_1].[Mode de cohabitation]",
+          "value": "Enfants d\u0027une famille monoparentale"
+        }
+      ]
+    },
+    {
+      "mdx": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members})} ON ROWS\nFROM [Cube1MobProInd]\n ",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        }
+      ]
+    },
+    {
+      "mdx": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, CrossJoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, CrossJoin([Sexe.Sexe_Hierarchie].[Sexe].Members, [Indicateur de lieu de travail.ILOCC_Hierarchie_1].[Indicateur de lieu].Members))) ON COLUMNS,\nNON EMPTY {Hierarchize({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Indicateur de lieu]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 2]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        }
+      ]
+    }
+  ],
+  "user": "15",
+  "id": "15",
+  "cubeFile": "res/cubeSchemas/DOPAN_DW3.xml",
+  "len": 6
+}

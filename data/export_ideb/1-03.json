@@ -1,0 +1,67 @@
+{
+  "user": {
+    "id": "03",
+    "name": "03",
+    "group": "1"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "1-03.txt",
+  "comment": " Besoin : expliquer la distance moyenne domicile-travail dans l\u0027Agglopolys pour les salariés.",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Nombre total d\u0027individus]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pour commencer, quelques requêtes pour mieux connaître la population qui nous intéresse : ici, on voit que les salariés d\u0027Agglopolys représentent environ 40% des salariés du Loir-et-Cher."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Nombre total d\u0027individus]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Les salariés représentent plus de 90% des travailleurs sur Agglopolys."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " On constate que la distance moyenne domicile-travail dans Agglopolys (17 km) est nettement inférieure que dans les autres communautés de communes du Loir-et-Cher. Seul le Grand Chambord affiche le même ordre de grandeur."
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Nombre total d\u0027individus]})} ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 5,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Nombre total d\u0027individus]})} ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Les deux requêtes précédentes vérifient que Agglopolys, et tout particulièrement Blois, sont de loin le premier bassin d\u0027emploi du Loir-et-Cher (Blois emploie un quart de tous les salariés). Cela ne démontre rien en soi, mais étant donné que l\u0027agglomération blésoise est également la plus peuplée, on peut supposer que la majorité des habitants d\u0027Agglopolys travaillent également dans Aggopolys, faisant baisser la distance moyenne."
+    },
+    {
+      "id": 6,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Nombre total d\u0027individus]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pour vérifier l\u0027hypothèse précédente, cette requête croise les communautés de communes de travail (rangées) avec celles de domicile (colonnes). Le tableau est difficile à lire en l\u0027état, mais en affichant les vues \"camembert\" associées, on constate bien que les habitants d\u0027Agglopolys sont ceux qui restent le plus dans leur agglomération pour travailler (83%), ce taux étant en moyenne aux alentours de 50% dans les autres communautés de communes. C\u0027est la probablement l\u0027une des principales raisons expliquant la faible distance de trajet moyenne depuis Agglopolys."
+    },
+    {
+      "id": 7,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d\u0027individus]}), Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(CrossJoin(Filter({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0)), {[Measures].[Nombre total d\u0027individus]}), CrossJoin(Filter({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0)), {[Measures].[Distance trajet domicile - travail (moyenne)]}))))) ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " La plupart des habitants d\u0027Agglopolys travaillant dans Agglopolys, on étudie ici les tendances des trajets au sein même d\u0027Agglopolys. Ce qui est important de constater ici, c\u0027est que plus de 11 000 salariés d\u0027Agglopolys (plus du quart) effectuent un simple trajet Blois-Blois, d\u0027en moyenne 7 km. C\u0027est un autre élément qui doit contribuer à considérablement baisser la distance moyenne, en comparaison avec les autres communautés de communes qui ne possèdent pas de centre urbain aussi important."
+    },
+    {
+      "id": 8,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Nombre total d\u0027individus]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Ici, on constate que Agglopolys concentre une part plus importante de cadres et de professions intermédiaires (46 et 37 %) que d\u0027employés et d\u0027ouvriers (32 et 26 %). On peut supposer que les cadres, ayant des moyens plus élevés, peuvent se loger en centre-ville et donc effectuer des trajets plus courts."
+    },
+    {
+      "id": 9,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Cette requête vient contredire la précédente supposition : les cadres effectuent en moyenne des trajets bien plus élevés que les autres CSP, y compris pour ceux vivant dans Agglopolys."
+    },
+    {
+      "id": 10,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members) ON COLUMNS,\nNON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " On voit ici que les salariés de moins de 40 ans on tendance à parcourir plus de distance que les plus de 40 ans dans le Loir-et-Cher."
+    },
+    {
+      "id": 11,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Nombre total d\u0027individus]}, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members) ON COLUMNS,\nNON EMPTY CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Toutefois, cette requête indique que la pyramide des âges des salariés d\u0027Agglopolys est dans la moyenne de celles des autres communautés de communes (on le voit bien avec la vue en barres 100%)."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "user": {
+    "id": "04",
+    "name": "04",
+    "group": "1"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "1-04.txt",
+  "comment": "",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})} ON COLUMNS,\nNON EMPTY CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}) ON ROWS\nFROM [Cube1MobProInd]\nWHERE {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}",
+      "comments": " La distance moyenne domicile/travail (pour les salariés, donc), au sein de l\u0027Agglopolys est de 8,11km."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Nombre total d\u0027individus]}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}) ON COLUMNS,\nNON EMPTY {Hierarchize({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})} ON ROWS\nFROM [Cube1MobProInd]\nWHERE {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}",
+      "comments": "\tIl y a 32 578,09 (0,09 ???) salariés habitant et travaillant dans l\u0027Agglopolys (noté SHTA pour la suite de ce document)."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus]}})} ON COLUMNS,\nNON EMPTY Order({Hierarchize({[Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members})}, [Measures].[Distance trajet domicile - travail (moyenne)], DESC) ON ROWS\nFROM [Cube1MobProInd]\nWHERE CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}, CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}))",
+      "comments": "\tCette requête indique la répartition de l\u0027utilisation des moyens de transport part les SHTAs. On remarque que 80,7% d\u0027entre eux prenne la voiture, pour une distance de trajet moyen de 8,67 km. Cette distance est supérieure aux autres méthodes de transports, ce qui est logique car elles sont moins rapides et donc utilisé pour de plus petit trajet. La moyenne de distance de 8,11 km est donc très influencée par les automobilistes (mais légèrement baissé par les autres).\nMais cette information n\u0027a pas vraiment beaucoup d\u0027intérêt pour expliquer pourquoi ce temps de trajet moyen est tel qu\u0027il est."
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, Filter({{[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0))})} ON COLUMNS,\nNON EMPTY Hierarchize(Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d\u0027individus]}), Union(CrossJoin(Filter({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0)), {[Measures].[Distance trajet domicile - travail (moyenne)]}), CrossJoin(Filter({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[BLOIS]}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0)), {[Measures].[Nombre total d\u0027individus]}))))) ON ROWS\nFROM [Cube1MobProInd]\nWHERE {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}",
+      "comments": " \tOn remarque que 1/3 des SHTAs (11 016 individus) habitent ET travaillent à Blois pour une distance de trajet moyenne de 6,98 km. "
+    },
+    {
+      "id": 5,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d\u0027individus]}))) ON COLUMNS,\nNON EMPTY Order({Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, Filter({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members}}, (Exists(Ancestor([Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0))})}, [Measures].[Nombre total d\u0027individus], DESC) ON ROWS\nFROM [Cube1MobProInd]\nWHERE {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}",
+      "comments": " \tCette même quantité (11 016) représente 80% des 13 627 SHTAs habitants à Blois, pour une distance de trajet moyenne de 6,81 (résultat étrangement inférieur au précédent), []"
+    },
+    {
+      "id": 6,
+      "query": "SELECT NON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Measures].[Nombre total d\u0027individus]}))) ON COLUMNS,\nNON EMPTY Order({Hierarchize({{[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, Filter({{[Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members}}, (Exists(Ancestor([Commune de travail.CNELOCC_Hierarchie_intercommunale].CurrentMember, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes]), {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}).Count  \u003e 0))})}, [Measures].[Nombre total d\u0027individus], DESC) ON ROWS\nFROM [Cube1MobProInd]\nWHERE {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés]}",
+      "comments": "mais seulement 50% des 21 698 SHTAs qui y travaillent. Ces derniers parcours en moyenne 8,44 km pour aller travailler, et ce sont donc eux qui font augmenter la distance de trajet moyenne."
+    }
+  ]
+}

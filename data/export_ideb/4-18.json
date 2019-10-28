@@ -1,0 +1,37 @@
+{
+  "user": {
+    "id": "18",
+    "name": "18",
+    "group": "4"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "4-18.txt",
+  "comment": " Besoin : Expliquer la durée moyenne domicile-travail par statut d\u0027emplois et nature de l\u0027activité économique",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinence : On remarqueque la catégorie \"Commerce, transports et services divers\" a une durée moyenne plus élevée que les autres (28,60 mins) et on remarque que la catégorie \"Agriculture, sylviculture et pêche\" a une durée moyenne plus courte (15,22 mins) pour les autres catégories on est autour de 23 minutes."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus]}})} ON COLUMNS,\nNON EMPTY CrossJoin([Nature l\u0027activite economique.NATACTECO_Hierarchie].[Nature de l\u0027activite].Members, [Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members) ON ROWS\nFROM [Cube1MobProInd]\n\t\n\t\n\t\n\t\n\t",
+      "comments": " Pertinence : \n\t- Pour la catégorie \"Administration publique, enseignement, santé humaine et action sociale\" la durée moyenne est de 23,37 minutes ce qui s\u0027explique par le fait que ~93% des personnes du secteur sont en \"Emplois sans limite de durée, CDI, titulaire de la fonction publique\" ou en \"Autres emplois à durée limitée, CDD, contrat court, vacataire\" et que leurs durées moyennes respectives sont de 23,65 minutes et 23,98 minutes. Effectivement on imagine bien que les personnes travaillant dans cette catégorie habitent à une distance raisonnable de leur lieu de travail.\n\t- Pour la catégorie \"Agriculture, sylviculture et pêche\" la durée moyenne est de 15,22, on remarque que ~87% des personnes de la catégorie sont dans 3 statuts d\u0027emplois, \"Emplois sans limite de durée, CDI, titulaire de la fonction publique\", \"Non salariés : Employeurs\" et \"Non salariés : Indépendants\" avec respectivement une durée moyenne de 19,09 minutes, 10,51 minutes et 14,01 minutes (approfondissement en \"3\").\n\t- Pour la catégorie \"Commerce, transports et services divers\" la durée moyenne domicile-travail est de 28,60 minutes. On remarque que ~73% des personnes de la catégorie sont en \"Emplois sans limite de durée, CDI, titulaire de la fonction publique\" avec une durée moyenne de 27,69 minutes. On observe aussi que les personnes en \"Autres emplois à durée limitée, CDD, contrat court, vacataire\" et qui représentent ~6,5%, ont une durée moyenne de 53,06 minutes (approfondissement en \"4\").\n\t- Pour la catégorie \"Construction\", on remarque que ~69% des personnes sont en \"Emplois sans limite de durée, CDI, titulaire de la fonction publique\" avec une moyenne de 25,29 minutes. La durée moyenne est ramené à la baisse par les statuts \"En contrat d\u0027apprentissage\", \"Non salariés : Employeurs\" et \"Non salariés : Indépendants\" avec respectivement 15,73 minutes, 13,41 minutes et 7,77 minutes. Ces 3 statuts représentent ~26% des personnes de la catégorie. On imagine bien que les apprentis, les indépendants et les employeurs non salariés travail ou cherche à travailler près de chez eux.\n\t- Pour la catégorie \"Industrie manufacturière, industries extractives et autres\" ~92% des personnes sont sous statut \"Emplois sans limite de durée, CDI, titulaire de la fonction publique\" ou \"Autres emplois à durée limitée, CDD, contrat court, vacataire\" avec respectivement 22,53 minutes et 23,08 minutes. En effet, on sait que l\u0027industrie cherche à embaucher des gens qui habitent au plus près de l\u0027entreprise."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Agriculture, sylviculture et pêche]}, CrossJoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members)) ON ROWS\nFROM [Cube1MobProInd]\n\t",
+      "comments": " Pertinence : on remarque que les personnes au statut précédemment cité sont soit ouvrier soit agriculteurs exploitants (dans la grande majorité des cas) ce qui pourrait expliquer qu\u0027ils ont tendance à vivre près de leurs lieux de travail."
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Commerce, transports et services divers]}, CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}, [Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members)) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " Pertinence : On remarque que les durées moyennes les plus élevé sont dues aux tanches d\u0027âge 20-29 ans et 65-69 ans. Les 20-24 ans avec une moyenne de 91,64 minutes, les 25-29 ans avec une moyenne de 102,58 minutes et les 65-69 ans avec une moyenne de 391,81 minutes. Je prends en compte la tranche 65-69 ans car bien qu\u0027elle ne possède que 15 individus leur durée moyenne est très supérieur à la durée moyenne de la catégorie, 391,81 contre ~50 minutes (approfondissement en \"5\")."
+    },
+    {
+      "id": 5,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin({[Nature l\u0027activite economique.NATACTECO_Hierarchie].[Commerce, transports et services divers]}, CrossJoin({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}, CrossJoin([Age revolu quinquenal.AgeRevQ_Hierarchie_1].[Age revolu quinquenal].Members, [Type de menage.TYPMEN_Hierarchie].[Type regroupe en 9 categories].Members))) ON ROWS\nFROM [Cube1MobProInd]\n\t",
+      "comments": " Pertinence : \n\t- On remarque que les 20-29 ont en majorité une famille donc on ne peut pas supposer l\u0027absence de famille comme le facteur déterminant. Donc on peut imaginer que les 20-29 ans acceptent plus facilement la contrainte de vivre loin de leur lieu de travail, par rapport aux autres tranches d\u0027âge.\n\t- Pour la tranche 65-69 ans on remarque que seul \"2,94\" \"Homme vivant seul\" sont résponsables de la moyenne très élevée de la tranche (1990,45 minutes), on peut imaginer que vue leurs âges et le peut d\u0027effectif qu\u0027ils représentent, ce sont des personnes avec des compétences recherchées et donc qui se déplacent plus. Le fait qu\u0027ils vivent seuls est peut-être un critère qui explique qu\u0027il accepte de travailler loin de chez eux."
+    }
+  ]
+}

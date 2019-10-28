@@ -19,6 +19,7 @@ public class Compatibility {
         // Handle projections
         parts.addAll(q.getAttributes().stream().map(Compatibility::projectionToDimensionQP).collect(Collectors.toSet()));
         // Handle measures
+        System.out.println("Measures: " + q.getMeasures());
         parts.addAll(q.getMeasures().stream().map(Compatibility::measureToMeasureQP).collect(Collectors.toSet()));
         // Handle selections
         parts.addAll(q.getSelectionPredicates().stream().map(Compatibility::selectionToFilterQP).collect(Collectors.toSet()));
@@ -33,14 +34,15 @@ public class Compatibility {
     }
 
     public static QueryPart projectionToDimensionQP(ProjectionFragment pf){
-        var dim = pf.toString().replace("].[", "");
-        dim = dim.substring(1, dim.length()-1);
+        var dim = pf.toString();//.replace("].[", "");
+        //dim = dim.substring(1, dim.length()-1);
+        //System.out.println(dim);
         return QueryPart.newDimension(dim);
     }
 
     public static QueryPart selectionToFilterQP(SelectionFragment sf){
         var member = sf.getValue().toString(); //TODO unify format
-        System.out.println(member);
+        //System.out.println(member);
         return QueryPart.newFilter(member);
     }
 

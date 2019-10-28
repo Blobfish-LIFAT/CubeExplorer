@@ -1,0 +1,22 @@
+{
+  "user": {
+    "id": "11",
+    "name": "11",
+    "group": "3"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "3-11.txt",
+  "comment": "",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({[Measures].[Duree trajet domicile - travail (moyenne)]})} ON COLUMNS,\nNON EMPTY CrossJoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY CrossJoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members) ON COLUMNS,\nNON EMPTY CrossJoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": ""
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.castor.session;
+package com.olap3.cubeexplorer.data.castor.session;
 
 import java.math.BigInteger;
 import java.util.Date;

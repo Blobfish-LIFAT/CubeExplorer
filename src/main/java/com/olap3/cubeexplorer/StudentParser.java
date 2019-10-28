@@ -1,9 +1,9 @@
 package com.olap3.cubeexplorer;
 
 import com.alexscode.utilities.Future;
-import com.olap3.cubeexplorer.castor.session.QueryRequest;
-import com.olap3.cubeexplorer.castor.session.CrSession;
-import com.olap3.cubeexplorer.castor.session.User;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.data.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.session.User;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -100,12 +100,16 @@ public class StudentParser {
      * Test code
      */
     public static void main(String[] args) throws Exception{
-        CrSession session = loadFile("data/studentSessions/4-19.txt");
-        System.out.println("Session size = " + session.getQueries().size());
-        for (var q : session.getQueries()){
-            System.out.println("--- Query ---");
-            System.out.println(q.getQuery());
+        var sessions = loadDir("data/studentSessions");
+        for (var session : sessions) {
+            System.out.println("Session size = " + session.getQueries().size() + " Session file:" + session.getTitle());
+            for (var q : session.getQueries()) {
+                if (!q.getQuery().contains("Measures")) {
+                    System.out.println("--- Query without measure found ---");
+                    System.out.println(q.getQuery());
+                }
+            }
         }
-        FrontEndFormatter.buildJson(session);
+        //FrontEndFormatter.buildJson(session);
     }
 }

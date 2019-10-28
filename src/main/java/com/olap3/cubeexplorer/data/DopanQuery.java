@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.im_olap.data;
+package com.olap3.cubeexplorer.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

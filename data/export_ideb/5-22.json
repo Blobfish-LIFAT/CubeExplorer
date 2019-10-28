@@ -1,0 +1,32 @@
+{
+  "user": {
+    "id": "22",
+    "name": "22",
+    "group": "5"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "5-22.txt",
+  "comment": "Besoin utilisateur 5 : Expliquer le nombre d\u0027individus, la durée minimale,\nmoyenne et maximale domicile-travail par lieu de travail et de résidence",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence].Members, [Commune de travail.CNELOCC_Hierarchie_administrative].[Commune d\u0027occupation].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Très dense, il faut un travail d\u0027observation poussé pour s\u0027apercevoir de\ncertain comportement.\nDans la très grande majorité des cas, les personnes ne travaillent pas dans\nla commune dans laquelle ils habitent.\nOn remarque des comportements \"étranges\", comme une personne qui met 2537 minutes\npour aller à Sassy.\nOn peut déduire de ces informations que les personnes travaillent rarement là où \nelles habitent"
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, CrossJoin([Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members)) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "La majorité des personnes vont au travail en voiture/camion/camionette. Certaines vont travailler à pieds"
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members, CrossJoin([Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members, CrossJoin([Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members))) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "Le niveau d\u0027étude ne nous donne pas d\u0027information supplémentaire sur le trajet \ndomicile-travail"
+    },
+    {
+      "id": 4,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "On remarque que les hommes mettent plus de temps à arriver au travail que les \nfemmes"
+    }
+  ]
+}

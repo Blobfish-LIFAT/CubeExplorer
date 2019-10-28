@@ -2,10 +2,10 @@ package com.olap3.cubeexplorer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.olap3.cubeexplorer.castor.response.CastorJsonResponse;
-import com.olap3.cubeexplorer.castor.response.CastorTable;
-import com.olap3.cubeexplorer.castor.session.QueryRequest;
-import com.olap3.cubeexplorer.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.response.CastorJsonResponse;
+import com.olap3.cubeexplorer.data.castor.response.CastorTable;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.data.castor.session.CrSession;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.olap.CellSet;
 import mondrian.parser.TokenMgrError;

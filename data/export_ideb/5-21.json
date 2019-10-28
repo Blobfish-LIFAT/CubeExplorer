@@ -1,0 +1,27 @@
+{
+  "user": {
+    "id": "21",
+    "name": "21",
+    "group": "5"
+  },
+  "cube": "Cube1MobProInd",
+  "title": "5-21.txt",
+  "comment": " Expliquer le nombre d\u0027individus, la durée minimale, moyenne et maximale domicile-travail par lieu de travail et de résidence",
+  "queries": [
+    {
+      "id": 1,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus]}})} ON COLUMNS,\nNON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members})} ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": " On remarque que les gens residant a agglopolys ont une moyenne faible pour le trajet maison-travail."
+    },
+    {
+      "id": 2,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus]}})} ON COLUMNS,\nNON EMPTY CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "on voit ici que une grande partie des gens résidant a agglopolys travaillent en fait dans la même ville et donc leur temps de trajet est très court (moyenne \u003d 13 mins). On voit aussi que c\u0027est la moyenne la plus faible ce qui est logique."
+    },
+    {
+      "id": 3,
+      "query": "SELECT NON EMPTY {Hierarchize({{[Measures].[Duree trajet domicile - travail (min)], [Measures].[Duree trajet domicile - travail (max)], [Measures].[Duree trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,\nNON EMPTY CrossJoin({[Commune de travail.CNELOCC_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members) ON ROWS\nFROM [Cube1MobProInd]",
+      "comments": "avec cette requete on observe que une grande partie des gens qui travaillent a blois , y habitent aussi."
+    }
+  ]
+}
