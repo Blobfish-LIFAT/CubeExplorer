@@ -20,7 +20,7 @@ public class Compatibility {
         // Handle projections
         parts.addAll(q.getAttributes().stream().map(Compatibility::projectionToDimensionQP).collect(Collectors.toSet()));
         // Handle measures
-        System.out.println("Measures: " + q.getMeasures());
+        //System.out.println("Measures: " + q.getMeasures());
         parts.addAll(q.getMeasures().stream().map(Compatibility::measureToMeasureQP).collect(Collectors.toSet()));
         // Handle selections
         parts.addAll(q.getSelectionPredicates().stream().map(Compatibility::selectionToFilterQP).collect(Collectors.toSet()));

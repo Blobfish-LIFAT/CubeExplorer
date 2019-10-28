@@ -80,7 +80,14 @@ public class DOLAP {
         // Init KS
         BudgetManager ks = new KnapsackManager(ic -> {
             var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
-            double sum = qps.stream().mapToDouble(interest::get).sum(); // .peek(qp -> System.out.println(qp + "|" + interest.get(qp)))
+            double sum = qps.stream().mapToDouble(key -> {
+                var i = interest.get(key);
+                if(i==null) {
+                    System.err.println("Error for "+ key.toString());
+                    return 0.001;
+                }else
+                    return i;
+            }).sum(); // .peek(qp -> System.out.println(qp + "|" + interest.get(qp)))
             return sum/qps.size();
         });
 
@@ -139,6 +146,8 @@ public class DOLAP {
         // Build drill-downs
         for (var sf : q0.getAttributes()){
             Level target = sf.getLevel().getChildLevel();
+            if (target==null)
+                continue;
             var tmp = new HashSet<>(q0.getAttributes());
             tmp.add(new ProjectionFragment(target));
 

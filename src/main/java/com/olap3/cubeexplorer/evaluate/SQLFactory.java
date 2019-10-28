@@ -65,6 +65,8 @@ public class SQLFactory {
 
         // For each dimension (projection fragment) of the query
         for (ProjectionFragment pf : formalQuery.getAttributes()){
+            if (pf.getLevel().isAll()) // ignore if it's the "All" level
+                continue;
             String dimTable = cube.getTableName(pf.getHierarchy());
             tables.add(dimTable);
 
