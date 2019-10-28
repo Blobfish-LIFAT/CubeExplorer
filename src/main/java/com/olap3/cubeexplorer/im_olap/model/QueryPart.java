@@ -65,6 +65,10 @@ public class QueryPart implements Comparable<QueryPart> {
         return getQueryPart(value, Type.DIMENSION, dimension_qps);
     }
 
+    public static QueryPart newDimensionFixed(String value) {
+        value = value.replaceFirst("]\\.\\[", ".");
+        return getQueryPart(value, Type.DIMENSION, dimension_qps);
+    }
 
     public static QueryPart newMeasure(String value) {
         return getQueryPart(value, Type.MEASURE, measure_qps);

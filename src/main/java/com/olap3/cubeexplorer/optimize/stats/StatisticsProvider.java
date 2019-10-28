@@ -27,7 +27,7 @@ import java.util.function.LongBinaryOperator;
 import java.util.stream.Collectors;
 
 public class StatisticsProvider {
-    public static String storageDirectory = "data/stats";
+    public static String storageDirectory = "data/cache";
     public static Gson gson;
     public static HashMap<String, Statistics> memCache;
 

@@ -68,6 +68,8 @@ public class CubeUtils {
         RolapLevel actualLevel = ((RolapCubeLevel) l).getRolapLevel();
         MondrianDef.Expression keyExp = (MondrianDef.Expression) Reflect.getField(actualLevel, "keyExp");
         MondrianDef.Expression nameExp = (MondrianDef.Expression) Reflect.getField(actualLevel, "nameExp");
+        if (keyExp == null && nameExp == null)
+            System.out.println("DEBUG");
         if (nameExp == null)
             return keyExp.getGenericExpression();
         else

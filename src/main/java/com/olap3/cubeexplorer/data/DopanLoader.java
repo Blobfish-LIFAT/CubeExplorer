@@ -27,10 +27,11 @@ public class DopanLoader {
 
             for (DopanQuery q : in.getQueries()){
                 Query qnew = new Query();
-                qnew.addAll(q.getGroupBySet().stream().map(QueryPart::newDimension).collect(Collectors.toSet()));
+                qnew.addAll(q.getGroupBySet().stream().map(QueryPart::newDimensionFixed).collect(Collectors.toSet()));
                 qnew.addAll(q.getMeasures().stream().map(QueryPart::newMeasure).collect(Collectors.toSet()));
                 qnew.addAll(q.getSelection().stream().map(s -> QueryPart.newFilter(s.getValue(),s.getLevel())).collect(Collectors.toSet()));
                 qnew.getProperties().put("id", q.getOriginId());
+                qnew.getProperties().put("mdx", q.getMdx());
                 out.queries.add(qnew);
             }
             return out;

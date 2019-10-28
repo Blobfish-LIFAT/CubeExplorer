@@ -21,6 +21,9 @@ public class KnapsackManager implements BudgetManager {
     @Override
     public ExecutionPlan findBestPlan(List<InfoCollector> candidates, int timeBudget) {
         int n = candidates.size();
+        if (n ==0)
+            throw new IllegalArgumentException("Cannot find best Knapsack solution for ZERO possible items !");
+
         int value[] = new int[n];
         int weight[] = new int[n];
         int[] valueApprox = new int[n];

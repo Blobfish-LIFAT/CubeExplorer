@@ -17,12 +17,12 @@ public class LinearPonderatedCost implements CostModel{
     }
 
     @Override
-    public int correctedEstimate(TimeableOp operation) {
+    public long correctedEstimate(TimeableOp operation) {
         if (factors.size() == 0)
             return operation.aprioriTime();
         else {
             double factor = factors.stream().mapToDouble(Double::doubleValue).sum()/factors.size();
-            return (int) Math.round(factor * operation.aprioriTime());
+            return Math.round(factor * operation.aprioriTime());
         }
     }
 }

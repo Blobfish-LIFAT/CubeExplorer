@@ -4,6 +4,8 @@ import com.alexscode.utilities.Nd4jUtils;
 import com.alexscode.utilities.collection.Pair;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.olap3.cubeexplorer.Compatibility;
 import com.olap3.cubeexplorer.StudentParser;
 import com.olap3.cubeexplorer.data.DopanLoader;
@@ -15,6 +17,7 @@ import com.olap3.cubeexplorer.im_olap.model.*;
 import com.olap3.cubeexplorer.info.ICView;
 import com.olap3.cubeexplorer.info.InfoCollector;
 import com.olap3.cubeexplorer.info.MDXAccessor;
+import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
@@ -30,6 +33,8 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.memory.MemoryManager;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
@@ -43,12 +48,13 @@ public class DOLAP {
     static double alpha = 0.5, epsilon = 0.005;
     static DecimalFormat df = new DecimalFormat("#.##");
     static MemoryManager mem = Nd4j.getMemoryManager();
+    static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     // For testing stuff
     static Qfset testQuery;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         LOGGER.info("Init Starting");
         Connection olap = MondrianConfig.getMondrianConnection();
         utils = new CubeUtils(olap, "Cube1MobProInd");
@@ -57,9 +63,34 @@ public class DOLAP {
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
-        testQuery = Compatibility.QPsToQfset(sessions.get(0).getQueries().get(0));
+        //Dodgy I know
+        testQuery = new Qfset(olap.parseQuery((String) sessions.get(0).queries.get(0).getProperties().get("mdx")));
+        testQuery.getMeasures().add(new MeasureFragment(utils.getMeasure("Distance trajet domicile - travail (moyenne)")));
 
         LOGGER.info("Computing interestigness scores");
+        //System.err.println("!!! WARNING !!! Using precomputed IM scores debug only !!! WARNING !!!");
+        //HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), HashMap.class);
+        Map<QueryPart, Double> interest = getInterestingness(sessions);
+        Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest).getBytes());
+
+        /*
+                    Fin des pre-calculs mettre le code de test ci apres
+         */
+        LOGGER.info("Begin test phase");
+        // Init KS
+        BudgetManager ks = new KnapsackManager(ic -> {
+            var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
+            double sum = qps.stream().mapToDouble(interest::get).sum(); // .peek(qp -> System.out.println(qp + "|" + interest.get(qp)))
+            return sum/qps.size();
+        });
+
+        List<InfoCollector> candidates = generateCandidates(testQuery);
+        System.out.printf("Found %s candidates%n", candidates.size());
+        System.out.println(ks.findBestPlan(candidates, 6000));
+
+    }
+
+    private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
         System.out.println("Building topology graph...");
         MutableValueGraph<QueryPart, Double> topoGraph = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
         DimensionsGraph.injectSchema(topoGraph, schemaPath);
@@ -72,35 +103,21 @@ public class DOLAP {
                 .interpolate(topoGraph, ValueGraphBuilder.directed().allowsSelfLoops(true).build(), logGraph);
 
         System.out.println("Freeing memory"); // I know I know, don't judge me laptop has only 16GB of RAM
-        topoGraph = null; logGraph = null;
+        topoGraph = null;
+        logGraph = null;
         mem.invokeGc();
 
         System.out.println("Computing PageRank...");
         Pair<INDArray, HashMap<QueryPart, Integer>> ref = PageRank.pagerank(base, 50);
         INDArray rawScores = ref.getLeft();
         HashMap<QueryPart, Double> interest = new HashMap<>(ref.getRight().size());
-        ref.right.entrySet().forEach(e -> {
-            interest.put(e.getKey(), rawScores.getDouble(e.getValue()));
-        });
+        ref.right.forEach((key, value) -> interest.put(key, rawScores.getDouble(value)));
 
         System.out.println("Freeing memory");
-        base = null; ref = null;
+        base = null;
+        ref = null;
         mem.invokeGc();
-
-        /*
-                    Fin des pre-calculs mettre le code de test ci apres
-         */
-        LOGGER.info("Begin test phase");
-        // Init KS
-        BudgetManager ks = new KnapsackManager(ic -> {
-            var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
-            double sum = qps.stream().mapToDouble(interest::get).sum();
-            return sum/qps.size();
-        });
-
-        //Test query 0
-        System.out.println(ks.findBestPlan(generateCandidates(testQuery)));
-
+        return interest;
     }
 
     public static List<InfoCollector> generateCandidates(Qfset q0){
@@ -108,6 +125,8 @@ public class DOLAP {
 
         // Build roll-ups
         for (ProjectionFragment f : q0.getAttributes()){
+            if (f.getLevel().isAll())
+                continue;
             ProjectionFragment p  = ProjectionFragment.newInstance(f.getLevel().getParentLevel());
 
             HashSet<ProjectionFragment> tmp = new HashSet<>(q0.getAttributes());

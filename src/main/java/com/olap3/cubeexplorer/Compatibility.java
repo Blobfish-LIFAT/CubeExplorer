@@ -5,6 +5,7 @@ import com.olap3.cubeexplorer.julien.MeasureFragment;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
+import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Query;
 
@@ -51,10 +52,14 @@ public class Compatibility {
         return QueryPart.newMeasure(measure);
     }
 
-    public static Qfset QPsToQfset(com.olap3.cubeexplorer.im_olap.model.Query query) {
-        Qfset out = new Qfset();
-        //TODO
+    //TODO finih this
+    public static Qfset QPsToQfset(com.olap3.cubeexplorer.im_olap.model.Query query, CubeUtils utils) {
+        var proj = new HashSet<ProjectionFragment>();
+        var sel = new HashSet<SelectionFragment>();
+        var meas = new HashSet<MeasureFragment>();
 
-        return out;
+
+
+        return new Qfset(proj, sel, meas);
     }
 }

@@ -49,12 +49,12 @@ public class Correlation implements MLModel {
     }
 
     @Override
-    public int aprioriTime() {
+    public long aprioriTime() {
         return 0;
     }
 
     @Override
-    public int aposterioriTime() {
+    public long aposterioriTime() {
         return 0;
     }
 
