@@ -28,7 +28,7 @@ public class KnapsackManager implements BudgetManager {
         int i1 = 0;
         for (InfoCollector ic : candidates) {
             value[i1] = (int) Math.round(metric.rate(ic) * res); //discretization might need something smart
-            weight[i1] = ic.estimatedTime();
+            weight[i1] = Math.toIntExact(ic.estimatedTime());
         }
 
         // Source for the FPTAS algorithm https://github.com/hzxie/Algorithm

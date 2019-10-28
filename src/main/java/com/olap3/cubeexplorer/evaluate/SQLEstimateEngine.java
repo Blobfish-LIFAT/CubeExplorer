@@ -1,6 +1,8 @@
 package com.olap3.cubeexplorer.evaluate;
 
 
+import com.olap3.cubeexplorer.julien.Qfset;
+import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.xmlutil.XMLPlan;
 import com.olap3.cubeexplorer.xmlutil.PlanParser;
@@ -13,8 +15,11 @@ import java.sql.*;
  * running classic SQL queries notably EXPLAIN for time estimations
  */
 public class SQLEstimateEngine {
-    Connection con;
 
+    static SQLEstimateEngine def = null;
+    static SQLFactory queryFactory = null;
+
+    Connection con;
     private int timeout = 500;
 
 
@@ -22,8 +27,19 @@ public class SQLEstimateEngine {
 
             con = MondrianConfig.getJdbcConnection();
 
+    }
 
+    public SQLEstimateEngine(Connection con) {
+        this.con = con;
+    }
 
+    public static long estimateQfset(Qfset qfset) {
+        if (def == null) {
+            def = new SQLEstimateEngine();
+            queryFactory = new SQLFactory(CubeUtils.getDefault());
+        }
+
+        return def.estimates(queryFactory.getStarJoin(qfset)).estimated_time;
     }
 
     public boolean setTimeout(int timeout) {

@@ -50,4 +50,11 @@ public class Compatibility {
         var measure = mf.getAttribute().toString(); //TODO unify format
         return QueryPart.newMeasure(measure);
     }
+
+    public static Qfset QPsToQfset(com.olap3.cubeexplorer.im_olap.model.Query query) {
+        Qfset out = new Qfset();
+        //TODO
+
+        return out;
+    }
 }

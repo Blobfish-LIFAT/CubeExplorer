@@ -15,10 +15,10 @@ public abstract class InfoCollector {
 
     }
 
-    public  int estimatedTime(){
+    public long estimatedTime(){
         return dataSource.aprioriTime() + model.aprioriTime();
     }
-    public int realTime(){
+    public long realTime(){
         return dataSource.aposterioriTime() + model.aposterioriTime();
     }
     public abstract ECube execute();
