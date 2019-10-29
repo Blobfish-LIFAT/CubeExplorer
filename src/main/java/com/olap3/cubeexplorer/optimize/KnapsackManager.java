@@ -13,8 +13,8 @@ import java.util.regex.Matcher;
 public class KnapsackManager implements BudgetManager {
     AprioriMetric metric;
     // resolution for discretization
-    int res = 65536;
-    double epsilon = 0.05; // bound on divergence from optimal value
+    int res = 8192;
+    double epsilon = 0.01; // bound on divergence from optimal value
 
     public KnapsackManager(AprioriMetric value) {
         metric = value;
@@ -35,7 +35,7 @@ public class KnapsackManager implements BudgetManager {
             rawValue[i] =metric.rate(candidates.get(i));
             weight[i] = Math.toIntExact(candidates.get(i).estimatedTime());
         }
-        IntRangeNormalizer norm = new IntRangeNormalizer(1, 1000, rawValue);
+        IntRangeNormalizer norm = new IntRangeNormalizer(1, res, rawValue);
         value = norm.normalized();
 
         // Source for the FPTAS algorithm https://github.com/hzxie/Algorithm
@@ -52,9 +52,10 @@ public class KnapsackManager implements BudgetManager {
             valueApprox[i] = (int)Math.floor(value[i] * k / maxValue);
             totalValue += valueApprox[i];
         }
+        System.out.println(totalValue);
 
         // Calculate Approximation Solution
-        boolean[] isPickedApprox = getKnapsackSolution(weight, value, timeBudget, totalValue);
+        boolean[] isPickedApprox = getKnapsackSolution(weight, value, timeBudget);
 
         HashSet<InfoCollector> solution = new HashSet<>();
         for (int i = 0; i < n; i++) {
@@ -91,6 +92,28 @@ public class KnapsackManager implements BudgetManager {
         return getPickedItem(cost, weight, value, capcity, totalValue);
     }
 
+    public boolean[] getKnapsackSolution(
+            int[] weight, int[] value, int capcity) {
+        int n = weight.length;
+        int[][] cost = new int[n][capcity + 1];
+
+        for ( int i = 0; i <= capcity; ++ i ) {
+            int currentWeight = weight[n - 1],
+                    currentValue = value[n - 1];
+            cost[n - 1][i] = i < currentWeight ? 0 : currentValue;
+        }
+        for ( int i = n - 2; i >= 0; -- i ) {
+            int currentWeight = weight[i],
+                    currentValue = value[i];
+            for ( int j = 0; j <= capcity; ++ j ) {
+                cost[i][j] = j < currentWeight ? cost[i + 1][j] :
+                        Math.max(cost[i + 1][j],
+                                cost[i + 1][j - currentWeight] + currentValue);
+            }
+        }
+        return getPickedItem(cost, weight, capcity);
+    }
+
     public boolean[] getPickedItem(int[][] cost, int[] weight,
                                    int[] value, int capcity, int totalValue) {
         int n = cost.length;
@@ -107,6 +130,21 @@ public class KnapsackManager implements BudgetManager {
             }
         }
         isPicked[n - 1] = cost[n - 1][j] == weight[n - 1];
+        return isPicked;
+    }
+
+    public boolean[] getPickedItem(int[][] cost, int[] weight, int capcity) {
+        int n = cost.length;
+        int j = capcity;
+        boolean[] isPicked = new boolean[n];
+
+        for ( int i = 0; i < n - 1; ++ i ) {
+            if ( cost[i][j] != cost[i + 1][j] ) {
+                isPicked[i] = true;
+                j -= weight[i];
+            }
+        }
+        isPicked[n - 1] = cost[n - 1][j] != 0;
         return isPicked;
     }
 

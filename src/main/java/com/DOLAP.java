@@ -104,8 +104,8 @@ public class DOLAP {
         BudgetManager ks = new KnapsackManager(im);
 
         List<InfoCollector> candidates = generateCandidates(testQuery);
-        System.out.printf("Found %s candidates%n", candidates.size());
-        candidates.forEach(c -> System.out.printf("Candidate %s, cost=%s, im=%s%n", c, c.estimatedTime(), im.rate(c)));
+        System.out.printf("--- Found %s candidates ---%n", candidates.size());
+        candidates.forEach(c -> System.out.printf("  %s%n    cost=%s, im=%s%n", c, c.estimatedTime(), im.rate(c)));
         ExecutionPlan plan = ks.findBestPlan(candidates, 60000);
         System.out.println("--- Plan summary ---");
         System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
