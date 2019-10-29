@@ -6,6 +6,7 @@ import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.olap3.cubeexplorer.Compatibility;
 import com.olap3.cubeexplorer.StudentParser;
 import com.olap3.cubeexplorer.data.DopanLoader;
@@ -33,6 +34,7 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.memory.MemoryManager;
 
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
@@ -48,7 +50,9 @@ public class DOLAP {
     static double alpha = 0.5, epsilon = 0.005;
     static DecimalFormat df = new DecimalFormat("#.##");
     static MemoryManager mem = Nd4j.getMemoryManager();
-    static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    static Gson gson = new GsonBuilder()
+            .enableComplexMapKeySerialization() //Necessary as QP map has "complex" key
+            .setPrettyPrinting().create();
 
     // For testing stuff
     static Qfset testQuery;
@@ -68,10 +72,11 @@ public class DOLAP {
         testQuery.getMeasures().add(new MeasureFragment(utils.getMeasure("Distance trajet domicile - travail (moyenne)")));
 
         LOGGER.info("Computing interestigness scores");
-        //System.err.println("!!! WARNING !!! Using precomputed IM scores debug only !!! WARNING !!!");
-        //HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), HashMap.class);
-        Map<QueryPart, Double> interest = getInterestingness(sessions);
-        Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest).getBytes());
+        Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
+        System.err.println("!!! WARNING !!! Using precomputed IM scores debug only !!! WARNING !!!");
+        HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
+        //Map<QueryPart, Double> interest = getInterestingness(sessions);
+        //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
 
         /*
                     Fin des pre-calculs mettre le code de test ci apres

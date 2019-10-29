@@ -2,11 +2,13 @@ package com.olap3.cubeexplorer.im_olap.model;
 
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.nio.ByteBuffer;
 import java.util.*;
 
+@JsonAdapter(QueryPartSerializer.class)
 public class QueryPart implements Comparable<QueryPart> {
 
     private static TreeMap<Integer, List<QueryPart>> dimension_qps = new TreeMap<>();
@@ -53,11 +55,7 @@ public class QueryPart implements Comparable<QueryPart> {
 
 
     /* Instance variables */
-    @Expose
-    @SerializedName("type")
     Type t;
-    @Expose
-    @SerializedName("value")
     String value;
 
 
