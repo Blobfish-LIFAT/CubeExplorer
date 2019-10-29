@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.optimize;
 
+import com.alexscode.utilities.math.IntRangeNormalizer;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.info.InfoCollector;
 
@@ -7,12 +8,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 public class KnapsackManager implements BudgetManager {
     AprioriMetric metric;
     // resolution for discretization
     int res = 65536;
-    double epsilon = 0.25; // bound on divergence from optimal value
+    double epsilon = 0.05; // bound on divergence from optimal value
 
     public KnapsackManager(AprioriMetric value) {
         metric = value;
@@ -24,15 +26,17 @@ public class KnapsackManager implements BudgetManager {
         if (n ==0)
             throw new IllegalArgumentException("Cannot find best Knapsack solution for ZERO possible items !");
 
-        int value[] = new int[n];
-        int weight[] = new int[n];
+        int[] value;
+        double[] rawValue = new double[n];
+        int[] weight = new int[n];
         int[] valueApprox = new int[n];
 
-        int i1 = 0;
-        for (InfoCollector ic : candidates) {
-            value[i1] = (int) Math.round(metric.rate(ic) * res); //discretization might need something smart
-            weight[i1] = Math.toIntExact(ic.estimatedTime());
+        for (int i = 0; i < candidates.size(); i++) {
+            rawValue[i] =metric.rate(candidates.get(i));
+            weight[i] = Math.toIntExact(candidates.get(i).estimatedTime());
         }
+        IntRangeNormalizer norm = new IntRangeNormalizer(1, 1000, rawValue);
+        value = norm.normalized();
 
         // Source for the FPTAS algorithm https://github.com/hzxie/Algorithm
         // Rounding

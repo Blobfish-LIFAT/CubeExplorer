@@ -108,7 +108,7 @@ public class DOLAP {
         candidates.forEach(c -> System.out.printf("Candidate %s, cost=%s, im=%s%n", c, c.estimatedTime(), im.rate(c)));
         ExecutionPlan plan = ks.findBestPlan(candidates, 60000);
         System.out.println("--- Plan summary ---");
-        System.out.printf("Chose %s ICs with total cost of %s sec%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum()/1000.0);
+        System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
         for (InfoCollector ic : plan.getOperations()){
             System.out.println("  " + ic);
             System.out.println("    Estimated cost " + ic.estimatedTime());

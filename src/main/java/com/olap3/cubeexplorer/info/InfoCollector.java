@@ -8,6 +8,7 @@ public abstract class InfoCollector {
     Qfset q0;
     DataAccessor dataSource;
     MLModel model;
+    long time_estimate = -1;
     //For debugging only
     String comment;
 
@@ -18,7 +19,9 @@ public abstract class InfoCollector {
     }
 
     public long estimatedTime(){
-        return dataSource.aprioriTime() + model.aprioriTime();
+        if (time_estimate == -1)
+            time_estimate = dataSource.aprioriTime() + model.aprioriTime();
+        return time_estimate;
     }
     public long realTime(){
         return dataSource.aposterioriTime() + model.aposterioriTime();
