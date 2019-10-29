@@ -57,7 +57,7 @@ public class PlanParser {
 
     public static void main(String[] args) throws DocumentException, IOException {
 
-        File file = new File("/home/ben/Documents/showplan.xml");
+        File file = new File("data/example_plan.xml");
 
         String content = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining());
 

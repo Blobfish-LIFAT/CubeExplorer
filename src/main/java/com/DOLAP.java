@@ -13,6 +13,7 @@ import com.olap3.cubeexplorer.data.DopanLoader;
 import com.olap3.cubeexplorer.data.castor.session.CrSession;
 import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.im_olap.compute.PageRank;
 import com.olap3.cubeexplorer.im_olap.model.*;
 import com.olap3.cubeexplorer.info.ICView;
@@ -40,6 +41,8 @@ import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
+
+import static com.alexscode.utilities.math.Distribution.log2;
 
 public class DOLAP {
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
@@ -81,22 +84,34 @@ public class DOLAP {
                     Fin des pre-calculs mettre le code de test ci apres
          */
         LOGGER.info("Begin test phase");
-        BudgetManager ks = new KnapsackManager(ic -> {
-            var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
-            double sum = qps.stream().mapToDouble(key -> {
-                var i = interest.get(key);
-                if(i==null) {
-                    System.err.printf("Warning no IM found for %s %n", key.toString());
-                    return 0.001;
-                }else
-                    return i;
-            }).sum(); // .peek(qp -> System.out.println(qp + "|" + interest.get(qp)))
-            return sum/qps.size();
-        });
+        AprioriMetric im = new AprioriMetric() {
+            @Override
+            public double rate(InfoCollector ic) {
+                var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
+                double sum = 0;
+                for (var qp : qps){
+                    Double i = interest.get(qp);
+                    if(i==null) {
+                        System.err.printf("Warning no IM found for %s %n", qp.toString());
+                        return 0;
+                    }
+                    else
+                        sum -= log2(i);
+                }
+                return sum/qps.size();
+            }
+        };
+        BudgetManager ks = new KnapsackManager(im);
 
         List<InfoCollector> candidates = generateCandidates(testQuery);
         System.out.printf("Found %s candidates%n", candidates.size());
-        System.out.println(ks.findBestPlan(candidates, 6000).getOperations());
+        candidates.forEach(c -> System.out.printf("Candidate %s, cost=%s, im=%s%n", c, c.estimatedTime(), im.rate(c)));
+        ExecutionPlan plan = ks.findBestPlan(candidates, 60000);
+        System.out.println("--- Plan summary ---");
+        for (InfoCollector ic : plan.getOperations()){
+            System.out.println(ic);
+            System.out.println("Estimated cost " + ic.estimatedTime());
+        }
 
     }
 
@@ -143,7 +158,7 @@ public class DOLAP {
             tmp.remove(f); tmp.add(p);
 
             Qfset query = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
-            queries.add(new ICView(new MDXAccessor(query)));
+            queries.add(new ICView(new MDXAccessor(query), "R-Up ON " + p.getHierarchy()));
         }
 
         // Build drill-downs
@@ -155,7 +170,7 @@ public class DOLAP {
             tmp.add(new ProjectionFragment(target));
 
             Qfset req = new Qfset(tmp, new HashSet<>(), new HashSet<>(q0.getMeasures()));
-            queries.add(new ICView(new MDXAccessor(req)));
+            queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
         }
 
         // Build siblings

@@ -8,6 +8,8 @@ public abstract class InfoCollector {
     Qfset q0;
     DataAccessor dataSource;
     MLModel model;
+    //For debugging only
+    String comment;
 
 
     // We will decompose the intentional query as query parts to express the "subcube"
@@ -37,5 +39,13 @@ public abstract class InfoCollector {
 
     public MLModel getModel() {
         return model;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

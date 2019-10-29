@@ -20,6 +20,7 @@ public class DimensionsGraph {
      * @param mondrianFile
      * @return
      */
+    //FIXME avoid putting all dimensions from all cubes in there maybe ?
     public static MutableValueGraph<QueryPart, Double> injectSchema(MutableValueGraph<QueryPart, Double> base, String mondrianFile){
         SAXReader reader = new SAXReader();
         try {

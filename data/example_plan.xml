@@ -1,0 +1,1620 @@
+<ShowPlanXML xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan" Version="1.539" Build="15.0.1900.25">
+    <BatchSequence>
+        <Batch>
+            <Statements>
+                <StmtSimple
+                        StatementText="SELECT mode_transport.categorie_nom AS &quot;Categorie&quot;, (SUM(mobpro_ind_1.distance_chemin_court * mobpro_ind_1.coef_pond)/SUM(mobpro_ind_1.coef_pond)) AS &quot;Distance trajet domicile - travail (moyenne)&quot; FROM  mobpro_ind_1, mode_transport WHERE mobpro_ind_1.mode_trans=mode_transport.mode_id GROUP BY mode_transport.categorie_nom"
+                        StatementId="1" StatementCompId="1" StatementType="SELECT" RetrievedFromCache="false"
+                        StatementSubTreeCost="0.522497" StatementEstRows="3.85714" SecurityPolicyApplied="false"
+                        StatementOptmLevel="FULL" QueryHash="0xA3C5451F52BE2DF1" QueryPlanHash="0x630634752E11B2A2"
+                        StatementOptmEarlyAbortReason="GoodEnoughPlanFound" CardinalityEstimationModelVersion="120">
+                    <StatementSetOptions QUOTED_IDENTIFIER="true" ARITHABORT="false" CONCAT_NULL_YIELDS_NULL="true"
+                                         ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true"
+                                         NUMERIC_ROUNDABORT="false"></StatementSetOptions>
+                    <QueryPlan CachedPlanSize="104" CompileTime="27" CompileCPU="27" CompileMemory="872">
+                        <MemoryGrantInfo SerialRequiredMemory="1536" SerialDesiredMemory="1584" GrantedMemory="0"
+                                         MaxUsedMemory="0"></MemoryGrantInfo>
+                        <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="164300"
+                                                              EstimatedPagesCached="82150"
+                                                              EstimatedAvailableDegreeOfParallelism="4"
+                                                              MaxCompileMemory="8338152"></OptimizerHardwareDependentProperties>
+                        <OptimizerStatsUsage>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.73" ModificationCount="0"
+                                            SamplingPercent="65.17" Statistics="[_dta_stat_1312723729_39_3_4_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.43" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_17_19_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.41" ModificationCount="0"
+                                            SamplingPercent="56.0527" Statistics="[_dta_stat_1312723729_17_16_19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.07" ModificationCount="0"
+                                            SamplingPercent="58.9222" Statistics="[_dta_stat_1312723729_5_16_4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.19" ModificationCount="0"
+                                            SamplingPercent="57.3286" Statistics="[_dta_stat_1312723729_39_3_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.81" ModificationCount="0"
+                                            SamplingPercent="55.5923" Statistics="[_dta_stat_1312723729_17_21_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.83" ModificationCount="0"
+                                            SamplingPercent="59.4498" Statistics="[_dta_stat_1312723729_16_19_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:34.21" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K5_10_12_14_22_30_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.39" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K14_K7_K16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.54" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K11_19_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.94" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K11_4_5_16_31]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.54" ModificationCount="0"
+                                            SamplingPercent="59.256" Statistics="[_dta_stat_1312723729_5_4_39]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.65" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_5_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:55.07" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_3_6_17_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:55.37" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_16_3_6_17_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:26.95" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_K16_K6_K11_22]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.44" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_3_6_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2015-10-29T16:34:26.53" ModificationCount="0"
+                                            SamplingPercent="100" Statistics="[_WA_Sys_0000000B_4E3E9311]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.46" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_5_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:53.80" ModificationCount="0"
+                                            SamplingPercent="56.2142" Statistics="[_dta_stat_1312723729_11_16_21_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.13" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_11_3_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.77" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_3_39_6_17_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.46" ModificationCount="0"
+                                            SamplingPercent="65.17" Statistics="[_dta_stat_1312723729_3_4_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.15" ModificationCount="0"
+                                            SamplingPercent="53.3635" Statistics="[_dta_stat_1312723729_39_7_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.44" ModificationCount="0"
+                                            SamplingPercent="53.3635" Statistics="[_dta_stat_1312723729_17_14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:36.49" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K6_2_5_11_18_22_28]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.03" ModificationCount="0"
+                                            SamplingPercent="56.5049" Statistics="[_dta_stat_1312723729_12_9]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.67" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_6_11_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.29" ModificationCount="0"
+                                            SamplingPercent="48.9892" Statistics="[_dta_stat_1312723729_6_4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.48" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_40_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.09" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_17_11_16_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.51" ModificationCount="0"
+                                            SamplingPercent="57.1455" Statistics="[_dta_stat_1312723729_12_17_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.99" ModificationCount="0"
+                                            SamplingPercent="56.408" Statistics="[_dta_stat_1312723729_11_3_4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:19.61" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K7_K21_K20_22_31]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.76" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_7_16_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.00" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_5_16_12]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.53" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_3_16_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.76" ModificationCount="0"
+                                            SamplingPercent="58.3084" Statistics="[_dta_stat_1312723729_39_7_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.77" ModificationCount="0"
+                                            SamplingPercent="56.2061" Statistics="[_dta_stat_1312723729_12_10]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.59" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_11_17_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.45" ModificationCount="0"
+                                            SamplingPercent="51.3231" Statistics="[_dta_stat_1312723729_11_4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.19" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_4_39_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.48" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_3_39_16_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.23" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_3_39_16_7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.36" ModificationCount="0"
+                                            SamplingPercent="60.2977" Statistics="[_dta_stat_1312723729_3_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.91" ModificationCount="0"
+                                            SamplingPercent="61.964" Statistics="[_dta_stat_1312723729_2_16_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:53.42" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_5_6_21_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.24" ModificationCount="0"
+                                            SamplingPercent="58.9222" Statistics="[_dta_stat_1312723729_5_16_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:39.77" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_12_17_28]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.54" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_18_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:36.72" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K5_K20_K21_18_22_23_27]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:53.57" ModificationCount="0"
+                                            SamplingPercent="56.5049" Statistics="[_dta_stat_1312723729_17_12_9_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.32" ModificationCount="0"
+                                            SamplingPercent="59.4498" Statistics="[_dta_stat_1312723729_16_11_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.88" ModificationCount="0"
+                                            SamplingPercent="63.1995" Statistics="[_dta_stat_1312723729_14_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:28.06" ModificationCount="0"
+                                            SamplingPercent="61.964" Statistics="[_dta_stat_1312723729_11_2_5_39]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:53.98" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_7_17_16_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:54.68" ModificationCount="0"
+                                            SamplingPercent="56.2061" Statistics="[_dta_stat_1312723729_5_10_16_12]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.53" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_3_16_7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.46" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_2_17_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.93" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K21_K6_K16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.72" ModificationCount="0"
+                                            SamplingPercent="57.412" Statistics="[_dta_stat_1312723729_20_16_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.40" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.42" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_11_39_3_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:53.10" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_7_3_2_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.09" ModificationCount="0"
+                                            SamplingPercent="56.5049" Statistics="[_dta_stat_1312723729_6_17_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:35.21" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_4_6_11_16_22_32]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.95" ModificationCount="0"
+                                            SamplingPercent="63.1995" Statistics="[_dta_stat_1312723729_39_2_7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.07" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K6_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.43" ModificationCount="0"
+                                            SamplingPercent="53.4146" Statistics="[_dta_stat_1312723729_6_19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.91" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_4_16_39_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.38" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:38.78" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2015-10-29T15:43:27.17" ModificationCount="0"
+                                            SamplingPercent="100" Statistics="[mobpro_ind_1_pk]" Table="[mobpro_ind_1]"
+                                            Schema="[dbo]" Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.46" ModificationCount="0"
+                                            SamplingPercent="56.9275" Statistics="[_dta_stat_1312723729_39_5_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.32" ModificationCount="0"
+                                            SamplingPercent="58.3084" Statistics="[_dta_stat_1312723729_20_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.23" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_18_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:33.69" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K21_K18_K5_7_10_12_14_20_22_31_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.94" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_7_16_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.44" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_4_13]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:40.74" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_K5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.65" ModificationCount="0"
+                                            SamplingPercent="55.5923" Statistics="[_dta_stat_1312723729_3_39_16_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2015-10-26T16:13:44.86" ModificationCount="1"
+                                            SamplingPercent="100" Statistics="[_WA_Sys_00000004_7E22B05D]"
+                                            Table="[mode_transport]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.73" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K20_K21_5_6_9_16_19_22]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.24" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K14_K19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.28" ModificationCount="0"
+                                            SamplingPercent="53.3635" Statistics="[_dta_stat_1312723729_7_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.79" ModificationCount="0"
+                                            SamplingPercent="57.3286" Statistics="[_dta_stat_1312723729_6_39_3_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.97" ModificationCount="0"
+                                            SamplingPercent="58.3084" Statistics="[_dta_stat_1312723729_39_3_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:35.10" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K12_K16_K5_2_3_17_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.51" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:39.44" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K7_K2_5_14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.21" ModificationCount="0"
+                                            SamplingPercent="61.894" Statistics="[_dta_stat_1312723729_6_21_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.74" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K6_K5_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:39.62" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K6_17_20_27]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:18.99" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K21_K16_K19_K6_5_18_20_22_32_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.61" ModificationCount="0"
+                                            SamplingPercent="59.4498" Statistics="[_dta_stat_1312723729_19_16_14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:26.15" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K17_K2_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.74" ModificationCount="0"
+                                            SamplingPercent="60.7607" Statistics="[_dta_stat_1312723729_7_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.09" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_6_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.05" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_4_39_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:34.82" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_K16_K6_K17_7_22_40_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.18" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_2_39_40_4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.64" ModificationCount="0"
+                                            SamplingPercent="61.964" Statistics="[_dta_stat_1312723729_39_11_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.33" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_22_13]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.10" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K17_K2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.26" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K17_K21_3_6_22_27]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:54.39" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_16_20_3_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.95" ModificationCount="0"
+                                            SamplingPercent="53.4146" Statistics="[_dta_stat_1312723729_14_19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:40.25" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K11_K16_K21_14_19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:40.60" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_K11_K3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.76" ModificationCount="0"
+                                            SamplingPercent="58.0366" Statistics="[_dta_stat_1312723729_2_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.26" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.20" ModificationCount="0"
+                                            SamplingPercent="61.1753" Statistics="[_dta_stat_1312723729_17_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.22" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K6_17_20_24]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.12" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_2_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.90" ModificationCount="0"
+                                            SamplingPercent="57.3286" Statistics="[_dta_stat_1312723729_18_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.34" ModificationCount="0"
+                                            SamplingPercent="51.3231" Statistics="[_dta_stat_1312723729_11_4_5_39]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:25.89" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_K3_22_28_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.76" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_5_6_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.66" ModificationCount="0"
+                                            SamplingPercent="63.1995" Statistics="[_dta_stat_1312723729_5_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:38.97" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K16_5_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.36" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_17_5_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:54.90" ModificationCount="0"
+                                            SamplingPercent="57.412" Statistics="[_dta_stat_1312723729_5_16_18_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.20" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.27" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_39_13]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.04" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K21_K5_K6_K20_9_12_17_22_27]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:38.26" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K19_K14_K17_K16_22]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.91" ModificationCount="0"
+                                            SamplingPercent="56.5856" Statistics="[_dta_stat_1312723729_17_7_16_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.60" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_17_5_7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.48" ModificationCount="0"
+                                            SamplingPercent="57.9908" Statistics="[_dta_stat_1312723729_39_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:40.01" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K6_K19_5_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:36.25" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K5_K11_K21_2_4_6_22]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.63" ModificationCount="0"
+                                            SamplingPercent="55.4658" Statistics="[_dta_stat_1312723729_7_14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.85" ModificationCount="0"
+                                            SamplingPercent="57.3609" Statistics="[_dta_stat_1312723729_5_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.34" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_3_12_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2015-10-30T16:32:52.67" ModificationCount="0"
+                                            SamplingPercent="100" Statistics="[mode_transport_pk]"
+                                            Table="[mode_transport]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.65" ModificationCount="0"
+                                            SamplingPercent="56.5856" Statistics="[_dta_stat_1312723729_40_39_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.09" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_40_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.97" ModificationCount="0"
+                                            SamplingPercent="56.0527" Statistics="[_dta_stat_1312723729_19_16_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:26.40" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K7_K40_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.08" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_16_2_39]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.65" ModificationCount="0"
+                                            SamplingPercent="51.3231" Statistics="[_dta_stat_1312723729_11_21_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.00" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_4_2_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.88" ModificationCount="0"
+                                            SamplingPercent="58.3084" Statistics="[_dta_stat_1312723729_2_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.22" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_39_4_13]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.67" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_17_6_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.36" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_16_10]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:19.88" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K11_K4_K39_K5_16_22_31_32]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.64" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K10_K6_5_11_16_18_20_22]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.59" ModificationCount="0"
+                                            SamplingPercent="56.5049" Statistics="[_dta_stat_1312723729_9_17_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:35.77" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K7_K3_2_5_20_22_28]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:38.60" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_K3_K4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.58" ModificationCount="0"
+                                            SamplingPercent="61.1753" Statistics="[_dta_stat_1312723729_39_6_17_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.93" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K20_K7_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.81" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_16_20_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:33.34" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_3_5_6_7_11_12_17_19_21_22_32_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.57" ModificationCount="0"
+                                            SamplingPercent="63.1995" Statistics="[_dta_stat_1312723729_5_14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.88" ModificationCount="0"
+                                            SamplingPercent="58.9222" Statistics="[_dta_stat_1312723729_4_11_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.59" ModificationCount="0"
+                                            SamplingPercent="56.9275" Statistics="[_dta_stat_1312723729_3_5_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.49" ModificationCount="0"
+                                            SamplingPercent="60.3758" Statistics="[_dta_stat_1312723729_21_20_7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.13" ModificationCount="0"
+                                            SamplingPercent="63.3987" Statistics="[_dta_stat_1312723729_16_3_39]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.24" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_16_5_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.34" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_16_2]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.99" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:38.39" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K6_11_16_21_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:27.74" ModificationCount="0"
+                                            SamplingPercent="63.1995" Statistics="[_dta_stat_1312723729_5_2_39]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:33.84" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_2_3_5_6_16_17_21_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.11" ModificationCount="0"
+                                            SamplingPercent="58.05" Statistics="[_dta_stat_1312723729_39_6_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.96" ModificationCount="0"
+                                            SamplingPercent="63.3987" Statistics="[_dta_stat_1312723729_39_11_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.96" ModificationCount="0"
+                                            SamplingPercent="51.3231" Statistics="[_dta_stat_1312723729_21_16_11_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.99" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_20_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.57" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K20_K6_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.91" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_17_14_7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:50.86" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_16_17_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.45" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:19.15" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K39_K6_K20_16_17_22_27_30_31]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.77" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_3_16_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.63" ModificationCount="0"
+                                            SamplingPercent="56.2142" Statistics="[_dta_stat_1312723729_21_6_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.58" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.55" ModificationCount="0"
+                                            SamplingPercent="56.0527" Statistics="[_dta_stat_1312723729_19_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.32" ModificationCount="0"
+                                            SamplingPercent="48.9892" Statistics="[_dta_stat_1312723729_17_4_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.00" ModificationCount="0"
+                                            SamplingPercent="58.2196" Statistics="[_dta_stat_1312723729_4_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.41" ModificationCount="0"
+                                            SamplingPercent="58.3354" Statistics="[_dta_stat_1312723729_3_39_4_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:19.40" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K16_K39_K4_5_7_10_11_12_14_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.23" ModificationCount="0"
+                                            SamplingPercent="63.3476" Statistics="[_dta_stat_1312723729_19_21]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.54" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K19_K16_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:54.56" ModificationCount="0"
+                                            SamplingPercent="59.2856" Statistics="[_dta_stat_1312723729_16_5_11_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.72" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_11_19_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.76" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_5_9]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.71" ModificationCount="0"
+                                            SamplingPercent="56.5856" Statistics="[_dta_stat_1312723729_39_2_3_7_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.35" ModificationCount="0"
+                                            SamplingPercent="57.412" Statistics="[_dta_stat_1312723729_18_21_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:40.49" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K16_K40_K7_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:51.27" ModificationCount="0"
+                                            SamplingPercent="56.2061" Statistics="[_dta_stat_1312723729_12_5_10]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.40" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_16_17_20_22_28]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:53.25" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_6_21_5_20]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.88" ModificationCount="0"
+                                            SamplingPercent="56.5049" Statistics="[_dta_stat_1312723729_5_12_9]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:18.32" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K16_K39_K2_K7_6_11_17_22_32_40_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:35.62" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K6_K18_5_11_22_31]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.41" ModificationCount="0"
+                                            SamplingPercent="57.412" Statistics="[_dta_stat_1312723729_20_21_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:46.97" ModificationCount="0"
+                                            SamplingPercent="63.3476" Statistics="[_dta_stat_1312723729_19_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.67" ModificationCount="0"
+                                            SamplingPercent="56.408" Statistics="[_dta_stat_1312723729_16_39_3_4_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:55.21" ModificationCount="0"
+                                            SamplingPercent="56.408" Statistics="[_dta_stat_1312723729_16_3_4_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:34.41" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K12_K5_11_22_23_30_31]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.37" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K9]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:28.20" ModificationCount="0"
+                                            SamplingPercent="54.6556" Statistics="[_dta_stat_1312723729_7_16_5_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.14" ModificationCount="0"
+                                            SamplingPercent="59.3771" Statistics="[_dta_stat_1312723729_5_21_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.45" ModificationCount="0"
+                                            SamplingPercent="57.1455" Statistics="[_dta_stat_1312723729_28_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:54.15" ModificationCount="0"
+                                            SamplingPercent="60.5804" Statistics="[_dta_stat_1312723729_21_19_16_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.12" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_11_16_3]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:44.12" ModificationCount="0"
+                                            SamplingPercent="47.5491" Statistics="[_dta_stat_1312723729_5_19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.69" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_K11_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.38" ModificationCount="0"
+                                            SamplingPercent="59.4498" Statistics="[_dta_stat_1312723729_14_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:38.67" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K3_K6_11_16_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:34.57" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K18_3_4_5_11_16_22_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:26.53" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_22_24]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.87" ModificationCount="0"
+                                            SamplingPercent="54.6233"
+                                            Statistics="[_dta_stat_1312723729_39_17_3_16_6_20]" Table="[mobpro_ind_1]"
+                                            Schema="[dbo]" Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:21.93" ModificationCount="0"
+                                            SamplingPercent="56.5049" Statistics="[_dta_stat_1312723729_17_21_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.73" ModificationCount="0"
+                                            SamplingPercent="57.3609" Statistics="[_dta_stat_1312723729_17_39_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:37.81" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_32_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:39.56" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_6_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:35.36" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_5_6_16_21_22_32]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:47.17" ModificationCount="0"
+                                            SamplingPercent="56.9275" Statistics="[_dta_stat_1312723729_3_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.69" ModificationCount="0"
+                                            SamplingPercent="56.5856" Statistics="[_dta_stat_1312723729_39_16_3_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:54.23" ModificationCount="0"
+                                            SamplingPercent="53.3635" Statistics="[_dta_stat_1312723729_16_14_17_19]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:48.25" ModificationCount="0"
+                                            SamplingPercent="51.743" Statistics="[_dta_stat_1312723729_16_17_4]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.76" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:33.99" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K5_2_7_14_19_21_22_32_41]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:49.93" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_3_2_16]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:22.55" ModificationCount="0"
+                                            SamplingPercent="59.5548" Statistics="[_dta_stat_1312723729_39_6_3_11]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.38" ModificationCount="0"
+                                            SamplingPercent="53.3635" Statistics="[_dta_stat_1312723729_22_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:23.83" ModificationCount="0"
+                                            SamplingPercent="54.6233" Statistics="[_dta_stat_1312723729_20_39_3_16_6]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.30" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K19_K6_14]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:40.90" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K4_K17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.69" ModificationCount="0"
+                                            SamplingPercent="61.964" Statistics="[_dta_stat_1312723729_2_18]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:43.34" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K7]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:41.56" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K21_5_12]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T13:45:20.59" ModificationCount="0"
+                                            SamplingPercent="61.1753" Statistics="[_dta_stat_1312723729_20_17]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:42.17" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K17_K11_K5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T15:32:26.67" ModificationCount="0"
+                                            SamplingPercent="100"
+                                            Statistics="[_dta_index_mobpro_ind_1_1_1312723729__K14_22_28]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:45.81" ModificationCount="0"
+                                            SamplingPercent="57.9908" Statistics="[_dta_stat_1312723729_7_40]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                            <StatisticsInfo LastUpdate="2019-03-16T12:04:52.65" ModificationCount="0"
+                                            SamplingPercent="57.7728" Statistics="[_dta_stat_1312723729_3_16_5]"
+                                            Table="[mobpro_ind_1]" Schema="[dbo]"
+                                            Database="[db_dopan]"></StatisticsInfo>
+                        </OptimizerStatsUsage>
+                        <RelOp NodeId="0" PhysicalOp="Compute Scalar" LogicalOp="Compute Scalar" EstimateRows="3.85714"
+                               EstimateIO="0" EstimateCPU="3.85714e-07" AvgRowSize="31"
+                               EstimatedTotalSubtreeCost="0.522497" Parallel="0" EstimateRebinds="0" EstimateRewinds="0"
+                               EstimatedExecutionMode="Row">
+                            <OutputList>
+                                <ColumnReference Database="[db_dopan]" Schema="[dbo]" Table="[mode_transport]"
+                                                 Column="categorie_nom"></ColumnReference>
+                                <ColumnReference Column="Expr1006"></ColumnReference>
+                            </OutputList>
+                            <ComputeScalar>
+                                <DefinedValues>
+                                    <DefinedValue>
+                                        <ColumnReference Column="Expr1006"></ColumnReference>
+                                        <ScalarOperator ScalarString="[Expr1004]/[Expr1005]">
+                                            <Arithmetic Operation="DIV">
+                                                <ScalarOperator>
+                                                    <Identifier>
+                                                        <ColumnReference Column="Expr1004"></ColumnReference>
+                                                    </Identifier>
+                                                </ScalarOperator>
+                                                <ScalarOperator>
+                                                    <Identifier>
+                                                        <ColumnReference Column="Expr1005"></ColumnReference>
+                                                    </Identifier>
+                                                </ScalarOperator>
+                                            </Arithmetic>
+                                        </ScalarOperator>
+                                    </DefinedValue>
+                                </DefinedValues>
+                                <RelOp NodeId="2" PhysicalOp="Compute Scalar" LogicalOp="Compute Scalar"
+                                       EstimateRows="3.85714" EstimateIO="0" EstimateCPU="3.85714e-07" AvgRowSize="39"
+                                       EstimatedTotalSubtreeCost="0.522496" Parallel="0" EstimateRebinds="0"
+                                       EstimateRewinds="0" EstimatedExecutionMode="Row">
+                                    <OutputList>
+                                        <ColumnReference Database="[db_dopan]" Schema="[dbo]" Table="[mode_transport]"
+                                                         Column="categorie_nom"></ColumnReference>
+                                        <ColumnReference Column="Expr1004"></ColumnReference>
+                                        <ColumnReference Column="Expr1005"></ColumnReference>
+                                    </OutputList>
+                                    <ComputeScalar>
+                                        <DefinedValues>
+                                            <DefinedValue>
+                                                <ColumnReference Column="Expr1004"></ColumnReference>
+                                                <ScalarOperator
+                                                        ScalarString="CASE WHEN [globalagg1009]=(0) THEN NULL ELSE [globalagg1011] END">
+                                                    <IF>
+                                                        <Condition>
+                                                            <ScalarOperator>
+                                                                <Compare CompareOp="EQ">
+                                                                    <ScalarOperator>
+                                                                        <Identifier>
+                                                                            <ColumnReference
+                                                                                    Column="globalagg1009"></ColumnReference>
+                                                                        </Identifier>
+                                                                    </ScalarOperator>
+                                                                    <ScalarOperator>
+                                                                        <Const ConstValue="(0)"></Const>
+                                                                    </ScalarOperator>
+                                                                </Compare>
+                                                            </ScalarOperator>
+                                                        </Condition>
+                                                        <Then>
+                                                            <ScalarOperator>
+                                                                <Const ConstValue="NULL"></Const>
+                                                            </ScalarOperator>
+                                                        </Then>
+                                                        <Else>
+                                                            <ScalarOperator>
+                                                                <Identifier>
+                                                                    <ColumnReference
+                                                                            Column="globalagg1011"></ColumnReference>
+                                                                </Identifier>
+                                                            </ScalarOperator>
+                                                        </Else>
+                                                    </IF>
+                                                </ScalarOperator>
+                                            </DefinedValue>
+                                            <DefinedValue>
+                                                <ColumnReference Column="Expr1005"></ColumnReference>
+                                                <ScalarOperator
+                                                        ScalarString="CASE WHEN [globalagg1013]=(0) THEN NULL ELSE [globalagg1015] END">
+                                                    <IF>
+                                                        <Condition>
+                                                            <ScalarOperator>
+                                                                <Compare CompareOp="EQ">
+                                                                    <ScalarOperator>
+                                                                        <Identifier>
+                                                                            <ColumnReference
+                                                                                    Column="globalagg1013"></ColumnReference>
+                                                                        </Identifier>
+                                                                    </ScalarOperator>
+                                                                    <ScalarOperator>
+                                                                        <Const ConstValue="(0)"></Const>
+                                                                    </ScalarOperator>
+                                                                </Compare>
+                                                            </ScalarOperator>
+                                                        </Condition>
+                                                        <Then>
+                                                            <ScalarOperator>
+                                                                <Const ConstValue="NULL"></Const>
+                                                            </ScalarOperator>
+                                                        </Then>
+                                                        <Else>
+                                                            <ScalarOperator>
+                                                                <Identifier>
+                                                                    <ColumnReference
+                                                                            Column="globalagg1015"></ColumnReference>
+                                                                </Identifier>
+                                                            </ScalarOperator>
+                                                        </Else>
+                                                    </IF>
+                                                </ScalarOperator>
+                                            </DefinedValue>
+                                        </DefinedValues>
+                                        <RelOp NodeId="3" PhysicalOp="Stream Aggregate" LogicalOp="Aggregate"
+                                               EstimateRows="3.85714" EstimateIO="0" EstimateCPU="4.92857e-06"
+                                               AvgRowSize="55" EstimatedTotalSubtreeCost="0.522496" Parallel="0"
+                                               EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                                            <OutputList>
+                                                <ColumnReference Database="[db_dopan]" Schema="[dbo]"
+                                                                 Table="[mode_transport]"
+                                                                 Column="categorie_nom"></ColumnReference>
+                                                <ColumnReference Column="globalagg1009"></ColumnReference>
+                                                <ColumnReference Column="globalagg1011"></ColumnReference>
+                                                <ColumnReference Column="globalagg1013"></ColumnReference>
+                                                <ColumnReference Column="globalagg1015"></ColumnReference>
+                                            </OutputList>
+                                            <StreamAggregate>
+                                                <DefinedValues>
+                                                    <DefinedValue>
+                                                        <ColumnReference Column="globalagg1009"></ColumnReference>
+                                                        <ScalarOperator ScalarString="SUM([partialagg1008])">
+                                                            <Aggregate Distinct="0" AggType="SUM">
+                                                                <ScalarOperator>
+                                                                    <Identifier>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1008"></ColumnReference>
+                                                                    </Identifier>
+                                                                </ScalarOperator>
+                                                            </Aggregate>
+                                                        </ScalarOperator>
+                                                    </DefinedValue>
+                                                    <DefinedValue>
+                                                        <ColumnReference Column="globalagg1011"></ColumnReference>
+                                                        <ScalarOperator ScalarString="SUM([partialagg1010])">
+                                                            <Aggregate Distinct="0" AggType="SUM">
+                                                                <ScalarOperator>
+                                                                    <Identifier>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1010"></ColumnReference>
+                                                                    </Identifier>
+                                                                </ScalarOperator>
+                                                            </Aggregate>
+                                                        </ScalarOperator>
+                                                    </DefinedValue>
+                                                    <DefinedValue>
+                                                        <ColumnReference Column="globalagg1013"></ColumnReference>
+                                                        <ScalarOperator ScalarString="SUM([partialagg1012])">
+                                                            <Aggregate Distinct="0" AggType="SUM">
+                                                                <ScalarOperator>
+                                                                    <Identifier>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1012"></ColumnReference>
+                                                                    </Identifier>
+                                                                </ScalarOperator>
+                                                            </Aggregate>
+                                                        </ScalarOperator>
+                                                    </DefinedValue>
+                                                    <DefinedValue>
+                                                        <ColumnReference Column="globalagg1015"></ColumnReference>
+                                                        <ScalarOperator ScalarString="SUM([partialagg1014])">
+                                                            <Aggregate Distinct="0" AggType="SUM">
+                                                                <ScalarOperator>
+                                                                    <Identifier>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1014"></ColumnReference>
+                                                                    </Identifier>
+                                                                </ScalarOperator>
+                                                            </Aggregate>
+                                                        </ScalarOperator>
+                                                    </DefinedValue>
+                                                </DefinedValues>
+                                                <GroupBy>
+                                                    <ColumnReference Database="[db_dopan]" Schema="[dbo]"
+                                                                     Table="[mode_transport]"
+                                                                     Column="categorie_nom"></ColumnReference>
+                                                </GroupBy>
+                                                <RelOp NodeId="4" PhysicalOp="Sort" LogicalOp="Sort" EstimateRows="5"
+                                                       EstimateIO="0.0112613" EstimateCPU="0.000118166" AvgRowSize="55"
+                                                       EstimatedTotalSubtreeCost="0.522491" Parallel="0"
+                                                       EstimateRebinds="0" EstimateRewinds="0"
+                                                       EstimatedExecutionMode="Row">
+                                                    <OutputList>
+                                                        <ColumnReference Database="[db_dopan]" Schema="[dbo]"
+                                                                         Table="[mode_transport]"
+                                                                         Column="categorie_nom"></ColumnReference>
+                                                        <ColumnReference Column="partialagg1008"></ColumnReference>
+                                                        <ColumnReference Column="partialagg1010"></ColumnReference>
+                                                        <ColumnReference Column="partialagg1012"></ColumnReference>
+                                                        <ColumnReference Column="partialagg1014"></ColumnReference>
+                                                    </OutputList>
+                                                    <MemoryFractions Input="0.666667" Output="1"></MemoryFractions>
+                                                    <Sort Distinct="0">
+                                                        <OrderBy>
+                                                            <OrderByColumn Ascending="1">
+                                                                <ColumnReference Database="[db_dopan]" Schema="[dbo]"
+                                                                                 Table="[mode_transport]"
+                                                                                 Column="categorie_nom"></ColumnReference>
+                                                            </OrderByColumn>
+                                                        </OrderBy>
+                                                        <RelOp NodeId="5" PhysicalOp="Nested Loops"
+                                                               LogicalOp="Inner Join" EstimateRows="5" EstimateIO="0"
+                                                               EstimateCPU="2.09e-05" AvgRowSize="55"
+                                                               EstimatedTotalSubtreeCost="0.511112" Parallel="0"
+                                                               EstimateRebinds="0" EstimateRewinds="0"
+                                                               EstimatedExecutionMode="Row">
+                                                            <OutputList>
+                                                                <ColumnReference Database="[db_dopan]" Schema="[dbo]"
+                                                                                 Table="[mode_transport]"
+                                                                                 Column="categorie_nom"></ColumnReference>
+                                                                <ColumnReference
+                                                                        Column="partialagg1008"></ColumnReference>
+                                                                <ColumnReference
+                                                                        Column="partialagg1010"></ColumnReference>
+                                                                <ColumnReference
+                                                                        Column="partialagg1012"></ColumnReference>
+                                                                <ColumnReference
+                                                                        Column="partialagg1014"></ColumnReference>
+                                                            </OutputList>
+                                                            <NestedLoops Optimized="0">
+                                                                <OuterReferences>
+                                                                    <ColumnReference Database="[db_dopan]"
+                                                                                     Schema="[dbo]"
+                                                                                     Table="[mobpro_ind_1]"
+                                                                                     Column="mode_trans"></ColumnReference>
+                                                                </OuterReferences>
+                                                                <RelOp NodeId="6" PhysicalOp="Hash Match"
+                                                                       LogicalOp="Aggregate" EstimateRows="5"
+                                                                       EstimateIO="0" EstimateCPU="0.265981"
+                                                                       AvgRowSize="44"
+                                                                       EstimatedTotalSubtreeCost="0.507175" Parallel="0"
+                                                                       EstimateRebinds="0" EstimateRewinds="0"
+                                                                       EstimatedExecutionMode="Row">
+                                                                    <OutputList>
+                                                                        <ColumnReference Database="[db_dopan]"
+                                                                                         Schema="[dbo]"
+                                                                                         Table="[mobpro_ind_1]"
+                                                                                         Column="mode_trans"></ColumnReference>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1008"></ColumnReference>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1010"></ColumnReference>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1012"></ColumnReference>
+                                                                        <ColumnReference
+                                                                                Column="partialagg1014"></ColumnReference>
+                                                                    </OutputList>
+                                                                    <MemoryFractions Input="1"
+                                                                                     Output="0.333333"></MemoryFractions>
+                                                                    <Hash>
+                                                                        <DefinedValues>
+                                                                            <DefinedValue>
+                                                                                <ColumnReference
+                                                                                        Column="partialagg1008"></ColumnReference>
+                                                                                <ScalarOperator
+                                                                                        ScalarString="COUNT_BIG([Expr1007])">
+                                                                                    <Aggregate Distinct="0"
+                                                                                               AggType="COUNT_BIG">
+                                                                                        <ScalarOperator>
+                                                                                            <Identifier>
+                                                                                                <ColumnReference
+                                                                                                        Column="Expr1007"></ColumnReference>
+                                                                                            </Identifier>
+                                                                                        </ScalarOperator>
+                                                                                    </Aggregate>
+                                                                                </ScalarOperator>
+                                                                            </DefinedValue>
+                                                                            <DefinedValue>
+                                                                                <ColumnReference
+                                                                                        Column="partialagg1010"></ColumnReference>
+                                                                                <ScalarOperator
+                                                                                        ScalarString="SUM([Expr1007])">
+                                                                                    <Aggregate Distinct="0"
+                                                                                               AggType="SUM">
+                                                                                        <ScalarOperator>
+                                                                                            <Identifier>
+                                                                                                <ColumnReference
+                                                                                                        Column="Expr1007"></ColumnReference>
+                                                                                            </Identifier>
+                                                                                        </ScalarOperator>
+                                                                                    </Aggregate>
+                                                                                </ScalarOperator>
+                                                                            </DefinedValue>
+                                                                            <DefinedValue>
+                                                                                <ColumnReference
+                                                                                        Column="partialagg1012"></ColumnReference>
+                                                                                <ScalarOperator
+                                                                                        ScalarString="COUNT_BIG([db_dopan].[dbo].[mobpro_ind_1].[coef_pond])">
+                                                                                    <Aggregate Distinct="0"
+                                                                                               AggType="COUNT_BIG">
+                                                                                        <ScalarOperator>
+                                                                                            <Identifier>
+                                                                                                <ColumnReference
+                                                                                                        Database="[db_dopan]"
+                                                                                                        Schema="[dbo]"
+                                                                                                        Table="[mobpro_ind_1]"
+                                                                                                        Column="coef_pond"></ColumnReference>
+                                                                                            </Identifier>
+                                                                                        </ScalarOperator>
+                                                                                    </Aggregate>
+                                                                                </ScalarOperator>
+                                                                            </DefinedValue>
+                                                                            <DefinedValue>
+                                                                                <ColumnReference
+                                                                                        Column="partialagg1014"></ColumnReference>
+                                                                                <ScalarOperator
+                                                                                        ScalarString="SUM([db_dopan].[dbo].[mobpro_ind_1].[coef_pond])">
+                                                                                    <Aggregate Distinct="0"
+                                                                                               AggType="SUM">
+                                                                                        <ScalarOperator>
+                                                                                            <Identifier>
+                                                                                                <ColumnReference
+                                                                                                        Database="[db_dopan]"
+                                                                                                        Schema="[dbo]"
+                                                                                                        Table="[mobpro_ind_1]"
+                                                                                                        Column="coef_pond"></ColumnReference>
+                                                                                            </Identifier>
+                                                                                        </ScalarOperator>
+                                                                                    </Aggregate>
+                                                                                </ScalarOperator>
+                                                                            </DefinedValue>
+                                                                        </DefinedValues>
+                                                                        <HashKeysBuild>
+                                                                            <ColumnReference Database="[db_dopan]"
+                                                                                             Schema="[dbo]"
+                                                                                             Table="[mobpro_ind_1]"
+                                                                                             Column="mode_trans"></ColumnReference>
+                                                                        </HashKeysBuild>
+                                                                        <BuildResidual>
+                                                                            <ScalarOperator
+                                                                                    ScalarString="[db_dopan].[dbo].[mobpro_ind_1].[mode_trans] = [db_dopan].[dbo].[mobpro_ind_1].[mode_trans]">
+                                                                                <Compare CompareOp="IS">
+                                                                                    <ScalarOperator>
+                                                                                        <Identifier>
+                                                                                            <ColumnReference
+                                                                                                    Database="[db_dopan]"
+                                                                                                    Schema="[dbo]"
+                                                                                                    Table="[mobpro_ind_1]"
+                                                                                                    Column="mode_trans"></ColumnReference>
+                                                                                        </Identifier>
+                                                                                    </ScalarOperator>
+                                                                                    <ScalarOperator>
+                                                                                        <Identifier>
+                                                                                            <ColumnReference
+                                                                                                    Database="[db_dopan]"
+                                                                                                    Schema="[dbo]"
+                                                                                                    Table="[mobpro_ind_1]"
+                                                                                                    Column="mode_trans"></ColumnReference>
+                                                                                        </Identifier>
+                                                                                    </ScalarOperator>
+                                                                                </Compare>
+                                                                            </ScalarOperator>
+                                                                        </BuildResidual>
+                                                                        <RelOp NodeId="7" PhysicalOp="Compute Scalar"
+                                                                               LogicalOp="Compute Scalar"
+                                                                               EstimateRows="37149" EstimateIO="0"
+                                                                               EstimateCPU="0.0037149" AvgRowSize="28"
+                                                                               EstimatedTotalSubtreeCost="0.241194"
+                                                                               Parallel="0" EstimateRebinds="0"
+                                                                               EstimateRewinds="0"
+                                                                               EstimatedExecutionMode="Row">
+                                                                            <OutputList>
+                                                                                <ColumnReference Database="[db_dopan]"
+                                                                                                 Schema="[dbo]"
+                                                                                                 Table="[mobpro_ind_1]"
+                                                                                                 Column="mode_trans"></ColumnReference>
+                                                                                <ColumnReference Database="[db_dopan]"
+                                                                                                 Schema="[dbo]"
+                                                                                                 Table="[mobpro_ind_1]"
+                                                                                                 Column="coef_pond"></ColumnReference>
+                                                                                <ColumnReference
+                                                                                        Column="Expr1007"></ColumnReference>
+                                                                            </OutputList>
+                                                                            <ComputeScalar>
+                                                                                <DefinedValues>
+                                                                                    <DefinedValue>
+                                                                                        <ColumnReference
+                                                                                                Column="Expr1007"></ColumnReference>
+                                                                                        <ScalarOperator
+                                                                                                ScalarString="[db_dopan].[dbo].[mobpro_ind_1].[distance_chemin_court]*[db_dopan].[dbo].[mobpro_ind_1].[coef_pond]">
+                                                                                            <Arithmetic
+                                                                                                    Operation="MULT">
+                                                                                                <ScalarOperator>
+                                                                                                    <Identifier>
+                                                                                                        <ColumnReference
+                                                                                                                Database="[db_dopan]"
+                                                                                                                Schema="[dbo]"
+                                                                                                                Table="[mobpro_ind_1]"
+                                                                                                                Column="distance_chemin_court"></ColumnReference>
+                                                                                                    </Identifier>
+                                                                                                </ScalarOperator>
+                                                                                                <ScalarOperator>
+                                                                                                    <Identifier>
+                                                                                                        <ColumnReference
+                                                                                                                Database="[db_dopan]"
+                                                                                                                Schema="[dbo]"
+                                                                                                                Table="[mobpro_ind_1]"
+                                                                                                                Column="coef_pond"></ColumnReference>
+                                                                                                    </Identifier>
+                                                                                                </ScalarOperator>
+                                                                                            </Arithmetic>
+                                                                                        </ScalarOperator>
+                                                                                    </DefinedValue>
+                                                                                </DefinedValues>
+                                                                                <RelOp NodeId="8"
+                                                                                       PhysicalOp="Index Scan"
+                                                                                       LogicalOp="Index Scan"
+                                                                                       EstimateRows="37149"
+                                                                                       EstimatedRowsRead="37149"
+                                                                                       EstimateIO="0.196458"
+                                                                                       EstimateCPU="0.0410209"
+                                                                                       AvgRowSize="28"
+                                                                                       EstimatedTotalSubtreeCost="0.237479"
+                                                                                       TableCardinality="37149"
+                                                                                       Parallel="0" EstimateRebinds="0"
+                                                                                       EstimateRewinds="0"
+                                                                                       EstimatedExecutionMode="Row">
+                                                                                    <OutputList>
+                                                                                        <ColumnReference
+                                                                                                Database="[db_dopan]"
+                                                                                                Schema="[dbo]"
+                                                                                                Table="[mobpro_ind_1]"
+                                                                                                Column="mode_trans"></ColumnReference>
+                                                                                        <ColumnReference
+                                                                                                Database="[db_dopan]"
+                                                                                                Schema="[dbo]"
+                                                                                                Table="[mobpro_ind_1]"
+                                                                                                Column="coef_pond"></ColumnReference>
+                                                                                        <ColumnReference
+                                                                                                Database="[db_dopan]"
+                                                                                                Schema="[dbo]"
+                                                                                                Table="[mobpro_ind_1]"
+                                                                                                Column="distance_chemin_court"></ColumnReference>
+                                                                                    </OutputList>
+                                                                                    <IndexScan Ordered="0"
+                                                                                               ForcedIndex="0"
+                                                                                               ForceSeek="0"
+                                                                                               ForceScan="0"
+                                                                                               NoExpandHint="0"
+                                                                                               Storage="RowStore">
+                                                                                        <DefinedValues>
+                                                                                            <DefinedValue>
+                                                                                                <ColumnReference
+                                                                                                        Database="[db_dopan]"
+                                                                                                        Schema="[dbo]"
+                                                                                                        Table="[mobpro_ind_1]"
+                                                                                                        Column="mode_trans"></ColumnReference>
+                                                                                            </DefinedValue>
+                                                                                            <DefinedValue>
+                                                                                                <ColumnReference
+                                                                                                        Database="[db_dopan]"
+                                                                                                        Schema="[dbo]"
+                                                                                                        Table="[mobpro_ind_1]"
+                                                                                                        Column="coef_pond"></ColumnReference>
+                                                                                            </DefinedValue>
+                                                                                            <DefinedValue>
+                                                                                                <ColumnReference
+                                                                                                        Database="[db_dopan]"
+                                                                                                        Schema="[dbo]"
+                                                                                                        Table="[mobpro_ind_1]"
+                                                                                                        Column="distance_chemin_court"></ColumnReference>
+                                                                                            </DefinedValue>
+                                                                                        </DefinedValues>
+                                                                                        <Object Database="[db_dopan]"
+                                                                                                Schema="[dbo]"
+                                                                                                Table="[mobpro_ind_1]"
+                                                                                                Index="[_dta_index_mobpro_ind_1_1_1312723729__K18_3_4_5_11_16_22_41]"
+                                                                                                IndexKind="NonClustered"
+                                                                                                Storage="RowStore"></Object>
+                                                                                    </IndexScan>
+                                                                                </RelOp>
+                                                                            </ComputeScalar>
+                                                                        </RelOp>
+                                                                    </Hash>
+                                                                </RelOp>
+                                                                <RelOp NodeId="9" PhysicalOp="Clustered Index Seek"
+                                                                       LogicalOp="Clustered Index Seek" EstimateRows="1"
+                                                                       EstimatedRowsRead="1" EstimateIO="0.003125"
+                                                                       EstimateCPU="0.0001581" AvgRowSize="23"
+                                                                       EstimatedTotalSubtreeCost="0.0039155"
+                                                                       TableCardinality="7" Parallel="0"
+                                                                       EstimateRebinds="4" EstimateRewinds="0"
+                                                                       EstimatedExecutionMode="Row">
+                                                                    <OutputList>
+                                                                        <ColumnReference Database="[db_dopan]"
+                                                                                         Schema="[dbo]"
+                                                                                         Table="[mode_transport]"
+                                                                                         Column="categorie_nom"></ColumnReference>
+                                                                    </OutputList>
+                                                                    <IndexScan Ordered="1" ScanDirection="FORWARD"
+                                                                               ForcedIndex="0" ForceSeek="0"
+                                                                               ForceScan="0" NoExpandHint="0"
+                                                                               Storage="RowStore">
+                                                                        <DefinedValues>
+                                                                            <DefinedValue>
+                                                                                <ColumnReference Database="[db_dopan]"
+                                                                                                 Schema="[dbo]"
+                                                                                                 Table="[mode_transport]"
+                                                                                                 Column="categorie_nom"></ColumnReference>
+                                                                            </DefinedValue>
+                                                                        </DefinedValues>
+                                                                        <Object Database="[db_dopan]" Schema="[dbo]"
+                                                                                Table="[mode_transport]"
+                                                                                Index="[mode_transport_pk]"
+                                                                                IndexKind="Clustered"
+                                                                                Storage="RowStore"></Object>
+                                                                        <SeekPredicates>
+                                                                            <SeekPredicateNew>
+                                                                                <SeekKeys>
+                                                                                    <Prefix ScanType="EQ">
+                                                                                        <RangeColumns>
+                                                                                            <ColumnReference
+                                                                                                    Database="[db_dopan]"
+                                                                                                    Schema="[dbo]"
+                                                                                                    Table="[mode_transport]"
+                                                                                                    Column="mode_id"></ColumnReference>
+                                                                                        </RangeColumns>
+                                                                                        <RangeExpressions>
+                                                                                            <ScalarOperator
+                                                                                                    ScalarString="[db_dopan].[dbo].[mobpro_ind_1].[mode_trans]">
+                                                                                                <Identifier>
+                                                                                                    <ColumnReference
+                                                                                                            Database="[db_dopan]"
+                                                                                                            Schema="[dbo]"
+                                                                                                            Table="[mobpro_ind_1]"
+                                                                                                            Column="mode_trans"></ColumnReference>
+                                                                                                </Identifier>
+                                                                                            </ScalarOperator>
+                                                                                        </RangeExpressions>
+                                                                                    </Prefix>
+                                                                                </SeekKeys>
+                                                                            </SeekPredicateNew>
+                                                                        </SeekPredicates>
+                                                                    </IndexScan>
+                                                                </RelOp>
+                                                            </NestedLoops>
+                                                        </RelOp>
+                                                    </Sort>
+                                                </RelOp>
+                                            </StreamAggregate>
+                                        </RelOp>
+                                    </ComputeScalar>
+                                </RelOp>
+                            </ComputeScalar>
+                        </RelOp>
+                    </QueryPlan>
+                </StmtSimple>
+            </Statements>
+        </Batch>
+    </BatchSequence>
+</ShowPlanXML>
