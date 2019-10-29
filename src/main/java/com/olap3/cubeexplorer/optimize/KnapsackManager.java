@@ -14,7 +14,7 @@ public class KnapsackManager implements BudgetManager {
     AprioriMetric metric;
     // resolution for discretization
     int res = 8192;
-    double epsilon = 0.01; // bound on divergence from optimal value
+    double epsilon = 0.05; // bound on divergence from optimal value
 
     public KnapsackManager(AprioriMetric value) {
         metric = value;
@@ -55,7 +55,7 @@ public class KnapsackManager implements BudgetManager {
         System.out.println(totalValue);
 
         // Calculate Approximation Solution
-        boolean[] isPickedApprox = getKnapsackSolution(weight, value, timeBudget);
+        boolean[] isPickedApprox = getKnapsackSolution(weight, valueApprox, timeBudget, totalValue);
 
         HashSet<InfoCollector> solution = new HashSet<>();
         for (int i = 0; i < n; i++) {
