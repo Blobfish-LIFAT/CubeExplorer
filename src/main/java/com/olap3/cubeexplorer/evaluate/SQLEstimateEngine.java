@@ -39,7 +39,8 @@ public class SQLEstimateEngine {
             queryFactory = new SQLFactory(CubeUtils.getDefault());
         }
 
-        return def.estimates(queryFactory.getStarJoin(qfset)).estimated_time;
+        //FIXME Not sure about this ratio see with ben
+        return (long) (def.estimates(queryFactory.getStarJoin(qfset)).total_cost * 1000);
     }
 
     public boolean setTimeout(int timeout) {
