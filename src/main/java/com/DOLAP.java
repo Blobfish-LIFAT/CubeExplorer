@@ -41,7 +41,6 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-
 public class DOLAP {
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
     static final String testData = "./data/import_ideb",
@@ -54,7 +53,7 @@ public class DOLAP {
             .enableComplexMapKeySerialization() //Necessary as QP map has "complex" key
             .setPrettyPrinting().create();
 
-    // For testing stuff
+    // For testing only
     static Qfset testQuery;
 
 
@@ -82,13 +81,12 @@ public class DOLAP {
                     Fin des pre-calculs mettre le code de test ci apres
          */
         LOGGER.info("Begin test phase");
-        // Init KS
         BudgetManager ks = new KnapsackManager(ic -> {
             var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
             double sum = qps.stream().mapToDouble(key -> {
                 var i = interest.get(key);
                 if(i==null) {
-                    System.err.println("Error for "+ key.toString());
+                    System.err.printf("Warning no IM found for %s %n", key.toString());
                     return 0.001;
                 }else
                     return i;
@@ -98,7 +96,7 @@ public class DOLAP {
 
         List<InfoCollector> candidates = generateCandidates(testQuery);
         System.out.printf("Found %s candidates%n", candidates.size());
-        System.out.println(ks.findBestPlan(candidates, 6000));
+        System.out.println(ks.findBestPlan(candidates, 6000).getOperations());
 
     }
 

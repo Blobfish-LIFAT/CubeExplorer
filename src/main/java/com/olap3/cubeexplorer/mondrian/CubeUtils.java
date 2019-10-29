@@ -54,11 +54,22 @@ public class CubeUtils {
         return actualDim.foreignKey;
     }
 
+    /**
+     * Fetches the table name for a given hierarchy in the cube
+     * @param h a hierarchy in the schema
+     * @return the table name
+     */
+    @RolapOnly
     public String getTableName(Hierarchy h){
         MondrianDef.Hierarchy xmlHierarchy = (MondrianDef.Hierarchy) Reflect.getField(((RolapCubeHierarchy)h).getRolapHierarchy(), "xmlHierarchy");
         return xmlHierarchy.relation.toString();
     }
 
+    /**
+     * Fetches the primary key from the dimension table of the given hierarchy
+     * @param h a hierarchy in the current schema
+     * @return the primary key name
+     */
     public String getPrimaryKey(Hierarchy h){
         MondrianDef.Hierarchy xmlHierarchy = (MondrianDef.Hierarchy) Reflect.getField(((RolapCubeHierarchy)h).getRolapHierarchy(), "xmlHierarchy");
         return xmlHierarchy.primaryKey;
@@ -68,8 +79,9 @@ public class CubeUtils {
         RolapLevel actualLevel = ((RolapCubeLevel) l).getRolapLevel();
         MondrianDef.Expression keyExp = (MondrianDef.Expression) Reflect.getField(actualLevel, "keyExp");
         MondrianDef.Expression nameExp = (MondrianDef.Expression) Reflect.getField(actualLevel, "nameExp");
-        if (keyExp == null && nameExp == null)
-            System.out.println("DEBUG");
+
+        if (keyExp == null && nameExp == null) // To my knowledge only happens for 'All' levels
+            System.err.println("level " + l.toString() + " has no known expression");
         if (nameExp == null)
             return keyExp.getGenericExpression();
         else

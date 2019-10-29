@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DimensionsGraph {
+    static boolean compatibilityMode = false;
 
     /**
      * This will inject edges in the graph based on a XML mondrian (v3) Schema, this is probably not compatible with complex schemas
@@ -31,8 +32,11 @@ public class DimensionsGraph {
                 List<Node> hierarchies = dimension.selectNodes("Hierarchy");
                 //System.out.printf("[DEBUG] Found %d hierarchies in %s%n",hierarchies.size(), dimName);
                 for (Node h : hierarchies){
-                    Element hierarchy = (Element) h;
-                    String prefix = "[" + dimName + "].[" + hierarchy.attributeValue("name") + "]";
+                    Element hierarchy = (Element) h; String prefix;
+                    if (compatibilityMode)
+                        prefix = "[" + dimName + "].[" + hierarchy.attributeValue("name") + "]";
+                    else
+                        prefix = "[" + dimName + "." + hierarchy.attributeValue("name") + "]";
 
                     List<String> levels = new ArrayList<>();
                     levels.add(hierarchy.attributeValue("allLevelName"));

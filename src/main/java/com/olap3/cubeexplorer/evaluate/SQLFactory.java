@@ -11,10 +11,7 @@ import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 import mondrian.olap.MondrianDef;
-import mondrian.rolap.RolapCalculatedMember;
-import mondrian.rolap.RolapCubeDimension;
-import mondrian.rolap.RolapMeasure;
-import mondrian.rolap.RolapStoredMeasure;
+import mondrian.rolap.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -67,20 +64,35 @@ public class SQLFactory {
         for (ProjectionFragment pf : formalQuery.getAttributes()){
             if (pf.getLevel().isAll()) // ignore if it's the "All" level
                 continue;
-            String dimTable = cube.getTableName(pf.getHierarchy());
+            RolapCubeLevel rl = (RolapCubeLevel) pf.getLevel();
+
+            //String dimTable = cube.getTableName(pf.getHierarchy()); // Fetch dimension table
+            String dimTable = rl.getHierarchy().getXmlHierarchy().relation.toString();//No reflect faster ?
             tables.add(dimTable);
 
             String join = factTable + "." + cube.getForeignKey(pf.getHierarchy().getDimension()) + "=" + dimTable + "." + cube.getPrimaryKey(pf.getHierarchy());
             joins.add(join);
 
             String gb = dimTable + "." + cube.getColumn(pf.getLevel());
-            groupBys.add(gb);
 
             String name = pf.getLevel().toString();
             name = name.split("]\\.\\[")[1];
             name = name.substring(0, name.length() - 1);
 
-            selects.add(gb + " AS \"" + name + "\"");
+            String select;
+            if (rl.getNameExp() != null) {
+                MondrianDef.Expression expression = rl.getNameExp();
+                if (expression instanceof MondrianDef.Column)
+                    select = dimTable + "." + ((MondrianDef.Column) expression).getColumnName();
+                else {
+                    select =  ((MondrianDef.NameExpression) expression).getGenericExpression();
+                    gb = select;
+                }
+            } else
+                select = gb;
+
+            groupBys.add(gb);
+            selects.add(select + " AS \"" + name + "\"");
         }
 
 

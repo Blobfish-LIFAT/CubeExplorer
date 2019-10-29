@@ -72,6 +72,7 @@ public class SQLEstimateEngine {
 
             return plan;
         } catch (SQLException | DocumentException e){
+            System.err.printf("Offending query : [%s]%n", query);
             e.printStackTrace();
         }
         return new XMLPlan(-1, -1, -1);

@@ -5,6 +5,12 @@ import java.lang.reflect.Modifier;
 
 public class Reflect {
 
+    /**
+     * Gets private fields from any object
+     * @param target the object to steal a field from
+     * @param fieldName the name of the field
+     * @return the field in question (you'll have to cast it yourself)
+     */
     public static Object getField(Object target, String fieldName){
 
         Field field = null;
