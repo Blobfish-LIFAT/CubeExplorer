@@ -44,39 +44,46 @@ import static com.alexscode.utilities.math.Distribution.log2;
 
 public class DOLAP {
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
-    static final String testData = "./data/import_ideb",
-            schemaPath  = "./data/cubeSchemas/DOPAN_DW3.xml";
-    static CubeUtils utils;
-    static double alpha = 0.5, epsilon = 0.005;
-    static DecimalFormat df = new DecimalFormat("#.##");
-    static MemoryManager mem = Nd4j.getMemoryManager();
-    static Gson gson = new GsonBuilder()
+
+    public static final String testData = "./data/import_ideb";
+    private static CubeUtils utils;
+    private static MemoryManager mem = Nd4j.getMemoryManager();
+    private static Gson gson = new GsonBuilder()
             .enableComplexMapKeySerialization() //Necessary as QP map has "complex" key
             .setPrettyPrinting().create();
-
     // For testing only
-    static Qfset testQuery;
+    private static Qfset testQuery;
 
 
     public static void main(String[] args) throws Exception{
-        LOGGER.info("Init Starting");
+        LOGGER.info("Initializing Mondrian");// Init code
         Connection olap = MondrianConfig.getMondrianConnection();
+        if (olap == null) {
+            LOGGER.severe("Couldn't initialize db/mondrian connection, check stack trace for details. Exiting now.");
+            System.exit(1); //Crash the app can't do anything w/o mondrian
+        }
         utils = new CubeUtils(olap, "Cube1MobProInd");
         CubeUtils.setDefault(utils);
-        LOGGER.info("DB Connection init complete");
+        LOGGER.info("Mondrian connection init complete");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
         //Dodgy I know
         testQuery = new Qfset(olap.parseQuery((String) sessions.get(0).queries.get(0).getProperties().get("mdx")));
         testQuery.getMeasures().add(MeasureFragment.newInstance(utils.getMeasure("Distance trajet domicile - travail (moyenne)")));
+        LOGGER.info("Test data loaded");
 
         LOGGER.info("Computing interestigness scores");
         Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
-        System.err.println("!!! WARNING !!! Using precomputed IM scores debug only !!! WARNING !!!");
+        LOGGER.warning("Using precomputed IM scores debug only");
         HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
         //Map<QueryPart, Double> interest = getInterestingness(sessions);
         //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
+        interest.forEach((k, v) -> {
+            if (k.isDimension())
+                System.out.println(k);
+        });
+        LOGGER.info("IM Compute done");
 
         /*
                     Fin des pre-calculs mettre le code de test ci apres

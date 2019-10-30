@@ -180,7 +180,7 @@ public class CubeUtils {
 
     public  HashSet<Hierarchy> getHierarchies() {
         Dimension[] cubeDims = cube.getDimensions();
-        HashSet<Hierarchy> hierachies = new HashSet<Hierarchy>();
+        HashSet<Hierarchy> hierachies = new HashSet<>();
 
         for (int i = 0; i < cubeDims.length; i++) {
             Hierarchy[] tmpH = cubeDims[i].getHierarchies();
@@ -219,6 +219,17 @@ public class CubeUtils {
         return null;
     }
 
+    public Level getLevel(String exactName){
+        for (Hierarchy h : getHierarchies()){
+            for (Level l : h.getLevels()){
+                //System.out.println(l.getUniqueName() + "/" + exactName);
+                if (l.getUniqueName().equals(exactName))
+                    return l;
+            }
+        }
+        return null;
+    }
+
     /**
      * This method reads the mondrian schema and returns the mondrian member
      * corresponding to the input measure
@@ -228,10 +239,13 @@ public class CubeUtils {
      */
     public Member getMeasure(String measureName) {
         Level l = getLevel("MeasuresLevel", "MEASURES");
+        String mName = measureName.trim().toUpperCase();
+        if (mName.startsWith("[MEASURES].["))
+            mName = mName.substring(12, mName.length() - 1);
         List<Member> members = cube.getSchemaReader(null).withLocus().getLevelMembers(l, true);
         for (Member member : members) {
-
-            if (member.getName().trim().toUpperCase().equals(measureName.trim().toUpperCase())) {
+            //System.out.println(member.getName().trim().toUpperCase() + "/" + mName);
+            if (member.getName().trim().toUpperCase().equals(mName)) {
                 return member;
             }
         }

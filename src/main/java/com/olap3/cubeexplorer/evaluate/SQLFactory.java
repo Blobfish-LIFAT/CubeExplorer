@@ -26,6 +26,9 @@ import java.util.stream.Collectors;
 public class SQLFactory {
     CubeUtils cube;
 
+    //Stats
+    int projNb, selNb, tableNb, aggNb;
+
     public SQLFactory(CubeUtils cube) {
         this.cube = cube;
     }
@@ -142,7 +145,16 @@ public class SQLFactory {
                 + " WHERE " + join(new ArrayList<>(where), " AND ")
                 + " GROUP BY " + join(groupBys, ", ") + ";";
 
+        projNb = selects.size(); selNb = whereDis.size();
+        tableNb = tables.size(); aggNb = groupBys.size();
         return query;
+    }
+
+    public QueryStats getLastStarStats(){
+        QueryStats stats = new QueryStats();
+        stats.setAggNb(aggNb); stats.setProjNb(projNb);
+        stats.setSelNb(selNb); stats.setTableNb(tableNb);
+        return stats;
     }
 
     /**
@@ -152,13 +164,13 @@ public class SQLFactory {
      */
     private static String formatted(Member value) {
         //TODO handle data types other than string/numbers
-        System.out.println(Arrays.toString(value.getProperties()));
+        //System.out.println(Arrays.toString(value.getProperties()));
         Pattern number = Pattern.compile("^[0-9\\.]*$");
         Matcher m = number.matcher(value.getName());
         if (m.matches())
             return value.getName();
         else
-            return "'" + value.getName() + "'";
+            return "'" + value.getName().replace("'", "''") + "'";
     }
 
     /**

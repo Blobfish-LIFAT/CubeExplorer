@@ -98,6 +98,15 @@ public class MondrianConfig {
         return jdbcConnection;
     }
 
+    public static java.sql.Connection getNewJdbcConnection(){
+        try {
+            return DriverManager.getConnection(config.getProperty("jdbcUrl"), config.getProperty("jdbcUser"), config.getProperty("jdbcPassword"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return getJdbcConnection();
+        }
+    }
+
     public static void close(){
         mondrianConnection.close();
         try {

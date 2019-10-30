@@ -7,7 +7,11 @@ import com.olap3.cubeexplorer.julien.Qfset;
 import com.olap3.cubeexplorer.julien.SelectionFragment;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import mondrian.olap.Level;
+import mondrian.olap.Member;
 import mondrian.olap.Query;
+import mondrian.rolap.RolapCubeLevel;
+import mondrian.rolap.RolapLevel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -48,17 +52,29 @@ public class Compatibility {
     }
 
     public static QueryPart measureToMeasureQP(MeasureFragment mf){
-        var measure = mf.getAttribute().toString(); //TODO unify format
+        var measure = mf.getAttribute().getUniqueName(); //TODO unify format
         return QueryPart.newMeasure(measure);
     }
 
-    //TODO finih this
     public static Qfset QPsToQfset(com.olap3.cubeexplorer.im_olap.model.Query query, CubeUtils utils) {
         var proj = new HashSet<ProjectionFragment>();
         var sel = new HashSet<SelectionFragment>();
         var meas = new HashSet<MeasureFragment>();
 
+        for(QueryPart dim : query.getDimensions()){
+            Level l = utils.getLevel(dim.getValue());
+            proj.add(ProjectionFragment.newInstance(l));
+        }
 
+        for (QueryPart filter : query.getFilters()){
+            Member m = utils.getMember(filter.getValue());
+            sel.add(SelectionFragment.newInstance(m));
+        }
+
+        for (QueryPart measure : query.getMeasures()){
+            Member m = utils.getMeasure(measure.getValue());
+            meas.add(MeasureFragment.newInstance(m));
+        }
 
         return new Qfset(proj, sel, meas);
     }

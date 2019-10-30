@@ -25,7 +25,7 @@ public class SQLEstimateEngine {
 
     public SQLEstimateEngine() {
 
-            con = MondrianConfig.getJdbcConnection();
+            con = MondrianConfig.getNewJdbcConnection();
 
     }
 
