@@ -11,11 +11,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
 public class DopanLoader {
     static Gson gson = new Gson();
+    static Pattern legacyP = Pattern.compile("\\[[^\\[\\]]*\\].\\[[^\\[\\]]*\\]\\.\\[[^\\[\\]]*\\]");
 
     public static Session loadFile(Path path){
         try {
@@ -27,7 +30,15 @@ public class DopanLoader {
 
             for (DopanQuery q : in.getQueries()){
                 Query qnew = new Query();
-                qnew.addAll(q.getGroupBySet().stream().map(QueryPart::newDimensionFixed).collect(Collectors.toSet()));
+                qnew.addAll(q.getGroupBySet().stream().map(s -> {
+                    Matcher m = legacyP.matcher(s);
+                    if (m.matches()) {
+                        //System.out.println(s);
+                        s = s.replaceFirst("]\\.\\[", ".");
+                        //System.out.println(s);
+                    }
+                    return s;
+                }).map(QueryPart::newDimension).collect(Collectors.toSet()));
                 qnew.addAll(q.getMeasures().stream().map(QueryPart::newMeasure).collect(Collectors.toSet()));
                 qnew.addAll(q.getSelection().stream().map(s -> QueryPart.newFilter(s.getValue(),s.getLevel())).collect(Collectors.toSet()));
                 qnew.getProperties().put("id", q.getOriginId());

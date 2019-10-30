@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.nio.ByteBuffer;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @JsonAdapter(QueryPartSerializer.class)
 public class QueryPart implements Comparable<QueryPart> {
@@ -59,14 +61,18 @@ public class QueryPart implements Comparable<QueryPart> {
     String value;
 
 
+    private static final Pattern legacyP = Pattern.compile("\\[[^\\[\\]]*\\].\\[[^\\[\\]]*\\]\\.\\[[^\\[\\]]*\\]");
+    private static final boolean enforce = false;
     public static QueryPart newDimension(String value) {
+        if (enforce){
+            Matcher m = legacyP.matcher(value);
+            if (m.matches()){
+                System.out.println("Detected legacy dimension format !");
+            }
+        }
         return getQueryPart(value, Type.DIMENSION, dimension_qps);
     }
 
-    public static QueryPart newDimensionFixed(String value) {
-        value = value.replaceFirst("]\\.\\[", ".");
-        return getQueryPart(value, Type.DIMENSION, dimension_qps);
-    }
 
     public static QueryPart newMeasure(String value) {
         return getQueryPart(value, Type.MEASURE, measure_qps);
@@ -110,12 +116,6 @@ public class QueryPart implements Comparable<QueryPart> {
         queryParts.add(queryPart);
 
         return queryPart;
-    }
-
-    public Optional<String> getHierarchy(){
-        if (t == Type.MEASURE)
-            return Optional.empty();
-        return Optional.of(value.split("\\.")[0]);
     }
 
     public void debugDumpMaps(){

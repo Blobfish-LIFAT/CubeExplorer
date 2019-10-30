@@ -20,8 +20,8 @@ public class DimensionsGraph {
         for (Hierarchy h : cube.getHierarchies()){
             Level[] levels = h.getLevels();
             for (int i = 0; i < levels.length - 1; i++) {
-                QueryPart p1 = QueryPart.newDimension(levels[i].toString());
-                QueryPart p2 = QueryPart.newDimension(levels[i+1].toString());
+                QueryPart p1 = QueryPart.newDimension(levels[i].getUniqueName());
+                QueryPart p2 = QueryPart.newDimension(levels[i+1].getUniqueName());
                 base.putEdgeValue(p1, p2, 1.0);
                 base.putEdgeValue(p2, p1, 1.0);
                 //System.out.printf("Linking %s | %s%n", p1, p2);
@@ -37,7 +37,7 @@ public class DimensionsGraph {
      * @param mondrianFile
      * @return
      */
-    //FIXME avoid putting all dimensions from all cubes in there maybe ?
+    @Deprecated
     public static MutableValueGraph<QueryPart, Double> injectSchema(MutableValueGraph<QueryPart, Double> base, String mondrianFile){
         SAXReader reader = new SAXReader();
         try {

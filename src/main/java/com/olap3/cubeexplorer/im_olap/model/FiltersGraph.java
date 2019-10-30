@@ -90,10 +90,10 @@ public class FiltersGraph {
 
         QueryPart us = QueryPart.newFilter(m.getName(), m.getLevel().toString());
         RolapCubeHierarchy var = (RolapCubeHierarchy) m.getHierarchy();
-        String tmp = "" + m.getHierarchy().getDimension() +
+        /*String tmp = "" + m.getHierarchy().getDimension() +
                 ".[" + var.getSubName() +
-                "].[" + m.getLevel().getName() + "]";
-        QueryPart dim = QueryPart.newDimension(tmp);
+                "].[" + m.getLevel().getName() + "]";*/
+        QueryPart dim = QueryPart.newDimension(m.getLevel().getUniqueName());
         in.addNode(us);
         in.addNode(dim);
         in.putEdgeValue(us, dim, 1.0);

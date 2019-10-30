@@ -79,10 +79,6 @@ public class DOLAP {
         HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
         //Map<QueryPart, Double> interest = getInterestingness(sessions);
         //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
-        interest.forEach((k, v) -> {
-            if (k.isDimension())
-                System.out.println(k);
-        });
         LOGGER.info("IM Compute done");
 
         /*
