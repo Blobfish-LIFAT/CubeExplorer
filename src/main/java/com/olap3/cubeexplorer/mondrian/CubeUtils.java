@@ -7,19 +7,24 @@ import mondrian.rolap.RolapCubeHierarchy;
 import mondrian.rolap.RolapCubeLevel;
 import mondrian.rolap.RolapLevel;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CubeUtils {
     private static final Logger LOGGER = Logger.getLogger( CubeUtils.class.getName() );
-    Connection con;
-    Cube cube;
-    String factTable = null ;
-    static String defaultCubeName = "";
-    static CubeUtils defaultCube = null;
+
+    private Connection con;
+    private Cube cube;
+    private String factTable = null ;
+
+    //Caches
+    private Map<String, Member> memberCache;
+    private Set<Hierarchy> membersCached;
+
+    // singleton stuff
+    private static String defaultCubeName = "";
+    private static CubeUtils defaultCube = null;
 
     public CubeUtils(Connection con, String cubeName) {
         this.con = con;
@@ -27,8 +32,16 @@ public class CubeUtils {
         if (cube == null){
             LOGGER.warning("Couldn't find cube '"+cubeName+"' in schema '"+con.getSchema().getName()+"'");
         }
+        //init caches
+        memberCache = new HashMap<>();
+        membersCached = new HashSet<>();
     }
 
+    /**
+     * Init code to fetch the targeted cube object
+     * @param name Name of the cube as specified in schema
+     * @return the corresponding mondrian cube object
+     */
     private Cube getCubeByName(String name){
         Schema schema = con.getSchema();
 
@@ -39,6 +52,43 @@ public class CubeUtils {
         return null;
     }
 
+    /**
+     * Fetches the member by name, warning this is expensive as heck, caching strategy is in place
+     * @param name the name of the member as is in the database
+     * @return the member object
+     */
+    public Member getMember(String name){
+        Member cacheTry = memberCache.get(name);
+        if (cacheTry != null) // Yeah cache hit !
+            return cacheTry;
+
+        SchemaReader schemaReader = cube.getSchemaReader(null).withLocus();
+        for (Dimension d : cube.getDimensions()){
+            if (!d.isMeasures()){
+                for (Hierarchy h : d.getHierarchies()){
+                    if (membersCached.contains(h))
+                        continue;
+                    for (Level l : h.getLevels()){
+                        for (Member member :schemaReader.getLevelMembers(l, true)){
+                            String cname = member.getName();
+                            memberCache.putIfAbsent(cname, member);
+                            if (cname.equals(name))
+                                return member;
+                        }
+                    }
+                    membersCached.add(h);
+                }
+            }
+        }
+
+        System.err.printf("Member '%s' no found in cube '%s'%n", name, cube);
+        return null;
+    }
+
+    /**
+     * Gets the table name for the fact table of the active cube
+     * @return te fact table name as specified in the schema
+     */
     public String getFactTableName(){
         if (factTable == null) {
             RolapCube actualCube = (RolapCube) cube;
@@ -187,6 +237,11 @@ public class CubeUtils {
         }
 
         return null;
+    }
+
+    public Member getDefaultMeasure(){
+        Level l = getLevel("MeasuresLevel", "MEASURES");
+        return cube.getSchemaReader(null).withLocus().getLevelMembers(l, true).get(0);
     }
 
     public Member getSelection(String attributeName, String hierarchyName, String value) {

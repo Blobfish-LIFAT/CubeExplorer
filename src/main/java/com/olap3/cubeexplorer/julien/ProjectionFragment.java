@@ -38,7 +38,7 @@ public class ProjectionFragment extends Fragment implements java.io.Serializable
      * Create a new projection fragment, added in the list of projections {@link #allProjections}.
      * @param l the level allowing to build the new projection fragment.
      */
-    public ProjectionFragment(Level l) {
+    private ProjectionFragment(Level l) {
         super(l.toString());
         attribute = l;
         type = 0;

@@ -1,13 +1,11 @@
 package com.olap3.cubeexplorer.info;
 
-import com.olap3.cubeexplorer.ECube;
+import com.olap3.cubeexplorer.data.ECube;
 import com.olap3.cubeexplorer.julien.*;
 
-import javax.management.loading.MLet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CheckParents extends InfoCollector {
 

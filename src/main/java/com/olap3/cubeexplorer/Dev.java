@@ -80,11 +80,11 @@ public class Dev {
 
 
         Qfset test = new Qfset();
-        test.add(new ProjectionFragment(utils.getLevel("Commune de residence", "Commune de residence")));
-        test.add(new MeasureFragment(utils.getMeasure("Duree trajet domicile - travail (moyenne)")));
-        test.add(new MeasureFragment(utils.getMeasure("Nombre total d'individus")));
-        test.add(new SelectionFragment(utils.fetchMember("Sexe", "Sexe", "Hommes")));
-        test.add(new SelectionFragment(utils.fetchMember("Sexe", "Sexe", "Femmes")));
+        test.add(ProjectionFragment.newInstance(utils.getLevel("Commune de residence", "Commune de residence")));
+        test.add(MeasureFragment.newInstance(utils.getMeasure("Duree trajet domicile - travail (moyenne)")));
+        test.add(MeasureFragment.newInstance(utils.getMeasure("Nombre total d'individus")));
+        test.add(SelectionFragment.newInstance(utils.fetchMember("Sexe", "Sexe", "Hommes")));
+        test.add(SelectionFragment.newInstance(utils.fetchMember("Sexe", "Sexe", "Femmes")));
 
         System.out.println("\n--- BEGIN Star Join test ---");
 

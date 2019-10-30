@@ -1,6 +1,6 @@
 package com.olap3.cubeexplorer.info;
 
-import com.olap3.cubeexplorer.ECube;
+import com.olap3.cubeexplorer.data.ECube;
 import com.olap3.cubeexplorer.julien.ProjectionFragment;
 import com.olap3.cubeexplorer.julien.Qfset;
 import mondrian.olap.Level;
@@ -8,7 +8,6 @@ import mondrian.olap.Level;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This is basically a drill down operation
@@ -30,7 +29,7 @@ public class CheckRestriction extends InfoCollector {
         for (var sf : q.getAttributes()){
             Level target = sf.getLevel().getChildLevel();
             var tmp = new HashSet<>(q.getAttributes());
-            tmp.add(new ProjectionFragment(target));
+            tmp.add(ProjectionFragment.newInstance(target));
 
             Qfset req = new Qfset(tmp, new HashSet<>(), new HashSet<>(q.getMeasures()));
             var da = new MDXAccessor(req);

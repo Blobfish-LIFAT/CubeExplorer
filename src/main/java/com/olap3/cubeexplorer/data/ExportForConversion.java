@@ -2,8 +2,6 @@ package com.olap3.cubeexplorer.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.olap3.cubeexplorer.StudentParser;
-import lombok.Data;
 
 import java.io.IOException;
 import java.nio.file.Files;

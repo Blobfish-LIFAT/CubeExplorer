@@ -51,11 +51,8 @@ public class Qfset implements java.io.Serializable {
         processSlicer();
         processAxis();
 
-        //TODO completion is not used because it demands too much resource
         complete();
 
-        // maybe selections should be of the form: level in {set of members}
-        // well, maybe not: if we have l1=m1, l1=m2, etc. then we have more rules?
     }
 
     public Qfset(HashSet<ProjectionFragment> projections, HashSet<SelectionFragment> selections, HashSet<MeasureFragment> measures) {
@@ -356,9 +353,7 @@ public class Qfset implements java.io.Serializable {
 
         for (Hierarchy h : CubeUtils.getDefault().getHierarchies()) {
             if ((!thisHiers.contains(h)) && h.hasAll()) {
-                //System.out.println(h);
                 attributes.add(ProjectionFragment.newInstance(h.getAllMember().getLevel()));
-                //do we have to add a selection as well? no makes no sense for all
             }
         }
 

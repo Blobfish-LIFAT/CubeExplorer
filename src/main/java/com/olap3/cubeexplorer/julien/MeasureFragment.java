@@ -33,7 +33,7 @@ public class MeasureFragment extends Fragment implements java.io.Serializable {
      *
      * @param m the member allowing to build the new measure fragment.
      */
-    public MeasureFragment(Member m) {
+    private MeasureFragment(Member m) {
         super(m.toString());
         attribute = m;
         type = 2;

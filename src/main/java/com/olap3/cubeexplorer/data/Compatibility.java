@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.data;
 
 import com.olap3.cubeexplorer.im_olap.model.QueryPart;
 import com.olap3.cubeexplorer.julien.MeasureFragment;

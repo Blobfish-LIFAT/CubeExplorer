@@ -1,14 +1,12 @@
-package com;
+package com.olap3.cubeexplorer;
 
-import com.alexscode.utilities.Nd4jUtils;
 import com.alexscode.utilities.collection.Pair;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.olap3.cubeexplorer.Compatibility;
-import com.olap3.cubeexplorer.StudentParser;
+import com.olap3.cubeexplorer.data.Compatibility;
 import com.olap3.cubeexplorer.data.DopanLoader;
 import com.olap3.cubeexplorer.data.castor.session.CrSession;
 import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
@@ -71,7 +69,7 @@ public class DOLAP {
         var sessions = DopanLoader.loadDir(testData);
         //Dodgy I know
         testQuery = new Qfset(olap.parseQuery((String) sessions.get(0).queries.get(0).getProperties().get("mdx")));
-        testQuery.getMeasures().add(new MeasureFragment(utils.getMeasure("Distance trajet domicile - travail (moyenne)")));
+        testQuery.getMeasures().add(MeasureFragment.newInstance(utils.getMeasure("Distance trajet domicile - travail (moyenne)")));
 
         LOGGER.info("Computing interestigness scores");
         Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
@@ -119,7 +117,7 @@ public class DOLAP {
     private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
         System.out.println("Building topology graph...");
         MutableValueGraph<QueryPart, Double> topoGraph = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
-        DimensionsGraph.injectSchema(topoGraph, schemaPath);
+        DimensionsGraph.injectSchema(topoGraph, utils);
         FiltersGraph.injectCompressedFilters(topoGraph, utils);
         System.out.println("Building Logs graph...");
         MutableValueGraph<QueryPart, Double> logGraph = SessionGraph.buildFromLog(sessions);
@@ -168,7 +166,7 @@ public class DOLAP {
             if (target==null)
                 continue;
             var tmp = new HashSet<>(q0.getAttributes());
-            tmp.add(new ProjectionFragment(target));
+            tmp.add(ProjectionFragment.newInstance(target));
 
             Qfset req = new Qfset(tmp, new HashSet<>(), new HashSet<>(q0.getMeasures()));
             queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
@@ -184,7 +182,7 @@ public class DOLAP {
                     continue;
                 var tmp = new HashSet<>(q0.getSelectionPredicates());
                 tmp.remove(original);
-                tmp.add(new SelectionFragment(other));
+                tmp.add(SelectionFragment.newInstance(other));
                 Qfset req = new Qfset(new HashSet<>(q0.getAttributes()), tmp, new HashSet<>(q0.getMeasures()));
                 queries.add(new ICView(new MDXAccessor(req)));
             }

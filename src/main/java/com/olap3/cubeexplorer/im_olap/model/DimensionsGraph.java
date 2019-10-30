@@ -1,6 +1,9 @@
 package com.olap3.cubeexplorer.im_olap.model;
 
 import com.google.common.graph.MutableValueGraph;
+import com.olap3.cubeexplorer.mondrian.CubeUtils;
+import mondrian.olap.Hierarchy;
+import mondrian.olap.Level;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -12,6 +15,20 @@ import java.util.List;
 
 public class DimensionsGraph {
     static boolean compatibilityMode = false;
+
+    public static MutableValueGraph<QueryPart, Double> injectSchema(MutableValueGraph<QueryPart, Double> base, CubeUtils cube){
+        for (Hierarchy h : cube.getHierarchies()){
+            Level[] levels = h.getLevels();
+            for (int i = 0; i < levels.length - 1; i++) {
+                QueryPart p1 = QueryPart.newDimension(levels[i].toString());
+                QueryPart p2 = QueryPart.newDimension(levels[i+1].toString());
+                base.putEdgeValue(p1, p2, 1.0);
+                base.putEdgeValue(p2, p1, 1.0);
+                //System.out.printf("Linking %s | %s%n", p1, p2);
+            }
+        }
+        return base;
+    }
 
     /**
      * This will inject edges in the graph based on a XML mondrian (v3) Schema, this is probably not compatible with complex schemas

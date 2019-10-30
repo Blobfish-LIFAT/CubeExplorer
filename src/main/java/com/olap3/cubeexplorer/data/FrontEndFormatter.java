@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

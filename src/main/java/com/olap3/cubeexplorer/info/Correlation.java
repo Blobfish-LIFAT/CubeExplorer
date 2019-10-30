@@ -1,10 +1,9 @@
 package com.olap3.cubeexplorer.info;
 
-import com.olap3.cubeexplorer.ECube;
+import com.olap3.cubeexplorer.data.ECube;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Correlation implements MLModel {

@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.data;
 
 import com.alexscode.utilities.Future;
 import com.olap3.cubeexplorer.data.castor.session.QueryRequest;

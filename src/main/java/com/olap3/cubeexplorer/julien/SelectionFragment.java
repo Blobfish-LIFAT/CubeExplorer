@@ -53,7 +53,7 @@ public class SelectionFragment extends Fragment {
      * Create a new selection fragment, added in the list of selections {@link #allSelections}.
      * @param m the member allowing to build the new selection fragment.
      */
-    public SelectionFragment(Member m) {
+    private SelectionFragment(Member m) {
         super(m.toString());
         value = m;
         attribute = m.getLevel();
@@ -61,11 +61,6 @@ public class SelectionFragment extends Fragment {
         allSelections.put(m, this);
     }
 
-    /*public SelectionFragment(Level l) {
-        super(null);
-        attribute = l;
-        type = 1;
-    }*/
 
     /*public SelectionFragment(SelectionFragment sf,String fragmentName) {
        super(fragmentName);

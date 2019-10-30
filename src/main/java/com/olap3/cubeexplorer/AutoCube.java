@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer;
 
+import com.olap3.cubeexplorer.data.ECube;
 import com.olap3.cubeexplorer.evaluate.Evaluator;
-import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.optimize.Optimizer;
 
 import java.util.Arrays;

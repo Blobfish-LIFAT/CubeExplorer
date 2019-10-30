@@ -120,9 +120,9 @@ public class StatisticsProvider {
         CubeUtils utils = new CubeUtils(olap, "Cube1MobProInd");
         CubeUtils.setDefault(utils);
 
-        var p = new ProjectionFragment(utils.getLevel("Commune de residence", "Commune de residence"));
+        var p = ProjectionFragment.newInstance(utils.getLevel("Commune de residence", "Commune de residence"));
         var set = new HashSet<ProjectionFragment>(); set.add(p);
-        var m = new MeasureFragment(utils.getMeasure("Nombre total d'individus"));
+        var m = MeasureFragment.newInstance(utils.getMeasure("Nombre total d'individus"));
 
         getFileName(set, m);
 

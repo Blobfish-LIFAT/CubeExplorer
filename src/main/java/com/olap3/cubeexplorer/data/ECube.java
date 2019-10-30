@@ -1,9 +1,7 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.data;
 
 import com.olap3.cubeexplorer.julien.Jaccard;
 import com.olap3.cubeexplorer.julien.Qfset;
-import com.olap3.cubeexplorer.olap.CellSet;
-import com.olap3.cubeexplorer.olap.HeaderTree;
 import com.olap3.cubeexplorer.tsp.Measurable;
 
 import java.util.HashMap;
