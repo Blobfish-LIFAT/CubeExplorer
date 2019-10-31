@@ -179,6 +179,10 @@ public class CubeUtils {
 
     public List<Member> fetchMembers(Level l){
         SchemaReader schemaReader = cube.getSchemaReader(null).withLocus();
+        if (l == null) {
+            LOGGER.warning("Level can't be null !");
+            return new ArrayList<>();
+        }
         return schemaReader.getLevelMembers(l, true);
     }
 

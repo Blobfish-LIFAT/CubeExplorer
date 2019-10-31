@@ -1,0 +1,1676 @@
+{
+  "user": "dibstudent10",
+  "id": "dibstudent10--2016-09-27--04-14.log",
+  "cubeFile": "res/cubeSchemas/DOPAN_DW3.xml",
+  "len": 29,
+  "queries": [
+    {
+      "id": 1212,
+      "original_id": 178939,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})))))))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1213,
+      "original_id": 179030,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})))))))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1214,
+      "original_id": 179121,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})))))))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1215,
+      "original_id": 179206,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})))))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1216,
+      "original_id": 179284,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1217,
+      "original_id": 179345,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1218,
+      "original_id": 179417,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        }
+      ]
+    },
+    {
+      "id": 1219,
+      "original_id": 179484,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members), Crossjoin([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        }
+      ]
+    },
+    {
+      "id": 1220,
+      "original_id": 179671,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Femmes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Femmes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Femmes"
+        }
+      ]
+    },
+    {
+      "id": 1221,
+      "original_id": 179743,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1222,
+      "original_id": 179812,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, Crossjoin({[Sexe.Sexe_Hierarchie].[Hommes]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, Crossjoin({[Sexe.Sexe_Hierarchie].[Hommes]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members))), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, Crossjoin({[Sexe.Sexe_Hierarchie].[Hommes]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members)))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1223,
+      "original_id": 179929,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, Crossjoin({[Sexe.Sexe_Hierarchie].[Hommes]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, Crossjoin({[Sexe.Sexe_Hierarchie].[Hommes]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members))), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, Crossjoin({[Sexe.Sexe_Hierarchie].[Hommes]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members)))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1224,
+      "original_id": 180042,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1].Members}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1225,
+      "original_id": 180113,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1226,
+      "original_id": 180180,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members), Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1227,
+      "original_id": 180333,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, Crossjoin([Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, Crossjoin([Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, Crossjoin([Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members, {[Sexe.Sexe_Hierarchie].[Hommes]})))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1228,
+      "original_id": 180446,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1229,
+      "original_id": 180513,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members), Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1230,
+      "original_id": 180622,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1231,
+      "original_id": 180689,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), [Mode de transport.MODTRANS_Hierarchie].[Categorie].Members), Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, [Mode de transport.MODTRANS_Hierarchie].[Categorie].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Categorie]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1232,
+      "original_id": 180817,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), {[Mode de transport.MODTRANS_Hierarchie].[Transports en commun]}), Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels]}), Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), {[Mode de transport.MODTRANS_Hierarchie].[Pas de transport]}), Union(Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, {[Mode de transport.MODTRANS_Hierarchie].[Transports en commun]}), Union(Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels]}), Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, {[Mode de transport.MODTRANS_Hierarchie].[Pas de transport]}))))))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Categorie]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Categorie]",
+          "value": "Modes personnels"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Categorie]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Categorie]",
+          "value": "Pas de transport"
+        }
+      ]
+    },
+    {
+      "id": 1233,
+      "original_id": 180910,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1234,
+      "original_id": 180977,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members), Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, [Mode de transport.MODTRANS_Hierarchie].[Mode de transport].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1235,
+      "original_id": 181121,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}), Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), {[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}), Union(Crossjoin(Filter({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0)), {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}), Union(Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}), Union(Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, {[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}), Crossjoin({[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, {[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}))))))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Marche à pied"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1236,
+      "original_id": 181258,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})))))))))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Marche à pied"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1237,
+      "original_id": 181387,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Union(Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))), Crossjoin({[Measures].[Duree trajet domicile - travail (moyenne)]}, Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})))))))))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Marche à pied"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1238,
+      "original_id": 181500,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))))))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]\nwhere {[Measures].[Duree trajet domicile - travail (moyenne)]}",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Duree trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Marche à pied"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1239,
+      "original_id": 181610,
+      "mdx": "select NON EMPTY Order(Hierarchize(Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}, {[Sexe.Sexe_Hierarchie].[Hommes]})), Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, Crossjoin({[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}, {[Sexe.Sexe_Hierarchie].[Hommes]}))))))))))), [Sexe.Sexe_Hierarchie].CurrentMember.Name, BASC) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Marche à pied"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        },
+        {
+          "level": "[Sexe.Sexe_Hierarchie].[Sexe]",
+          "value": "Hommes"
+        }
+      ]
+    },
+    {
+      "id": 1240,
+      "original_id": 181726,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Marche à pied]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Transports en commun].[Transports en commun]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale monoparentale]}), Union(Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages avec famille principale composée d\u0027un couple]}), Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[Modes personnels].[Voiture, camion, fourgonnette]}, {[Type de menage.TYPMEN_Hierarchie].[Ménages d\u0027une personne seule sans famille]})))))))))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}, Filter({{[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 2].Members}}, (Exists({Ancestor([Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].CurrentMember, [Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1])}, {[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Avec diplôme]}).Count \u003e 0))})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Mode de transport]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Categorie 1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages d\u0027une personne seule sans famille"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Marche à pied"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Transports en commun"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale composée d\u0027un couple"
+        },
+        {
+          "level": "[Type de menage.TYPMEN_Hierarchie].[Type regroupe en 4 categories]",
+          "value": "Ménages avec famille principale monoparentale"
+        },
+        {
+          "level": "[Niveau d\u0027instruction.Niveau_Instruction_Hierarchie].[Categorie 1]",
+          "value": "Avec diplôme"
+        },
+        {
+          "level": "[Mode de transport.MODTRANS_Hierarchie].[Mode de transport]",
+          "value": "Voiture, camion, fourgonnette"
+        }
+      ]
+    }
+  ]
+}

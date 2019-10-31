@@ -1,23 +1,26 @@
 package com.olap3.cubeexplorer;
 
-import com.olap3.cubeexplorer.model.Compatibility;
 import com.olap3.cubeexplorer.data.DopanLoader;
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.evaluate.SQLEstimateEngine;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
+import com.olap3.cubeexplorer.evaluate.xmlutil.XMLPlan;
+import com.olap3.cubeexplorer.model.Compatibility;
+import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.model.Query;
 import com.olap3.cubeexplorer.model.Session;
-import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.evaluate.xmlutil.XMLPlan;
 import mondrian.olap.Connection;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -29,6 +32,7 @@ public class TimeCallibration {
 
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
     static final String testData = "./data/import_ideb";
+    static final String testData2 = "./data/dopan_converted";
     static final String outCSV = "./data/timed_queries.csv";
 
     public static void main(String[] args) throws IOException {
@@ -44,6 +48,7 @@ public class TimeCallibration {
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
+        //sessions.addAll(DopanLoader.loadDir(testData2).stream().filter(s -> s.getCubeName().equals("Cube1MobProInd")).collect(Collectors.toSet()));
         LOGGER.info("Test data loaded");
 
         //Open csv
@@ -54,20 +59,28 @@ public class TimeCallibration {
         SQLEstimateEngine estimateEngine = new SQLEstimateEngine();
         java.sql.Connection con = MondrianConfig.getJdbcConnection();
 
+        LOGGER.info("Beginning query evaluation");
         for (Session s : sessions){
             int i = 0;
             for (Query q : s.getQueries()){
+                String id = "\"" + s.getFilename() + "|" + i++ + "\"";
+
+                Object mdx = q.getProperties().get("mdx");
+                if (mdx != null && mdx.toString().contains("Cube2MobScoInd"))
+                    continue;
+                if (mdx != null && mdx.toString().contains("Cube4Chauffage"))
+                    continue;
                 Qfset qfset = Compatibility.QPsToQfset(q, utils);
                 String sql = sje.getStarJoin(qfset);
 
                 XMLPlan plan = estimateEngine.estimates(sql);
                 double t_est = plan.total_cost;
                 double t_real = timeQuery(sql, con);
-                String id = "\"" + s.getFilename() + "|" + i + "\"";
-                QueryStats sq = sje.getLastStarStats();
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), plan.estimated_tuples, plan.full_row_cost, sq.getAggNb(), t_est, t_real);
 
-                i++;
+                QueryStats sq = sje.getLastStarStats();
+                if (!(t_real < 0))
+                    out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), plan.estimated_tuples, plan.full_row_cost, sq.getAggNb(), t_est, t_real);
+
             }
             out.flush();
         }

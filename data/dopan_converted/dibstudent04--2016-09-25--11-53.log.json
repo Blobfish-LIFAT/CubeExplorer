@@ -1,0 +1,514 @@
+{
+  "user": "dibstudent04",
+  "id": "dibstudent04--2016-09-25--11-53.log",
+  "cubeFile": "res/cubeSchemas/DOPAN_DW3.xml",
+  "len": 13,
+  "queries": [
+    {
+      "id": 12,
+      "original_id": 56151,
+      "mdx": "select NON EMPTY {Hierarchize({[Annee du recensement.Annee_rencesement_Hierarchie_1].[toutes les annees]})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 13,
+      "original_id": 56480,
+      "mdx": "select NON EMPTY {Hierarchize({[Annee du recensement.Annee_rencesement_Hierarchie_1].[toutes les annees]})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 14,
+      "original_id": 56809,
+      "mdx": "select NON EMPTY {Hierarchize({{[Annee du recensement.Annee_rencesement_Hierarchie_1].[toutes les annees]}, {[Annee du recensement.Annee_rencesement_Hierarchie_1].[Annee].Members}})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 15,
+      "original_id": 57139,
+      "mdx": "select NON EMPTY {Hierarchize({[Annee du recensement.Annee_rencesement_Hierarchie_1].[toutes les annees]})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 16,
+      "original_id": 57464,
+      "mdx": "select NON EMPTY {Hierarchize({[Statut d\u0027occupation du logement.STOCLOGT_Hierarchie].[Statut d\u0027occupation].Members})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Statut d\u0027occupation]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 17,
+      "original_id": 57795,
+      "mdx": "select NON EMPTY {Hierarchize({[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 18,
+      "original_id": 58129,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 19,
+      "original_id": 58537,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[ROTT]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "ROTT"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "original_id": 58601,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[ROTT], [Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[ALTWILLER], [Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[AMMERZWILLER], [Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[ANDOLSHEIM], [Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[ARTOLSHEIM], [Commune de residence.CNERES_Hierarchie_intercommunale].[ALSACE].[PAYS INCONNU].[CC INCONNUE].[ASPACH], [Commune de residence.CNERES_Hierarchie_intercommunale].[AQUITAINE].[PAYS INCONNU].[CC INCONNUE].[RAMOUS], [Commune de residence.CNERES_Hierarchie_intercommunale].[AQUITAINE].[PAYS INCONNU].[CC INCONNUE].[QUINSAC], [Commune de residence.CNERES_Hierarchie_intercommunale].[AQUITAINE].[PAYS INCONNU].[CC INCONNUE].[REIGNAC]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "ALTWILLER"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "QUINSAC"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "ANDOLSHEIM"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "ASPACH"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "REIGNAC"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "AMMERZWILLER"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "ROTT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RAMOUS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "ARTOLSHEIM"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "original_id": 58634,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Commune de residence]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 22,
+      "original_id": 58645,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Commune de residence]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 23,
+      "original_id": 59050,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Commune de residence]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[CSP1]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 24,
+      "original_id": 59461,
+      "mdx": "select NON EMPTY Crossjoin([Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 3].Members, [Categorie socioprofessionnelle.CSP_Hierarchie_1].[CSP1].Members) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_vulnerabilite].[Classe de vulnérabilité énergétique inconnue].[ABAUCOURT-HAUTECOURT], [Commune de residence.CNERES_Hierarchie_vulnerabilite].[Classe de vulnérabilité énergétique inconnue].[ABBARETZ]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence]",
+          "value": "ABBARETZ"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_vulnerabilite].[Commune de residence]",
+          "value": "ABAUCOURT-HAUTECOURT"
+        }
+      ]
+    }
+  ]
+}

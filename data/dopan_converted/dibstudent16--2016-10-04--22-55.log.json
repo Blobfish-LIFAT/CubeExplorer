@@ -1,0 +1,2162 @@
+{
+  "user": "dibstudent16",
+  "id": "dibstudent16--2016-10-04--22-55.log",
+  "cubeFile": "res/cubeSchemas/DOPAN_DW3.xml",
+  "len": 49,
+  "queries": [
+    {
+      "id": 317,
+      "original_id": 17391,
+      "mdx": "select NON EMPTY {Hierarchize({[Mode de transport.MODTRANS_Hierarchie].[tous les modes confondus]})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 318,
+      "original_id": 17429,
+      "mdx": "select NON EMPTY Crossjoin({[Mode de transport.MODTRANS_Hierarchie].[tous les modes confondus]}, {[Measures].[Nombre total d\u0027individus]}) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 319,
+      "original_id": 17447,
+      "mdx": "select NON EMPTY {Hierarchize({[Measures].[Nombre total d\u0027individus]})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 320,
+      "original_id": 17464,
+      "mdx": "select NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Distance trajet domicile - travail (min)]}})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (min)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 321,
+      "original_id": 17479,
+      "mdx": "select NON EMPTY {Hierarchize({[Measures].[Nombre total d\u0027individus]})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 322,
+      "original_id": 17496,
+      "mdx": "select NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Distance trajet domicile - travail (moyenne)]}})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 323,
+      "original_id": 17515,
+      "mdx": "select NON EMPTY {Hierarchize({{[Measures].[Nombre total d\u0027individus], [Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 324,
+      "original_id": 17541,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Nombre total d\u0027individus]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members), Union(Crossjoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members), Crossjoin({[Measures].[Distance trajet domicile - travail (max)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members)))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 325,
+      "original_id": 17618,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Nombre total d\u0027individus]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members), Union(Crossjoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members), Crossjoin({[Measures].[Distance trajet domicile - travail (max)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members)))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 326,
+      "original_id": 17692,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members), Crossjoin({[Measures].[Distance trajet domicile - travail (max)]}, [Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 327,
+      "original_id": 17748,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 328,
+      "original_id": 17802,
+      "mdx": "select NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,\n  NON EMPTY Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Sexe.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 329,
+      "original_id": 17890,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 330,
+      "original_id": 17942,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+          "value": "AGGLOPOLYS"
+        }
+      ]
+    },
+    {
+      "id": 331,
+      "original_id": 17978,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+          "value": "AGGLOPOLYS"
+        }
+      ]
+    },
+    {
+      "id": 332,
+      "original_id": 18005,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY Order({Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]})}, [Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember.Name, BASC) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+          "value": "AGGLOPOLYS"
+        }
+      ]
+    },
+    {
+      "id": 333,
+      "original_id": 18044,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY Order({Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members})}, [Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember.Name, BASC) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 334,
+      "original_id": 18095,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY Order({Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members})}, [Commune de residence.CNERES_Hierarchie_intercommunale].CurrentMember.Name, BASC) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 335,
+      "original_id": 18144,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[toutes les communes]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 336,
+      "original_id": 18173,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[toutes les communes]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 337,
+      "original_id": 18201,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Commune de residence]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 338,
+      "original_id": 18544,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_depense].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Commune de residence]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 339,
+      "original_id": 18870,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_depense].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Commune de residence]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 340,
+      "original_id": 19187,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_depense].[Commune de residence].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Commune de residence]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 341,
+      "original_id": 19649,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Region]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Region]",
+          "value": "CENTRE"
+        }
+      ]
+    },
+    {
+      "id": 342,
+      "original_id": 19674,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE]})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Region]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Region]",
+          "value": "CENTRE"
+        }
+      ]
+    },
+    {
+      "id": 343,
+      "original_id": 19703,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 344,
+      "original_id": 19748,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 345,
+      "original_id": 20654,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence].Members}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": []
+    },
+    {
+      "id": 346,
+      "original_id": 21585,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 347,
+      "original_id": 21735,
+      "mdx": "select NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Nombre total d\u0027individus]})))))))))))))))))))))))))))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 348,
+      "original_id": 21850,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 349,
+      "original_id": 22001,
+      "mdx": "select NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Nombre total d\u0027individus]})))))))))))))))))))))))))))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 350,
+      "original_id": 22116,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), Union(Crossjoin({[Measures].[Distance trajet domicile - travail (max)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), Crossjoin({[Measures].[Nombre total d\u0027individus]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 351,
+      "original_id": 22267,
+      "mdx": "select NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Distance trajet domicile - travail (max)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS]}, {[Measures].[Nombre total d\u0027individus]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}, {[Measures].[Nombre total d\u0027individus]})))))))))))))))))))))))))))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 352,
+      "original_id": 22382,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin({[Measures].[Distance trajet domicile - travail (moyenne)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), Union(Crossjoin({[Measures].[Distance trajet domicile - travail (max)]}, [Sexe.Sexe_Hierarchie].[Sexe].Members), Crossjoin({[Measures].[Nombre total d\u0027individus]}, [Sexe.Sexe_Hierarchie].[Sexe].Members)))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 353,
+      "original_id": 22453,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 354,
+      "original_id": 22524,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAMPIGNY-EN-BEAUCE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[LANCOME], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[MESLAND], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[RILLY-SUR-LOIRE], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-CYR-DU-GAULT], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[SAINT-ETIENNE-DES-GUERETS], [Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[VALAIRE]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "VALAIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "LANCOME"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "MESLAND"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-CYR-DU-GAULT"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "SAINT-ETIENNE-DES-GUERETS"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "RILLY-SUR-LOIRE"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        },
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAMPIGNY-EN-BEAUCE"
+        }
+      ]
+    },
+    {
+      "id": 355,
+      "original_id": 22585,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 356,
+      "original_id": 22635,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[toutes les communes]}), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, {[Commune de travail.CNELOCC_Hierarchie_intercommunale].[toutes les communes]}))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 357,
+      "original_id": 22675,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 358,
+      "original_id": 22717,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Region].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Region].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Region]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 359,
+      "original_id": 22774,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY {Hierarchize({{[Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members}, {[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}})} ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 360,
+      "original_id": 22816,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 361,
+      "original_id": 23037,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members), Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members), Union(Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Commune d\u0027occupation].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members))))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Pays]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 362,
+      "original_id": 23443,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Nombre total d\u0027individus]})))) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Nombre total d\u0027individus]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Pays]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 363,
+      "original_id": 23519,
+      "mdx": "select NON EMPTY Hierarchize(Union(Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}), Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (max)]}))) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (max)]",
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Pays]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 364,
+      "original_id": 23589,
+      "mdx": "select NON EMPTY Crossjoin([Sexe.Sexe_Hierarchie].[Sexe].Members, {[Measures].[Distance trajet domicile - travail (moyenne)]}) ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Distance trajet domicile - travail (moyenne)]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Pays]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    },
+    {
+      "id": 365,
+      "original_id": 23655,
+      "mdx": "select NON EMPTY {Hierarchize({[Sexe.Sexe_Hierarchie].[Sexe].Members})} ON COLUMNS,\n  NON EMPTY Hierarchize(Union(Crossjoin([Commune de residence.CNERES_Hierarchie_intercommunale].[Communaute de communes].Members, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members), Crossjoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS].[CHAILLES]}, [Commune de travail.CNELOCC_Hierarchie_intercommunale].[Pays].Members))) ON ROWS\nfrom [Cube1MobProInd]",
+      "cubeName": "Cube1MobProInd",
+      "measures": [
+        "[Measures].[Nombre total d\u0027individus]"
+      ],
+      "groupBySet": [
+        "[Statut d\u0027emploi].[STATEMPL_Hierarchie].[Tout]",
+        "[Mode de transport].[MODTRANS_Hierarchie].[Tout]",
+        "[Motif de deplacement].[MOTIFDEP_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Communaute de communes]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Indicateur de lieu de travail].[ILOCC_Hierarchie_1].[Tout]",
+        "[Type de menage].[TYPMEN_Hierarchie].[Tout]",
+        "[Lien avec la personne de reference].[LPRM_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age revolu quinquenal].[AgeRevQ_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Mode de cohabitation].[MODCOHAB_Hierarchie_1].[Tout]",
+        "[Nature l\u0027activite economique].[NATACTECO_Hierarchie].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_administrative].[Tout]",
+        "[Temps d\u0027emploi].[TEMPSEMP_Hierarchie].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Sexe].[Sexe_Hierarchie].[Sexe]",
+        "[Categorie socioprofessionnelle].[CSP_Hierarchie_1].[Tout]",
+        "[Commune de travail].[CNELOCC_Hierarchie_intercommunale].[Pays]",
+        "[Niveau d\u0027instruction].[Niveau_Instruction_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Commune de residence.CNERES_Hierarchie_intercommunale].[Commune de residence]",
+          "value": "CHAILLES"
+        }
+      ]
+    }
+  ]
+}

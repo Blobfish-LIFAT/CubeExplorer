@@ -1,0 +1,962 @@
+{
+  "user": "dibstudent05",
+  "id": "dibstudent05--2016-09-26--08-16.log",
+  "cubeFile": "res/cubeSchemas/DOPAN_DW3.xml",
+  "len": 18,
+  "queries": [
+    {
+      "id": 1403,
+      "original_id": 132826,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction].Members})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1404,
+      "original_id": 132884,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1405,
+      "original_id": 132925,
+      "mdx": "select NON EMPTY Crossjoin({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]}, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1406,
+      "original_id": 132981,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members)) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1407,
+      "original_id": 133038,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members)) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1408,
+      "original_id": 133081,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members)) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1409,
+      "original_id": 133124,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, [Sexe du referent.Sexe_Hierarchie].[Sexe].Members) ON ROWS\nfrom [Cube4Chauffage]\nwhere {[Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members}",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1410,
+      "original_id": 133389,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members)) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1411,
+      "original_id": 133511,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members)) ON ROWS\nfrom [Cube4Chauffage]\nwhere {[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1412,
+      "original_id": 133556,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, {[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}))) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1413,
+      "original_id": 133680,
+      "mdx": "select NON EMPTY Crossjoin({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]}, {[Age du referent.REF_AGE_Hierarchie_1].[tous les ages regroupes]}) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, {[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}))) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1414,
+      "original_id": 133737,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, Crossjoin({[Age du referent.REF_AGE_Hierarchie_1].[tous les ages regroupes]}, {[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]})))) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1415,
+      "original_id": 133809,
+      "mdx": "select NON EMPTY {Hierarchize({[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})} ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, Crossjoin([Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members, {[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}))) ON ROWS\nfrom [Cube4Chauffage]\nwhere {[Age du referent.REF_AGE_Hierarchie_1].[tous les ages regroupes]}",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1416,
+      "original_id": 133862,
+      "mdx": "select NON EMPTY Crossjoin({[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}, {[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]}) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members)) ON ROWS\nfrom [Cube4Chauffage]\nwhere {[Age du referent.REF_AGE_Hierarchie_1].[tous les ages regroupes]}",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1417,
+      "original_id": 133914,
+      "mdx": "select NON EMPTY Crossjoin({[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}, {[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]}) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members)) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1418,
+      "original_id": 133977,
+      "mdx": "select NON EMPTY Crossjoin({[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}, {[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]}) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members)) ON ROWS\nfrom [Cube4Chauffage]\nwhere {[Age du referent.REF_AGE_Hierarchie_1].[Age regroupe].Members}",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1419,
+      "original_id": 134027,
+      "mdx": "select NON EMPTY Crossjoin({[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}, {[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]}) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, Crossjoin([Age du referent.REF_AGE_Hierarchie_1].[Age regroupe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members))) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Age regroupe]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    },
+    {
+      "id": 1420,
+      "original_id": 134100,
+      "mdx": "select NON EMPTY Crossjoin({[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Salariés]}, Crossjoin([Age du referent.REF_AGE_Hierarchie_1].[Age regroupe].Members, {[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Sans diplôme].[Non Scolarisé].[Pas de scolarité]})) ON COLUMNS,\n  NON EMPTY Crossjoin({[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Emménagement après 1999].[Année  2007]}, Crossjoin([Sexe du referent.Sexe_Hierarchie].[Sexe].Members, [Categorie du logement.LOGT_CATEGORIE_Hierarchie_1].[Categorie].Members)) ON ROWS\nfrom [Cube4Chauffage]",
+      "cubeName": "Cube4Chauffage",
+      "measures": [
+        "[Measures].[Nombre total de menages]"
+      ],
+      "groupBySet": [
+        "[Commune de residence].[CNERES_Hierarchie_administrative].[Tout]",
+        "[Stationnement reserve].[LOGT_STATIONNEMENT_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_vulnerabilite].[Tout]",
+        "[Type de construction du logement].[LOGT_TYPECONSTR_Hierarchie_1].[Tout]",
+        "[Periode de construction du logement].[LOGT_PERIODECONSTR_Hierarchie_1].[Tout]",
+        "[Statut d\u0027occupation du logement].[STOCLOGT_Hierarchie].[Tout]",
+        "[Niveau d\u0027instruction du referent].[Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+        "[Anciennete de recherche d\u0027emploi du referent].[REF_RECHEMPLOI_Hierarchie_1].[Tout]",
+        "[Anciennete d\u0027emmenagement].[MENAGE_ANCIENNETE_EMM_Hierarchie_1].[Tout]",
+        "[Nombre de pieces du logement].[LOGT_NBPIECE_Hierarchie_1].[Tout]",
+        "[Type d\u0027activite du referent].[REF_TYPACT_Hierarchie_1].[Tout]",
+        "[Categorie du logement].[LOGT_CATEGORIE_Hierarchie_1].[Categorie]",
+        "[Indicateur de lieu de travail du referent].[ILOCC_Hierarchie_1].[Tout]",
+        "[Niveau de motorisation du menage].[Niveau_motorisation_Hierarchie].[Tout]",
+        "[Annee d\u0027emmenagement].[MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+        "[Mode de transport domcile-travail du referent].[MODTRANS_Hierarchie].[Tout]",
+        "[Statut d\u0027emploi du referent].[STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+        "[Type de logement].[TYPLOGT_Hierarchie].[Tout]",
+        "[Sexe du referent].[Sexe_Hierarchie].[Sexe]",
+        "[Surface du logement].[LOGT_SURFACE_Hierarchie_1].[Tout]",
+        "[Type de chauffage du logement].[LOGT_TYPECHAUF_Hierarchie_1].[Tout]",
+        "[Etat matrimonial du referent].[REF_ETATMATRIMONIAL_Hierarchie_1].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_intercommunale].[Tout]",
+        "[Commune de residence].[CNERES_Hierarchie_depense].[Tout]",
+        "[Age du referent].[REF_AGE_Hierarchie_1].[Age regroupe]",
+        "[Annee du recensement].[Annee_rencesement_Hierarchie_1].[Tout]",
+        "[Indicateur du lieu d\u0027etudes du referent].[REF_INDLIEUETUD_Hierarchie_1].[Tout]",
+        "[Energie de chauffage du logement].[LOGT_ENERGIECHAUF_Hierarchie_1].[Tout]",
+        "[Appartenance du logement a un HLM].[LOGT_HLM_Hierarchie_1].[Tout]",
+        "[Temps d\u0027emploi du referent].[TEMPSEMP_Hierarchie].[Tout]"
+      ],
+      "selection": [
+        {
+          "level": "[Niveau d\u0027instruction du referent.Niveau_Instruction_Hierarchie].[Niveau d\u0027instruction]",
+          "value": "Pas de scolarité"
+        },
+        {
+          "level": "[Statut d\u0027emploi du referent.STATEMPL_Hierarchie].[Statut d\u0027emploi de niveau 1]",
+          "value": "Salariés"
+        },
+        {
+          "level": "[Annee d\u0027emmenagement.MENAGE_ANNEE_EMM_Hierarchie_1].[Annee]",
+          "value": "Année  2007"
+        }
+      ]
+    }
+  ]
+}
