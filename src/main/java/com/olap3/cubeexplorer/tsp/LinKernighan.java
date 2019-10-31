@@ -8,7 +8,7 @@ public class LinKernighan {
     //The instance variables definitions
 
     // The ids of all the cities (sorted)
-    private ArrayList<Integer> ids;
+    private List<Integer> ids;
 
     // The coordinates of all the cities
     private List<Measurable> coordinates;
@@ -28,7 +28,7 @@ public class LinKernighan {
      * @param ArrayList<Point> the coordinates of all the cities
      * @param ArrayList<Integer> the id of all the cities
      */ 
-    public LinKernighan(List<Measurable> coordinates, ArrayList<Integer> ids) {
+    public LinKernighan(List<Measurable> coordinates, List<Integer> ids) {
         this.ids = ids;
         this.coordinates = coordinates;
         this.size = ids.size();

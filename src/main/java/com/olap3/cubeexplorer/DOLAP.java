@@ -24,11 +24,16 @@ import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.optimize.AprioriMetric;
 import com.olap3.cubeexplorer.optimize.BudgetManager;
 import com.olap3.cubeexplorer.optimize.KnapsackManager;
+import com.olap3.cubeexplorer.tsp.LinKernighan;
+import com.olap3.cubeexplorer.tsp.Measurable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 import mondrian.olap.Connection;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
+import mondrian.olap.Result;
+import mondrian.rolap.RolapResult;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.memory.MemoryManager;
@@ -38,11 +43,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.alexscode.utilities.math.Distribution.log2;
 
 public class DOLAP {
-    @Data @AllArgsConstructor
+    @Data @AllArgsConstructor @ToString
     static class TAPStats {
         Qfset q0;
         Stopwatch genTime, optTime, execTime;
@@ -109,26 +116,60 @@ public class DOLAP {
             }
         };
 
-        runTAPHeuristic(testQuery, 10000, im);
+        System.out.println(runTAPHeuristic(testQuery, 10000, im));
 
     }
 
     public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness){
         BudgetManager ks = new KnapsackManager(interestingness);
+
         Stopwatch genTime = Stopwatch.createStarted();
         List<InfoCollector> candidates = generateCandidates(q0);
         genTime.stop();
+
         System.out.printf("--- Found %s candidates ---%n", candidates.size());
         //candidates.forEach(c -> System.out.printf("  %s%n    cost=%s, im=%s%n", c, c.estimatedTime(), interestingness.rate(c)));
+
+        Stopwatch optTime = Stopwatch.createStarted();
         ExecutionPlan plan = ks.findBestPlan(candidates, budgetms);
+        optTime.stop();
+
         System.out.println("--- Plan summary ---");
         System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
         for (InfoCollector ic : plan.getOperations()){
             System.out.println("  " + ic);
             System.out.println("    Estimated cost " + ic.estimatedTime());
         }
+        //Exec phase
+        Set<Pair<Qfset, Result>> executed = new HashSet<>();
+        Stopwatch execTime = Stopwatch.createUnstarted();
 
-        return new TAPStats(q0, genTime,null, null, plan);
+        for (InfoCollector ic : plan.getOperations()){
+            execTime.start();
+            executed.add(new Pair<>(ic.getDataSource().getInternal(), runMDX(ic)));
+            execTime.stop();
+        }
+
+
+        //Ordering phase
+        List<Qfset> toOrder = executed.stream().map(Pair::getLeft).collect(Collectors.toList());
+        List<Integer> ids = IntStream.range(0, toOrder.size()).boxed().collect(Collectors.toList());
+
+        optTime.start();
+        LinKernighan tsp = new LinKernighan(toOrder.stream().map(q -> (Measurable) q).collect(Collectors.toList()), ids);
+        tsp.runAlgorithm();
+        optTime.stop();
+
+        System.out.println(tsp);
+
+        return new TAPStats(q0, genTime,optTime, execTime, plan);
+    }
+
+    private static Result runMDX(InfoCollector ic) {
+        mondrian.olap.Connection cnx = MondrianConfig.getMondrianConnection();
+        mondrian.olap.Query query = ic.getDataSource().getInternal().toMDX();
+        RolapResult result = (RolapResult) cnx.execute(query);
+        return result;
     }
 
     private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
@@ -184,8 +225,9 @@ public class DOLAP {
                 continue;
             var tmp = new HashSet<>(q0.getAttributes());
             tmp.add(ProjectionFragment.newInstance(target));
+            tmp.remove(sf);
 
-            Qfset req = new Qfset(tmp, new HashSet<>(), new HashSet<>(q0.getMeasures()));
+            Qfset req = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
             queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
         }
 

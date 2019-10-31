@@ -1,19 +1,23 @@
 package com.olap3.cubeexplorer.model;
 
+import com.alexscode.utilities.Future;
+import com.olap3.cubeexplorer.measures.Jaccard;
 import com.olap3.cubeexplorer.measures.ReferenceSet;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import com.olap3.cubeexplorer.tsp.Measurable;
 import mondrian.calc.Calc;
 import mondrian.calc.ExpCompiler;
 import mondrian.mdx.ResolvedFunCall;
-import mondrian.olap.*;
 import mondrian.olap.Query;
+import mondrian.olap.*;
 import mondrian.rolap.RolapEvaluator;
 import mondrian.rolap.RolapResult;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class Qfset implements java.io.Serializable {
+public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     mondrian.olap.Query mondrianQuery;
     String mdx;
@@ -715,39 +719,11 @@ public class Qfset implements java.io.Serializable {
     }
 
     public String toString() {
-        String s = "Measure(s): ";
-        int size = 0;
-        for (MeasureFragment mf : this.measures) {
-            s += mf.getAttribute().getName() + ",";
-        }
+        List<String> mStr = this.measures.stream().map(mf -> mf.getAttribute().getName()).collect(Collectors.toList());
+        List<String> pStr = this.attributes.stream().map(pf -> pf.getLevel().getUniqueName()).collect(Collectors.toList());
+        List<String> sStr = this.selectionPredicates.stream().map(sp -> sp.getValue().getUniqueName()).collect(Collectors.toList());
 
-        if (!"".equals(s)) {
-            s = s.substring(0, s.length() - 1);
-        }
-        s += "\nProjection(s): ";
-        size = s.length();
-
-        for (ProjectionFragment pf : this.attributes) {
-            s += pf.getLevel().getHierarchy().getName() + "." + pf.getLevel().getName() + ",";
-        }
-
-        if (size != s.length()) {
-            s = s.substring(0, s.length() - 1);
-        }
-        s += "\nSelection(s): ";
-        size = s.length();
-
-        for (SelectionFragment sf : this.selectionPredicates) {
-            s += sf.getLevel().getHierarchy().getName() + "." + sf.getLevel().getName() + "=\"" + sf.getValue().getName() + "\",";
-        }
-
-        if (size != s.length()) {
-            s = s.substring(0, s.length() - 1);
-        } else {
-            s += "NONE";
-        }
-
-        return s;
+        return "Measure={" + Future.join(mStr, "; ") + "}\nProjections={" + Future.join(pStr,"; ") + "}\nSelections={"+ Future.join(sStr, "; ") +"}";
     }
 
     public String toStringAttributes() {
@@ -1667,4 +1643,8 @@ public class Qfset implements java.io.Serializable {
         return false;
     }
 
+    @Override
+    public double dist(Qfset other) {
+        return Jaccard.similarity(this, other);
+    }
 }
