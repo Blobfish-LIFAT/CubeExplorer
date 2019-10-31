@@ -91,6 +91,7 @@ public class CubeUtils {
      * Forces the building of the full member cache of the cube
      */
     public void forceMembersCaching(){
+        LOGGER.info("Full member caching forced on '" + cube.getName() + "' cube, this may take a few minutes...");
         if (membersCacheComplete)
             return;
         SchemaReader schemaReader = cube.getSchemaReader(null).withLocus();
