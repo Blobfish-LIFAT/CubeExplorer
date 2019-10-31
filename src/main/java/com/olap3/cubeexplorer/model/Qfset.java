@@ -767,23 +767,11 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     }
 
     public String toStringMeasures() {
-        ArrayList<String> measureSet = new ArrayList<String>();
-        for (MeasureFragment mf : this.measures) {
-            measureSet.add(mf.getAttribute().getName());
-        }
-        Collections.sort(measureSet);
-
-        String result = "";
-
-        for (String s : measureSet) {
-            result += s + " ";
-        }
-
-        if (result.equals("")) {
+        List<String> mStr = this.measures.stream().map(mf -> mf.getAttribute().getName()).collect(Collectors.toList());
+        if (mStr.size() == 0)
             return "NO MEASURE";
-        } else {
-            return (String) result.subSequence(0, result.length() - 1);
-        }
+        else
+            return Future.join(mStr, " ");
     }
 
     public boolean addAllMeasures(HashSet<MeasureFragment> c) {
@@ -915,43 +903,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
                 return s;
             }
         }
-
-        return null;
-    }
-
-    public Level levelRandom(int ran) {
-        int id = 0;
-        for (ProjectionFragment pf : this.getAttributes()) {
-            if (id == ran) {
-                return pf.getLevel();
-            }
-            id++;
-        }
-
-        return null;
-    }
-
-    public SelectionFragment selectionRandom(int ran) {
-        int id = 0;
-        for (SelectionFragment sf : this.getSelectionPredicates()) {
-            if (id == ran) {
-                return sf;
-            }
-            id++;
-        }
-
-        return null;
-    }
-
-    public MeasureFragment measureRandom(int ran) {
-        int id = 0;
-        for (MeasureFragment mf : this.getMeasures()) {
-            if (id == ran) {
-                return mf;
-            }
-            id++;
-        }
-
         return null;
     }
 
