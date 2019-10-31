@@ -1,33 +1,31 @@
 package com.olap3.cubeexplorer;
 
 import com.alexscode.utilities.collection.Pair;
+import com.google.common.base.Stopwatch;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.olap3.cubeexplorer.data.DopanLoader;
+import com.olap3.cubeexplorer.data.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
+import com.olap3.cubeexplorer.infocolectors.ICView;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
+import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
+import com.olap3.cubeexplorer.measures.compute.PageRank;
 import com.olap3.cubeexplorer.measures.graph.DimensionsGraph;
 import com.olap3.cubeexplorer.measures.graph.FiltersGraph;
 import com.olap3.cubeexplorer.measures.graph.SessionGraph;
 import com.olap3.cubeexplorer.model.*;
-import com.olap3.cubeexplorer.data.DopanLoader;
-import com.olap3.cubeexplorer.data.castor.session.CrSession;
-import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
-
-import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
-import com.olap3.cubeexplorer.measures.compute.PageRank;
-import com.olap3.cubeexplorer.infocolectors.ICView;
-import com.olap3.cubeexplorer.infocolectors.InfoCollector;
-import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
-import com.olap3.cubeexplorer.model.MeasureFragment;
-import com.olap3.cubeexplorer.model.ProjectionFragment;
-import com.olap3.cubeexplorer.model.Qfset;
-import com.olap3.cubeexplorer.model.SelectionFragment;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.optimize.AprioriMetric;
 import com.olap3.cubeexplorer.optimize.BudgetManager;
 import com.olap3.cubeexplorer.optimize.KnapsackManager;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import mondrian.olap.Connection;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
@@ -44,6 +42,13 @@ import java.util.logging.Logger;
 import static com.alexscode.utilities.math.Distribution.log2;
 
 public class DOLAP {
+    @Data @AllArgsConstructor
+    static class TAPStats {
+        Qfset q0;
+        Stopwatch genTime, optTime, execTime;
+        ExecutionPlan finalPlan;
+    }
+
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
 
     public static final String testData = "./data/import_ideb";
@@ -103,12 +108,19 @@ public class DOLAP {
                 return sum/qps.size();
             }
         };
-        BudgetManager ks = new KnapsackManager(im);
 
-        List<InfoCollector> candidates = generateCandidates(testQuery);
+        runTAPHeuristic(testQuery, 10000, im);
+
+    }
+
+    public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness){
+        BudgetManager ks = new KnapsackManager(interestingness);
+        Stopwatch genTime = Stopwatch.createStarted();
+        List<InfoCollector> candidates = generateCandidates(q0);
+        genTime.stop();
         System.out.printf("--- Found %s candidates ---%n", candidates.size());
-        candidates.forEach(c -> System.out.printf("  %s%n    cost=%s, im=%s%n", c, c.estimatedTime(), im.rate(c)));
-        ExecutionPlan plan = ks.findBestPlan(candidates, 60000);
+        //candidates.forEach(c -> System.out.printf("  %s%n    cost=%s, im=%s%n", c, c.estimatedTime(), interestingness.rate(c)));
+        ExecutionPlan plan = ks.findBestPlan(candidates, budgetms);
         System.out.println("--- Plan summary ---");
         System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
         for (InfoCollector ic : plan.getOperations()){
@@ -116,6 +128,7 @@ public class DOLAP {
             System.out.println("    Estimated cost " + ic.estimatedTime());
         }
 
+        return new TAPStats(q0, genTime,null, null, plan);
     }
 
     private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
