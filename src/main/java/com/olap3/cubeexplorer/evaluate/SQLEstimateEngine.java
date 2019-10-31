@@ -76,6 +76,6 @@ public class SQLEstimateEngine {
             System.err.printf("Offending query : [%s]%n", query);
             e.printStackTrace();
         }
-        return new XMLPlan(-1, -1, -1);
+        return new XMLPlan(-1, -1, -1, -1);
     }
 }

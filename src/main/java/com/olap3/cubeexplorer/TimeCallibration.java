@@ -48,7 +48,7 @@ public class TimeCallibration {
 
         //Open csv
         PrintWriter out = new PrintWriter(new FileOutputStream(new File(outCSV)));
-        out.println("id,ascii_len,projNb,selNb,tableNb,estTuples,aggNb,predicted,actual");
+        out.println("id,ascii_len,projNb,selNb,tableNb,estTuples,estTuples_proper,aggNb,predicted,actual");
 
         SQLFactory sje = new SQLFactory(utils);
         SQLEstimateEngine estimateEngine = new SQLEstimateEngine();
@@ -65,7 +65,7 @@ public class TimeCallibration {
                 double t_real = timeQuery(sql, con);
                 String id = "\"" + s.getFilename() + "|" + i + "\"";
                 QueryStats sq = sje.getLastStarStats();
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), plan.estimated_tuples, sq.getAggNb(), t_est, t_real);
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), plan.estimated_tuples, plan.full_row_cost, sq.getAggNb(), t_est, t_real);
 
                 i++;
             }

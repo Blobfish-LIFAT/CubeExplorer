@@ -16,19 +16,12 @@ public class PlanParser {
     public static XMLPlan xml_to_plan(String xml) throws DocumentException {
 
         StringReader stringReader = new StringReader(xml);
-
         SAXReader saxReader = new SAXReader();
-
         Document doc = saxReader.read(stringReader);
-
-        Namespace namespace = new Namespace("ms", "http://schemas.microsoft.com/sqlserver/2004/07/showplan" );
-
-        //Node stmt = doc.selectSingleNode("//StmtSimple");
 
         XPath xPath = doc.createXPath("//ms:StmtSimple");
 
         Map<String, String> map = new HashMap<>();
-
         map.put("ms","http://schemas.microsoft.com/sqlserver/2004/07/showplan");
 
         xPath.setNamespaceURIs(map);
@@ -51,7 +44,16 @@ public class PlanParser {
             est_rows = Math.round(Double.valueOf(val_rows));
         }
 
-        return new XMLPlan(est_rows,-1, total_cost);
+        //Alex stuff :
+        XPath relopP = doc.createXPath("//ms:RelOp");
+        relopP.setNamespaceURIs(map);
+        double full_cost = 0;
+        for (Node n : relopP.selectNodes(doc)){
+            Element e = (Element) n;
+            full_cost += Double.parseDouble(e.attributeValue("EstimateRows"));
+        }
+
+        return new XMLPlan(est_rows,-1, total_cost, Math.round(full_cost));
     }
 
 
