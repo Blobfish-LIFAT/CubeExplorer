@@ -1,6 +1,6 @@
 package com.olap3.cubeexplorer;
 
-import com.olap3.cubeexplorer.data.ECube;
+import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.evaluate.Evaluator;
 import com.olap3.cubeexplorer.optimize.Optimizer;
 

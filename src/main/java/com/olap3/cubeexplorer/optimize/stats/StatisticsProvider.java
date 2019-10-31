@@ -1,17 +1,16 @@
 package com.olap3.cubeexplorer.optimize.stats;
 
 import com.alexscode.utilities.Future;
-import com.alexscode.utilities.collection.Pair;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.common.hash.Funnel;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
-import com.google.common.hash.PrimitiveSink;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
-import com.olap3.cubeexplorer.julien.*;
+import com.olap3.cubeexplorer.model.Fragment;
+import com.olap3.cubeexplorer.model.MeasureFragment;
+import com.olap3.cubeexplorer.model.ProjectionFragment;
+import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;

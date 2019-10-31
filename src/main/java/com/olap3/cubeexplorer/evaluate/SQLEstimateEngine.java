@@ -1,11 +1,11 @@
 package com.olap3.cubeexplorer.evaluate;
 
 
-import com.olap3.cubeexplorer.julien.Qfset;
+import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.xmlutil.XMLPlan;
-import com.olap3.cubeexplorer.xmlutil.PlanParser;
+import com.olap3.cubeexplorer.evaluate.xmlutil.XMLPlan;
+import com.olap3.cubeexplorer.evaluate.xmlutil.PlanParser;
 import org.dom4j.DocumentException;
 
 import java.sql.*;

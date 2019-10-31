@@ -1,6 +1,6 @@
 package com.olap3.cubeexplorer.evaluate;
 
-import com.olap3.cubeexplorer.data.ECube;
+import com.olap3.cubeexplorer.model.ECube;
 
 import java.util.List;
 

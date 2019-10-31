@@ -1,12 +1,9 @@
 package com.olap3.cubeexplorer.evaluate;
 
-import com.olap3.cubeexplorer.julien.MeasureFragment;
+import com.olap3.cubeexplorer.model.MeasureFragment;
 import com.olap3.cubeexplorer.mdxparser.MDXExpBaseVisitor;
 import com.olap3.cubeexplorer.mdxparser.MDXExpParser;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
-import org.olap4j.metadata.Measure;
-
-import java.util.List;
 
 public class MDXtoSQLvisitor extends MDXExpBaseVisitor<String> {
     CubeUtils cube;

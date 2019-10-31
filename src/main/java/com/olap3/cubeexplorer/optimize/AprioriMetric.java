@@ -1,6 +1,6 @@
 package com.olap3.cubeexplorer.optimize;
 
-import com.olap3.cubeexplorer.info.InfoCollector;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
 public interface AprioriMetric {
     /**

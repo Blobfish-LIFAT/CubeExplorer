@@ -1,9 +1,9 @@
 package com.olap3.cubeexplorer.data;
 
 import com.google.gson.Gson;
-import com.olap3.cubeexplorer.im_olap.model.Query;
-import com.olap3.cubeexplorer.im_olap.model.QueryPart;
-import com.olap3.cubeexplorer.im_olap.model.Session;
+import com.olap3.cubeexplorer.model.Query;
+import com.olap3.cubeexplorer.model.QueryPart;
+import com.olap3.cubeexplorer.model.Session;
 
 
 import java.io.IOException;

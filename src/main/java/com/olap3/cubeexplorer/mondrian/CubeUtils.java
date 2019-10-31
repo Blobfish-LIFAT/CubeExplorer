@@ -21,6 +21,7 @@ public class CubeUtils {
     //Caches
     private Map<String, Member> memberCache;
     private Set<Hierarchy> membersCached;
+    private boolean membersCacheComplete = false;
 
     // singleton stuff
     private static String defaultCubeName = "";
@@ -54,7 +55,8 @@ public class CubeUtils {
 
     /**
      * Fetches the member by name, warning this is expensive as heck, caching strategy is in place
-     * @param name the name of the member as is in the database
+     * @param name the name of the member as is in the database, (i.e. Partial like 'Paris' instead of the 'unique names' like
+     *             '[Geography.fine hierarchy].[City].[Paris]' use getMemberExact if you have this type of name)
      * @return the member object
      */
     public Member getMember(String name){
@@ -83,6 +85,30 @@ public class CubeUtils {
 
         System.err.printf("Member '%s' no found in cube '%s'%n", name, cube);
         return null;
+    }
+
+    /**
+     * Forces the building of the full member cache of the cube
+     */
+    public void forceMembersCaching(){
+        if (membersCacheComplete)
+            return;
+        SchemaReader schemaReader = cube.getSchemaReader(null).withLocus();
+        for (Dimension d : cube.getDimensions()){
+            if (!d.isMeasures()){
+                for (Hierarchy h : d.getHierarchies()){
+                    if (membersCached.contains(h))
+                        continue;
+                    for (Level l : h.getLevels()){
+                        for (Member member :schemaReader.getLevelMembers(l, true)){
+                            memberCache.putIfAbsent(member.getName(), member);
+                        }
+                    }
+                    membersCached.add(h);
+                }
+            }
+        }
+        membersCacheComplete = true;
     }
 
     /**
@@ -152,8 +178,7 @@ public class CubeUtils {
 
     public List<Member> fetchMembers(Level l){
         SchemaReader schemaReader = cube.getSchemaReader(null).withLocus();
-        List<Member> levelMembers = schemaReader.getLevelMembers(l, true);
-        return levelMembers;
+        return schemaReader.getLevelMembers(l, true);
     }
 
     public Member fetchMember(String dimName, String levelName, String name){
@@ -194,7 +219,7 @@ public class CubeUtils {
     /**
      * This method reads the mondrian schema and returns the mondrian level
      * corresponding to the input attribute
-     *
+     * Warnign Julien's code avoid using
      * @param attributeName: the name of the attribute we want to
      * retrieve
      * @param hierarchyName: the name of the hierarchy which the
@@ -202,6 +227,7 @@ public class CubeUtils {
      * @return the mondrian level corresponding to the attribute we want to
      * retrieve
      */
+    @Deprecated
     public Level getLevel(String attributeName, String hierarchyName) {
         for (Hierarchy h : this.getHierarchies()) {
             // Note from alex: fixed this with a little split
@@ -219,6 +245,11 @@ public class CubeUtils {
         return null;
     }
 
+    /**
+     * Fetches a level by name by doing a full hierarchy traversal
+     * @param exactName the exact name 'unique name' of the elvel (e.g. '[Dimension one.simple_hierarchy].[My precious level]')
+     * @return the mondrian level object
+     */
     public Level getLevel(String exactName){
         for (Hierarchy h : getHierarchies()){
             for (Level l : h.getLevels()){
@@ -253,6 +284,10 @@ public class CubeUtils {
         return null;
     }
 
+    /**
+     * The default measure of a cube per Mondrian documentation is the first one to appear in the XML schema file
+     * @return The default measure of the active cube
+     */
     public Member getDefaultMeasure(){
         Level l = getLevel("MeasuresLevel", "MEASURES");
         return cube.getSchemaReader(null).withLocus().getLevelMembers(l, true).get(0);
@@ -281,6 +316,12 @@ public class CubeUtils {
         return null;
     }
 
+    /**
+     * Returns the CubeUtils for the default cube either set on the global property of this class,
+     * manually by invoking setDefault(),
+     * or the first cube of the schema.
+     * @return the default cube utility class
+     */
     public static CubeUtils getDefault(){
         if (defaultCube == null){
             if (defaultCubeName.equals("")) {

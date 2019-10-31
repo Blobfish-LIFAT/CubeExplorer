@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.optimize;
 
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
-import com.olap3.cubeexplorer.info.InfoCollector;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.optimize.stats.StatBasedMetric;
 
 import java.util.List;

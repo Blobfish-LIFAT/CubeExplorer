@@ -1,15 +1,12 @@
 package com.olap3.cubeexplorer.optimize;
 
-import com.olap3.cubeexplorer.info.InfoCollector;
-import com.olap3.cubeexplorer.julien.Qfset;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
+import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
-import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Hierarchy;
-import mondrian.olap.Member;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Relevence implements AprioriMetric {
 

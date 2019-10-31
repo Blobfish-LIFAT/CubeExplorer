@@ -1,9 +1,8 @@
 package com.olap3.cubeexplorer;
 
 import com.alexscode.utilities.collection.Pair;
-import com.olap3.cubeexplorer.julien.Qfset;
+import com.olap3.cubeexplorer.model.Qfset;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class IntentionalQuery {

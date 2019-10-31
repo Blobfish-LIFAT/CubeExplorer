@@ -1,27 +1,11 @@
 package com.olap3.cubeexplorer;
 
-import com.olap3.cubeexplorer.evaluate.MDXtoSQLvisitor;
-import com.olap3.cubeexplorer.evaluate.SQLEstimateEngine;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
-import com.olap3.cubeexplorer.julien.MeasureFragment;
-import com.olap3.cubeexplorer.julien.ProjectionFragment;
-import com.olap3.cubeexplorer.julien.Qfset;
-import com.olap3.cubeexplorer.julien.SelectionFragment;
-import com.olap3.cubeexplorer.mdxparser.MDXExpLexer;
-import com.olap3.cubeexplorer.mdxparser.MDXExpParser;
+import com.olap3.cubeexplorer.model.*;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
-import mondrian.olap.Level;
-import mondrian.olap.Result;
-import mondrian.rolap.sql.*;
-import mondrian.server.Execution;
 import mondrian.server.Statement;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -50,10 +34,7 @@ public class Dev {
         String sqlExp = calculator.visit(tree);
         System.out.println("Final expresion: " + sqlExp);
 */
-        String testQuery = "SELECT\n" +
-                "NON EMPTY {Hierarchize({[Type de logement.TYPLOGT_Hierarchie].[Type regroupe].Members})} ON COLUMNS,\n" +
-                "NON EMPTY {Hierarchize({[Measures].[Nombre total d'individus]})} ON ROWS\n" +
-                "FROM [Cube1MobProInd]";
+        String testQuery = "SELECT NON EMPTY {Hierarchize({{[Measures].[Distance trajet domicile - travail (moyenne)], [Measures].[Nombre total d\u0027individus], [Measures].[Distance trajet domicile - travail (max)]}})} ON COLUMNS,\nNON EMPTY Hierarchize(Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[En contrat d\u0027apprentissage]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés en formation].[Stagiaires rémunérés en entreprise]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés non précaires].[Emplois sans limite de durée, CDI, titulaire de la fonction publique]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Autres emplois à durée limitée, CDD, contrat court, vacataire...]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Emplois-jeunes, CES, contrats de qualification]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Salariés].[Salariés précaires].[Placés par une agence d\u0027intérim]}), Union(CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Statut inconnu].[Statut inconnu].[Statut  inconnu]}), CrossJoin({[Commune de residence.CNERES_Hierarchie_intercommunale].[CENTRE].[Pays des Châteaux].[AGGLOPOLYS]}, {[Statut d\u0027emploi.STATEMPL_Hierarchie].[Sans objet].[Sans objet].[Sans objet]}))))))))) ON ROWS\nFROM [Cube1MobProInd]";
 
         mondrian.olap.QueryPart qp = olap.parseStatement(testQuery);
 
@@ -71,9 +52,6 @@ public class Dev {
 
         System.out.println(st);
 
-        Execution exec = new Execution(st, 1000);
-
-        //System.out.println(exec.);
 
         var res = olap.execute(olapQuery);
 
@@ -92,10 +70,13 @@ public class Dev {
         String SQLquery = factory.getStarJoin(test);
         System.out.println(SQLquery);
 
-        SQLEstimateEngine see = new SQLEstimateEngine();
-        var plan = see.estimates(SQLquery);
-
-        System.out.println(plan);
+        System.out.println("--- Begin conversion test ---");
+        System.out.println(testQuery);
+        Qfset converted = new Qfset(olapQuery);
+        System.out.println(converted);
+        MdxToTripletConverter converter = new MdxToTripletConverter(utils);
+        converter.extractMeasures(testQuery, converted);
+        System.out.println(converted);
     }
 
 }

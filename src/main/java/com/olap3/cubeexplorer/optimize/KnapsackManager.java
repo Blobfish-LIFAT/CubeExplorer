@@ -2,13 +2,11 @@ package com.olap3.cubeexplorer.optimize;
 
 import com.alexscode.utilities.math.IntRangeNormalizer;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
-import com.olap3.cubeexplorer.info.InfoCollector;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
 
 public class KnapsackManager implements BudgetManager {
     AprioriMetric metric;

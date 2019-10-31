@@ -2,7 +2,7 @@ package com.olap3.cubeexplorer.data.castor.response;
 
 
 
-import com.olap3.cubeexplorer.olap.HeaderTree;
+import com.olap3.cubeexplorer.data.HeaderTree;
 
 import java.util.List;
 

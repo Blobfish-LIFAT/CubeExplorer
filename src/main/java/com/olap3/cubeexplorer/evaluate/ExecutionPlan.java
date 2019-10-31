@@ -1,9 +1,8 @@
 package com.olap3.cubeexplorer.evaluate;
 
-import com.olap3.cubeexplorer.info.InfoCollector;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
 import java.util.List;
-import java.util.Set;
 
 public class ExecutionPlan {
     List<InfoCollector> operations;

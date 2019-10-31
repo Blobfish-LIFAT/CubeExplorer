@@ -1,10 +1,9 @@
 package com.olap3.cubeexplorer.evaluate;
 
-import com.alexscode.utilities.Reflect;
-import com.olap3.cubeexplorer.julien.MeasureFragment;
-import com.olap3.cubeexplorer.julien.ProjectionFragment;
-import com.olap3.cubeexplorer.julien.Qfset;
-import com.olap3.cubeexplorer.julien.SelectionFragment;
+import com.olap3.cubeexplorer.model.MeasureFragment;
+import com.olap3.cubeexplorer.model.ProjectionFragment;
+import com.olap3.cubeexplorer.model.Qfset;
+import com.olap3.cubeexplorer.model.SelectionFragment;
 import com.olap3.cubeexplorer.mdxparser.MDXExpLexer;
 import com.olap3.cubeexplorer.mdxparser.MDXExpParser;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
