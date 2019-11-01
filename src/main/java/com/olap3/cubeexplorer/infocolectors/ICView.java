@@ -17,7 +17,12 @@ public class ICView extends InfoCollector {
     }
 
     @Override
-    public ECube execute() {
+    public long realTime() {
+        return dataSource.aposterioriTime();
+    }
+
+    @Override
+    public ECube executeInternal() {
         return null;
     }
 

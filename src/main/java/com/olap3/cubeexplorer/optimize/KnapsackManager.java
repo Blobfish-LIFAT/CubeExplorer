@@ -5,7 +5,6 @@ import com.google.common.base.Stopwatch;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
@@ -68,8 +67,7 @@ public class KnapsackManager implements BudgetManager {
                 solution.add(candidates.get(i));
         }
 
-        var result = new ExecutionPlan();
-        result.setOperations(new ArrayList<>(solution));//FIXME order ....
+        var result = new ExecutionPlan(solution);
         return result;
     }
 

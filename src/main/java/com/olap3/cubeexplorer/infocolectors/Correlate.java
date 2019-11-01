@@ -5,7 +5,7 @@ import com.olap3.cubeexplorer.model.ECube;
 public class Correlate extends InfoCollector{
 
     @Override
-    public ECube execute() {
+    public ECube executeInternal() {
         return null;
     }
 }

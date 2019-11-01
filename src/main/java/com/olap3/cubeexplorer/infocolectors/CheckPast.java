@@ -7,7 +7,7 @@ public class CheckPast extends InfoCollector {
 
 
     @Override
-    public ECube execute() {
+    public ECube executeInternal() {
         return null;
     }
 }

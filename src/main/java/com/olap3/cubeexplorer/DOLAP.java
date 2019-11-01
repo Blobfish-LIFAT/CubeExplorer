@@ -50,6 +50,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -164,6 +165,7 @@ public class DOLAP {
     }
 
     public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon){
+        Stopwatch runTime = Stopwatch.createStarted();
         BudgetManager ks = new KnapsackManager(interestingness, ks_epsilon);
 
         Stopwatch genTime = Stopwatch.createStarted();
@@ -172,26 +174,24 @@ public class DOLAP {
 
         System.out.printf("Found %s candidates%n", candidates.size());
         //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
-        //System.out.println();
 
         Stopwatch optTime = Stopwatch.createStarted();
         ExecutionPlan plan = ks.findBestPlan(candidates, budgetms);
         optTime.stop();
 
-        /*System.out.println("--- Plan summary ---");
-        System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
-        for (InfoCollector ic : plan.getOperations()){
-            System.out.println("  " + ic);
-            System.out.println("    Estimated cost " + ic.estimatedTime() + "  IM " + interestingness.rate(ic));
-        }*/
         //Exec phase
         Set<Pair<Qfset, Result>> executed = new HashSet<>();
         Stopwatch execTime = Stopwatch.createUnstarted();
 
-        for (InfoCollector ic : plan.getOperations()){
+        //Main execution Loop (Algorithm 2 line 5)
+        for (;plan.hasNext();) {
+            InfoCollector ic = plan.next();
             execTime.start();
             executed.add(new Pair<>(ic.getDataSource().getInternal(), runMDX(ic)));
             execTime.stop();
+            optTime.start();
+            reoptRoutine(plan, candidates, runTime, budgetms, ks);
+            optTime.stop();
         }
 
 
@@ -204,9 +204,51 @@ public class DOLAP {
         tsp.runAlgorithm();
         optTime.stop();
 
+        runTime.stop();
         return new TAPStats(q0, genTime,optTime, execTime, Arrays.stream(tsp.tour).mapToObj(toOrder::get).collect(Collectors.toList()), candidates.size());
     }
 
+    /**
+     * Re-optimization routine
+     * @param plan the current execution plan
+     * @param candidates the original search space
+     * @param runTime the total run time stopwatch
+     * @param budget the original time budget
+     * @param bm A Budget Manager to perform the re-optimization
+     */
+    private static void reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
+        Set<InfoCollector> executed = plan.getExecuted();
+        long left = budget - runTime.elapsed(TimeUnit.MILLISECONDS);
+
+        // Case one we OUTATIME
+        if (left < 1){
+            //kill the plan !
+            plan.removeAll(plan.getOperations());
+            return;
+        }
+
+        long predictedRunTime = executed.stream().mapToLong(InfoCollector::estimatedTime).sum();
+
+        // Case two less time left than anticipated
+        if (predictedRunTime > runTime.elapsed(TimeUnit.MILLISECONDS)){
+            Set<InfoCollector> restOfExec = bm.findBestPlan(new ArrayList<>(plan.getOperations()), (int)left).getOperations();
+            plan.getOperations().retainAll(restOfExec);
+            return;
+        }
+
+        //Case three we have more time than anticipated
+        List<InfoCollector> possibleStuff = new ArrayList<>(candidates);
+        possibleStuff.removeAll(plan.getOperations());
+        possibleStuff.removeAll(plan.getExecuted());
+        Set<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
+        plan.addAll(newStuff);
+    }
+
+    /**
+     * Run MDX for the tests and add the time to the MDXAccessor
+     * @param ic the IC to run
+     * @return the mondrian result of the MDX, doesn't run any model
+     */
     private static Result runMDX(InfoCollector ic) {
         Qfset toRun = ic.getDataSource().getInternal();
         mondrian.olap.Connection cnx = MondrianConfig.getMondrianConnection();
@@ -216,6 +258,8 @@ public class DOLAP {
         runTime.stop();
         QueryStats qs = toRun.getStats();
         stats.printf("%s,%s,%s,%s,%s,%s,%s%n", Stuff.md5(toRun.getSql()), toRun.getSql().length(), qs.getProjNb(), qs.getSelNb(), qs.getTableNb(), qs.getAggNb(), runTime.elapsed().toMillis()/1000d);
+        ((MDXAccessor)ic.getDataSource()).setMesuredTime(runTime.elapsed(TimeUnit.MILLISECONDS));
+        ic.execute();//Just to flag it
         return result;
     }
 
@@ -319,7 +363,7 @@ public class DOLAP {
             for (QueryRequest qr : in.getQueries()){
                 queries.add(new Query(Compatibility.partsFromQfset(Compatibility.QfsetFromMDX(qr.getQuery()))));
             }
-            Session current = new Session(queries, in.getUser().getName(), in.getTitle()); // TODO check properties we want
+            Session current = new Session(queries, in.getUser().getName(), in.getTitle());
             outSess.add(current);
         }
 

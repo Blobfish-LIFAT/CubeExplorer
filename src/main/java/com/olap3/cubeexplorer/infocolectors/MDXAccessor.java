@@ -6,6 +6,7 @@ import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import lombok.Setter;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class MDXAccessor extends DataAccessor {
     DataSet cached = null;
+    @Setter
+    long mesuredTime;
 
     static Connection connection;
     static SQLFactory sqlFactory;
@@ -112,7 +115,7 @@ public class MDXAccessor extends DataAccessor {
 
     @Override
     public long aposterioriTime() {
-        return 0;
+        return mesuredTime;
     }
 
     @Override
