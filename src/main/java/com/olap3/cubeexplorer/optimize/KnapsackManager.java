@@ -39,7 +39,7 @@ public class KnapsackManager implements BudgetManager {
             weight[i] = Math.toIntExact(candidates.get(i).estimatedTime());
         }
 
-        LOGGER.info("KS init. took " + initTime.stop());
+        //LOGGER.info("KS init. took " + initTime.stop());
         IntRangeNormalizer norm = new IntRangeNormalizer(1, res, rawValue);
         value = norm.normalized();
 

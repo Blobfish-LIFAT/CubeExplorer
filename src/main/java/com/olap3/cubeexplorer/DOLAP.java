@@ -16,6 +16,8 @@ import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.infocolectors.ICView;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
+import com.olap3.cubeexplorer.measures.IMMetric;
+import com.olap3.cubeexplorer.measures.Jaccard;
 import com.olap3.cubeexplorer.measures.compute.PageRank;
 import com.olap3.cubeexplorer.measures.graph.DimensionsGraph;
 import com.olap3.cubeexplorer.measures.graph.FiltersGraph;
@@ -48,18 +50,18 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static com.alexscode.utilities.math.Distribution.log2;
 
 public class DOLAP {
     @Data @AllArgsConstructor @ToString
     static class TAPStats {
         Qfset q0;
         Stopwatch genTime, optTime, execTime;
-        ExecutionPlan finalPlan;
+        List<Qfset> finalPlan;
+        int candidatesNb;
     }
 
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
@@ -85,8 +87,10 @@ public class DOLAP {
         }
         utils = new CubeUtils(olap, "Cube1MobProInd");
         CubeUtils.setDefault(utils);
-        //utils.forceMembersCaching();
         LOGGER.info("Mondrian connection init complete");
+
+        utils.forceMembersCaching();
+        LOGGER.info("Members cached");
 
         stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
 
@@ -109,27 +113,54 @@ public class DOLAP {
                     Fin des pre-calculs mettre le code de test ci apres
          */
         LOGGER.info("Begin test phase");
-        AprioriMetric im = new AprioriMetric() {
-            @Override
-            public double rate(InfoCollector ic) {
-                var qps = Compatibility.partsFromQfset(ic.getDataSource().getInternal());
-                double sum = 0;
-                for (var qp : qps){
-                    Double i = interest.get(qp);
-                    if(i==null) {
-                        System.err.printf("Warning no IM found for %s %n", qp.toString());
-                        return 0;
-                    }
-                    else
-                        sum -= log2(i);
-                }
-                return sum/qps.size();
-            }
-        };
+        AprioriMetric im = new IMMetric(interest);
 
-        System.out.println(runTAPHeuristic(testQuery, 10000, im, 0.005));
+        Function<Query, Qfset> mapable = query -> Compatibility.QPsToQfset(query, utils);
+        int budget = 10000;
+
+        for (Session s : sessions){
+            //TODO find the issue with session 3-15/5-22/5-23
+            if (s.length() < 2 || s.getFilename().equals("3-15.json") || s.getFilename().equals("5-22.json") || s.getFilename().equals("5-23.json")){
+                continue; //skip useless sessions
+            }
+            System.out.println("--- Session " + s.getFilename() + " ---");
+            Query firstQuery = s.getQueries().get(0);
+            Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
+            TAPStats results = runTAPHeuristic(firstTriplet, budget, im, 0.005);
+
+            List<Qfset> originals = s.getQueries().subList(1, s.length() ).stream().map(mapable).collect(Collectors.toList());
+            List<Pair<Qfset, Double>> bestMatches = findMostSimilars(originals, results.finalPlan);
+            double recall = computeRecall(bestMatches, 0.90);
+            System.out.printf("sessionFile,sessionLen,candidatesNb,icNb,execTimeMs,optTimeMs,budgetMs,recal%n");
+            System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), s.length(), results.candidatesNb, results.finalPlan.size(), results.execTime.elapsed().toMillis(), results.optTime.elapsed().toMillis(), budget, recall);
+        }
+
+
 
         stats.flush(); stats.close();
+    }
+
+    private static double computeRecall(List<Pair<Qfset, Double>> bestMatches, double threshold) {
+        System.out.println(bestMatches.stream().map(Pair::getRight).collect(Collectors.toList()));
+        return bestMatches.stream().mapToDouble(Pair::getRight).filter(value -> value > threshold).count()/((double)bestMatches.size());
+    }
+
+    private static List<Pair<Qfset, Double>> findMostSimilars(List<Qfset> toMatch, List<Qfset> searchSpace) {
+        List<Pair<Qfset, Double>> found = new ArrayList<>(toMatch.size());
+
+        for (Qfset q : toMatch){
+            Qfset best = null; double sim = 0;
+            for (Qfset candidate : searchSpace){
+                double j = Jaccard.similarity(q, candidate);
+                if (j > sim){
+                    best = candidate;
+                    sim = j;
+                }
+            }
+            found.add(new Pair<>(best, sim));
+        }
+
+        return found;
     }
 
     public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon){
@@ -139,20 +170,20 @@ public class DOLAP {
         List<InfoCollector> candidates = generateCandidates(q0);
         genTime.stop();
 
-        System.out.printf("--- Found %s candidates ---%n", candidates.size());
-        candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
-        System.out.println();
+        System.out.printf("Found %s candidates%n", candidates.size());
+        //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
+        //System.out.println();
 
         Stopwatch optTime = Stopwatch.createStarted();
         ExecutionPlan plan = ks.findBestPlan(candidates, budgetms);
         optTime.stop();
 
-        System.out.println("--- Plan summary ---");
+        /*System.out.println("--- Plan summary ---");
         System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
         for (InfoCollector ic : plan.getOperations()){
             System.out.println("  " + ic);
             System.out.println("    Estimated cost " + ic.estimatedTime() + "  IM " + interestingness.rate(ic));
-        }
+        }*/
         //Exec phase
         Set<Pair<Qfset, Result>> executed = new HashSet<>();
         Stopwatch execTime = Stopwatch.createUnstarted();
@@ -173,9 +204,7 @@ public class DOLAP {
         tsp.runAlgorithm();
         optTime.stop();
 
-        System.out.println(tsp);
-
-        return new TAPStats(q0, genTime,optTime, execTime, plan);
+        return new TAPStats(q0, genTime,optTime, execTime, Arrays.stream(tsp.tour).mapToObj(toOrder::get).collect(Collectors.toList()), candidates.size());
     }
 
     private static Result runMDX(InfoCollector ic) {
