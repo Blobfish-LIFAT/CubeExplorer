@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.infocolectors;
 
 import com.alexscode.utilities.collection.Pair;
-import com.olap3.cubeexplorer.evaluate.SQLEstimateEngine;
+import com.olap3.cubeexplorer.LinearTimeEstimator;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
@@ -107,7 +107,7 @@ public class MDXAccessor extends DataAccessor {
 
     @Override
     public long aprioriTime() {
-        return SQLEstimateEngine.estimateQfset(this.internal);
+        return LinearTimeEstimator.estimateQfsetMs(this.internal);
     }
 
     @Override

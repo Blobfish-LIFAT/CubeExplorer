@@ -1,21 +1,25 @@
 package com.olap3.cubeexplorer.optimize;
 
 import com.alexscode.utilities.math.IntRangeNormalizer;
+import com.google.common.base.Stopwatch;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class KnapsackManager implements BudgetManager {
+    Logger LOGGER = Logger.getLogger(KnapsackManager.class.getName());
     AprioriMetric metric;
     // resolution for discretization
-    int res = 8192;
-    double epsilon = 0.05; // bound on divergence from optimal value
+    static int res = 8192;
+    private double epsilon = 0.05; // bound on divergence from optimal value
 
-    public KnapsackManager(AprioriMetric value) {
+    public KnapsackManager(AprioriMetric value, double epsilon) {
         metric = value;
+        this.epsilon = epsilon;
     }
 
     @Override
@@ -29,10 +33,13 @@ public class KnapsackManager implements BudgetManager {
         int[] weight = new int[n];
         int[] valueApprox = new int[n];
 
+        Stopwatch initTime = Stopwatch.createStarted();
         for (int i = 0; i < candidates.size(); i++) {
             rawValue[i] =metric.rate(candidates.get(i));
             weight[i] = Math.toIntExact(candidates.get(i).estimatedTime());
         }
+
+        LOGGER.info("KS init. took " + initTime.stop());
         IntRangeNormalizer norm = new IntRangeNormalizer(1, res, rawValue);
         value = norm.normalized();
 
@@ -50,7 +57,7 @@ public class KnapsackManager implements BudgetManager {
             valueApprox[i] = (int)Math.floor(value[i] * k / maxValue);
             totalValue += valueApprox[i];
         }
-        System.out.println(totalValue);
+        //System.out.println(totalValue);
 
         // Calculate Approximation Solution
         boolean[] isPickedApprox = getKnapsackSolution(weight, valueApprox, timeBudget, totalValue);

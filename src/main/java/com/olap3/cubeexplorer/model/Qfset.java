@@ -1,11 +1,14 @@
 package com.olap3.cubeexplorer.model;
 
 import com.alexscode.utilities.Future;
+import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.measures.Jaccard;
 import com.olap3.cubeexplorer.measures.ReferenceSet;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.tsp.Measurable;
+import lombok.Getter;
+import lombok.Setter;
 import mondrian.calc.Calc;
 import mondrian.calc.ExpCompiler;
 import mondrian.mdx.ResolvedFunCall;
@@ -21,6 +24,10 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     mondrian.olap.Query mondrianQuery;
     String mdx;
+    @Getter @Setter
+    String sql;
+    @Getter @Setter
+    QueryStats stats;
     /**
      * Set of measure with the corresponding aggregate function
      */

@@ -1,14 +1,18 @@
 package com.olap3.cubeexplorer.evaluate;
 
 
+import com.google.common.base.Stopwatch;
+import com.olap3.cubeexplorer.evaluate.xmlutil.PlanParser;
+import com.olap3.cubeexplorer.evaluate.xmlutil.XMLPlan;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.evaluate.xmlutil.XMLPlan;
-import com.olap3.cubeexplorer.evaluate.xmlutil.PlanParser;
 import org.dom4j.DocumentException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Holds a parallel JDBC connection to mondrian on the DBMS hosting the cube to allow
@@ -18,15 +22,21 @@ public class SQLEstimateEngine {
 
     static SQLEstimateEngine def = null;
     static SQLFactory queryFactory = null;
+    public static Stopwatch timer =Stopwatch.createUnstarted();
 
     Connection con;
     private int timeout = 500;
 
 
     public SQLEstimateEngine() {
-
-            con = MondrianConfig.getNewJdbcConnection();
-
+        con = MondrianConfig.getNewJdbcConnection();
+        try {
+            Statement planON = con.createStatement();
+            planON.execute("SET SHOWPLAN_XML ON");
+            planON.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public SQLEstimateEngine(Connection con) {
@@ -40,7 +50,8 @@ public class SQLEstimateEngine {
         }
 
         //FIXME Not sure about this ratio see with ben
-        return (long) (def.estimates(queryFactory.getStarJoin(qfset)).total_cost * 1000);
+        double rawTime = def.estimates(queryFactory.getStarJoin(qfset)).total_cost * 1000;
+        return Math.round(rawTime);
     }
 
     public boolean setTimeout(int timeout) {
@@ -55,21 +66,20 @@ public class SQLEstimateEngine {
 
     public XMLPlan estimates(String query){
         try {
-            Statement planON = con.createStatement();
-            planON.execute("SET SHOWPLAN_XML ON");
+            Statement st = con.createStatement();
+            //st.execute("SET SHOWPLAN_XML ON");
 
-
-            ResultSet rs = planON.executeQuery(query);
+            ResultSet rs = st.executeQuery(query);
 
             XMLPlan plan = null;
             if (rs.next()) {
                 String xml_plan = rs.getString(1);
                 //System.out.println(xml_plan);
+
                 plan = PlanParser.xml_to_plan(xml_plan);
+
             }
-
-            planON.close();
-
+            st.close();
 
             return plan;
         } catch (SQLException | DocumentException e){

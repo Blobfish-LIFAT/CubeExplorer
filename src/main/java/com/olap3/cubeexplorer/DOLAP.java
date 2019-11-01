@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer;
 
+import com.alexscode.utilities.Stuff;
 import com.alexscode.utilities.collection.Pair;
 import com.google.common.base.Stopwatch;
 import com.google.common.graph.MutableValueGraph;
@@ -11,6 +12,7 @@ import com.olap3.cubeexplorer.data.DopanLoader;
 import com.olap3.cubeexplorer.data.castor.session.CrSession;
 import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
+import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.infocolectors.ICView;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
@@ -38,6 +40,10 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.memory.MemoryManager;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -58,12 +64,14 @@ public class DOLAP {
 
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
 
-    public static final String testData = "./data/import_ideb";
+    public static final String testData = "./data/import_ideb",
+                                statsFile = "./data/stats/timings.csv";
     private static CubeUtils utils;
     private static MemoryManager mem = Nd4j.getMemoryManager();
     private static Gson gson = new GsonBuilder()
             .enableComplexMapKeySerialization() //Necessary as QP map has "complex" key
             .setPrettyPrinting().create();
+    private static PrintWriter stats;
     // For testing only
     private static Qfset testQuery;
 
@@ -77,7 +85,10 @@ public class DOLAP {
         }
         utils = new CubeUtils(olap, "Cube1MobProInd");
         CubeUtils.setDefault(utils);
+        //utils.forceMembersCaching();
         LOGGER.info("Mondrian connection init complete");
+
+        stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
@@ -116,19 +127,21 @@ public class DOLAP {
             }
         };
 
-        System.out.println(runTAPHeuristic(testQuery, 10000, im));
+        System.out.println(runTAPHeuristic(testQuery, 10000, im, 0.005));
 
+        stats.flush(); stats.close();
     }
 
-    public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness){
-        BudgetManager ks = new KnapsackManager(interestingness);
+    public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon){
+        BudgetManager ks = new KnapsackManager(interestingness, ks_epsilon);
 
         Stopwatch genTime = Stopwatch.createStarted();
         List<InfoCollector> candidates = generateCandidates(q0);
         genTime.stop();
 
         System.out.printf("--- Found %s candidates ---%n", candidates.size());
-        //candidates.forEach(c -> System.out.printf("  %s%n    cost=%s, im=%s%n", c, c.estimatedTime(), interestingness.rate(c)));
+        candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
+        System.out.println();
 
         Stopwatch optTime = Stopwatch.createStarted();
         ExecutionPlan plan = ks.findBestPlan(candidates, budgetms);
@@ -138,7 +151,7 @@ public class DOLAP {
         System.out.printf("Chose %s ICs with total cost of %s ms%nICs Chosen:%n", plan.getOperations().size(), plan.getOperations().stream().mapToLong(InfoCollector::estimatedTime).sum());
         for (InfoCollector ic : plan.getOperations()){
             System.out.println("  " + ic);
-            System.out.println("    Estimated cost " + ic.estimatedTime());
+            System.out.println("    Estimated cost " + ic.estimatedTime() + "  IM " + interestingness.rate(ic));
         }
         //Exec phase
         Set<Pair<Qfset, Result>> executed = new HashSet<>();
@@ -166,9 +179,14 @@ public class DOLAP {
     }
 
     private static Result runMDX(InfoCollector ic) {
+        Qfset toRun = ic.getDataSource().getInternal();
         mondrian.olap.Connection cnx = MondrianConfig.getMondrianConnection();
-        mondrian.olap.Query query = ic.getDataSource().getInternal().toMDX();
+        Stopwatch runTime = Stopwatch.createStarted();
+        mondrian.olap.Query query = toRun.toMDX();
         RolapResult result = (RolapResult) cnx.execute(query);
+        runTime.stop();
+        QueryStats qs = toRun.getStats();
+        stats.printf("%s,%s,%s,%s,%s,%s,%s%n", Stuff.md5(toRun.getSql()), toRun.getSql().length(), qs.getProjNb(), qs.getSelNb(), qs.getTableNb(), qs.getAggNb(), runTime.elapsed().toMillis()/1000d);
         return result;
     }
 
@@ -216,6 +234,12 @@ public class DOLAP {
 
             Qfset query = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
             queries.add(new ICView(new MDXAccessor(query), "R-Up ON " + p.getHierarchy()));
+
+            if (f.getLevel().getParentLevel().isAll())
+                continue;
+            Qfset query2 = query.copy();
+            query2.rollupLevel(f.getLevel(), 1);
+            queries.add(new ICView(new MDXAccessor(query2), "R-Up (+2) ON " + p.getHierarchy()));
         }
 
         // Build drill-downs
@@ -229,6 +253,13 @@ public class DOLAP {
 
             Qfset req = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
             queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
+
+
+            if (target.getChildLevel() == null)
+                continue;
+            Qfset req2 = req.copy();
+            req2.drillDownLevel(target, 1);
+            queries.add(new ICView(new MDXAccessor(req2), "D-Down (-2) ON " + target.getHierarchy()));
         }
 
         // Build siblings

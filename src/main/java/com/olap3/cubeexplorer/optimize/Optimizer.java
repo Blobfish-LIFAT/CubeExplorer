@@ -11,7 +11,7 @@ public class Optimizer {
     BudgetManager manager;
 
     static {
-        opt = new Optimizer(new KnapsackManager(new StatBasedMetric()));
+        opt = new Optimizer(new KnapsackManager(new StatBasedMetric(), 0.1));
     }
 
     private Optimizer(BudgetManager manager) {
