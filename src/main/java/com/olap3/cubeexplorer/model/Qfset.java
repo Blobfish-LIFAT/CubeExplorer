@@ -1401,6 +1401,9 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         int pair = 0;
         String s = "";
 
+        //FIXME Do we need to inlcude attributes which are All level
+        //attributes = attributes.stream().filter(a -> !a.getLevel().isAll()).collect(Collectors.toCollection(HashSet::new));
+
         for (ProjectionFragment pf : attributes) {
             if (pair != 0 && pair % 2 == 0) {
                 s = "CrossJoin(" + s + "),";

@@ -110,8 +110,8 @@ public class DOLAP {
         //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
         LOGGER.info("IM Compute done");
 
-        /*
-                    Fin des pre-calculs mettre le code de test ci apres
+        /**
+         *     Test Loop
          */
         LOGGER.info("Begin test phase");
         AprioriMetric im = new IMMetric(interest);
@@ -120,20 +120,21 @@ public class DOLAP {
         int budget = 10000;
 
         for (Session s : sessions){
-            //TODO find the issue with session 3-15/5-22/5-23
-            if (s.length() < 2 || s.getFilename().equals("3-15.json") || s.getFilename().equals("5-22.json") || s.getFilename().equals("5-23.json")){
+            if (s.length() < 2 || s.getFilename().equals("5-22.json")){
                 continue; //skip useless sessions
             }
             System.out.println("--- Session " + s.getFilename() + " ---");
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
-            TAPStats results = runTAPHeuristic(firstTriplet, budget, im, 0.005);
+            TAPStats results = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
 
             List<Qfset> originals = s.getQueries().subList(1, s.length() ).stream().map(mapable).collect(Collectors.toList());
             List<Pair<Qfset, Double>> bestMatches = findMostSimilars(originals, results.finalPlan);
             double recall = computeRecall(bestMatches, 0.90);
             System.out.printf("sessionFile,sessionLen,candidatesNb,icNb,execTimeMs,optTimeMs,budgetMs,recal%n");
-            System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), s.length(), results.candidatesNb, results.finalPlan.size(), results.execTime.elapsed().toMillis(), results.optTime.elapsed().toMillis(), budget, recall);
+            System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), s.length(), results.candidatesNb,
+                    results.finalPlan.size(), results.execTime.elapsed().toMillis(),
+                    results.optTime.elapsed().toMillis(), budget, recall);
         }
 
 
@@ -164,7 +165,7 @@ public class DOLAP {
         return found;
     }
 
-    public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon){
+    public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon, boolean reoptEnabled){
         Stopwatch runTime = Stopwatch.createStarted();
         BudgetManager ks = new KnapsackManager(interestingness, ks_epsilon);
 
@@ -188,7 +189,10 @@ public class DOLAP {
             InfoCollector ic = plan.next();
             execTime.start();
             executed.add(new Pair<>(ic.getDataSource().getInternal(), runMDX(ic)));
+            plan.setExecuted(ic);
             execTime.stop();
+            if (!reoptEnabled)
+                continue;
             optTime.start();
             reoptRoutine(plan, candidates, runTime, budgetms, ks);
             optTime.stop();
@@ -317,6 +321,9 @@ public class DOLAP {
 
         // Build drill-downs
         for (var sf : q0.getAttributes()){
+            //FIXME We can't drill down on comunnes kills the server ...
+            if (sf.getLevel().getUniqueName().contains("Commune de"))
+                continue;
             Level target = sf.getLevel().getChildLevel();
             if (target==null)
                 continue;
