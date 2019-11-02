@@ -134,10 +134,11 @@ public class DOLAP {
             List<Qfset> originals = s.getQueries().subList(1, s.length() ).stream().map(mapable).collect(Collectors.toList());
             List<Pair<Qfset, Double>> bestMatches = findMostSimilars(originals, results.finalPlan);
 
-            Arrays.stream(new double[]{0.5,0.6,0.7,0.8,0.85,0.9,0.95,1.0}).forEach(thres -> {
+            Arrays.stream(new double[]{0.5,0.6,0.7,0.8,0.825,0.85,0.875,0.9,0.925,0.95,0.975,1.0}).forEach(thres -> {
                 res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), s.getFilename().split("-")[0],s.length(), results.candidatesNb,
                         results.finalPlan.size(), results.execTime.elapsed().toMillis(),
                         results.optTime.elapsed().toMillis(), budget, thres, computeRecall(bestMatches, thres));
+                res.flush();
             });
 
         }
