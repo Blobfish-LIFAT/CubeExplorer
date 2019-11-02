@@ -96,7 +96,7 @@ public class DOLAP {
 
         stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
         res = new PrintWriter(new FileOutputStream(new File(resultFile), false));
-        res.printf("sessionFile;sessionLen;candidatesNb;icNb;execTimeMs;optTimeMs;budgetMs;recal%n");
+        res.printf("sessionFile;question;sessionLen;candidatesNb;icNb;execTimeMs;optTimeMs;budgetMs;recall%n");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
@@ -134,12 +134,12 @@ public class DOLAP {
             List<Qfset> originals = s.getQueries().subList(1, s.length() ).stream().map(mapable).collect(Collectors.toList());
             List<Pair<Qfset, Double>> bestMatches = findMostSimilars(originals, results.finalPlan);
 
-            List<Double> recall = Arrays.stream(new double[]{0.5,0.6,0.7,0.8,0.85,0.9,0.95,1.0})
-                    .map(t -> computeRecall(bestMatches, t)).boxed().collect(Collectors.toList());
+            Arrays.stream(new double[]{0.5,0.6,0.7,0.8,0.85,0.9,0.95,1.0}).forEach(thres -> {
+                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), s.getFilename().split("-")[0],s.length(), results.candidatesNb,
+                        results.finalPlan.size(), results.execTime.elapsed().toMillis(),
+                        results.optTime.elapsed().toMillis(), budget, thres, computeRecall(bestMatches, thres));
+            });
 
-            res.printf("%s;%s;%s;%s;%s;%s;%s;%s%n", s.getFilename(), s.length(), results.candidatesNb,
-                    results.finalPlan.size(), results.execTime.elapsed().toMillis(),
-                    results.optTime.elapsed().toMillis(), budget, recall);
         }
 
 
