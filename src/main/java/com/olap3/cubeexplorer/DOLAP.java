@@ -96,7 +96,7 @@ public class DOLAP {
 
         stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
         res = new PrintWriter(new FileOutputStream(new File(resultFile), false));
-        res.printf("sessionFile;question;sessionLen;candidatesNb;icNb;execTimeMs;optTimeMs;budgetMs;recall%n");
+        res.printf("sessionFile,question,sessionLen,candidatesNb,icNb,execTimeMs,optTimeMs,budgetMs,thres,recall%n");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);

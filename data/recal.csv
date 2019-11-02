@@ -1,4 +1,4 @@
-sessionFile;question;sessionLen;candidatesNb;icNb;execTimeMs;optTimeMs;budgetMs;recall
+sessionFile,question,sessionLen,candidatesNb,icNb,execTimeMs,optTimeMs,budgetMs,thres,recall
 1-01.json,1,4,145,64,1648,1637,10000,0.5,1.0
 1-01.json,1,4,145,64,1648,1637,10000,0.6,1.0
 1-01.json,1,4,145,64,1648,1637,10000,0.7,0.0
