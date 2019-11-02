@@ -68,13 +68,14 @@ public class DOLAP {
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
 
     public static final String testData = "./data/import_ideb",
-                                statsFile = "./data/stats/timings.csv";
+                                statsFile = "./data/stats/timings.csv",
+                                resultFile = "./data/recal.csv";
     private static CubeUtils utils;
     private static MemoryManager mem = Nd4j.getMemoryManager();
     private static Gson gson = new GsonBuilder()
             .enableComplexMapKeySerialization() //Necessary as QP map has "complex" key
             .setPrettyPrinting().create();
-    private static PrintWriter stats;
+    private static PrintWriter stats, res;
     // For testing only
     private static Qfset testQuery;
 
@@ -94,6 +95,8 @@ public class DOLAP {
         LOGGER.info("Members cached");
 
         stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
+        res = new PrintWriter(new FileOutputStream(new File(resultFile), false));
+        res.printf("sessionFile;sessionLen;candidatesNb;icNb;execTimeMs;optTimeMs;budgetMs;recal%n");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
@@ -120,7 +123,7 @@ public class DOLAP {
         int budget = 10000;
 
         for (Session s : sessions){
-            if (s.length() < 2 || s.getFilename().equals("5-22.json")){
+            if (s.length() < 2 || s.getFilename().equals("5-22.json")|| s.getFilename().equals("5-23.json")){
                 continue; //skip useless sessions
             }
             System.out.println("--- Session " + s.getFilename() + " ---");
@@ -130,9 +133,11 @@ public class DOLAP {
 
             List<Qfset> originals = s.getQueries().subList(1, s.length() ).stream().map(mapable).collect(Collectors.toList());
             List<Pair<Qfset, Double>> bestMatches = findMostSimilars(originals, results.finalPlan);
-            double recall = computeRecall(bestMatches, 0.90);
-            System.out.printf("sessionFile,sessionLen,candidatesNb,icNb,execTimeMs,optTimeMs,budgetMs,recal%n");
-            System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), s.length(), results.candidatesNb,
+
+            List<Double> recall = Arrays.stream(new double[]{0.5,0.6,0.7,0.8,0.85,0.9,0.95,1.0})
+                    .map(t -> computeRecall(bestMatches, t)).boxed().collect(Collectors.toList());
+
+            res.printf("%s;%s;%s;%s;%s;%s;%s;%s%n", s.getFilename(), s.length(), results.candidatesNb,
                     results.finalPlan.size(), results.execTime.elapsed().toMillis(),
                     results.optTime.elapsed().toMillis(), budget, recall);
         }
@@ -140,10 +145,11 @@ public class DOLAP {
 
 
         stats.flush(); stats.close();
+        res.close();
     }
 
     private static double computeRecall(List<Pair<Qfset, Double>> bestMatches, double threshold) {
-        System.out.println(bestMatches.stream().map(Pair::getRight).collect(Collectors.toList()));
+        //System.out.println(bestMatches.stream().map(Pair::getRight).collect(Collectors.toList()));
         return bestMatches.stream().mapToDouble(Pair::getRight).filter(value -> value > threshold).count()/((double)bestMatches.size());
     }
 
