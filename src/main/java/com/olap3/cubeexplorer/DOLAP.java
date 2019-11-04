@@ -47,8 +47,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -103,13 +101,14 @@ public class DOLAP {
         //Dodgy I know
         testQuery = new Qfset(olap.parseQuery((String) sessions.get(0).queries.get(0).getProperties().get("mdx")));
         testQuery.getMeasures().add(MeasureFragment.newInstance(utils.getMeasure("Distance trajet domicile - travail (moyenne)")));
+        var learning = DopanLoader.loadDir("./data/dopan_converted");
         LOGGER.info("Test data loaded");
 
         LOGGER.info("Computing interestigness scores");
         Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
         LOGGER.warning("Using precomputed IM scores debug only");
-        HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
-        //Map<QueryPart, Double> interest = getInterestingness(sessions);
+        //HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
+        Map<QueryPart, Double> interest = getInterestingness(learning);
         //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
         LOGGER.info("IM Compute done");
 
@@ -367,6 +366,8 @@ public class DOLAP {
 
         return queries;
     }
+
+
 
 
     public static List<Session> convertFromCr(List<CrSession> sessions){
