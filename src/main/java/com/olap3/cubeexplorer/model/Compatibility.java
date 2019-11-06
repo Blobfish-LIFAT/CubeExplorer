@@ -1,12 +1,16 @@
 package com.olap3.cubeexplorer.model;
 
+import com.olap3.cubeexplorer.data.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 import mondrian.olap.Query;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -85,6 +89,8 @@ public class Compatibility {
 
         for(QueryPart dim : query.getDimensions()){
             Level l = utils.getLevel(dim.getValue());
+            if (l == null)
+                System.out.printf("call debugger");
             proj.add(ProjectionFragment.newInstance(l));
         }
 
@@ -110,5 +116,20 @@ public class Compatibility {
             }
         }
         return SelectionFragment.newInstance(utils.getMember(filter.getValue()));
+    }
+
+    public static List<Session> convertFromCr(List<CrSession> sessions){
+        ArrayList<Session> outSess = new ArrayList<>(sessions.size());
+
+        for (CrSession in : sessions){
+            ArrayList<com.olap3.cubeexplorer.model.Query> queries = new ArrayList<>(in.getQueries().size());
+            for (QueryRequest qr : in.getQueries()){
+                queries.add(new com.olap3.cubeexplorer.model.Query(Compatibility.partsFromQfset(Compatibility.QfsetFromMDX(qr.getQuery()))));
+            }
+            Session current = new Session(queries, in.getUser().getName(), in.getTitle());
+            outSess.add(current);
+        }
+
+        return outSess;
     }
 }

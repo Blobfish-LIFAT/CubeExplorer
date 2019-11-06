@@ -29,6 +29,6 @@ public class ECube implements Measurable<ECube> {
 
     @Override
     public double dist(ECube other) {
-        return Jaccard.similarity(this.cubeQuery, other.cubeQuery);
+        return 1 - Jaccard.similarity(this.cubeQuery, other.cubeQuery);
     }
 }

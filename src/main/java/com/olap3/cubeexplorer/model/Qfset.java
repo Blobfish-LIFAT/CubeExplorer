@@ -1606,6 +1606,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     @Override
     public double dist(Qfset other) {
-        return Jaccard.similarity(this, other);
+        return 1 - Jaccard.similarity(this, other);
     }
 }

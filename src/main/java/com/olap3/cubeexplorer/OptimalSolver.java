@@ -47,24 +47,26 @@ public class OptimalSolver {
                 .filter(s -> s.stream().mapToLong(InfoCollector::estimatedTime).sum() <= timebudget)
                 .forEach(s -> {
                     var tmp = new ArrayList<>(s);
-                    StreamedPermutation.generatePerm(tmp.subList(0, Math.min(10, tmp.size())))
+                    StreamedPermutation.generatePerm(tmp)
                             .stream().filter(p -> p.size() > 1)
                             .forEach(p -> {
                         double interst = 0, dist = 0;
                         for (int i = 0; i < p.size() - 1; i++) {
                             interst += im.rate(p.get(i));
-                            dist += Jaccard.similarity(p.get(i).getDataSource().getInternal(), p.get(i+1).getDataSource().getInternal());
+                            dist += 1 - Jaccard.similarity(p.get(i).getDataSource().getInternal(), p.get(i+1).getDataSource().getInternal());
                         }
                         interst += im.rate(p.get(p.size() - 1));
                         Solution us = new Solution(p, interst, dist);
 
                         Set<Solution> subs = new HashSet<>(); boolean addUs = false;
-
-                        if (bestDistance(dominantes).distance > us.distance || bestIm(dominantes).interest < us.interest) {
+                        //System.out.println(dominantes);
+                        if (dominantes.size() != 0 && (bestDistance(dominantes).distance > us.distance || bestIm(dominantes).interest < us.interest)) {
                             addUs = true;
                             for (Solution dom : dominantes) {
-                                if (dom.distance > us.distance || us.interest > dom.interest)
+                                if (dom.distance > us.distance && us.interest > dom.interest) {
                                     subs.add(dom);//Dom become a sub so I guess it's a switch ?
+                                    //System.out.println(us);
+                                }
                             }
                         }
 
@@ -76,6 +78,7 @@ public class OptimalSolver {
                             dominantes.add(us);
                     });
                 });
+        System.out.println(dominantes.size());
         return dominantes.stream().map(Solution::getIc).collect(Collectors.toSet());
     }
 }
@@ -98,6 +101,11 @@ class StreamedPermutation<E> implements Iterator<List<E>> {
     }
 
     public static <E> List<List<E>> generatePerm(List<E> original) {
+        if (original.size() == 0) {
+            List<List<E>> result = new ArrayList<List<E>>();
+            result.add(new ArrayList<E>());
+            return result;
+        }
 
         E firstElement = original.remove(0);
 

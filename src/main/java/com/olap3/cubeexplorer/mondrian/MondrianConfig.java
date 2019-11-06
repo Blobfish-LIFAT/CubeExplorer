@@ -119,4 +119,7 @@ public class MondrianConfig {
         }
     }
 
+    public static void setMondrianConnection(Connection mondrianConnection) {
+        MondrianConfig.mondrianConnection = mondrianConnection;
+    }
 }

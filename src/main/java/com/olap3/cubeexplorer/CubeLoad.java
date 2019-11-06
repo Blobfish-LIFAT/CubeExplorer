@@ -1,0 +1,407 @@
+package com.olap3.cubeexplorer;
+
+import com.alexscode.utilities.collection.Pair;
+import com.google.common.base.Stopwatch;
+import com.google.common.graph.MutableValueGraph;
+import com.google.common.graph.ValueGraphBuilder;
+import com.olap3.cubeexplorer.data.cubeloadBeans.*;
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
+import com.olap3.cubeexplorer.evaluate.QueryStats;
+import com.olap3.cubeexplorer.infocolectors.ICView;
+import com.olap3.cubeexplorer.infocolectors.InfoCollector;
+import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
+import com.olap3.cubeexplorer.measures.IMMetric;
+import com.olap3.cubeexplorer.measures.Jaccard;
+import com.olap3.cubeexplorer.measures.compute.PageRank;
+import com.olap3.cubeexplorer.measures.graph.DimensionsGraph;
+import com.olap3.cubeexplorer.measures.graph.FiltersGraph;
+import com.olap3.cubeexplorer.measures.graph.SessionGraph;
+import com.olap3.cubeexplorer.model.Query;
+import com.olap3.cubeexplorer.model.Session;
+import com.olap3.cubeexplorer.model.*;
+import com.olap3.cubeexplorer.mondrian.CubeUtils;
+import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import com.olap3.cubeexplorer.optimize.AprioriMetric;
+import com.olap3.cubeexplorer.optimize.BudgetManager;
+import com.olap3.cubeexplorer.optimize.KnapsackManager;
+import com.olap3.cubeexplorer.tsp.LinKernighan;
+import com.olap3.cubeexplorer.tsp.Measurable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
+import mondrian.olap.Connection;
+import mondrian.olap.Dimension;
+import mondrian.olap.SchemaReader;
+import mondrian.rolap.RolapResult;
+import org.nd4j.linalg.api.ndarray.INDArray;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public class CubeLoad {
+    @Data
+    @AllArgsConstructor
+    @ToString
+    static class TAPStats {
+        Qfset q0;
+        Stopwatch genTime, optTime, execTime;
+        List<Qfset> finalPlan;
+        int candidatesNb;
+        double im, dist;
+    }
+
+    static Logger LOGGER = Logger.getLogger(CubeLoad.class.getName());
+    private static String dataDir = "data/ssb_converted/",
+        outputFile = "data/stats/res_ssb.csv";
+    static CubeUtils utils;
+    private static PrintWriter out;
+    static Connection olap;
+    private static String[] cubeloadProfiles = new String[]{"explorative", "goal_oriented", "slice_all", "slice_and_drill"};
+
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+        olap = MondrianConfig.getSeparateConnection("data/ssb.properties");
+        if (olap == null) {
+            System.exit(1); //Crash the app can't do anything w/o mondrian
+        }
+        utils = new CubeUtils(olap, "SSB");
+        CubeUtils.setDefault(utils);
+        MondrianConfig.setMondrianConnection(olap);
+
+        List<Session> learning = new ArrayList<>();
+        Map<String, List<Session>> profiles = new HashMap<>();
+        for (String cubeloadProfile : cubeloadProfiles) {
+            List<Session> profile = loadCubeloadXML(dataDir + cubeloadProfile + ".xml", olap, "SSB");
+            profiles.put(cubeloadProfile, profile);
+            learning.addAll(profile);
+        }
+
+        System.out.println("--- Loaded Cubeload Sessions ---");
+
+        out = new PrintWriter(new FileOutputStream(new File(outputFile)));
+
+        LOGGER.info("Computing interestigness scores");
+        //Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
+        //LOGGER.warning("Using precomputed IM scores debug only");
+        //HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
+        Map<QueryPart, Double> interest = getInterestingness(learning);
+        //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
+        LOGGER.info("IM Compute done");
+
+        LOGGER.info("Begin test phase");
+        AprioriMetric im = new IMMetric(interest);
+
+        Function<Query, Qfset> mapable = query -> Compatibility.QPsToQfset(query, utils);
+        int budget = 10000;
+
+        for (Session s : learning){
+            if (s.length() < 2){
+                continue; //skip useless sessions
+            }
+            System.out.println("--- Session " + s.getFilename() + " ---");
+            Query firstQuery = s.getQueries().get(0);
+            Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
+
+            TAPStats resultsOPT = runOptimal(firstTriplet, budget, im, 0.005, false);
+            TAPStats result = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
+
+            int optSize = resultsOPT.finalPlan.size();
+            int size = result.finalPlan.size();
+            System.out.printf("    IM     |      DIST%nOPT %s|%s|%s %nHEU %s|%s|%s %n",
+                    resultsOPT.im/size, resultsOPT.dist/ optSize, optSize,
+                    result.im/size, result.dist/ size, size);
+
+        }
+
+        out.close();
+    }
+
+    private static double computeRecall(List<Pair<Qfset, Double>> bestMatches, double threshold) {
+        //System.out.println(bestMatches.stream().map(Pair::getRight).collect(Collectors.toList()));
+        return bestMatches.stream().mapToDouble(Pair::getRight).filter(value -> value > threshold).count()/((double)bestMatches.size());
+    }
+
+    private static List<Pair<Qfset, Double>> findMostSimilars(List<Qfset> toMatch, List<Qfset> searchSpace) {
+        List<Pair<Qfset, Double>> found = new ArrayList<>(toMatch.size());
+
+        for (Qfset q : toMatch){
+            Qfset best = null; double sim = 0;
+            for (Qfset candidate : searchSpace){
+                double j = Jaccard.similarity(q, candidate);
+                if (j > sim){
+                    best = candidate;
+                    sim = j;
+                }
+            }
+            found.add(new Pair<>(best, sim));
+        }
+
+        return found;
+    }
+
+    public static List<InfoCollector> generateCandidates(Qfset q0){
+        List<InfoCollector> queries = new ArrayList<>();
+
+        // Build roll-ups
+        for (ProjectionFragment f : q0.getAttributes()){
+            if (f.getLevel().isAll())
+                continue;
+            ProjectionFragment p  = ProjectionFragment.newInstance(f.getLevel().getParentLevel());
+
+            HashSet<ProjectionFragment> tmp = new HashSet<>(q0.getAttributes());
+            tmp.remove(f); tmp.add(p);
+
+            Qfset query = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
+            queries.add(new ICView(new MDXAccessor(query), "R-Up ON " + p.getHierarchy()));
+        }
+
+        // Build drill-downs
+        for (var sf : q0.getAttributes()){
+            mondrian.olap.Level target = sf.getLevel().getChildLevel();
+            if (target==null)
+                continue;
+            var tmp = new HashSet<>(q0.getAttributes());
+            tmp.add(ProjectionFragment.newInstance(target));
+            tmp.remove(sf);
+
+            Qfset req = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
+            queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
+
+        }
+
+        // Build siblings
+        /*
+        for (var sel : q0.getSelectionPredicates()){
+            mondrian.olap.Level target = sel.getLevel();
+            Member original = sel.getValue();
+
+            for (var other : utils.fetchMembers(target)){
+                if (other.equals(original))
+                    continue;
+                var tmp = new HashSet<>(q0.getSelectionPredicates());
+                tmp.remove(original);
+                tmp.add(SelectionFragment.newInstance(other));
+                Qfset req = new Qfset(new HashSet<>(q0.getAttributes()), tmp, new HashSet<>(q0.getMeasures()));
+                queries.add(new ICView(new MDXAccessor(req)));
+            }
+        }
+        */
+        return queries;
+    }
+
+
+    public static TAPStats runOptimal(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon, boolean reoptEnabled){
+        Stopwatch runTime = Stopwatch.createStarted();
+
+        Stopwatch genTime = Stopwatch.createStarted();
+        Set<InfoCollector> candidates = new HashSet<>(generateCandidates(q0));
+        genTime.stop();
+
+        System.out.printf("Found %s candidates%n", candidates.size());
+        //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
+
+        Stopwatch optTime = Stopwatch.createStarted();
+        ExecutionPlan plan = new ExecutionPlan(OptimalSolver.optimalSolver(candidates, interestingness, budgetms).iterator().next());
+        optTime.stop();
+
+        //Exec phase
+        List<Qfset> executed = new ArrayList<>();
+        Stopwatch execTime = Stopwatch.createUnstarted();
+
+        //Main execution Loop (Algorithm 2 line 5)
+        for (;plan.hasNext();) {
+            InfoCollector ic = plan.next();
+            execTime.start();
+            plan.setExecuted(ic);
+            execTime.stop();
+            executed.add(ic.getDataSource().getInternal());
+            //runMDX(ic, olap);
+        }
+        double dist = 0d;
+        List<InfoCollector> ics = new ArrayList<>(plan.getExecuted());
+        for (int i = 0; i < ics.size() - 1; i++) {
+            dist += 1 - Jaccard.similarity(ics.get(i).getDataSource().getInternal(), ics.get(i+1).getDataSource().getInternal());
+        }
+
+        return new TAPStats(q0, genTime,optTime, execTime, executed, candidates.size(),
+                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(),
+                dist);
+    }
+
+    private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
+        System.out.println("Building topology graph...");
+        MutableValueGraph<QueryPart, Double> topoGraph = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
+        DimensionsGraph.injectSchema(topoGraph, utils);
+        FiltersGraph.injectCompressedFilters(topoGraph, utils);
+        System.out.println("Building Logs graph...");
+        MutableValueGraph<QueryPart, Double> logGraph = SessionGraph.buildFromLog(sessions);
+
+        MutableValueGraph<QueryPart, Double> base = SessionEvaluator
+                .<QueryPart>linearInterpolation(0.5, true)
+                .interpolate(topoGraph, ValueGraphBuilder.directed().allowsSelfLoops(true).build(), logGraph);
+
+        System.out.println("Freeing memory"); // I know I know, don't judge me laptop has only 16GB of RAM
+        topoGraph = null;
+        logGraph = null;
+        //mem.invokeGc();
+
+        System.out.println("Computing PageRank...");
+        Pair<INDArray, HashMap<QueryPart, Integer>> ref = PageRank.pagerank(base, 50);
+        INDArray rawScores = ref.getLeft();
+        HashMap<QueryPart, Double> interest = new HashMap<>(ref.getRight().size());
+        ref.right.forEach((key, value) -> interest.put(key, rawScores.getDouble(value)));
+
+        System.out.println("Freeing memory");
+        base = null;
+        ref = null;
+        //mem.invokeGc();
+        return interest;
+    }
+
+    public static List<Session> loadCubeloadXML(String filePath, Connection connection, String cubeName){
+        ArrayList<Session> sessions = new ArrayList<>();
+        int count = 0;
+        try {
+            JAXBContext context = JAXBContext.newInstance(Benchmark.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Benchmark benchmark = (Benchmark) unmarshaller.unmarshal(new File(filePath));
+
+            CubeUtils cube = new CubeUtils(connection, cubeName);
+            SchemaReader reader = cube.getCube().getSchemaReader(null).withLocus();
+
+            for (com.olap3.cubeexplorer.data.cubeloadBeans.Session s : benchmark.getSession()){
+                List<Query> queries = new ArrayList<>();
+                for (com.olap3.cubeexplorer.data.cubeloadBeans.Query q : s.getQuery()){
+                    List<QueryPart> parts = new ArrayList<>();
+                    // Load Dimensions
+                    for (Element dim : q.getGroupBy().getElement()){
+                        String hName = ((Hierarchy) dim.getContent().stream().filter(e -> e instanceof Hierarchy).findFirst().get()).getValue();
+                        String levelName = ((Level) dim.getContent().stream().filter(e -> e instanceof Level).findFirst().get()).getValue();
+                        String tmp = "["+hName+"]";
+                        Dimension mdDim = reader.getCubeDimensions(cube.getCube()).stream()
+                                .filter(dimension -> Arrays.stream(dimension.getHierarchies()).anyMatch(h -> h.toString().equals(tmp)))
+                                .findFirst().get();
+                        parts.add(QueryPart.newDimension("[" + mdDim.getName() +"].[" + levelName + "]"));
+                    }
+
+                    //Load Filters
+                    for (Object obj : q.getSelectionPredicates().getContent()){
+                        if (obj instanceof String)
+                            continue;
+                        Element sel = (Element) obj;
+                        String hName = ((Hierarchy) sel.getContent().stream().filter(e -> e instanceof Hierarchy).findFirst().get()).getValue();
+                        String levelName = ((Level) sel.getContent().stream().filter(e -> e instanceof Level).findFirst().get()).getValue();
+                        String predicate = ((Predicate) sel.getContent().stream().filter(e -> e instanceof Predicate).findFirst().get()).getValue();
+                        String tmp = "["+hName+"]";
+                        Dimension mdDim = reader.getCubeDimensions(cube.getCube()).stream()
+                                .filter(dimension -> Arrays.stream(dimension.getHierarchies()).anyMatch(h -> h.toString().equals(tmp)))
+                                .findFirst().get();
+                        parts.add(QueryPart.newFilter(predicate, "[" + mdDim.getName() + "].[" + levelName + "]"));
+                        //parts.add(QueryPart.newFilter(predicate));
+                    }
+
+                    //Load Measures
+                    for (Element meas : q.getMeasures().getElement()){
+                        String measName =  meas.getValue();
+                        parts.add(QueryPart.newMeasure("[Measures].["+measName+"]"));
+                    }
+
+                    queries.add(new Query(parts));
+                }
+
+                sessions.add(new Session(queries, s.getTemplate(), filePath + "_" + count++, cubeName));
+            }
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return sessions;
+    }
+
+
+    public static TAPStats runTAPHeuristic(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon, boolean reoptEnabled){
+        Stopwatch runTime = Stopwatch.createStarted();
+        BudgetManager ks = new KnapsackManager(interestingness, ks_epsilon);
+
+        Stopwatch genTime = Stopwatch.createStarted();
+        List<InfoCollector> candidates = generateCandidates(q0);
+        genTime.stop();
+
+        System.out.printf("Found %s candidates%n", candidates.size());
+        //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
+
+        Stopwatch optTime = Stopwatch.createStarted();
+        ExecutionPlan plan = ks.findBestPlan(candidates, budgetms);
+        optTime.stop();
+
+        //Exec phase
+        Set<Pair<Qfset, mondrian.olap.Result>> executed = new HashSet<>();
+        Stopwatch execTime = Stopwatch.createUnstarted();
+
+        //Main execution Loop (Algorithm 2 line 5)
+        for (;plan.hasNext();) {
+            InfoCollector ic = plan.next();
+            execTime.start();
+            mondrian.olap.Result result = null;//runMDX(ic, olap);
+            executed.add(new Pair<>(ic.getDataSource().getInternal(), result));
+            plan.setExecuted(ic);
+            execTime.stop();
+            if (!reoptEnabled)
+                continue;
+            optTime.start();
+            DOLAP.reoptRoutine(plan, candidates, runTime, budgetms, ks);
+            optTime.stop();
+        }
+
+
+        //Ordering phase
+        List<Qfset> toOrder = executed.stream().map(Pair::getLeft).collect(Collectors.toList());
+        List<Integer> ids = IntStream.range(0, toOrder.size()).boxed().collect(Collectors.toList());
+
+        optTime.start();
+        LinKernighan tsp = new LinKernighan(toOrder.stream().map(q -> (Measurable) q).collect(Collectors.toList()), ids);
+        tsp.runAlgorithm();
+        optTime.stop();
+
+        runTime.stop();
+
+        double dist = 0d;
+        List<InfoCollector> ics = new ArrayList<>(plan.getExecuted());
+        for (int i = 0; i < ics.size() - 1; i++) {
+            dist += 1 - Jaccard.similarity(ics.get(i).getDataSource().getInternal(), ics.get(i+1).getDataSource().getInternal());
+        }
+
+        return new TAPStats(q0, genTime,optTime, execTime,
+                Arrays.stream(tsp.tour).mapToObj(toOrder::get).collect(Collectors.toList()), candidates.size(),
+                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(), dist);
+    }
+
+
+    /**
+     * Run MDX for the tests and add the time to the MDXAccessor
+     * @param ic the IC to run
+     * @return the mondrian result of the MDX, doesn't run any model
+     */
+    private static mondrian.olap.Result runMDX(InfoCollector ic, mondrian.olap.Connection cnx) {
+        Qfset toRun = ic.getDataSource().getInternal();
+        Stopwatch runTime = Stopwatch.createStarted();
+        mondrian.olap.Query query = toRun.toMDX();
+        RolapResult result = (RolapResult) cnx.execute(query);
+        runTime.stop();
+        QueryStats qs = toRun.getStats();
+        ((MDXAccessor)ic.getDataSource()).setMesuredTime(runTime.elapsed(TimeUnit.MILLISECONDS));
+        ic.execute();//Just to flag it
+        return result;
+    }
+}

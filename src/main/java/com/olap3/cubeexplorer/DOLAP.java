@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.olap3.cubeexplorer.data.DopanLoader;
-import com.olap3.cubeexplorer.data.castor.session.CrSession;
-import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.infocolectors.ICView;
@@ -47,6 +45,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -107,8 +107,8 @@ public class DOLAP {
         LOGGER.info("Computing interestigness scores");
         Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
         LOGGER.warning("Using precomputed IM scores debug only");
-        //HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
-        Map<QueryPart, Double> interest = getInterestingness(learning);
+        HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
+        //Map<QueryPart, Double> interest = getInterestingness(learning);
         //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
         LOGGER.info("IM Compute done");
 
@@ -128,7 +128,7 @@ public class DOLAP {
             System.out.println("--- Session " + s.getFilename() + " ---");
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
-            TAPStats results = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
+            TAPStats results = runOptimal(firstTriplet, budget, im, 0.005, false);
 
             List<Qfset> originals = s.getQueries().subList(1, s.length() ).stream().map(mapable).collect(Collectors.toList());
             List<Pair<Qfset, Double>> bestMatches = findMostSimilars(originals, results.finalPlan);
@@ -218,6 +218,36 @@ public class DOLAP {
         return new TAPStats(q0, genTime,optTime, execTime, Arrays.stream(tsp.tour).mapToObj(toOrder::get).collect(Collectors.toList()), candidates.size());
     }
 
+    public static TAPStats runOptimal(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon, boolean reoptEnabled){
+        Stopwatch runTime = Stopwatch.createStarted();
+
+        Stopwatch genTime = Stopwatch.createStarted();
+        Set<InfoCollector> candidates = new HashSet<>(generateCandidates(q0));
+        genTime.stop();
+
+        System.out.printf("Found %s candidates%n", candidates.size());
+        //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
+
+        Stopwatch optTime = Stopwatch.createStarted();
+        ExecutionPlan plan = new ExecutionPlan(OptimalSolver.optimalSolver(candidates.stream().limit(30).collect(Collectors.toSet()), interestingness, budgetms).iterator().next());
+        optTime.stop();
+
+        //Exec phase
+        List<Qfset> executed = new ArrayList<>();
+        Stopwatch execTime = Stopwatch.createUnstarted();
+
+        //Main execution Loop (Algorithm 2 line 5)
+        for (;plan.hasNext();) {
+            InfoCollector ic = plan.next();
+            execTime.start();
+            plan.setExecuted(ic);
+            execTime.stop();
+            executed.add(ic.getDataSource().getInternal());
+        }
+
+        return new TAPStats(q0, genTime,optTime, execTime, executed, candidates.size());
+    }
+
     /**
      * Re-optimization routine
      * @param plan the current execution plan
@@ -226,7 +256,7 @@ public class DOLAP {
      * @param budget the original time budget
      * @param bm A Budget Manager to perform the re-optimization
      */
-    private static void reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
+    static void reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
         Set<InfoCollector> executed = plan.getExecuted();
         long left = budget - runTime.elapsed(TimeUnit.MILLISECONDS);
 
@@ -241,6 +271,8 @@ public class DOLAP {
 
         // Case two less time left than anticipated
         if (predictedRunTime > runTime.elapsed(TimeUnit.MILLISECONDS)){
+            if (plan.getOperations().size() == 0)
+                return;
             Set<InfoCollector> restOfExec = bm.findBestPlan(new ArrayList<>(plan.getOperations()), (int)left).getOperations();
             plan.getOperations().retainAll(restOfExec);
             return;
@@ -250,8 +282,13 @@ public class DOLAP {
         List<InfoCollector> possibleStuff = new ArrayList<>(candidates);
         possibleStuff.removeAll(plan.getOperations());
         possibleStuff.removeAll(plan.getExecuted());
-        Set<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
-        plan.addAll(newStuff);
+        try {
+            Set<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
+            plan.addAll(newStuff);
+        } catch (IllegalArgumentException e){ // No more stuff to run anyway
+            return;
+        }
+
     }
 
     /**
@@ -317,12 +354,12 @@ public class DOLAP {
 
             Qfset query = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
             queries.add(new ICView(new MDXAccessor(query), "R-Up ON " + p.getHierarchy()));
-
+/*
             if (f.getLevel().getParentLevel().isAll())
                 continue;
             Qfset query2 = query.copy();
             query2.rollupLevel(f.getLevel(), 1);
-            queries.add(new ICView(new MDXAccessor(query2), "R-Up (+2) ON " + p.getHierarchy()));
+            queries.add(new ICView(new MDXAccessor(query2), "R-Up (+2) ON " + p.getHierarchy()));*/
         }
 
         // Build drill-downs
@@ -339,13 +376,13 @@ public class DOLAP {
 
             Qfset req = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
             queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
-
+/*
 
             if (target.getChildLevel() == null)
                 continue;
             Qfset req2 = req.copy();
             req2.drillDownLevel(target, 1);
-            queries.add(new ICView(new MDXAccessor(req2), "D-Down (-2) ON " + target.getHierarchy()));
+            queries.add(new ICView(new MDXAccessor(req2), "D-Down (-2) ON " + target.getHierarchy()));*/
         }
 
         // Build siblings
@@ -367,21 +404,4 @@ public class DOLAP {
         return queries;
     }
 
-
-
-
-    public static List<Session> convertFromCr(List<CrSession> sessions){
-        ArrayList<Session> outSess = new ArrayList<>(sessions.size());
-
-        for (CrSession in : sessions){
-            ArrayList<Query> queries = new ArrayList<>(in.getQueries().size());
-            for (QueryRequest qr : in.getQueries()){
-                queries.add(new Query(Compatibility.partsFromQfset(Compatibility.QfsetFromMDX(qr.getQuery()))));
-            }
-            Session current = new Session(queries, in.getUser().getName(), in.getTitle());
-            outSess.add(current);
-        }
-
-        return outSess;
-    }
 }
