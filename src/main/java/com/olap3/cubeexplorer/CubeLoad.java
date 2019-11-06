@@ -6,7 +6,6 @@ import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.olap3.cubeexplorer.data.cubeloadBeans.*;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
-import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.infocolectors.ICView;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
@@ -31,6 +30,7 @@ import lombok.Data;
 import lombok.ToString;
 import mondrian.olap.Connection;
 import mondrian.olap.Dimension;
+import mondrian.olap.QueryTimeoutException;
 import mondrian.olap.SchemaReader;
 import mondrian.rolap.RolapResult;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -103,24 +103,38 @@ public class CubeLoad {
         AprioriMetric im = new IMMetric(interest);
 
         Function<Query, Qfset> mapable = query -> Compatibility.QPsToQfset(query, utils);
-        int budget = 10000;
 
+        out.printf("session,candidateSize,budget,algo,planSize,executedSize,im,avgDist,optiTime,execTime%n");
         for (Session s : learning){
             if (s.length() < 2){
                 continue; //skip useless sessions
             }
+            if (s.getFilename().equals("data/ssb_converted/explorative.xml_6"))
+                System.out.println("debug");
             System.out.println("--- Session " + s.getFilename() + " ---");
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
-            TAPStats resultsOPT = runOptimal(firstTriplet, budget, im, 0.005, false);
-            TAPStats result = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
+            for (int i = 1; i <= 10; i++){
+                int budget = 1000 * i;
 
-            int optSize = resultsOPT.finalPlan.size();
-            int size = result.finalPlan.size();
-            System.out.printf("    IM     |      DIST%nOPT %s|%s|%s %nHEU %s|%s|%s %n",
-                    resultsOPT.im/size, resultsOPT.dist/ optSize, optSize,
-                    result.im/size, result.dist/ size, size);
+                TAPStats optimal = runOptimal(firstTriplet, budget, im);
+                TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
+                TAPStats tapReopt = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
+
+                int optSize = optimal.finalPlan.size();
+                int naiveSize = naive.finalPlan.size();
+                int tapSize = tapReopt.finalPlan.size();
+
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), optimal.candidatesNb, budget,
+                        "OPT", optSize, optSize, optimal.im, optimal.dist/((double)optSize), optimal.optTime.elapsed(TimeUnit.MILLISECONDS), optimal.execTime.elapsed(TimeUnit.MILLISECONDS));
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), naive.candidatesNb, budget,
+                        "NAIVE", naive.candidatesNb, naiveSize, naive.im, naive.dist/((double)naiveSize), naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS));
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
+                        "TAP", tapSize, tapReopt.candidatesNb, tapReopt.im, tapReopt.dist/((double)tapSize), tapReopt.optTime.elapsed(TimeUnit.MILLISECONDS), tapReopt.execTime.elapsed(TimeUnit.MILLISECONDS));
+                out.flush();
+            }
+
 
         }
 
@@ -181,6 +195,7 @@ public class CubeLoad {
         }
 
         // Build siblings
+        //Can't do that with the exact solver it has O(|candidates|!) complexity
         /*
         for (var sel : q0.getSelectionPredicates()){
             mondrian.olap.Level target = sel.getLevel();
@@ -201,15 +216,10 @@ public class CubeLoad {
     }
 
 
-    public static TAPStats runOptimal(Qfset q0, int budgetms, AprioriMetric interestingness, double ks_epsilon, boolean reoptEnabled){
-        Stopwatch runTime = Stopwatch.createStarted();
-
+    public static TAPStats runOptimal(Qfset q0, int budgetms, AprioriMetric interestingness){
         Stopwatch genTime = Stopwatch.createStarted();
         Set<InfoCollector> candidates = new HashSet<>(generateCandidates(q0));
         genTime.stop();
-
-        System.out.printf("Found %s candidates%n", candidates.size());
-        //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
 
         Stopwatch optTime = Stopwatch.createStarted();
         ExecutionPlan plan = new ExecutionPlan(OptimalSolver.optimalSolver(candidates, interestingness, budgetms).iterator().next());
@@ -223,10 +233,10 @@ public class CubeLoad {
         for (;plan.hasNext();) {
             InfoCollector ic = plan.next();
             execTime.start();
+            runMDX(ic, olap);
             plan.setExecuted(ic);
             execTime.stop();
             executed.add(ic.getDataSource().getInternal());
-            //runMDX(ic, olap);
         }
         double dist = 0d;
         List<InfoCollector> ics = new ArrayList<>(plan.getExecuted());
@@ -353,7 +363,7 @@ public class CubeLoad {
         for (;plan.hasNext();) {
             InfoCollector ic = plan.next();
             execTime.start();
-            mondrian.olap.Result result = null;//runMDX(ic, olap);
+            mondrian.olap.Result result = runMDX(ic, olap);
             executed.add(new Pair<>(ic.getDataSource().getInternal(), result));
             plan.setExecuted(ic);
             execTime.stop();
@@ -397,9 +407,15 @@ public class CubeLoad {
         Qfset toRun = ic.getDataSource().getInternal();
         Stopwatch runTime = Stopwatch.createStarted();
         mondrian.olap.Query query = toRun.toMDX();
-        RolapResult result = (RolapResult) cnx.execute(query);
+        RolapResult result;
+        try {
+            result = (RolapResult) cnx.execute(query);
+        } catch (QueryTimeoutException timeOut){
+            System.err.println("Query timed out");
+            return null;
+        }
+
         runTime.stop();
-        QueryStats qs = toRun.getStats();
         ((MDXAccessor)ic.getDataSource()).setMesuredTime(runTime.elapsed(TimeUnit.MILLISECONDS));
         ic.execute();//Just to flag it
         return result;
