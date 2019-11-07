@@ -132,7 +132,7 @@ public class CubeLoad {
                         "OPT", optSize, optSize, optimal.im, optimal.dist/((double)optSize), optimal.optTime.elapsed(TimeUnit.MILLISECONDS),
                         optimal.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
                 out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), naive.candidatesNb, budget,
-                        "NAIVE", naive.candidatesNb, naiveSize, naive.im, naive.dist/((double)naiveSize), naive.optTime.elapsed(TimeUnit.MILLISECONDS),
+                        "NAIVE", naive.candidatesNb, naiveSize, naive.im, naive.dist/((double)naiveSize), naive.optTime.elapsed(TimeUnit.MICROSECONDS)/10e3d,
                         naive.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
                 out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
                         "TAP", tapSize, tapReopt.candidatesNb, tapReopt.im, tapReopt.dist/((double)tapSize), tapReopt.optTime.elapsed(TimeUnit.MILLISECONDS),
