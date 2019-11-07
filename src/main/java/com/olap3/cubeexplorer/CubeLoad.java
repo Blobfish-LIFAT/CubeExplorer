@@ -6,6 +6,7 @@ import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.olap3.cubeexplorer.data.cubeloadBeans.*;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
+import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.infocolectors.ICView;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
@@ -30,9 +31,7 @@ import lombok.Data;
 import lombok.ToString;
 import mondrian.olap.Connection;
 import mondrian.olap.Dimension;
-import mondrian.olap.QueryTimeoutException;
 import mondrian.olap.SchemaReader;
-import mondrian.rolap.RolapResult;
 import org.nd4j.linalg.api.ndarray.INDArray;
 
 import javax.xml.bind.JAXBContext;
@@ -42,10 +41,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -60,6 +60,7 @@ public class CubeLoad {
         List<Qfset> finalPlan;
         int candidatesNb;
         double im, dist;
+        int reoptGood, reoptBad;
     }
 
     static Logger LOGGER = Logger.getLogger(CubeLoad.class.getName());
@@ -68,28 +69,29 @@ public class CubeLoad {
     static CubeUtils utils;
     private static PrintWriter out;
     static Connection olap;
+    static java.sql.Connection con;
     private static String[] cubeloadProfiles = new String[]{"explorative", "goal_oriented", "slice_all", "slice_and_drill"};
+    //private static String[] cubeloadProfiles = new String[]{"goal_oriented"};
 
     public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-        olap = MondrianConfig.getSeparateConnection("data/ssb.properties");
-        if (olap == null) {
+        MondrianConfig.defaultConfigFile = args[0];
+        olap = MondrianConfig.getMondrianConnection();
+        if (olap == null)
             System.exit(1); //Crash the app can't do anything w/o mondrian
-        }
         utils = new CubeUtils(olap, "SSB");
         CubeUtils.setDefault(utils);
         MondrianConfig.setMondrianConnection(olap);
+        con = MondrianConfig.getNewJdbcConnection();
+        LOGGER.info("Server Connection established");
 
         List<Session> learning = new ArrayList<>();
         Map<String, List<Session>> profiles = new HashMap<>();
         for (String cubeloadProfile : cubeloadProfiles) {
-            List<Session> profile = loadCubeloadXML(dataDir + cubeloadProfile + ".xml", olap, "SSB");
+            List<Session> profile = loadCubeloadXML(dataDir + cubeloadProfile + ".xml", olap, "SSB").subList(0,10);
             profiles.put(cubeloadProfile, profile);
             learning.addAll(profile);
         }
-
-        System.out.println("--- Loaded Cubeload Sessions ---");
-
-        out = new PrintWriter(new FileOutputStream(new File(outputFile)));
+        LOGGER.info("Loaded Cubeload Sessions");
 
         LOGGER.info("Computing interestigness scores");
         //Type qpMapType = new TypeToken<Map<QueryPart, Double>>() {}.getType(); // Type erasure is a pain
@@ -97,20 +99,17 @@ public class CubeLoad {
         //HashMap<QueryPart, Double> interest = gson.fromJson(new String(Files.readAllBytes(Paths.get("data/cache/im_testing.json"))), qpMapType);
         Map<QueryPart, Double> interest = getInterestingness(learning);
         //Files.write(Paths.get("data/cache/im_testing.json"), gson.toJson(interest, qpMapType).getBytes());
-        LOGGER.info("IM Compute done");
+        LOGGER.info("Interestingness Computation done");
 
         LOGGER.info("Begin test phase");
+        out = new PrintWriter(new FileOutputStream(new File(outputFile)));
         AprioriMetric im = new IMMetric(interest);
 
-        Function<Query, Qfset> mapable = query -> Compatibility.QPsToQfset(query, utils);
-
-        out.printf("session,candidateSize,budget,algo,planSize,executedSize,im,avgDist,optiTime,execTime%n");
+        out.printf("session,candidateSize,budget,algo,planSize,executedSize,im,avgDist,optiTime,execTime,reoptGood,reoptBad%n");
         for (Session s : learning){
             if (s.length() < 2){
                 continue; //skip useless sessions
             }
-            if (s.getFilename().equals("data/ssb_converted/explorative.xml_6"))
-                System.out.println("debug");
             System.out.println("--- Session " + s.getFilename() + " ---");
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
@@ -118,20 +117,26 @@ public class CubeLoad {
             for (int i = 1; i <= 10; i++){
                 int budget = 1000 * i;
 
+                System.out.println("Running OPT budget " + budget/1000 + "s");
                 TAPStats optimal = runOptimal(firstTriplet, budget, im);
+                System.out.println("Running NAIVE budget " + budget/1000 + "s");
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
+                System.out.println("Running TAP budget " + budget/1000 + "s");
                 TAPStats tapReopt = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
 
                 int optSize = optimal.finalPlan.size();
                 int naiveSize = naive.finalPlan.size();
                 int tapSize = tapReopt.finalPlan.size();
 
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), optimal.candidatesNb, budget,
-                        "OPT", optSize, optSize, optimal.im, optimal.dist/((double)optSize), optimal.optTime.elapsed(TimeUnit.MILLISECONDS), optimal.execTime.elapsed(TimeUnit.MILLISECONDS));
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), naive.candidatesNb, budget,
-                        "NAIVE", naive.candidatesNb, naiveSize, naive.im, naive.dist/((double)naiveSize), naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS));
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
-                        "TAP", tapSize, tapReopt.candidatesNb, tapReopt.im, tapReopt.dist/((double)tapSize), tapReopt.optTime.elapsed(TimeUnit.MILLISECONDS), tapReopt.execTime.elapsed(TimeUnit.MILLISECONDS));
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), optimal.candidatesNb, budget,
+                        "OPT", optSize, optSize, optimal.im, optimal.dist/((double)optSize), optimal.optTime.elapsed(TimeUnit.MILLISECONDS),
+                        optimal.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), naive.candidatesNb, budget,
+                        "NAIVE", naive.candidatesNb, naiveSize, naive.im, naive.dist/((double)naiveSize), naive.optTime.elapsed(TimeUnit.MILLISECONDS),
+                        naive.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
+                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
+                        "TAP", tapSize, tapReopt.candidatesNb, tapReopt.im, tapReopt.dist/((double)tapSize), tapReopt.optTime.elapsed(TimeUnit.MILLISECONDS),
+                        tapReopt.execTime.elapsed(TimeUnit.MILLISECONDS), tapReopt.reoptGood, tapReopt.reoptBad);
                 out.flush();
             }
 
@@ -215,7 +220,6 @@ public class CubeLoad {
         return queries;
     }
 
-
     public static TAPStats runOptimal(Qfset q0, int budgetms, AprioriMetric interestingness){
         Stopwatch genTime = Stopwatch.createStarted();
         Set<InfoCollector> candidates = new HashSet<>(generateCandidates(q0));
@@ -233,7 +237,7 @@ public class CubeLoad {
         for (;plan.hasNext();) {
             InfoCollector ic = plan.next();
             execTime.start();
-            runMDX(ic, olap);
+            runQuery(ic);
             plan.setExecuted(ic);
             execTime.stop();
             executed.add(ic.getDataSource().getInternal());
@@ -246,7 +250,7 @@ public class CubeLoad {
 
         return new TAPStats(q0, genTime,optTime, execTime, executed, candidates.size(),
                 plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(),
-                dist);
+                dist, 0, 0);
     }
 
     private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
@@ -348,7 +352,7 @@ public class CubeLoad {
         List<InfoCollector> candidates = generateCandidates(q0);
         genTime.stop();
 
-        System.out.printf("Found %s candidates%n", candidates.size());
+        //System.out.printf("Found %s candidates%n", candidates.size());
         //candidates.forEach(c -> System.out.printf("cost=%s,im=%s|", c.estimatedTime(), interestingness.rate(c)));
 
         Stopwatch optTime = Stopwatch.createStarted();
@@ -358,19 +362,23 @@ public class CubeLoad {
         //Exec phase
         Set<Pair<Qfset, mondrian.olap.Result>> executed = new HashSet<>();
         Stopwatch execTime = Stopwatch.createUnstarted();
+        int reoptGood = 0, reoptBad = 0;
 
         //Main execution Loop (Algorithm 2 line 5)
         for (;plan.hasNext();) {
             InfoCollector ic = plan.next();
             execTime.start();
-            mondrian.olap.Result result = runMDX(ic, olap);
-            executed.add(new Pair<>(ic.getDataSource().getInternal(), result));
+            runQuery(ic);
+            executed.add(new Pair<>(ic.getDataSource().getInternal(), null));
             plan.setExecuted(ic);
             execTime.stop();
             if (!reoptEnabled)
                 continue;
             optTime.start();
-            DOLAP.reoptRoutine(plan, candidates, runTime, budgetms, ks);
+            if(DOLAP.reoptRoutine(plan, candidates, runTime, budgetms, ks))
+                reoptGood++;
+            else
+                reoptBad++;
             optTime.stop();
         }
 
@@ -394,7 +402,7 @@ public class CubeLoad {
 
         return new TAPStats(q0, genTime,optTime, execTime,
                 Arrays.stream(tsp.tour).mapToObj(toOrder::get).collect(Collectors.toList()), candidates.size(),
-                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(), dist);
+                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(), dist, reoptGood, reoptBad);
     }
 
 
@@ -403,21 +411,22 @@ public class CubeLoad {
      * @param ic the IC to run
      * @return the mondrian result of the MDX, doesn't run any model
      */
-    private static mondrian.olap.Result runMDX(InfoCollector ic, mondrian.olap.Connection cnx) {
-        Qfset toRun = ic.getDataSource().getInternal();
-        Stopwatch runTime = Stopwatch.createStarted();
-        mondrian.olap.Query query = toRun.toMDX();
-        RolapResult result;
+    private static void runQuery(InfoCollector ic) {
         try {
-            result = (RolapResult) cnx.execute(query);
-        } catch (QueryTimeoutException timeOut){
-            System.err.println("Query timed out");
-            return null;
-        }
+            SQLFactory factory = new SQLFactory(utils);
+            String query = factory.getStarJoin(ic.getDataSource().getInternal());
+            Statement planON = con.createStatement();
 
-        runTime.stop();
-        ((MDXAccessor)ic.getDataSource()).setMesuredTime(runTime.elapsed(TimeUnit.MILLISECONDS));
-        ic.execute();//Just to flag it
-        return result;
+            ResultSet rs = planON.executeQuery(query);
+
+            double sum = 0.0;
+            while (rs.next()){
+                sum = sum + 0.9; //Dummy loop don't need the results but go through the rs to be realist
+            }
+
+            planON.close();
+        }catch (SQLException e){
+
+        }
     }
 }

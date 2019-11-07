@@ -78,7 +78,7 @@ public class OptimalSolver {
                             dominantes.add(us);
                     });
                 });
-        System.out.println(dominantes.size());
+        //System.out.println(dominantes.size());
         return dominantes.stream().map(Solution::getIc).collect(Collectors.toSet());
     }
 }

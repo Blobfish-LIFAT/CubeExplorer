@@ -12,7 +12,7 @@ import java.util.Properties;
 public class MondrianConfig {
     private static Connection mondrianConnection;
     private static java.sql.Connection jdbcConnection;
-    private static String defaultConfigFile = "data/olap.properties";
+    public static String defaultConfigFile = "data/olap.properties";
     private static Properties config = new Properties();
     private static boolean initConf = false;
 
@@ -44,6 +44,8 @@ public class MondrianConfig {
                         + ";JdbcUser=" + config.getProperty("jdbcUser")
                         + ";JdbcPassword=" + config.getProperty("jdbcPassword");
 
+        //System.out.println(config.getProperty("jdbcUrl"));
+        //jdbcConnection     = DriverManager.getConnection(config.getProperty("jdbcUrl"));
         jdbcConnection     = DriverManager.getConnection(config.getProperty("jdbcUrl"), config.getProperty("jdbcUser"), config.getProperty("jdbcPassword"));
         mondrianConnection = mondrian.olap.DriverManager.getConnection(mondrianString, null);
 

@@ -256,7 +256,7 @@ public class DOLAP {
      * @param budget the original time budget
      * @param bm A Budget Manager to perform the re-optimization
      */
-    static void reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
+    static boolean reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
         Set<InfoCollector> executed = plan.getExecuted();
         long left = budget - runTime.elapsed(TimeUnit.MILLISECONDS);
 
@@ -264,7 +264,7 @@ public class DOLAP {
         if (left < 1){
             //kill the plan !
             plan.removeAll(plan.getOperations());
-            return;
+            return false;
         }
 
         long predictedRunTime = executed.stream().mapToLong(InfoCollector::estimatedTime).sum();
@@ -272,10 +272,10 @@ public class DOLAP {
         // Case two less time left than anticipated
         if (predictedRunTime > runTime.elapsed(TimeUnit.MILLISECONDS)){
             if (plan.getOperations().size() == 0)
-                return;
+                return false;
             Set<InfoCollector> restOfExec = bm.findBestPlan(new ArrayList<>(plan.getOperations()), (int)left).getOperations();
             plan.getOperations().retainAll(restOfExec);
-            return;
+            return false;
         }
 
         //Case three we have more time than anticipated
@@ -286,9 +286,9 @@ public class DOLAP {
             Set<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
             plan.addAll(newStuff);
         } catch (IllegalArgumentException e){ // No more stuff to run anyway
-            return;
+            return true;
         }
-
+        return true;
     }
 
     /**
