@@ -65,7 +65,7 @@ public class CubeLoad {
 
     static Logger LOGGER = Logger.getLogger(CubeLoad.class.getName());
     private static String dataDir = "data/ssb_converted/",
-        outputFile = "data/stats/res_ssb.csv";
+        outputFile = "data/stats/res_ssb_2.csv";
     static CubeUtils utils;
     private static PrintWriter out;
     static Connection olap;
@@ -115,13 +115,13 @@ public class CubeLoad {
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
             for (int i = 1; i <= 10; i++){
-                int budget = 1000 * i;
+                int budget = 100 * i;
 
-                System.out.println("Running OPT budget " + budget/1000 + "s");
+                System.out.println("Running OPT budget " + budget/100 + "s");
                 TAPStats optimal = runOptimal(firstTriplet, budget, im);
-                System.out.println("Running NAIVE budget " + budget/1000 + "s");
+                System.out.println("Running NAIVE budget " + budget/100 + "s");
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
-                System.out.println("Running TAP budget " + budget/1000 + "s");
+                System.out.println("Running TAP budget " + budget/100 + "s");
                 TAPStats tapReopt = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
 
                 int optSize = optimal.finalPlan.size();

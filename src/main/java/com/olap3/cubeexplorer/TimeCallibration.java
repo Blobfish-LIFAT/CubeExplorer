@@ -124,7 +124,7 @@ public class TimeCallibration {
     public static int explainQueryRows(String query, java.sql.Connection con){
         try {
             Statement planON = con.createStatement();
-            ResultSet rs = planON.executeQuery("EXPLAIN" + query);
+            ResultSet rs = planON.executeQuery("EXPLAIN " + query);
 
             int sum = 1;
             while (rs.next()){
