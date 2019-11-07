@@ -114,8 +114,8 @@ public class CubeLoad {
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
-            for (int i = 5; i <= 15; i++){
-                int budget = 100 * i;
+            for (int i = 1; i <= 10; i++){
+                int budget = 1000 * i;
 
                 System.out.println("Running OPT budget " + budget/1000 + "s");
                 TAPStats optimal = runOptimal(firstTriplet, budget, im);
