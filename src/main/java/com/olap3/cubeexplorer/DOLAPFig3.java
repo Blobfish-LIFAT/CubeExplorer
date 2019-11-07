@@ -93,7 +93,7 @@ public class DOLAPFig3 {
 
         //stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
         res = new PrintWriter(new FileOutputStream(new File(resultFile), false));
-        res.printf("budget,algorithm,im,avgDist%n");
+        res.printf("id,budget,algorithm,im,avgDist,optTime,execTime%n");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
@@ -121,19 +121,21 @@ public class DOLAPFig3 {
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
-            for (int i = 1; i <= 6; i++) {
-                int budget = i*10000;
+            for (int i = 1; i <= 10; i++) {
+                int budget = i*1000;
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
                 TAPStats reopt = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
-                res.printf("%s,%s,%s,%s%n", budget, "NAIVE", naive.im, naive.dist);
-                res.printf("%s,%s,%s,%s%n", budget, "TAP", reopt.im, reopt.dist);
+                res.printf("%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "NAIVE", naive.im, naive.dist,
+                        naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS));
+                res.printf("%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "TAP", reopt.im, reopt.dist,
+                        reopt.optTime.elapsed(TimeUnit.MILLISECONDS), reopt.execTime.elapsed(TimeUnit.MILLISECONDS));
             }
 
         }
 
 
 
-        stats.flush(); stats.close();
+        //stats.flush(); stats.close();
         res.close();
     }
 
@@ -290,41 +292,35 @@ public class DOLAPFig3 {
 
         // Build roll-ups
         for (ProjectionFragment f : q0.getAttributes()){
-            if (f.getLevel().isAll())
-                continue;
-            ProjectionFragment p  = ProjectionFragment.newInstance(f.getLevel().getParentLevel());
+            Level target = f.getLevel().getParentLevel();
+            while(target != null){
+                ProjectionFragment p  = ProjectionFragment.newInstance(target);
+                HashSet<ProjectionFragment> tmp = new HashSet<>(q0.getAttributes());
+                tmp.remove(f); tmp.add(p);
 
-            HashSet<ProjectionFragment> tmp = new HashSet<>(q0.getAttributes());
-            tmp.remove(f); tmp.add(p);
+                Qfset query = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
+                queries.add(new ICView(new MDXAccessor(query), "R-Up ON " + p.getHierarchy()));
 
-            Qfset query = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
-            queries.add(new ICView(new MDXAccessor(query), "R-Up ON " + p.getHierarchy()));
-
-            if (f.getLevel().getParentLevel().isAll())
-                continue;
-            Qfset query2 = query.copy();
-            query2.rollupLevel(f.getLevel(), 1);
-            queries.add(new ICView(new MDXAccessor(query2), "R-Up (+2) ON " + p.getHierarchy()));
+                target = target.getParentLevel();
+            }
         }
 
         // Build drill-downs
         for (var sf : q0.getAttributes()){
+            //FIXME We can't drill down on comunnes kills the server ...
+            if (sf.getLevel().getUniqueName().contains("Commune de"))
+                continue;
+
             Level target = sf.getLevel().getChildLevel();
-            if (target==null)
-                continue;
-            var tmp = new HashSet<>(q0.getAttributes());
-            tmp.add(ProjectionFragment.newInstance(target));
-            tmp.remove(sf);
+            while (target!=null) {
+                var tmp = new HashSet<>(q0.getAttributes());
+                tmp.add(ProjectionFragment.newInstance(target));
+                tmp.remove(sf);
 
-            Qfset req = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
-            queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
-
-
-            if (target.getChildLevel() == null)
-                continue;
-            Qfset req2 = req.copy();
-            req2.drillDownLevel(target, 1);
-            queries.add(new ICView(new MDXAccessor(req2), "D-Down (-2) ON " + target.getHierarchy()));
+                Qfset req = new Qfset(tmp, new HashSet<>(q0.getSelectionPredicates()), new HashSet<>(q0.getMeasures()));
+                queries.add(new ICView(new MDXAccessor(req), "D-Down ON " + target.getHierarchy()));
+                target = target.getChildLevel();
+            }
         }
 
         // Build siblings

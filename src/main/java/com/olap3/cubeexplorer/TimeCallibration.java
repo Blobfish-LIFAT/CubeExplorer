@@ -60,7 +60,7 @@ public class TimeCallibration {
         //Open csv
         PrintWriter out = new PrintWriter(new FileOutputStream(new File(outCSV)));
         //out.println("id,ascii_len,projNb,selNb,tableNb,estTuples,estTuples_proper,aggNb,predicted,actual");
-        out.println("id,ascii_len,projNb,selNb,tableNb,aggNb,actual");
+        out.println("id,ascii_len,projNb,selNb,tableNb,aggNb,rows,actual");
 
         SQLFactory sje = new SQLFactory(utils);
         //SQLEstimateEngine estimateEngine = new SQLEstimateEngine();
@@ -83,7 +83,7 @@ public class TimeCallibration {
                 QueryStats sq = sje.getLastStarStats();
                 if (!(t_real < 0))
                     //out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), plan.estimated_tuples, plan.full_row_cost, sq.getAggNb(), t_est, t_real);
-                    out.printf("%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), sq.getAggNb(), t_real);
+                    out.printf("%s,%s,%s,%s,%s,%s,%s,%s%n", id, sql.length(), sq.getProjNb(), sq.getSelNb(), sq.getTableNb(), sq.getAggNb(), explainQueryRows(sql, con), t_real);
 
             }
             out.flush();
@@ -113,6 +113,26 @@ public class TimeCallibration {
 
             planON.close();
             return t;
+
+        } catch (SQLException e){
+            System.err.printf("Offending query : [%s]%n", query);
+            //e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int explainQueryRows(String query, java.sql.Connection con){
+        try {
+            Statement planON = con.createStatement();
+            ResultSet rs = planON.executeQuery("EXPLAIN" + query);
+
+            int sum = 1;
+            while (rs.next()){
+                sum += rs.getInt("rows");
+            }
+
+            planON.close();
+            return sum;
 
         } catch (SQLException e){
             System.err.printf("Offending query : [%s]%n", query);

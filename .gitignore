@@ -82,3 +82,4 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 /data/olap.properties
+data/ssb.properties
