@@ -160,6 +160,23 @@ public class TimeCallibration {
         return -1;
     }
 
+    //['ascii_len','selNb', 'projNb', 'tableNb', 'aggNb']
+    //[  -0.64920196 -243.99479906   39.2955434   221.55470518   39.2955434 ]
+    //-288.5450654145311
+    static SQLFactory queryFactoryCBL = null;
+    public static long approximateCubeload(Qfset qfset, java.sql.Connection con){
+        if (queryFactoryCBL == null) {
+            queryFactoryCBL = new SQLFactory(CubeUtils.getDefault());
+        }
+        String q = queryFactoryCBL.getStarJoin(qfset);
+        QueryStats qs = queryFactoryCBL.getLastStarStats();
+        qfset.setStats(qs);
+        qfset.setSql(q);
 
+        double estRaw = q.length() * -0.64920196 + qs.getProjNb() * 39.2955434 + qs.getSelNb() * -243.99479906 + qs.getTableNb() * 221.55470518 + qs.getAggNb() * 39.2955434 ;
+        estRaw = estRaw -288.5450654145311;
+        //System.out.println(estRaw);
+        return Math.round(estRaw);
+    }
 
 }

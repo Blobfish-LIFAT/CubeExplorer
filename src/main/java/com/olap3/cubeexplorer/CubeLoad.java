@@ -114,20 +114,20 @@ public class CubeLoad {
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
-            for (int i = 1; i <= 10; i++){
+            for (int i = 5; i <= 15; i++){
                 int budget = 100 * i;
 
-                System.out.println("Running OPT budget " + budget/100 + "s");
+                System.out.println("Running OPT budget " + budget/1000 + "s");
                 TAPStats optimal = runOptimal(firstTriplet, budget, im);
-                System.out.println("Running NAIVE budget " + budget/100 + "s");
+                System.out.println("Running NAIVE budget " + budget/1000 + "s");
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
-                System.out.println("Running TAP budget " + budget/100 + "s");
+                System.out.println("Running TAP budget " + budget/1000 + "s");
                 TAPStats tapReopt = runTAPHeuristic(firstTriplet, budget, im, 0.005, true);
 
                 int optSize = optimal.finalPlan.size();
                 int naiveSize = naive.finalPlan.size();
                 int tapSize = tapReopt.finalPlan.size();
-
+                if(optSize>0){
                 out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), optimal.candidatesNb, budget,
                         "OPT", optSize, optSize, optimal.im, optimal.dist/((double)optSize), optimal.optTime.elapsed(TimeUnit.MILLISECONDS),
                         optimal.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
@@ -136,7 +136,7 @@ public class CubeLoad {
                         naive.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
                 out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
                         "TAP", tapSize, tapReopt.candidatesNb, tapReopt.im, tapReopt.dist/((double)tapSize), tapReopt.optTime.elapsed(TimeUnit.MILLISECONDS),
-                        tapReopt.execTime.elapsed(TimeUnit.MILLISECONDS), tapReopt.reoptGood, tapReopt.reoptBad);
+                        tapReopt.execTime.elapsed(TimeUnit.MILLISECONDS), tapReopt.reoptGood, tapReopt.reoptBad);}
                 out.flush();
             }
 
@@ -226,7 +226,13 @@ public class CubeLoad {
         genTime.stop();
 
         Stopwatch optTime = Stopwatch.createStarted();
-        ExecutionPlan plan = new ExecutionPlan(OptimalSolver.optimalSolver(candidates, interestingness, budgetms).iterator().next());
+        ExecutionPlan plan;
+        try {
+            plan = new ExecutionPlan(OptimalSolver.optimalSolver(candidates, interestingness, budgetms).iterator().next());
+        } catch (NoSuchElementException e){
+            System.err.println("No optimal found try higher budget than " + budgetms + " ms");
+            return new TAPStats(q0, genTime, optTime.stop(), Stopwatch.createUnstarted(), new ArrayList<>(), candidates.size(), 0, 0, 0, 0);
+        }
         optTime.stop();
 
         //Exec phase
