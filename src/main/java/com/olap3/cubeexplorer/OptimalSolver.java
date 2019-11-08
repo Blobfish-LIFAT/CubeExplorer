@@ -81,45 +81,47 @@ public class OptimalSolver {
         //System.out.println(dominantes.size());
         return dominantes.stream().map(Solution::getIc).collect(Collectors.toSet());
     }
-}
 
-class StreamedPermutation<E> implements Iterator<List<E>> {
-    List<E> original;
 
-    public StreamedPermutation(List<E> original) {
-        this.original = original;
-    }
+    private static class StreamedPermutation<E> implements Iterator<List<E>> {
+        List<E> original;
 
-    @Override
-    public boolean hasNext() {
-        return false;
-    }
-
-    @Override
-    public List<E> next() {
-        return null;
-    }
-
-    public static <E> List<List<E>> generatePerm(List<E> original) {
-        if (original.size() == 0) {
-            List<List<E>> result = new ArrayList<List<E>>();
-            result.add(new ArrayList<E>());
-            return result;
+        public StreamedPermutation(List<E> original) {
+            this.original = original;
         }
 
-        E firstElement = original.remove(0);
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
 
-        List<List<E>> returnValue = new ArrayList<>();
-        List<List<E>> permutations = generatePerm(original);
+        @Override
+        public List<E> next() {
+            return null;
+        }
 
-        for (List<E> smallerPermutated : permutations) {
-            for (int index=0; index <= smallerPermutated.size(); index++) {
-                List<E> temp = new ArrayList<E>(smallerPermutated);
-                temp.add(index, firstElement);
-                returnValue.add(temp);
+        public static <E> List<List<E>> generatePerm(List<E> original) {
+            if (original.size() == 0) {
+                List<List<E>> result = new ArrayList<List<E>>();
+                result.add(new ArrayList<E>());
+                return result;
             }
-        }
 
-        return returnValue;
+            E firstElement = original.remove(0);
+
+            List<List<E>> returnValue = new ArrayList<>();
+            List<List<E>> permutations = generatePerm(original);
+
+            for (List<E> smallerPermutated : permutations) {
+                for (int index=0; index <= smallerPermutated.size(); index++) {
+                    List<E> temp = new ArrayList<E>(smallerPermutated);
+                    temp.add(index, firstElement);
+                    returnValue.add(temp);
+                }
+            }
+
+            return returnValue;
+        }
     }
+
 }
