@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.infocolectors;
 
 import com.alexscode.utilities.collection.Pair;
-import com.olap3.cubeexplorer.TimeCallibration;
+import com.olap3.cubeexplorer.LinearTimeEstimator;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
@@ -110,8 +110,8 @@ public class MDXAccessor extends DataAccessor {
 
     @Override
     public long aprioriTime() {
-        return TimeCallibration.approximateCubeload(this.internal, MondrianConfig.getJdbcConnection());
-        //return LinearTimeEstimator.estimateQfsetMs(this.internal);
+        //return TimeCallibration.approximateCubeload(this.internal, MondrianConfig.getJdbcConnection());
+        return LinearTimeEstimator.estimateQfsetMs(this.internal);
     }
 
     @Override

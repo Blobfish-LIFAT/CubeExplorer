@@ -61,12 +61,13 @@ public class DOLAPFig3 {
         List<Qfset> finalPlan;
         int candidatesNb;
         double im, dist;
+        int reoptGood, reoptBad;
     }
 
     private static final Logger LOGGER = Logger.getLogger(DOLAPFig3.class.getName());
 
     public static final String testData = "./data/import_ideb",
-            resultFile = "./data/stats/res_dopan_low_time.csv";
+            resultFile = "./data/stats/res_dopan_low_time_reopt.csv";
     private static CubeUtils utils;
     private static MemoryManager mem = Nd4j.getMemoryManager();
     private static Gson gson = new GsonBuilder()
@@ -93,7 +94,7 @@ public class DOLAPFig3 {
 
         //stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
         res = new PrintWriter(new FileOutputStream(new File(resultFile), false));
-        res.printf("id,budget,algorithm,im,avgDist,optTime,execTime,candidates,nbExecuted%n");
+        res.printf("id,budget,algorithm,im,avgDist,optTime,execTime,candidates,nbExecuted,reoptGood,reoptBad;%n");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
@@ -125,10 +126,10 @@ public class DOLAPFig3 {
                 //int budget = i*1000;
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.05, false);
                 TAPStats reopt = runTAPHeuristic(firstTriplet, budget, im, 0.05, true);
-                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "NAIVE", naive.im, naive.dist,
-                        naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS), naive.candidatesNb, naive.finalPlan.size());
-                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "TAP", reopt.im, reopt.dist,
-                        reopt.optTime.elapsed(TimeUnit.MILLISECONDS), reopt.execTime.elapsed(TimeUnit.MILLISECONDS), reopt.candidatesNb, reopt.finalPlan.size());
+                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "NAIVE", naive.im, naive.dist,
+                        naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS), naive.candidatesNb, naive.finalPlan.size(), naive.reoptGood, naive.reoptBad);
+                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "TAP", reopt.im, reopt.dist,
+                        reopt.optTime.elapsed(TimeUnit.MILLISECONDS), reopt.execTime.elapsed(TimeUnit.MILLISECONDS), reopt.candidatesNb, reopt.finalPlan.size(), reopt.reoptGood, reopt.reoptBad);
             }
 
         }
@@ -158,6 +159,7 @@ public class DOLAPFig3 {
         //Exec phase
         Set<Pair<Qfset, Result>> executed = new HashSet<>();
         Stopwatch execTime = Stopwatch.createUnstarted();
+        int reoptGood = 0, reoptBad = 0;
 
         //Main execution Loop (Algorithm 2 line 5)
         for (;plan.hasNext();) {
@@ -169,7 +171,10 @@ public class DOLAPFig3 {
             if (!reoptEnabled)
                 continue;
             optTime.start();
-            reoptRoutine(plan, candidates, runTime, budgetms, ks);
+            if(DOLAP.reoptRoutine(plan, candidates, runTime, budgetms, ks))
+                reoptGood++;
+            else
+                reoptBad++;
             optTime.stop();
         }
 
@@ -192,7 +197,7 @@ public class DOLAPFig3 {
 
         return new TAPStats(q0, genTime,optTime, execTime,
                 Arrays.stream(tsp.tour).mapToObj(toOrder::get).collect(Collectors.toList()), candidates.size(),
-                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(), dist);
+                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(), dist, reoptGood, reoptBad);
     }
 
     /**
