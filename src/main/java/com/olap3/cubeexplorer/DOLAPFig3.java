@@ -93,7 +93,7 @@ public class DOLAPFig3 {
 
         //stats = new PrintWriter(new BufferedOutputStream(new FileOutputStream(new File(statsFile), true)));
         res = new PrintWriter(new FileOutputStream(new File(resultFile), false));
-        res.printf("id,budget,algorithm,im,avgDist,optTime,execTime%n");
+        res.printf("id,budget,algorithm,im,avgDist,optTime,execTime,candidates,nbExecuted%n");
 
         LOGGER.info("Loading test data from " + testData);
         var sessions = DopanLoader.loadDir(testData);
@@ -125,10 +125,10 @@ public class DOLAPFig3 {
                 int budget = i*1000;
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.05, false);
                 TAPStats reopt = runTAPHeuristic(firstTriplet, budget, im, 0.05, true);
-                res.printf("%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "NAIVE", naive.im, naive.dist,
-                        naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS));
-                res.printf("%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "TAP", reopt.im, reopt.dist,
-                        reopt.optTime.elapsed(TimeUnit.MILLISECONDS), reopt.execTime.elapsed(TimeUnit.MILLISECONDS));
+                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "NAIVE", naive.im, naive.dist,
+                        naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS), naive.candidatesNb, naive.finalPlan.size());
+                res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "TAP", reopt.im, reopt.dist,
+                        reopt.optTime.elapsed(TimeUnit.MILLISECONDS), reopt.execTime.elapsed(TimeUnit.MILLISECONDS), reopt.candidatesNb, reopt.finalPlan.size());
             }
 
         }
