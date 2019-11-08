@@ -66,7 +66,7 @@ public class DOLAPFig3 {
     private static final Logger LOGGER = Logger.getLogger(DOLAPFig3.class.getName());
 
     public static final String testData = "./data/import_ideb",
-            resultFile = "./data/stats/res_dopan.csv";
+            resultFile = "./data/stats/res_dopan_low_time.csv";
     private static CubeUtils utils;
     private static MemoryManager mem = Nd4j.getMemoryManager();
     private static Gson gson = new GsonBuilder()
@@ -121,8 +121,8 @@ public class DOLAPFig3 {
             Query firstQuery = s.getQueries().get(0);
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
-            for (int i = 1; i <= 10; i++) {
-                int budget = i*1000;
+            for (int budget : new int[]{500,1000,1500,2000,2500,3000,4000,5000}) {
+                //int budget = i*1000;
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.05, false);
                 TAPStats reopt = runTAPHeuristic(firstTriplet, budget, im, 0.05, true);
                 res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "NAIVE", naive.im, naive.dist,
