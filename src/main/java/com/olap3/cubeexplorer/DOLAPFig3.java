@@ -216,7 +216,7 @@ public class DOLAPFig3 {
         long predictedRunTime = plan.getLeft().stream().mapToLong(InfoCollector::estimatedTime).sum();
 
         // Case two less time left than anticipated
-        if (predictedRunTime > left){
+        if (predictedRunTime > left+budget*0.01){
             if (plan.getOperations().size() == 0)
                 return false;
             List<InfoCollector> restOfExec = bm.findBestPlan(new ArrayList<>(plan.getOperations()), (int)left).getOperations();
@@ -230,6 +230,7 @@ public class DOLAPFig3 {
         possibleStuff.removeAll(plan.getExecuted());
         try {
             List<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
+            //System.out.println("Added " + newStuff.size());
             plan.addAll(newStuff);
         } catch (IllegalArgumentException e){ // No more stuff to run anyway
             return true;
