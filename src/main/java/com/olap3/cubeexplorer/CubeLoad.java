@@ -419,8 +419,10 @@ public class CubeLoad {
      */
     private static void runQuery(InfoCollector ic) {
         try {
+            Stopwatch exec = Stopwatch.createStarted();
+            MDXAccessor data = (MDXAccessor) ic.getDataSource();
             SQLFactory factory = new SQLFactory(utils);
-            String query = factory.getStarJoin(ic.getDataSource().getInternal());
+            String query = factory.getStarJoin(data.getInternal());
             Statement planON = con.createStatement();
 
             ResultSet rs = planON.executeQuery(query);
@@ -431,6 +433,7 @@ public class CubeLoad {
             }
 
             planON.close();
+            data.setMesuredTime(exec.stop().elapsed(TimeUnit.MILLISECONDS));
         }catch (SQLException e){
 
         }

@@ -257,7 +257,6 @@ public class DOLAP {
      * @param bm A Budget Manager to perform the re-optimization
      */
     static boolean reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
-        Set<InfoCollector> executed = plan.getExecuted();
         long left = budget - runTime.elapsed(TimeUnit.MILLISECONDS);
 
         // Case one we OUTATIME
@@ -267,23 +266,23 @@ public class DOLAP {
             return false;
         }
 
-        long predictedRunTime = executed.stream().mapToLong(InfoCollector::estimatedTime).sum();
+        long predictedRunTime = plan.getLeft().stream().mapToLong(InfoCollector::estimatedTime).sum();
 
         // Case two less time left than anticipated
-        if (predictedRunTime > runTime.elapsed(TimeUnit.MILLISECONDS)){
+        if (predictedRunTime > left){
             if (plan.getOperations().size() == 0)
                 return false;
-            Set<InfoCollector> restOfExec = bm.findBestPlan(new ArrayList<>(plan.getOperations()), (int)left).getOperations();
+            List<InfoCollector> restOfExec = bm.findBestPlan(new ArrayList<>(plan.getOperations()), (int)left).getOperations();
             plan.getOperations().retainAll(restOfExec);
             return false;
         }
 
         //Case three we have more time than anticipated
-        List<InfoCollector> possibleStuff = new ArrayList<>(candidates);
+        List<InfoCollector> possibleStuff = candidates.stream().filter(ic -> ic.estimatedTime() < left).collect(Collectors.toList());
         possibleStuff.removeAll(plan.getOperations());
         possibleStuff.removeAll(plan.getExecuted());
         try {
-            Set<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
+            List<InfoCollector> newStuff = bm.findBestPlan(possibleStuff,(int)left).getOperations();
             plan.addAll(newStuff);
         } catch (IllegalArgumentException e){ // No more stuff to run anyway
             return true;

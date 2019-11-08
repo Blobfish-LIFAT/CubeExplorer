@@ -3,24 +3,22 @@ package com.olap3.cubeexplorer.evaluate;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import lombok.Getter;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class ExecutionPlan implements Iterator<InfoCollector>{
     @Getter
     Set<InfoCollector> executed;
     @Getter
-    Set<InfoCollector> operations;
+    List<InfoCollector> operations;
 
     public ExecutionPlan(Collection<InfoCollector> base){
-        operations = new HashSet<>(base);
+        operations = new ArrayList<>(base);
+        operations.sort(Comparator.comparing(InfoCollector::estimatedTime));
         executed = new HashSet<>();
     }
 
     public Set<InfoCollector> getLeft() {
-        return operations;
+        return new HashSet<>(operations);
     }
 
     public void setExecuted(InfoCollector op) {
