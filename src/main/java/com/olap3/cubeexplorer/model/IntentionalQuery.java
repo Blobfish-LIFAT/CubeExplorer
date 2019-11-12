@@ -1,7 +1,6 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.model;
 
 import com.alexscode.utilities.collection.Pair;
-import com.olap3.cubeexplorer.model.Qfset;
 
 import java.util.List;
 

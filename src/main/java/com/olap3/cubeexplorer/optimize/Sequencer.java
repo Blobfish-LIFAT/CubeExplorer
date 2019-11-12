@@ -1,6 +1,7 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.optimize;
 
 import com.olap3.cubeexplorer.model.ECube;
+import com.olap3.cubeexplorer.model.IntentionalQuery;
 
 import java.util.List;
 

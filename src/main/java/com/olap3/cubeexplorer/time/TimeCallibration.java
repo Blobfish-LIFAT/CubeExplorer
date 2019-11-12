@@ -1,6 +1,8 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.time;
 
 import com.google.common.base.Stopwatch;
+import com.olap3.cubeexplorer.dolap.CubeLoad;
+import com.olap3.cubeexplorer.dolap.DOLAP;
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.model.Compatibility;

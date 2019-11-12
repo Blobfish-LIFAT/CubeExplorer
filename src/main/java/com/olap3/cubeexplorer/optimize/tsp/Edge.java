@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.tsp;
+package com.olap3.cubeexplorer.optimize.tsp;
 
 /**
  * This class is meant for representing the edges, it allows to store

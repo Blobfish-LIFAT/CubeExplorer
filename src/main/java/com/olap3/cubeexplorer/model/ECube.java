@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.model;
 
 import com.olap3.cubeexplorer.measures.Jaccard;
-import com.olap3.cubeexplorer.tsp.Measurable;
+import com.olap3.cubeexplorer.optimize.tsp.Measurable;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.evaluate.xmlutil;
+package com.olap3.cubeexplorer.time.xmlutil;
 
 public class XMLPlan {
     public final long estimated_tuples;

@@ -6,7 +6,7 @@ import com.olap3.cubeexplorer.measures.Jaccard;
 import com.olap3.cubeexplorer.measures.ReferenceSet;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.tsp.Measurable;
+import com.olap3.cubeexplorer.optimize.tsp.Measurable;
 import lombok.Getter;
 import lombok.Setter;
 import mondrian.calc.Calc;

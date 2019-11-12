@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.tsp;
+package com.olap3.cubeexplorer.optimize.tsp;
 
 public interface Measurable<T> {
 

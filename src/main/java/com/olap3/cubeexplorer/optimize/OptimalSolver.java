@@ -1,9 +1,8 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.optimize;
 
 import com.google.common.collect.Sets;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.measures.Jaccard;
-import com.olap3.cubeexplorer.optimize.AprioriMetric;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

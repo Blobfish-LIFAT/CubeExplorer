@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer;
+package com.olap3.cubeexplorer.dolap;
 
 import com.alexscode.utilities.collection.Pair;
 import com.google.common.base.Stopwatch;
@@ -24,8 +24,9 @@ import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.optimize.AprioriMetric;
 import com.olap3.cubeexplorer.optimize.BudgetManager;
 import com.olap3.cubeexplorer.optimize.KnapsackManager;
-import com.olap3.cubeexplorer.tsp.LinKernighan;
-import com.olap3.cubeexplorer.tsp.Measurable;
+import com.olap3.cubeexplorer.optimize.OptimalSolver;
+import com.olap3.cubeexplorer.optimize.tsp.LinKernighan;
+import com.olap3.cubeexplorer.optimize.tsp.Measurable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;

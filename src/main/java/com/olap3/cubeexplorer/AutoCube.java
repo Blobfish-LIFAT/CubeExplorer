@@ -1,8 +1,10 @@
 package com.olap3.cubeexplorer;
 
-import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.evaluate.Evaluator;
+import com.olap3.cubeexplorer.model.ECube;
+import com.olap3.cubeexplorer.model.IntentionalQuery;
 import com.olap3.cubeexplorer.optimize.Optimizer;
+import com.olap3.cubeexplorer.optimize.Sequencer;
 
 import java.util.Arrays;
 import java.util.List;
