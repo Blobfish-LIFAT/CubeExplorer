@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.time.xmlutil;
+package com.olap3.cubeexplorer.optimize.time.xmlutil;
 
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;

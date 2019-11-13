@@ -1,11 +1,13 @@
-package com.olap3.cubeexplorer.time;
+package com.olap3.cubeexplorer.optimize.time;
 
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
+import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
+import com.olap3.cubeexplorer.optimize.TimeableOp;
 
-public class LinearTimeEstimator {
+public class LinearTimeEstimatorDOPAN implements CostModel {
     static SQLFactory queryFactory = null;
     static double ascii_len_c = 8e-05,
             projNb_c= 3e-03,
@@ -27,5 +29,13 @@ public class LinearTimeEstimator {
         estRaw = estRaw + intercept;
         //System.out.println(estRaw);
         return Math.round(estRaw*1000);
+    }
+
+    @Override
+    public long estimateCost(TimeableOp operation) {
+        if (operation instanceof MDXAccessor){
+            return estimateQfsetMs(((MDXAccessor)operation).getInternal());
+        } else
+            throw new UnsupportedOperationException();
     }
 }

@@ -5,7 +5,7 @@ import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.time.LinearTimeEstimator;
+import com.olap3.cubeexplorer.optimize.time.CostModelProvider;
 import lombok.Setter;
 
 import java.sql.*;
@@ -99,19 +99,10 @@ public class MDXAccessor extends DataAccessor {
     }
 
     @Override
-    public int aprioriTuples() {
-        return 0;
-    }
-
-    @Override
-    public int aposterioriTuples() {
-        return 0;
-    }
-
-    @Override
     public long aprioriTime() {
+        return CostModelProvider.getModelFor(this).estimateCost(this);
         //return TimeCallibration.approximateCubeload(this.internal, MondrianConfig.getJdbcConnection());
-        return LinearTimeEstimator.estimateQfsetMs(this.internal);
+        //return LinearTimeEstimatorDOPAN.estimateQfsetMs(this.internal);
     }
 
     @Override
@@ -119,13 +110,4 @@ public class MDXAccessor extends DataAccessor {
         return mesuredTime;
     }
 
-    @Override
-    public double aprioriInterest() {
-        return 0;
-    }
-
-    @Override
-    public double aposterioriInterest() {
-        return 0;
-    }
 }

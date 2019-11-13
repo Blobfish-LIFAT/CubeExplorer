@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.time;
+package com.olap3.cubeexplorer.optimize.time;
 
 
 import com.google.common.base.Stopwatch;
@@ -6,8 +6,8 @@ import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import com.olap3.cubeexplorer.time.xmlutil.PlanParser;
-import com.olap3.cubeexplorer.time.xmlutil.XMLPlan;
+import com.olap3.cubeexplorer.optimize.time.xmlutil.PlanParser;
+import com.olap3.cubeexplorer.optimize.time.xmlutil.XMLPlan;
 import org.dom4j.DocumentException;
 
 import java.sql.Connection;

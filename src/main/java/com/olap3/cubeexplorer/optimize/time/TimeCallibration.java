@@ -1,16 +1,18 @@
-package com.olap3.cubeexplorer.time;
+package com.olap3.cubeexplorer.optimize.time;
 
 import com.google.common.base.Stopwatch;
 import com.olap3.cubeexplorer.dolap.CubeLoad;
 import com.olap3.cubeexplorer.dolap.DOLAP;
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
+import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
 import com.olap3.cubeexplorer.model.Compatibility;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.model.Query;
 import com.olap3.cubeexplorer.model.Session;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import com.olap3.cubeexplorer.optimize.TimeableOp;
 import mondrian.olap.Connection;
 
 import java.io.File;
@@ -30,7 +32,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TimeCallibration {
+public class TimeCallibration implements CostModel {
 
 
     private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
@@ -166,7 +168,7 @@ public class TimeCallibration {
     //[  -0.64920196 -243.99479906   39.2955434   221.55470518   39.2955434 ]
     //-288.5450654145311
     static SQLFactory queryFactoryCBL = null;
-    public static long approximateCubeload(Qfset qfset, java.sql.Connection con){
+    public static long approximateCubeload(Qfset qfset){
         if (queryFactoryCBL == null) {
             queryFactoryCBL = new SQLFactory(CubeUtils.getDefault());
         }
@@ -181,4 +183,11 @@ public class TimeCallibration {
         return Math.round(estRaw);
     }
 
+    @Override
+    public long estimateCost(TimeableOp operation) {
+        if (operation instanceof MDXAccessor){
+            return approximateCubeload(((MDXAccessor)operation).getInternal());
+        } else
+            throw new UnsupportedOperationException();
+    }
 }

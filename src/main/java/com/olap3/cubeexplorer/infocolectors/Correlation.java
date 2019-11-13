@@ -57,23 +57,4 @@ public class Correlation implements MLModel {
         return 0;
     }
 
-    @Override
-    public int aprioriTuples() {
-        return 0;
-    }
-
-    @Override
-    public int aposterioriTuples() {
-        return 0;
-    }
-
-    @Override
-    public double aprioriInterest() {
-        return 0;
-    }
-
-    @Override
-    public double aposterioriInterest() {
-        return 0;
-    }
 }
