@@ -1,4 +1,5 @@
-#Cube Explorer
+# Cube Explorer
+
 This prototype is an atempt at implementing an intentional OLAP operator,
 first described in (this paper)[https://www.sciencedirect.com/science/article/abs/pii/S0306437918303016?via%3Dihub] by PanosVassiliadis, PatrickMarcel and StefanoRizzi.
 
