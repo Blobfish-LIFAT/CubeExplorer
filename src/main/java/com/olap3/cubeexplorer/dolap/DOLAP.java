@@ -257,7 +257,7 @@ public class DOLAP {
      * @param budget the original time budget
      * @param bm A Budget Manager to perform the re-optimization
      */
-    static boolean reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
+    public static boolean reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
         long left = budget - runTime.elapsed(TimeUnit.MILLISECONDS);
 
         // Case one we OUTATIME

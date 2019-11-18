@@ -59,6 +59,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.nd4j</groupId>
             <artifactId>nd4j-native-platform</artifactId>
             <version>0.9.1</version>
@@ -148,7 +154,6 @@
             <version>2.4</version>
         </dependency>
 
-
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -178,7 +183,6 @@
             <artifactId>mondrian</artifactId>
             <version>3.14.0.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>eigenbase</groupId>

@@ -204,6 +204,18 @@ public class CubeUtils {
         return Arrays.asList(h.getLevels());
     }
 
+    public List<Dimension> fetchAllDimensions(boolean includeMeasures){
+        if (includeMeasures)
+            return Arrays.asList(cube.getDimensions());
+
+        ArrayList<Dimension> dims = new ArrayList<>(cube.getDimensions().length);
+        for (Dimension dim : cube.getDimensions()) {
+            if (dim.isMeasures()) continue;
+            dims.add(dim);
+        }
+        return dims;
+    }
+
     public Cube getCube() {
         return cube;
     }
