@@ -1,6 +1,7 @@
 package com.olap3.cubeexplorer.optimize;
 
 import com.google.common.collect.Sets;
+import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.measures.Jaccard;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,23 @@ import lombok.Data;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OptimalSolver {
+public class OptimalSolver implements BudgetManager{
+    public static enum ResType{
+        RANDOM, METRIC, DISTANCE, BALANCED
+    }
+    AprioriMetric metric;
+
+    public OptimalSolver(AprioriMetric metric) {
+        this.metric = metric;
+    }
+
+    @Override
+    public ExecutionPlan findBestPlan(List<InfoCollector> candidates, int timeBudget) {
+        Set<List<InfoCollector>> res = OptimalSolver.optimalSolver(new HashSet<>(candidates), metric, timeBudget);
+
+        return new ExecutionPlan(res.iterator().next()); //TODO allow choosing result type ...
+    }
+
     @Data @AllArgsConstructor
     static class Solution{
         List<InfoCollector> ic;

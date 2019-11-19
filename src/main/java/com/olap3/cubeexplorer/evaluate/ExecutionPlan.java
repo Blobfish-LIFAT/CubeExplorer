@@ -2,6 +2,7 @@ package com.olap3.cubeexplorer.evaluate;
 
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
@@ -10,6 +11,8 @@ public class ExecutionPlan implements Iterator<InfoCollector>{
     Set<InfoCollector> executed;
     @Getter
     List<InfoCollector> operations;
+    @Getter @Setter
+    long predictedRuntime;
 
     public ExecutionPlan(Collection<InfoCollector> base){
         operations = new ArrayList<>(base);

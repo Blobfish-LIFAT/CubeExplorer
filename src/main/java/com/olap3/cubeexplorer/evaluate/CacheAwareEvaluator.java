@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.evaluate;
 
+import com.google.common.base.Stopwatch;
 import com.olap3.cubeexplorer.infocolectors.DataAccessor;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.infocolectors.MLModel;
@@ -20,7 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class CacheAwareEvaluator extends Evaluator {
+public class CacheAwareEvaluator implements Evaluator {
     HashMap<DataAccessor, Set<MLModel>> algos;
     List<DataAccessor> queries;
     CubeUtils utils;
@@ -35,11 +36,21 @@ public class CacheAwareEvaluator extends Evaluator {
     }
 
     @Override
-    public List<ECube> evaluate(ExecutionPlan p) {
-        buildExecOrder(p.getOperations());
+    public List<ECube> evaluate() {
+
         return null;
     }
 
+    @Override
+    public boolean setup(ExecutionPlan p, Stopwatch runtime, boolean reoptEnable) {
+        buildExecOrder(p.getOperations());
+        return true;
+    }
+
+    @Override
+    public EXPRunStats getStats() {
+        return null;
+    }
 
     public void buildExecOrder(Collection<InfoCollector> base){
         List<SimpleDirectedGraph<InfoCollector, ICEdge>> ranks = new ArrayList<>();
