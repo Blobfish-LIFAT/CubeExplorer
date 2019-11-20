@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.data;
 
+import lombok.Getter;
 import org.olap4j.*;
 import org.olap4j.metadata.Dimension;
 import org.olap4j.metadata.Member;
@@ -38,16 +39,12 @@ public class CellSet {
 
     private int measureAxisOrdinal = -1;
 
+    @Getter
     private int nbOfRows;
+    @Getter
     private int nbOfColumns;
+    @Getter
     private int nbOfCells;
-
-    /**
-     * <p>Constructor used for testing. You should not build your cell set with this constructor.
-     * Instead use {@link CellSet#CellSet(org.olap4j.CellSet)}</p>
-     */
-    public CellSet() {
-    }
 
     public CellSet(org.olap4j.CellSet olap4JCellSet) {
         //TODO: check if olap4JCellSet is 2D, else throw an exception
@@ -152,7 +149,7 @@ public class CellSet {
 
 
     private HeaderTree buildHeaders(CellSetAxis axis) {
-        HeaderTree root = new HeaderTree("root");
+        HeaderTree root = new HeaderTree("root", false, null);
         for (Position position : axis) {
             HeaderTree parent = root;
             for (Member member : position.getMembers()) {
@@ -164,8 +161,8 @@ public class CellSet {
                     } catch (OlapException e) {
                         e.printStackTrace();
                     }
-                    child = new HeaderTree(member.getName(), isMeasure);
-                    parent.getChildren().add(child);
+                    child = new HeaderTree(member.getName(), isMeasure, member.getLevel());
+                    parent.addChild(child);
                 }
                 parent = child;
             }
@@ -198,30 +195,6 @@ public class CellSet {
 
     public List<Integer> ordinalToCoordinates(int ordinal) {
         return olap4JCellSet.ordinalToCoordinates(ordinal);
-    }
-
-    public int getNbOfRows() {
-        return nbOfRows;
-    }
-
-    public void setNbOfRows(int nbOfRows) {
-        this.nbOfRows = nbOfRows;
-    }
-
-    public int getNbOfColumns() {
-        return nbOfColumns;
-    }
-
-    public void setNbOfColumns(int nbOfColumns) {
-        this.nbOfColumns = nbOfColumns;
-    }
-
-    public int getNbOfCells() {
-        return nbOfCells;
-    }
-
-    public void setNbOfCells(int nbOfCells) {
-        this.nbOfCells = nbOfCells;
     }
 
     public int getMeasureAxisOrdinal() {

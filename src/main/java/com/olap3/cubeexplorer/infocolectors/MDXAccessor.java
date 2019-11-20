@@ -2,6 +2,7 @@ package com.olap3.cubeexplorer.infocolectors;
 
 import com.alexscode.utilities.collection.Pair;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
+import com.olap3.cubeexplorer.model.DataSet;
 import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;

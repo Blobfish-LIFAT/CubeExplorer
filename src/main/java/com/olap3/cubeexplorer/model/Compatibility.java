@@ -1,5 +1,8 @@
 package com.olap3.cubeexplorer.model;
 
+import com.alexscode.utilities.collection.Pair;
+import com.olap3.cubeexplorer.data.CellSet;
+import com.olap3.cubeexplorer.data.HeaderTree;
 import com.olap3.cubeexplorer.data.castor.session.CrSession;
 import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
@@ -14,11 +17,42 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.olap3.cubeexplorer.data.HeaderTree.getCrossTabPos;
+import static com.olap3.cubeexplorer.data.HeaderTree.getLevelDescriptors;
+
 /**
  * @author Alex
  * Various conversion functions to go between data formats for queries and parts
  */
 public class Compatibility {
+
+    public static DataSet cellSetToDataSet(CellSet cs){
+        Double[][] data = cs.getData();
+        List<String> descriptors = new ArrayList<>(cs.getNbOfColumns() + cs.getNbOfRows());
+        List<HeaderTree> rows = HeaderTree.getLeaves(cs.getHeaderTree(1));
+        List<HeaderTree> cols = HeaderTree.getLeaves(cs.getHeaderTree(0));
+
+        descriptors.addAll(getLevelDescriptors(rows.get(0)));
+        descriptors.addAll(getLevelDescriptors(cols.get(0)));
+
+        List<Pair<String, DataSet.Datatype>> colDescription = descriptors.stream().map(d -> new Pair<>(d, DataSet.Datatype.STRING)).collect(Collectors.toList());
+        colDescription.add(new Pair<>("MEASURES", DataSet.Datatype.REAL));
+        DataSet ds = new DataSet(colDescription, cs.getNbOfCells());
+
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                List<String> coords = getCrossTabPos(rows.get(i));
+                coords.addAll(getCrossTabPos(cols.get(j)));
+                Object[] line = new Object[coords.size()+1];
+                System.arraycopy(coords.toArray(), 0, line, 0, coords.size());
+                line[coords.size()] = data[i][j];
+                //System.out.println(Arrays.toString(line));
+                ds.pushLine(line);
+            }
+        }
+
+        return ds;
+    }
 
     /**
      * Extracts query parts from a triplet

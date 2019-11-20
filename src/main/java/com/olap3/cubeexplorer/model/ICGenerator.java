@@ -2,8 +2,8 @@ package com.olap3.cubeexplorer.model;
 
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ICGenerator {
-    public List<InfoCollector> produce(IntentionalQuery q);
+    public Set<InfoCollector> produce(IntentionalQuery q);
 }

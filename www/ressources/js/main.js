@@ -21,10 +21,10 @@ function remote_load_show() {
 
 function submit_file() {
     const selectedFile = document.getElementById("input").files[0];
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function (e) {
         loadData(e.target.result);
-    }
+    };
     reader.readAsText(selectedFile);
 }
 

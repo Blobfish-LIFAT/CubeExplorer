@@ -1,5 +1,6 @@
-package com.olap3.cubeexplorer.infocolectors;
+package com.olap3.cubeexplorer.model;
 
+import com.alexscode.utilities.Future;
 import com.alexscode.utilities.collection.Pair;
 
 import java.nio.ByteBuffer;
@@ -16,7 +17,8 @@ public class DataSet {
 
     List<String> lineOrder;
     int[] typeMap;
-    int width, depth;
+    int width, //Number of columns
+            depth;
 
     boolean allocated = false;
     int insert_index = 0;
@@ -83,28 +85,41 @@ public class DataSet {
 
     }
 
+    /**
+     * don't replace this with Arrays.fill, especially if you have no idea why you wouldn't do that
+     */
     public void allocate(){
-        Arrays.fill(dataReal, new double[depth]);
-        Arrays.fill(dataInt, new int[depth]);
-        Arrays.fill(dataStr, new String[depth]);
+        for (int i = 0; i < dataReal.length; i++) {
+            dataReal[i] = new double[depth];
+        }
+        for (int i = 0; i < dataInt.length; i++) {
+            dataInt[i] = new int[depth];
+        }
+        for (int i = 0; i < dataStr.length; i++) {
+            dataStr[i] = new String[depth];
+        }
 
         allocated = true;
     }
 
-    public Object[] getLine(int i){
+    public Object[] getLine(int line){
         Object[] res = new Object[width];
         for (int j = 0; j < width; j++) {
-            switch (typeMap[i]){
-                case 0 -> res[i] = dataReal[posReal.get(lineOrder.get(i))][i];
-                case 1 -> res[i] = dataInt[posInt.get(lineOrder.get(i))][i];
-                case 2 -> res[i] = dataStr[posString.get(lineOrder.get(i))][i];
+            switch (typeMap[j]){
+                case 0 -> res[j] = dataReal[posReal.get(lineOrder.get(j))][line];
+                case 1 -> res[j] = dataInt[posInt.get(lineOrder.get(j))][line];
+                case 2 -> res[j] = dataStr[posString.get(lineOrder.get(j))][line];
             }
         }
         return res;
     }
 
     public void setLine(Object[] input, int row_index){
-        for (int i = 0; i < input.length; i++) {
+        //System.out.println(Arrays.toString(input));
+        if (input.length != width)
+            throw new IllegalArgumentException("Input size doesn't match number of columns");
+        for (int i = 0; i < width; i++) {
+            //System.out.println(typeMap[i]);
             switch (typeMap[i]){
                 case 0 -> dataReal[posReal.get(lineOrder.get(i))][row_index] = (double) input[i];
                 case 1 -> dataInt[posInt.get(lineOrder.get(i))][row_index] = (int) input[i];
@@ -183,7 +198,15 @@ public class DataSet {
     }
 
 
-
+    @Override
+    public String toString() {
+        String str =  "--- DataSet ---\n";
+        str += Future.join(lineOrder, ",") + "\n";
+        for (int i = 0; i < depth; i++) {
+            str += Arrays.toString(getLine(i)) + "\n";
+        }
+        return str;
+    }
 
     public enum Datatype {
         STRING(2), INTEGER(1), REAL(0);
