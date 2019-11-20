@@ -36,7 +36,7 @@ public class Compatibility {
         descriptors.addAll(getLevelDescriptors(cols.get(0)));
 
         List<Pair<String, DataSet.Datatype>> colDescription = descriptors.stream().map(d -> new Pair<>(d, DataSet.Datatype.STRING)).collect(Collectors.toList());
-        colDescription.add(new Pair<>("MEASURES", DataSet.Datatype.REAL));
+        colDescription.add(new Pair<>("MeasureValue", DataSet.Datatype.REAL));
         DataSet ds = new DataSet(colDescription, cs.getNbOfCells());
 
         for (int i = 0; i < data.length; i++) {

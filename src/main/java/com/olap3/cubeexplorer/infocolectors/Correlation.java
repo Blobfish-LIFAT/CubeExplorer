@@ -36,10 +36,6 @@ public class Correlation implements MLModel {
         return cube;
     }
 
-    @Override
-    public void setDataSource(DataAccessor da) {
-        this.da = da;
-    }
 
     private DataAccessor getDataSource() {
         if (da != null)
