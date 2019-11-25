@@ -5,6 +5,10 @@ import com.olap3.cubeexplorer.data.CellSet;
 import com.olap3.cubeexplorer.data.HeaderTree;
 import com.olap3.cubeexplorer.data.castor.session.CrSession;
 import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.model.columnStore.DataSet;
+import com.olap3.cubeexplorer.model.columnStore.Datatype;
+import com.olap3.cubeexplorer.model.columnStore.Predicate;
+import com.olap3.cubeexplorer.model.columnStore.StringEqPredicate;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Level;
@@ -16,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.olap3.cubeexplorer.data.HeaderTree.getCrossTabPos;
 import static com.olap3.cubeexplorer.data.HeaderTree.getLevelDescriptors;
@@ -26,17 +31,89 @@ import static com.olap3.cubeexplorer.data.HeaderTree.getLevelDescriptors;
  */
 public class Compatibility {
 
-    public static DataSet cellSetToDataSet(CellSet cs){
-        Double[][] data = cs.getData();
+    public static DataSet cellSetToDataSet(CellSet cs, boolean splitMeasures) {
+        if (!splitMeasures) return cellSetToDataSet(cs);
+        DataSet original = cellSetToDataSet(cs);
+
+        // --- Sorta group by by hand ---
+        List<Pair<String, Datatype>> descriptors = original.getDescriptors();
+        Pair<String, Datatype> mLevel = descriptors.stream().filter(p -> p.getLeft().equals("MeasuresLevel")).findFirst().get();
+        Pair<String, Datatype> mVal = descriptors.stream().filter(p -> p.getLeft().equals("MeasureValue")).findFirst().get();
+        descriptors.remove(mLevel);
+        descriptors.remove(mVal);
+
+        //get measures
+        List<String> newMeasures = Stream.of(original.getStringColumn(mLevel.getLeft())).distinct().collect(Collectors.toList());
+
+        // Add a column for each measure
+        descriptors.addAll(newMeasures.stream().map(s -> new Pair<>(s, Datatype.REAL)).collect(Collectors.toList()));
+        DataSet output = new DataSet(descriptors, original.getNumberOfRows() / newMeasures.size());
+
+        HashSet<String> parsedCoordinates = new HashSet<>();
+
+        int mlInd = original.getColIndex("MeasuresLevel");
+        int mvInd = original.getNumberOfColumns() - 1; // MeasureValue column should always be last (by construction)
+        String[] originalCols = original.getHeader();
+        for (int i = 0; i < original.getNumberOfRows(); i++) {
+            Object[] line = original.getLine(i);
+            String gbKey = "";
+            for (int j = 0; j < line.length; j++) {
+                if (j != mlInd && j != mvInd){
+                    gbKey += line[j];
+                }
+            }
+            if (parsedCoordinates.contains(gbKey))
+                continue;
+
+            parsedCoordinates.add(gbKey);
+            List<Predicate> gbMask = new ArrayList<>();
+            for (int j = 0; j < line.length; j++) {
+                if (j != mlInd && j != mvInd) {
+                    gbMask.add(new StringEqPredicate(originalCols[j], (String) line[j]));
+                }
+            }
+            List<Object[]> toGroup = original.selectConjunctive(gbMask);
+            Object[] newLine = new Object[originalCols.length - 2 + newMeasures.size()];
+            int index = 0;
+            for (int j = 0; j < line.length; j++) {
+                if (j != mlInd && j != mvInd){
+                    newLine[index++] = line[j];
+                }
+            }
+            for (String measure : newMeasures){
+                for (int j = 0; j < toGroup.size(); j++) {
+                    Object[] oldLine = toGroup.get(j);
+                    if (oldLine[mlInd].equals(measure))
+                        newLine[index++] = oldLine[mvInd];
+                }
+            }
+            //System.out.println(Arrays.toString(output.getHeader()));
+            //System.out.println(Arrays.toString(newLine));
+            output.pushLine(newLine);
+        }
+
+        return output;
+    }
+
+    /**
+     * Extrapolates columns descriptors from the header trees of the cell set
+     * @param cs The cell set
+     * @return first part of the header trees
+     */
+    private static List<Pair<String, Datatype>> getDescriptors(CellSet cs){
         List<String> descriptors = new ArrayList<>(cs.getNbOfColumns() + cs.getNbOfRows());
+        descriptors.addAll(getLevelDescriptors(HeaderTree.getLeaves(cs.getHeaderTree(1)).get(0)));
+        descriptors.addAll(getLevelDescriptors(HeaderTree.getLeaves(cs.getHeaderTree(0)).get(0)));
+        return descriptors.stream().map(d -> new Pair<>(d, Datatype.STRING)).collect(Collectors.toList());
+    }
+
+    private static DataSet cellSetToDataSet(CellSet cs){
+        Double[][] data = cs.getData();
         List<HeaderTree> rows = HeaderTree.getLeaves(cs.getHeaderTree(1));
         List<HeaderTree> cols = HeaderTree.getLeaves(cs.getHeaderTree(0));
 
-        descriptors.addAll(getLevelDescriptors(rows.get(0)));
-        descriptors.addAll(getLevelDescriptors(cols.get(0)));
-
-        List<Pair<String, DataSet.Datatype>> colDescription = descriptors.stream().map(d -> new Pair<>(d, DataSet.Datatype.STRING)).collect(Collectors.toList());
-        colDescription.add(new Pair<>("MeasureValue", DataSet.Datatype.REAL));
+        var colDescription = getDescriptors(cs);
+        colDescription.add(new Pair<>("MeasureValue", Datatype.REAL));
         DataSet ds = new DataSet(colDescription, cs.getNbOfCells());
 
         for (int i = 0; i < data.length; i++) {
@@ -46,7 +123,6 @@ public class Compatibility {
                 Object[] line = new Object[coords.size()+1];
                 System.arraycopy(coords.toArray(), 0, line, 0, coords.size());
                 line[coords.size()] = data[i][j];
-                //System.out.println(Arrays.toString(line));
                 ds.pushLine(line);
             }
         }

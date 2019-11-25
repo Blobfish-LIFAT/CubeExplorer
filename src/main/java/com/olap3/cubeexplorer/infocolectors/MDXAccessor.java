@@ -1,13 +1,19 @@
 package com.olap3.cubeexplorer.infocolectors;
 
 import com.alexscode.utilities.collection.Pair;
+import com.olap3.cubeexplorer.data.CellSet;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
-import com.olap3.cubeexplorer.model.DataSet;
+import com.olap3.cubeexplorer.model.Compatibility;
 import com.olap3.cubeexplorer.model.Qfset;
+import com.olap3.cubeexplorer.model.columnStore.DataSet;
+import com.olap3.cubeexplorer.model.columnStore.Datatype;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import com.olap3.cubeexplorer.optimize.time.CostModelProvider;
 import lombok.Setter;
+import org.olap4j.OlapConnection;
+import org.olap4j.OlapStatement;
+import org.olap4j.OlapWrapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,6 +38,21 @@ public class MDXAccessor extends DataAccessor {
 
     @Override
     public DataSet execute() {
+        try {
+            java.sql.Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
+            OlapWrapper wrapper = (OlapWrapper) connection;
+            OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
+            OlapStatement statement = olapConnection.createStatement();
+            CellSet cs = new CellSet(statement.executeOlapQuery(internal.toMDXString()));
+            return Compatibility.cellSetToDataSet(cs, true);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public DataSet executeSql() {
         if (cached != null)
             return cached;
 
@@ -43,7 +64,7 @@ public class MDXAccessor extends DataAccessor {
             ResultSet rs = st.executeQuery(sqlFactory.getStarJoin(internal));
             ResultSetMetaData rsmd = rs.getMetaData();
 
-            List<Pair<String, DataSet.Datatype>> cols = new ArrayList<>();
+            List<Pair<String, Datatype>> cols = new ArrayList<>();
             for (int i = 1; i < rsmd.getColumnCount() + 1; i++) {
                 var name = rsmd.getColumnName(i);
                 var typeRaw = rsmd.getColumnType(i);
@@ -75,15 +96,15 @@ public class MDXAccessor extends DataAccessor {
         return cached;
     }
 
-    private static HashMap<Integer, DataSet.Datatype> typeMap;
+    private static HashMap<Integer, Datatype> typeMap;
     static {
         typeMap = new HashMap<>();
-        typeMap.put(12, DataSet.Datatype.STRING);
-        typeMap.put(6, DataSet.Datatype.REAL);
-        typeMap.put(8, DataSet.Datatype.REAL);
-        typeMap.put(4, DataSet.Datatype.INTEGER);
+        typeMap.put(12, Datatype.STRING);
+        typeMap.put(6, Datatype.REAL);
+        typeMap.put(8, Datatype.REAL);
+        typeMap.put(4, Datatype.INTEGER);
     }
-    private static DataSet.Datatype getProperType(int typeRaw) {
+    private static Datatype getProperType(int typeRaw) {
         return typeMap.get(typeRaw);
     }
 

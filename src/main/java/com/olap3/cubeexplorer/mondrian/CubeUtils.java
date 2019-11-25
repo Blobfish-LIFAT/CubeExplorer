@@ -286,12 +286,10 @@ public class CubeUtils {
      * @return the member corresponding to the measure we want to retrieve
      */
     public Member getMeasure(String measureName) {
-        Level l = getLevel("MeasuresLevel", "MEASURES");
         String mName = measureName.trim().toUpperCase();
         if (mName.startsWith("[MEASURES].["))
             mName = mName.substring(12, mName.length() - 1);
-        List<Member> members = cube.getSchemaReader(null).withLocus().getLevelMembers(l, true);
-        for (Member member : members) {
+        for (Member member : getMeasures()) {
             //System.out.println(member.getName().trim().toUpperCase() + "/" + mName);
             if (member.getName().trim().toUpperCase().equals(mName)) {
                 return member;
@@ -299,6 +297,16 @@ public class CubeUtils {
         }
 
         return null;
+    }
+
+    /**
+     * This method reads the mondrian schema and returns the mondrian member
+     * corresponding to all the measures in the cube
+     ** @return the measures
+     */
+    public List<Member> getMeasures() {
+        Level l = getLevel("MeasuresLevel", "MEASURES");
+        return cube.getSchemaReader(null).withLocus().getLevelMembers(l, true);
     }
 
     /**

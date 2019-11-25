@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.infocolectors;
 
-import com.olap3.cubeexplorer.model.DataSet;
 import com.olap3.cubeexplorer.model.ECube;
+import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 

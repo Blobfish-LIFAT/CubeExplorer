@@ -1,13 +1,13 @@
-package com.olap3.cubeexplorer.model;
+package com.olap3.cubeexplorer.model.columnStore;
 
 import com.alexscode.utilities.Future;
 import com.alexscode.utilities.collection.Pair;
+import lombok.Getter;
 
-import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  */
 public class DataSet {
 
+    @Getter
+    final List<Pair<String, Datatype>> descriptors;
     List<String> lineOrder;
     int[] typeMap;
     int width, //Number of columns
@@ -34,6 +36,7 @@ public class DataSet {
 
     public DataSet(List<Pair<String, Datatype>> columnsDef, int size) {
         depth = size;
+        this.descriptors = columnsDef;
 
         //Save column order and type
         this.lineOrder = columnsDef.stream().map(p -> p.left).collect(Collectors.toList());
@@ -137,14 +140,38 @@ public class DataSet {
         insert_index++;
     }
 
+    public List<Object[]> selectConjunctive(List<Predicate> predicates){
+        boolean[] sel = new boolean[depth];
+        Arrays.fill(sel, true);
+
+        for (int i = 0; i < predicates.size(); i++) {
+            Predicate p = predicates.get(i);
+            boolean[] vec = new boolean[sel.length];
+            switch (typeMap[lineOrder.indexOf(p.getCol())]) {
+                case 0 -> vec = p.getBinaryVector(getDoubleColumn(p.getCol()));
+                case 1 -> vec = p.getBinaryVector(getIntColumn(p.getCol()));
+                case 2 -> vec = p.getBinaryVector(getStringColumn(p.getCol()));
+            }
+            for (int j = 0; j < vec.length; j++) {
+                sel[j] = sel[j] && vec[j];
+            }
+        }
+
+        List<Object[]> lines = new ArrayList<>();
+        for (int i = 0; i < sel.length; i++) {
+            if (sel[i])
+                lines.add(getLine(i));
+        }
+
+        return lines;
+    }
+
     public void setColumn(String name, double[] array){
         dataReal[posReal.get(name)] = array;
     }
-
     public void setColumn(String name, int[] array){
         dataInt[posInt.get(name)] = array;
     }
-
     public void setColumn(String name, String[] array){
         dataStr[posString.get(name)] = array;
     }
@@ -152,7 +179,6 @@ public class DataSet {
     public int getNumberOfColumns(){
         return width;
     }
-
     public int getNumberOfRows(){
         return depth;
     }
@@ -176,12 +202,11 @@ public class DataSet {
         return dataStr[posString.get(column_name)];
     }
 
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
     public String getColName(int column_index) {
         return  lineOrder.get(column_index);
+    }
+    public int getColIndex(String colName){
+        return lineOrder.indexOf(colName);
     }
 
     public Datatype getColDatatype(int column_index) {
@@ -197,6 +222,10 @@ public class DataSet {
        return getColDatatype(lineOrder.indexOf(column_name));
     }
 
+    public String[] getHeader(){
+        return lineOrder.toArray(new String[0]);
+    }
+
 
     @Override
     public String toString() {
@@ -208,50 +237,6 @@ public class DataSet {
         return str;
     }
 
-    public enum Datatype {
-        STRING(2), INTEGER(1), REAL(0);
-
-        private int value;
-        private static Map map = new HashMap<>();
-
-        Datatype(int value) {
-            this.value = value;
-        }
-
-        static {
-            for (DataSet.Datatype pageType : DataSet.Datatype.values()) {
-                map.put(pageType.value, pageType);
-            }
-        }
-
-        public static DataSet.Datatype valueOf(int pageType) {
-            return (DataSet.Datatype) map.get(pageType);
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public byte[] getBytes() {
-            ByteBuffer b = ByteBuffer.allocate(4);
-            b.putInt(value);
-            return b.array();
-        }
-
-        public boolean isString(){
-            return value == 2;
-        }
-
-        public boolean isInt(){
-            return value == 1;
-        }
-
-        public boolean isReal(){
-            return value == 0;
-        }
-
-
-    }
 }
 
 
