@@ -17,6 +17,6 @@ public class ICCorrelate extends InfoCollector{
     @Override
     public ECube executeInternal() {
         List<String> others = dataSource.getInternal().getMeasures().stream().filter(m -> !m.getAttribute().getName().equals(measure)).map(m -> m.getAttribute().getName()).collect(Collectors.toList());
-        return new Correlation(dataSource, measure, others).process();
+        return new Correlation(measure, others).process(dataSource.execute());
     }
 }

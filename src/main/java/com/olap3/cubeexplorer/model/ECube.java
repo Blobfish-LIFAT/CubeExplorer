@@ -2,6 +2,8 @@ package com.olap3.cubeexplorer.model;
 
 import com.olap3.cubeexplorer.measures.Jaccard;
 import com.olap3.cubeexplorer.optimize.tsp.Measurable;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 
@@ -9,6 +11,7 @@ import java.util.HashMap;
  * An enhanced cube (ie cells + other info)
  */
 public class ECube implements Measurable<ECube> {
+    @Getter @Setter
     Qfset cubeQuery;
 
     private String algorithmType;
@@ -17,7 +20,7 @@ public class ECube implements Measurable<ECube> {
 
     double interestingness;
 
-    public ECube(Qfset cubeQuery, String algorithmType) {
+    public ECube(String algorithmType) {
         this.cubeQuery = cubeQuery;
         this.algorithmType = algorithmType;
         explProperties = new HashMap<>();

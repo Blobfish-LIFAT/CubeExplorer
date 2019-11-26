@@ -1,6 +1,5 @@
 package com.olap3.cubeexplorer.infocolectors.algos;
 
-import com.olap3.cubeexplorer.infocolectors.DataAccessor;
 import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -10,20 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Correlation implements MLModel {
-    DataAccessor da;
     String ref;
     List<String> others;
 
 
-    public Correlation(DataAccessor source, String refMeasure, List<String> otherMeasures){
-        da = source;
+    public Correlation(String refMeasure, List<String> otherMeasures){
         ref = refMeasure;
         others = otherMeasures;
     }
 
     @Override
-    public ECube process() {
-        DataSet ds = da.execute();
+    public ECube process(DataSet ds) {
         double[][] data = new double[1+others.size()][];
         data[0] = ds.getDoubleColumn(ref);
 
@@ -32,7 +28,7 @@ public class Correlation implements MLModel {
         }
 
         RealMatrix res = new PearsonsCorrelation().computeCorrelationMatrix(data);
-        var cube = new ECube(da.getInternal(), "correlation");
+        var cube = new ECube("correlation");
         List<String> header = new ArrayList<>();
         header.add(ref);
         header.addAll(others);
@@ -40,14 +36,6 @@ public class Correlation implements MLModel {
         cube.getExplProperties().put("corr_matrix", res);
 
         return cube;
-    }
-
-
-    private DataAccessor getDataSource() {
-        if (da != null)
-            return da;
-        else
-            throw new IllegalStateException("[MLModel] expected data source before operation ! No data source set !");
     }
 
     @Override
