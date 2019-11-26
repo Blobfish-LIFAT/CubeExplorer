@@ -37,7 +37,7 @@ public class MondrianDev {
 
         var sessions = DopanLoader.loadDir(testData);
 
-        Query q = sessions.stream().filter(s -> s.getFilename().equals("2-08.json")).findFirst().get().queries.get(0);
+        Query q = sessions.stream().filter(s -> s.getFilename().equals("2-08.json")).findFirst().get().queries.get(3);
         Qfset qf = Compatibility.QPsToQfset(q, utils);
 
         ICCorrelate icc = new ICCorrelate(new MDXAccessor(qf),"Nombre de voitures des menages (moyenne)");

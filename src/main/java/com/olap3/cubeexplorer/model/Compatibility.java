@@ -12,6 +12,7 @@ import com.olap3.cubeexplorer.model.columnStore.Predicate;
 import com.olap3.cubeexplorer.model.columnStore.StringEqPredicate;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
+import mondrian.olap.Hierarchy;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 import mondrian.olap.Query;
@@ -71,10 +72,11 @@ public class Compatibility {
         }
 
         // Handle selection predicates
-        Map<Level, List<SelectionFragment>> selections = q.getSelectionPredicates().stream().collect(Collectors.groupingBy(SelectionFragment::getLevel));
+        // Members from same hierarchy need to be grouped and put in a set {}
+        Map<Hierarchy, List<SelectionFragment>> selections = q.getSelectionPredicates().stream().collect(Collectors.groupingBy(sf -> sf.getLevel().getHierarchy()));
         selections.forEach((key, val) -> {
             List<Member> members = val.stream().map(SelectionFragment::getValue).collect(Collectors.toList());
-            onRows.add(new SelectElement(SelectElement.SEL, key, members));
+            onRows.add(new SelectElement(SelectElement.SEL, null, members));
         });
 
         // put all other hierarchies in rows (only non All levels) not described by selection predicates
@@ -111,8 +113,12 @@ public class Compatibility {
             default -> {
                 mdx.append("{");
                 String rowsText = "";
-                for (SelectElement onRow : onRows) {
-                    rowsText = "CROSSJOIN({" + onRow.getRepr() + "}, " + rowsText + ")";
+                for (int i = 0; i < onRows.size(); i++) {
+                    SelectElement el = onRows.get(i);
+                    if (i == 0)
+                        rowsText = el.getRepr();
+                    else
+                        rowsText = "CROSSJOIN({" + el.getRepr() + "}, " + rowsText + ")";
                 }
                 mdx.append(rowsText);
                 mdx.append("} ON ROWS");
@@ -123,7 +129,6 @@ public class Compatibility {
         // FROM CLAUSE
         String cubeName = CubeUtils.getDefault().getCube().getName();//FIXME can't we use references from a fragment ?
         mdx.append("FROM [").append(cubeName).append("]");
-        mdx.append(lsep);
 
         //System.out.println(mdx);
         return mdx.toString();
