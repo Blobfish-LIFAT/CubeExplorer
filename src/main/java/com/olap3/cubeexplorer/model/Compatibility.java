@@ -125,7 +125,7 @@ public class Compatibility {
         mdx.append("FROM [").append(cubeName).append("]");
         mdx.append(lsep);
 
-        System.out.println(mdx);
+        //System.out.println(mdx);
         return mdx.toString();
     }
 

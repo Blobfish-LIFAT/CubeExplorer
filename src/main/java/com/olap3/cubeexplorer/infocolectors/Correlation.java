@@ -5,6 +5,7 @@ import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.correlation.PearsonsCorrelation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Correlation implements MLModel {
@@ -31,6 +32,10 @@ public class Correlation implements MLModel {
 
         RealMatrix res = new PearsonsCorrelation().computeCorrelationMatrix(data);
         var cube = new ECube(da.getInternal(), "correlation");
+        List<String> header = new ArrayList<>();
+        header.add(ref);
+        header.addAll(others);
+        cube.getExplProperties().put("corr_header", header);
         cube.getExplProperties().put("corr_matrix", res);
 
         return cube;
