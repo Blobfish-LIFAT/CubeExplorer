@@ -43,7 +43,8 @@ public class MDXAccessor extends DataAccessor {
             OlapWrapper wrapper = (OlapWrapper) connection;
             OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
             OlapStatement statement = olapConnection.createStatement();
-            CellSet cs = new CellSet(statement.executeOlapQuery(internal.toMDXString()));
+            //CellSet cs = new CellSet(statement.executeOlapQuery(internal.toMDXString()));
+            CellSet cs = new CellSet(statement.executeOlapQuery(Compatibility.QfsetToMDX(internal)));
             return Compatibility.cellSetToDataSet(cs, true);
 
         } catch (SQLException e){

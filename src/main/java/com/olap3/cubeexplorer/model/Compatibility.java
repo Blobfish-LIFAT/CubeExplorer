@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.model;
 
+import com.alexscode.utilities.Future;
 import com.alexscode.utilities.collection.Pair;
 import com.olap3.cubeexplorer.data.CellSet;
 import com.olap3.cubeexplorer.data.HeaderTree;
@@ -15,10 +16,7 @@ import mondrian.olap.Level;
 import mondrian.olap.Member;
 import mondrian.olap.Query;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +28,106 @@ import static com.olap3.cubeexplorer.data.HeaderTree.getLevelDescriptors;
  * Various conversion functions to go between data formats for queries and parts
  */
 public class Compatibility {
+
+    static class SelectElement {
+        public static final int PROJ = 0, SEL = 1;
+        int type;
+        Level l;
+        List<Member> m;
+
+        public SelectElement(int type, Level l, List<Member> m) {
+            this.type = type;
+            this.l = l;
+            this.m = m;
+        }
+
+        public String getRepr(){
+            if (type == PROJ){
+                return l.getUniqueName() + ".MEMBERS";
+            }
+            else if (type == SEL){
+                return "{" +
+                        Future.join(m.stream().map(Member::getUniqueName).collect(Collectors.toList()), ",")
+                        + "}";
+            }
+            return "! error Compatibility.java triplet format !";
+        }
+    }
+
+    /**
+     * Creates a basic MDX query to represent the query triplet
+     * @param q the input triplet
+     * @return the MDX query as a String
+     */
+    public static String QfsetToMDX(Qfset q){
+        final String lsep = System.lineSeparator();
+
+        List<Member> columns = new ArrayList<>();
+        List<SelectElement> onRows = new ArrayList<>();
+
+        // put measures on columns
+        for(MeasureFragment m_tmp : q.getMeasures()) {
+            columns.add(m_tmp.getAttribute());
+        }
+
+        // Handle selection predicates
+        Map<Level, List<SelectionFragment>> selections = q.getSelectionPredicates().stream().collect(Collectors.groupingBy(SelectionFragment::getLevel));
+        selections.forEach((key, val) -> {
+            List<Member> members = val.stream().map(SelectionFragment::getValue).collect(Collectors.toList());
+            onRows.add(new SelectElement(SelectElement.SEL, key, members));
+        });
+
+        // put all other hierarchies in rows (only non All levels) not described by selection predicates
+        Set<Level> banned = q.getSelectionPredicates().stream().map(SelectionFragment::getLevel).collect(Collectors.toSet());
+        for(ProjectionFragment pf : q.getAttributes()) {
+            if(!pf.getLevel().isAll() && !banned.contains(pf.getLevel())) {
+                onRows.add(new SelectElement(SelectElement.PROJ, pf.getLevel(), null));
+            }
+        }
+
+        StringBuilder mdx  = new StringBuilder();
+
+        // SELECT CLAUSE
+        mdx.append("SELECT NON EMPTY ");
+        mdx.append(lsep);
+
+        // ON COLUMNS
+        mdx.append("{");
+        for(int i = 0; i < columns.size(); i++) {
+            mdx.append(columns.get(i).getUniqueName());
+            if(i +1 < columns.size()) mdx.append(", ");
+        }
+        mdx.append("}");
+        mdx.append(" ON COLUMNS,");
+        mdx.append(lsep);
+        mdx.append("NON EMPTY ");
+
+        // ON ROWS
+        switch (onRows.size()) {
+            case 1 -> {
+                mdx.append("{").append(onRows.iterator().next().getRepr()).append("} ON ROWS");
+                mdx.append(lsep);
+            }
+            default -> {
+                mdx.append("{");
+                String rowsText = "";
+                for (SelectElement onRow : onRows) {
+                    rowsText = "CROSSJOIN({" + onRow.getRepr() + "}, " + rowsText + ")";
+                }
+                mdx.append(rowsText);
+                mdx.append("} ON ROWS");
+                mdx.append(lsep);
+            }
+        }
+
+        // FROM CLAUSE
+        String cubeName = CubeUtils.getDefault().getCube().getName();//FIXME can't we use references from a fragment ?
+        mdx.append("FROM [").append(cubeName).append("]");
+        mdx.append(lsep);
+
+        System.out.println(mdx);
+        return mdx.toString();
+    }
 
     public static DataSet cellSetToDataSet(CellSet cs, boolean splitMeasures) {
         if (!splitMeasures) return cellSetToDataSet(cs);

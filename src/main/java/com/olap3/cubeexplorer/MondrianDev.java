@@ -1,9 +1,12 @@
 package com.olap3.cubeexplorer;
 
-import com.olap3.cubeexplorer.data.CellSet;
-import com.olap3.cubeexplorer.data.HeaderTree;
+import com.olap3.cubeexplorer.data.DopanLoader;
+import com.olap3.cubeexplorer.infocolectors.ICCorrelate;
+import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
 import com.olap3.cubeexplorer.model.Compatibility;
-import com.olap3.cubeexplorer.model.columnStore.DataSet;
+import com.olap3.cubeexplorer.model.ECube;
+import com.olap3.cubeexplorer.model.Qfset;
+import com.olap3.cubeexplorer.model.Query;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
@@ -12,9 +15,8 @@ import org.olap4j.OlapStatement;
 import org.olap4j.OlapWrapper;
 
 import java.sql.DriverManager;
-import java.util.List;
 
-import static com.olap3.cubeexplorer.data.HeaderTree.getLevelDescriptors;
+import static com.olap3.cubeexplorer.dolap.DOLAPFig3.testData;
 
 public class MondrianDev {
     public static void main(String[] args) throws Exception{
@@ -33,30 +35,17 @@ public class MondrianDev {
         OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
         OlapStatement statement = olapConnection.createStatement();
 
-        CellSet cs = new CellSet(statement.executeOlapQuery(query2));
+        var sessions = DopanLoader.loadDir(testData);
 
-        Double[][] data = cs.getData();
-        String[] descriptors = new String[cs.getNbOfColumns() + cs.getNbOfRows()];
-        List<HeaderTree> rows = HeaderTree.getLeaves(cs.getHeaderTree(1));
-        List<HeaderTree> cols = HeaderTree.getLeaves(cs.getHeaderTree(0));
+        Query q = sessions.stream().filter(s -> s.getFilename().equals("2-08.json")).findFirst().get().queries.get(0);
+        Qfset qf = Compatibility.QPsToQfset(q, utils);
 
-        System.out.println(rows);
-        System.out.println(getLevelDescriptors(rows.get(0)));
-        System.out.println(cols);
-        System.out.println(getLevelDescriptors(cols.get(0)));
-/*
-        for (int i = 0; i < data.length; i++) {
-            System.out.print(getCrossTabPos(rows.get(i)) + " ");
-            for (int j = 0; j < data[i].length; j++) {
-                double d = data[i][j];
-                System.out.print(d + " ");
-            }
-            System.out.println();
-        }
-*/
-        DataSet ds = Compatibility.cellSetToDataSet(cs, true);
+        ICCorrelate icc = new ICCorrelate(new MDXAccessor(qf),"Nombre de voitures des menages (moyenne)");
+        //DataSet ds = Compatibility.cellSetToDataSet(cs, true);
+        ECube ec = icc.execute();
 
-        System.out.println(ds);
+
+        System.out.println(ec.getExplProperties().get("corr_matrix"));
 
 
     }

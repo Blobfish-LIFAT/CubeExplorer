@@ -1,9 +1,8 @@
 package com.olap3.cubeexplorer.infocolectors;
 
 import com.olap3.cubeexplorer.model.ECube;
-import com.olap3.cubeexplorer.mondrian.CubeUtils;
-import mondrian.olap.OlapElement;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ICCorrelate extends InfoCollector{
@@ -17,6 +16,7 @@ public class ICCorrelate extends InfoCollector{
     //TODO test code finish class
     @Override
     public ECube executeInternal() {
-        return new Correlation(dataSource, measure, CubeUtils.getDefault().getMeasures().stream().map(OlapElement::getName).collect(Collectors.toList())).process();
+        List<String> others = dataSource.getInternal().getMeasures().stream().filter(m -> !m.getAttribute().getName().equals(measure)).map(m -> m.getAttribute().getName()).collect(Collectors.toList());
+        return new Correlation(dataSource, measure, others).process();
     }
 }

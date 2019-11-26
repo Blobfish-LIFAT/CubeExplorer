@@ -23,10 +23,12 @@ import java.util.stream.Collectors;
 public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     mondrian.olap.Query mondrianQuery;
-    String mdx;
-    @Getter @Setter
+
+    @Getter
+    @Setter
     String sql;
-    @Getter @Setter
+    @Getter
+    @Setter
     QueryStats stats;
     /**
      * Set of measure with the corresponding aggregate function
@@ -75,7 +77,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     }
 
     /**
-     *
      * @return the total size of the lists of projection, selection and measure
      * fragments.
      */
@@ -84,7 +85,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     }
 
     /**
-     *
      * @return the list of projection fragments.
      */
     public HashSet<ProjectionFragment> getAttributes() {
@@ -92,7 +92,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     }
 
     /**
-     *
      * @return the list of selection fragments.
      */
     public HashSet<SelectionFragment> getSelectionPredicates() {
@@ -100,7 +99,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     }
 
     /**
-     *
      * @return the list of measure fragments.
      */
     public HashSet<MeasureFragment> getMeasures() {
@@ -240,7 +238,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
             return;
         }
 
-        if (e.getCategory() == Category.Member) {	// single member, needed if {member1, member2, ...}
+        if (e.getCategory() == Category.Member) {    // single member, needed if {member1, member2, ...}
             processMember(e);
         } else {
             if (((ResolvedFunCall) e).getArgCount() == 1) {
@@ -472,7 +470,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     /**
      * Replace a projection fragment by another projection fragment.
      *
-     * @param l the new level where the new projection fragment will be created.
+     * @param l  the new level where the new projection fragment will be created.
      * @param pf the old projection fragment.
      */
     public void replaceProjection(Level l, ProjectionFragment pf) {
@@ -484,7 +482,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     /**
      * Replace a selection fragment by another selection fragment.
      *
-     * @param m the new member where the new selection fragment will be created.
+     * @param m  the new member where the new selection fragment will be created.
      * @param sf the old selection fragment.
      */
     public void replaceSelection(Member m, SelectionFragment sf) {
@@ -670,6 +668,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     }
 
     // true if this includes q
+
     /**
      * Test if the list of projections, selection and measure fragments include
      * all lists of projection, selection ans measure fragments of another
@@ -730,7 +729,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         List<String> pStr = this.attributes.stream().map(pf -> pf.getLevel().getUniqueName()).collect(Collectors.toList());
         List<String> sStr = this.selectionPredicates.stream().map(sp -> sp.getValue().getUniqueName()).collect(Collectors.toList());
 
-        return "Measure={" + Future.join(mStr, "; ") + "}\nProjections={" + Future.join(pStr,"; ") + "}\nSelections={"+ Future.join(sStr, "; ") +"}";
+        return "Measure={" + Future.join(mStr, "; ") + "}\nProjections={" + Future.join(pStr, "; ") + "}\nSelections={" + Future.join(sStr, "; ") + "}";
     }
 
     public String toStringAttributes() {
@@ -968,9 +967,9 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
         return true;
     }
-    
+
     public boolean isqTop() {
-       
+
         if (!(this.getMeasures().isEmpty() && this.getSelectionPredicates().isEmpty())) {
             return false;
         }
@@ -992,7 +991,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
             if (!d.toString().equals("[Measures]")) {
                 ArrayList<Member> members = new ArrayList<Member>();
                 for (SelectionFragment s : selectionPredicates) {
-                    if (s.getLevel().getHierarchy()== d) {
+                    if (s.getLevel().getHierarchy() == d) {
                         members.add(s.getValue());
                     }
                 }
@@ -1008,6 +1007,15 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     public mondrian.olap.Query toMDX() {
         if (mondrianQuery == null) {
+            String queryString = toMDXString();
+            mondrian.olap.Connection cnx = MondrianConfig.getMondrianConnection();
+            return cnx.parseQuery(queryString);
+        } else {
+            return mondrianQuery;
+        }
+    }
+
+    public String toMDXString() {
             String select = "SELECT ";
             String where = "";
             String from = "FROM " + CubeUtils.getDefault().getCube().getName();
@@ -1021,7 +1029,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
             //for identifying the attributes where a selection has been done (because it is a different treatment)
             for (ProjectionFragment pf : attributes) {
                 for (SelectionFragment sf : selectionPredicates) {
-                    if (sf.getLevel().getHierarchy()== pf.getLevel().getHierarchy()) {
+                    if (sf.getLevel().getHierarchy() == pf.getLevel().getHierarchy()) {
                         forbiddenSelections.add(sf);
                     }
                 }
@@ -1057,22 +1065,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
             //final query
             String queryString = select + " " + from + " " + where;
-
-            mondrian.olap.Connection cnx = MondrianConfig.getMondrianConnection();
-            mondrian.olap.Query query = cnx.parseQuery(queryString);
-            mdx = queryString;
-
-            //RolapResult result = (RolapResult) cnx.execute(query);
-            //System.out.println(result);
-            return query;
-        } else {
-            return mondrianQuery;
-        }
-    }
-
-    public String toMDXString(){
-        this.toMDX();
-        return mdx;
+        return queryString;
     }
 
     public mondrian.olap.Query toMDX(HashSet<ProjectionFragment> projectionOnRows, HashSet<ProjectionFragment> projectionOnColumns) {
@@ -1402,7 +1395,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         String s = "";
 
         //FIXME Do we need to inlcude attributes which are All level
-        //attributes = attributes.stream().filter(a -> !a.getLevel().isAll()).collect(Collectors.toCollection(HashSet::new));
+        attributes = attributes.stream().filter(a -> !a.getLevel().isAll()).collect(Collectors.toCollection(HashSet::new));
 
         for (ProjectionFragment pf : attributes) {
             if (pair != 0 && pair % 2 == 0) {
@@ -1442,92 +1435,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         return s;
     }
 
-    /*public Query toMDXwithIPUMS() {
-     if (mondrianQuery == null) {
-     String select;
-     String where = "";
-     String from = "FROM " + CubeUtils.getDefault().getCube().getName()();
-     ArrayList<SelectionFragment> forbiddenSelections = new ArrayList<SelectionFragment>();
 
-     int nbMeasure = 0;
-
-     int axis = 0;
-
-     //for identifying the attributes where a selection has been done (because it is a different treatment)
-     for (ProjectionFragment pf : attributes) {
-     for (SelectionFragment sf : selectionPredicates) {
-     if (sf.getLevel().getDimension() == pf.getLevel().getDimension()) {
-     forbiddenSelections.add(sf);
-     }
-     }
-     }
-
-     HashSet<ProjectionFragment> projectionOnRows = new HashSet<ProjectionFragment>();
-     HashSet<ProjectionFragment> projectionOnColumns = new HashSet<ProjectionFragment>();
-
-     for (ProjectionFragment pf : attributes) {
-     if (pf.getLevel().getDimension().getName().equalsIgnoreCase("occupation") || pf.getLevel().getDimension().getName().equalsIgnoreCase("race")) {
-     projectionOnRows.add(pf);
-     } else {
-     projectionOnColumns.add(pf);
-     }
-     }
-
-     select = crossjoinAttributesMDX(projectionOnRows, forbiddenSelections);
-
-     String measureString = "";
-     for (MeasureFragment mf : measures) {
-     if (measures.size() - 1 == nbMeasure) {
-     measureString += mf.getAttribute().getUniqueName() + "}";
-     } else {
-     measureString += mf.getAttribute().getUniqueName() + ", ";
-     }
-     nbMeasure++;
-     }
-
-     if (!measures.isEmpty()) {
-     select = "SELECT {Crossjoin({" + measureString + "," + select + ")} ON " + axis + ", \n";
-     axis++;
-     } else {
-     select = "SELECT {" + select + "} ON " + axis + ", \n";
-     axis++;
-     }
-
-
-     if (measures.isEmpty() && projectionOnRows.isEmpty()) {
-     select = "SELECT ";
-     }
-     select += "{" + crossjoinAttributesMDX(projectionOnColumns, forbiddenSelections) + "} ON " + axis + " \n";
-
-     //where clause
-     ArrayList<SelectionFragment> sfs = new ArrayList<SelectionFragment>();
-
-     for (SelectionFragment sf : selectionPredicates) {
-     if (!forbiddenSelections.contains(sf)) {
-     sfs.add(sf);
-     }
-     }
-
-     if (!sfs.isEmpty()) {
-     where = "where(" + crossjoinSelectionsMDX(sfs) + ")";
-     }
-
-     //final query
-     String queryString = select + " " + from + " " + where;
-
-     //System.out.println(queryString);
-
-     mondrian.olap.Connection cnx = fr.univ_tours.li.jaligon.falseto.Generics.Connection.getCnx();
-     Query query = cnx.parseQuery(queryString);
-
-     //RolapResult result = (RolapResult) cnx.execute(query);
-     //System.out.println(result);
-
-     return query;
-     } else {
-     return mondrianQuery;
-     }
-     }*/
     public static ReferenceSet getReferences(RolapResult query) {
         ReferenceSet result = new ReferenceSet();
 
@@ -1560,7 +1468,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
                     for (Position p : query.getSlicerAxis().getPositions()) {//this axis returns all the set of members in the slicer in one position (so all members with any dimension)
                         for (Member m : p) {
                             ArrayList<Member> membersDimension = new ArrayList<Member>();
-                            if (m.getLevel().getHierarchy()== d) {
+                            if (m.getLevel().getHierarchy() == d) {
                                 membersDimension.add(m);
                                 referencesPerDimension.add(membersDimension);
                             }
