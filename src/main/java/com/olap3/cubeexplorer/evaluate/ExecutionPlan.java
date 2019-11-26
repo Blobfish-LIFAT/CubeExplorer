@@ -20,6 +20,13 @@ public class ExecutionPlan implements Iterator<InfoCollector>{
         executed = new HashSet<>();
     }
 
+    public ExecutionPlan(Collection<InfoCollector> base, boolean sortedByTime){
+        operations = new ArrayList<>(base);
+        if (sortedByTime)
+            operations.sort(Comparator.comparing(InfoCollector::estimatedTime));
+        executed = new HashSet<>();
+    }
+
     public Set<InfoCollector> getLeft() {
         return new HashSet<>(operations);
     }
