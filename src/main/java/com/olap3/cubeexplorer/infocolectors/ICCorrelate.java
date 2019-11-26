@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.infocolectors;
 
+import com.olap3.cubeexplorer.infocolectors.algos.Correlation;
 import com.olap3.cubeexplorer.model.ECube;
 
 import java.util.List;

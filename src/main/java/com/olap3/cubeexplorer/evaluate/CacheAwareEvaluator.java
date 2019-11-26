@@ -3,7 +3,7 @@ package com.olap3.cubeexplorer.evaluate;
 import com.google.common.base.Stopwatch;
 import com.olap3.cubeexplorer.infocolectors.DataAccessor;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
-import com.olap3.cubeexplorer.infocolectors.MLModel;
+import com.olap3.cubeexplorer.infocolectors.algos.MLModel;
 import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.model.ProjectionFragment;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;

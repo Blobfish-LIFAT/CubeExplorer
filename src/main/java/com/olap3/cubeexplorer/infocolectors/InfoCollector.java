@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.infocolectors;
 
+import com.olap3.cubeexplorer.infocolectors.algos.MLModel;
 import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.model.Qfset;
 import lombok.Getter;

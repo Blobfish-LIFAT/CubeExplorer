@@ -1,5 +1,6 @@
-package com.olap3.cubeexplorer.infocolectors;
+package com.olap3.cubeexplorer.infocolectors.algos;
 
+import com.olap3.cubeexplorer.infocolectors.DataAccessor;
 import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import org.apache.commons.math3.linear.RealMatrix;
