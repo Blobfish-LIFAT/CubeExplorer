@@ -6,9 +6,14 @@ import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.infocolectors.algos.MLModel;
 import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.model.ProjectionFragment;
+import com.olap3.cubeexplorer.model.Qfset;
+import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.optimize.AprioriMetric;
 import com.olap3.cubeexplorer.optimize.BudgetManager;
+import com.olap3.cubeexplorer.optimize.KnapsackManager;
+import com.olap3.cubeexplorer.optimize.tsp.LinKernighan;
+import com.olap3.cubeexplorer.optimize.tsp.Measurable;
 import mondrian.olap.Dimension;
 import mondrian.olap.Level;
 import org.jgrapht.Graph;
@@ -22,32 +27,81 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class CacheAwareEvaluator implements Evaluator {
     Map<DataAccessor, List<MLModel>> algos;
     Set<DataAccessor> reoptAfter;
+    Set<InfoCollector> all;
     Map<InfoCollector, ECube> results = new HashMap<>();
+
     ExecutionPlan current;
     CubeUtils utils;
     AprioriMetric im;
 
+    boolean setupDone = false;
+    boolean reopt;
+    long budget;
+    Stopwatch runTime;
+
     ExecutorService poolExecutor;
 
-    public CacheAwareEvaluator(CubeUtils utils, AprioriMetric im) {
+    public CacheAwareEvaluator(CubeUtils utils, AprioriMetric im, long budgetms) {
         this.utils = utils;
         this.im = im;
-        poolExecutor = new ThreadPoolExecutor(1,2,5, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+        budget = budgetms;
     }
 
     @Override
     public List<ECube> evaluate() {
-        //TODO
-        return null;
+        KnapsackManager ks = new KnapsackManager(im, 0.05);
+        if (!setupDone)
+            throw new IllegalStateException("Call setup first to initialize the evaluator !");
+
+        for (;current.hasNext();) {
+            InfoCollector ic = current.next();
+
+            results.put(ic, runAndGetResult(ic));
+            current.setExecuted(ic);
+            if (!reopt)
+                continue;
+            List<InfoCollector> candidates = all.stream().filter(c -> !current.getLeft().contains(c))
+                    .filter(c -> !current.getExecuted().contains(c)).collect(Collectors.toList());
+            reoptRoutine(current, candidates, runTime, budget, ks);
+        }
+
+        //Ordering phase
+        List<InfoCollector> executed = new ArrayList<>(current.getExecuted());
+        List<Qfset> toOrder = executed.stream().map(ic -> ic.getDataSource().getInternal()).collect(Collectors.toList());
+        List<Integer> ids = IntStream.range(0, toOrder.size()).boxed().collect(Collectors.toList());
+        LinKernighan tsp = new LinKernighan(toOrder.stream().map(q -> (Measurable) q).collect(Collectors.toList()), ids);
+        tsp.runAlgorithm();
+
+        List<ECube> ordered = new ArrayList<>(executed.size());
+        for (int index : tsp.tour){
+            ordered.add(results.get(executed.get(index)));
+        }
+
+        return ordered;
+    }
+
+    private ECube runAndGetResult(InfoCollector ic) {
+        DataAccessor da = ic.getDataSource();
+        DataSet ds = da.execute();
+        MLModel model = ic.getModel();
+        ECube res = model.process(ds);
+        res.getExplProperties().put("query", da.getInternal());
+        return res;
     }
 
     @Override
-    public boolean setup(ExecutionPlan p, Stopwatch runtime, boolean reoptEnable) {
+    public boolean setup(ExecutionPlan p, boolean reoptEnable) {
+        runTime = Stopwatch.createStarted();
+        all = new HashSet<>(p.getOperations());
         buildExecOrder(p.getOperations());
+        this.reopt = reoptEnable;
+        poolExecutor = new ThreadPoolExecutor(1,2,5, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+        setupDone = true;
         return true;
     }
 
