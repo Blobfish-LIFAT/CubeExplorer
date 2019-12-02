@@ -95,13 +95,9 @@ public class TrainSetBuilder {
                     continue;
                 }
                 for (QueryPart measure : q.getMeasures()){
-                    double[] targets;
-                    try {
-                        targets = computeTargets(ds, measure.getValue());
-                    }catch (Exception e){
-                        System.out.println("        error: " + e.getMessage());
+                    double[] targets = computeTargets(ds, measure.getValue());
+                    if (targets == null)
                         continue;
-                    }
 
                     String id = sess.getFilename() + "$" + qnb;
                     feat.print(id + ","); // Query id
@@ -124,7 +120,11 @@ public class TrainSetBuilder {
                     //selection encoding
                     int[] s = new int[selections.size()];
                     Arrays.fill(s, 0);
-                    //TODO encode selections
+                    for (SelectionFragment sf : triplet.getSelectionPredicates()){
+                        int sind = selections.indexOf(sf.getLevel().getUniqueName() + "$Active");
+                        s[sind] = 1;
+                        s[sind + 1] = 0; //FIXME count members ?
+                    }
                     feat.print(Future.arrayToString(s, ",") + ",");
 
                     feat.print(Future.arrayToString(targets, ",") + "\n");
@@ -154,6 +154,8 @@ public class TrainSetBuilder {
             String name = measureValue.split("]\\.\\[")[1].replace("]", "");
             data = ds.getDoubleColumn(name);
         }
+        if (data == null)
+            return null;
 
         DescriptiveStatistics stats = new DescriptiveStatistics(data);
 
