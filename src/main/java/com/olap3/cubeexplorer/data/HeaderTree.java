@@ -60,16 +60,17 @@ public class HeaderTree {
     /**
      * Remove empty children list by replacing them with null and compute span values
      */
-    public void updateSpanAndTrimChildren() {
-        if (children == null || children.isEmpty()) {
-            span = 1;
-            children = null;
+    public static int updateSpanAndTrimChildren(HeaderTree ht) {
+        if (ht.children == null || ht.children.isEmpty()) {
+            ht.span = 1;
+            ht.children = null;
+            return 1;
         } else {
-            span = 0;
-            for (HeaderTree child : children) {
-                child.updateSpanAndTrimChildren();
-                span += child.span;
+            ht.span = 0;
+            for (HeaderTree child : ht.children) {
+                ht.span += updateSpanAndTrimChildren(child);
             }
+            return ht.span;
         }
     }
 

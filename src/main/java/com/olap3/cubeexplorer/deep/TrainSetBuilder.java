@@ -86,9 +86,23 @@ public class TrainSetBuilder {
                 //CellSet cs = new CellSet(statement.executeOlapQuery(internal.toMDXString()));
                 final Qfset triplet = Compatibility.QPsToQfset(q, utils);
                 CellSet cs = new CellSet(statement.executeOlapQuery(Compatibility.QfsetToMDX(triplet)));
-                DataSet ds = Compatibility.cellSetToDataSet(cs, true);
-
+                DataSet ds;
+                try {
+                    ds = Compatibility.cellSetToDataSet(cs, true);
+                }catch (Exception e){
+                    System.out.println("        error: " + e.getMessage());
+                    qnb++;
+                    continue;
+                }
                 for (QueryPart measure : q.getMeasures()){
+                    double[] targets;
+                    try {
+                        targets = computeTargets(ds, measure.getValue());
+                    }catch (Exception e){
+                        System.out.println("        error: " + e.getMessage());
+                        continue;
+                    }
+
                     String id = sess.getFilename() + "$" + qnb;
                     feat.print(id + ","); // Query id
 
@@ -97,7 +111,7 @@ public class TrainSetBuilder {
                     Arrays.fill(m, 0);
                     int mind = getMeasureIndex(measures, measure);
                     m[mind] = 1;
-                    feat.print(Future.arrayToString(m, ","));
+                    feat.print(Future.arrayToString(m, ",") + ",");
 
                     //projection encoding
                     int[] p = new int[projections.size()];
@@ -113,7 +127,6 @@ public class TrainSetBuilder {
                     //TODO encode selections
                     feat.print(Future.arrayToString(s, ",") + ",");
 
-                    double[] targets = computeTargets(ds, measure.getValue());
                     feat.print(Future.arrayToString(targets, ",") + "\n");
 
                 }
@@ -149,10 +162,10 @@ public class TrainSetBuilder {
         double[] gmm = new double[3 * k];
 
         int i = 0;
-        for (var component : gm.components){ //FIXME actually add the gaussian parameters in there ....
-            gmm[i++] = 0;
-            gmm[i++] = 0;
-            gmm[i++] = 0;
+        for (var component : gm.components){
+            gmm[i++] = component.distribution.mean();
+            gmm[i++] = component.distribution.sd();
+            gmm[i++] = component.priori;
         }
 
         return ArrayUtils.addAll(new double[]{stats.getMean(), stats.getVariance(), stats.getSkewness(),

@@ -167,7 +167,7 @@ public class CellSet {
                 parent = child;
             }
         }
-        root.updateSpanAndTrimChildren();
+        HeaderTree.updateSpanAndTrimChildren(root);
         return root;
     }
 
