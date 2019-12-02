@@ -74,9 +74,10 @@ public class TrainSetBuilder {
         feat.print(Future.join(projections, ",") + ",");
         feat.print(Future.join(selections, ",") + ",");
         feat.print("avg,variance,skewness,1stq,median,3rdq,mu1,sigma1,pi1,mu2,sigma2,pi2,mu3,sigma3,pi3\n");
+        feat.flush();
 
-        int id = 0;
         for (Session sess : sessions){
+            int qnb = 0;
             for (Query q : sess.getQueries()){
                 //Run query
                 java.sql.Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
@@ -88,6 +89,7 @@ public class TrainSetBuilder {
                 DataSet ds = Compatibility.cellSetToDataSet(cs, true);
 
                 for (QueryPart measure : q.getMeasures()){
+                    String id = sess.getFilename() + "$" + qnb++;
                     feat.print(id + ","); // Query id
 
                     //measure encoding
@@ -120,10 +122,11 @@ public class TrainSetBuilder {
 
                 }
 
-                id++;
+                feat.flush();
             }
         }
 
+        feat.close();
     }
 
     private static double[] computeTargets(DataSet ds, String measureValue) {

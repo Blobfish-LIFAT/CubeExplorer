@@ -319,6 +319,8 @@ public class Compatibility {
     }
 
     public static SelectionFragment selFragFromFilter(QueryPart filter, CubeUtils utils){
+        if (filter.value.equals("Sans objet"))
+            System.out.println("debug");
         //Attempt more efficient conversion
         if (filter.level != null){
             Level l = utils.getLevel(filter.level);
