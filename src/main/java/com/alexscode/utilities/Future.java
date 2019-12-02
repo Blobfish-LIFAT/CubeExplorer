@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -36,6 +35,36 @@ public final class Future {
             }
         }
         return sb.toString();
+    }
+
+    public static String arrayToString(int[] a, String sep){
+        if (a == null)
+            return "null";
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i<a.length; i++) {
+            b.append(a[i]);
+            if (i == a.length - 1)
+                return b.toString();
+            b.append(sep);
+        }
+
+        return "";
+    }
+
+    public static String arrayToString(double[] a, String sep){
+        if (a == null)
+            return "null";
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i<a.length; i++) {
+            b.append(a[i]);
+            if (i == a.length - 1)
+                return b.toString();
+            b.append(sep);
+        }
+
+        return "";
     }
 
     static final String accentedCharacters = "àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ";
