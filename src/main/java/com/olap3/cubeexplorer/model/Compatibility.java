@@ -257,7 +257,7 @@ public class Compatibility {
                 coords.addAll(getCrossTabPos(cols.get(j)));
                 Object[] line = new Object[coords.size()+1];
                 System.arraycopy(coords.toArray(), 0, line, 0, coords.size());
-                line[coords.size()] = data[i][j];
+                line[coords.size()] = data[i][j] == null ? Double.NaN : data[i][j];
                 ds.pushLine(line);
             }
         }

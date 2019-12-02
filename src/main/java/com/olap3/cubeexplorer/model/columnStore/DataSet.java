@@ -124,7 +124,13 @@ public class DataSet {
         for (int i = 0; i < width; i++) {
             //System.out.println(typeMap[i]);
             switch (typeMap[i]){
-                case 0 -> dataReal[posReal.get(lineOrder.get(i))][row_index] = (double) input[i];
+                case 0 -> {
+                    try {
+                        dataReal[posReal.get(lineOrder.get(i))][row_index] = (double) input[i];
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
+                }
                 case 1 -> dataInt[posInt.get(lineOrder.get(i))][row_index] = (int) input[i];
                 case 2 -> dataStr[posString.get(lineOrder.get(i))][row_index] = (String) input[i];
             }
