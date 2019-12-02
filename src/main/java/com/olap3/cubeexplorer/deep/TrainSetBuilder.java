@@ -3,10 +3,7 @@ package com.olap3.cubeexplorer.deep;
 import com.alexscode.utilities.Future;
 import com.olap3.cubeexplorer.data.CellSet;
 import com.olap3.cubeexplorer.data.DopanLoader;
-import com.olap3.cubeexplorer.model.Compatibility;
-import com.olap3.cubeexplorer.model.Query;
-import com.olap3.cubeexplorer.model.QueryPart;
-import com.olap3.cubeexplorer.model.Session;
+import com.olap3.cubeexplorer.model.*;
 import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
@@ -77,25 +74,29 @@ public class TrainSetBuilder {
         feat.flush();
 
         for (Session sess : sessions){
+            System.out.println("Parsing session " + sess.getFilename());
             int qnb = 0;
             for (Query q : sess.getQueries()){
+                System.out.println("    Parsing Q" + qnb);
                 //Run query
                 java.sql.Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
                 OlapWrapper wrapper = (OlapWrapper) connection;
                 OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
                 OlapStatement statement = olapConnection.createStatement();
                 //CellSet cs = new CellSet(statement.executeOlapQuery(internal.toMDXString()));
-                CellSet cs = new CellSet(statement.executeOlapQuery(Compatibility.QfsetToMDX(Compatibility.QPsToQfset(q, utils))));
+                final Qfset triplet = Compatibility.QPsToQfset(q, utils);
+                CellSet cs = new CellSet(statement.executeOlapQuery(Compatibility.QfsetToMDX(triplet)));
                 DataSet ds = Compatibility.cellSetToDataSet(cs, true);
 
                 for (QueryPart measure : q.getMeasures()){
-                    String id = sess.getFilename() + "$" + qnb++;
+                    String id = sess.getFilename() + "$" + qnb;
                     feat.print(id + ","); // Query id
 
                     //measure encoding
                     int[] m = new int[measures.size()];
                     Arrays.fill(m, 0);
-                    m[measures.indexOf(measure.getValue())] = 1;
+                    int mind = getMeasureIndex(measures, measure);
+                    m[mind] = 1;
                     feat.print(Future.arrayToString(m, ","));
 
                     //projection encoding
@@ -109,12 +110,7 @@ public class TrainSetBuilder {
                     //selection encoding
                     int[] s = new int[selections.size()];
                     Arrays.fill(s, 0);
-                    for (QueryPart sel : q.getFilters()){
-                        int index = selections.indexOf(sel.getValue());
-                        int nb = utils.fetchMembers(utils.getLevel(sel.getValue())).size();
-                        s[index] = 1;
-                        s[index + 1] += nb;
-                    }
+                    //TODO encode selections
                     feat.print(Future.arrayToString(s, ",") + ",");
 
                     double[] targets = computeTargets(ds, measure.getValue());
@@ -123,14 +119,29 @@ public class TrainSetBuilder {
                 }
 
                 feat.flush();
+                qnb++;
             }
         }
 
         feat.close();
     }
 
+    private static int getMeasureIndex(List<String> measures, QueryPart measure) {
+        int index = measures.indexOf(measure.getValue());
+        if (index != -1)
+            return index;
+
+        String name = measure.getValue().split("]\\.\\[")[1].replace("]", "");
+        return measures.indexOf(name);
+    }
+
     private static double[] computeTargets(DataSet ds, String measureValue) {
         double[] data = ds.getDoubleColumn(measureValue);
+        if (data == null){
+            String name = measureValue.split("]\\.\\[")[1].replace("]", "");
+            data = ds.getDoubleColumn(name);
+        }
+
         DescriptiveStatistics stats = new DescriptiveStatistics(data);
 
         int k = 3;

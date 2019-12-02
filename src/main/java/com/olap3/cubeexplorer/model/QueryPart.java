@@ -145,6 +145,12 @@ public class QueryPart implements Comparable<QueryPart> {
         return value;
     }
 
+    public String getLevel() {
+        if (!this.isFilter())
+            throw new UnsupportedOperationException("Level only exists for filters");
+        return level;
+    }
+
     @Override
     public String toString() {
         return "QueryPart{" +

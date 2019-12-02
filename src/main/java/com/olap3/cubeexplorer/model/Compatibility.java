@@ -12,10 +12,8 @@ import com.olap3.cubeexplorer.model.columnStore.Predicate;
 import com.olap3.cubeexplorer.model.columnStore.StringEqPredicate;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import mondrian.olap.Hierarchy;
-import mondrian.olap.Level;
-import mondrian.olap.Member;
 import mondrian.olap.Query;
+import mondrian.olap.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,18 +31,34 @@ public class Compatibility {
     static class SelectElement {
         public static final int PROJ = 0, SEL = 1;
         int type;
-        Level l;
-        List<Member> m;
+        Set<Level> l; Hierarchy h;
+        Set<Member> m;
 
-        public SelectElement(int type, Level l, List<Member> m) {
+        public SelectElement(int type, Level l, Collection<Member> m) {
             this.type = type;
-            this.l = l;
-            this.m = m;
+            this.l = new HashSet<>();
+            this.l.add(l);
+            if (m != null)
+                this.m = new HashSet<>(m);
+            else
+                this.m = new HashSet<>();
+        }
+
+        public SelectElement(int type, Collection<Member> m) {
+            this.type = type;
+            this.l = new HashSet<>();
+            if (m !=null)
+                this.m = new HashSet<>(m);
+            else
+                this.m = new HashSet<>();
         }
 
         public String getRepr(){
             if (type == PROJ){
-                return l.getUniqueName() + ".MEMBERS";
+                if (l.size() == 1)
+                    return l.iterator().next().getUniqueName() + ".MEMBERS";
+                else
+                    return "{" + Future.join(l.stream().map(OlapElement::getUniqueName).collect(Collectors.toUnmodifiableList()),",") + "}";
             }
             else if (type == SEL){
                 return "{" +
@@ -52,6 +66,14 @@ public class Compatibility {
                         + "}";
             }
             return "! error Compatibility.java triplet format !";
+        }
+
+        public boolean isSelection(){
+            return type == SEL;
+        }
+
+        public boolean isProjection(){
+            return type == PROJ;
         }
     }
 
@@ -76,14 +98,24 @@ public class Compatibility {
         Map<Hierarchy, List<SelectionFragment>> selections = q.getSelectionPredicates().stream().collect(Collectors.groupingBy(sf -> sf.getLevel().getHierarchy()));
         selections.forEach((key, val) -> {
             List<Member> members = val.stream().map(SelectionFragment::getValue).collect(Collectors.toList());
-            onRows.add(new SelectElement(SelectElement.SEL, null, members));
+            final SelectElement el = new SelectElement(SelectElement.SEL, members);
+            el.h = key;
+            onRows.add(el);
         });
 
         // put all other hierarchies in rows (only non All levels) not described by selection predicates
-        Set<Level> banned = q.getSelectionPredicates().stream().map(SelectionFragment::getLevel).collect(Collectors.toSet());
+        //Set<Level> banned = q.getSelectionPredicates().stream().map(SelectionFragment::getLevel).collect(Collectors.toSet());
         for(ProjectionFragment pf : q.getAttributes()) {
-            if(!pf.getLevel().isAll() && !banned.contains(pf.getLevel())) {
-                onRows.add(new SelectElement(SelectElement.PROJ, pf.getLevel(), null));
+            if(!pf.getLevel().isAll()){//!banned.contains(pf.getLevel())) {
+                if (selections.containsKey(pf.getHierarchy())){
+                    for (SelectElement el : onRows){
+                        if (el.isSelection() && el.h.equals(pf.getHierarchy())){
+                            el.l.add(pf.getLevel());
+                        }
+                    }
+                } else {
+                    onRows.add(new SelectElement(SelectElement.PROJ, pf.getLevel(), null));
+                }
             }
         }
 

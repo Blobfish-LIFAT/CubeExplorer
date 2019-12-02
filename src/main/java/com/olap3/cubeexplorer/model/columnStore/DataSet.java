@@ -193,7 +193,10 @@ public class DataSet {
         return dataReal[column_index];
     }
     public double[] getDoubleColumn(String column_name) {
-        return dataReal[posReal.get(column_name)];
+        Integer index = posReal.get(column_name);
+        if (index == null)
+            return null;
+        return dataReal[index];
     }
     public String[] getStringColumn(int column_index) {
         return dataStr[column_index];
