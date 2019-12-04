@@ -70,7 +70,7 @@ public class TrainSetBuilder {
         feat.print(Future.join(measures, ",") + ",");
         feat.print(Future.join(projections, ",") + ",");
         feat.print(Future.join(selections, ",") + ",");
-        feat.print("avg,variance,skewness,1stq,median,3rdq,mu1,sigma1,pi1,mu2,sigma2,pi2,mu3,sigma3,pi3\n");
+        feat.print("avg,variance,skewness,1stq,median,3rdq,mu1,sigma1,pi1,mu2,sigma2,pi2,mu3,sigma3,pi3,raw\n");
         feat.flush();
 
         for (Session sess : sessions){
@@ -127,7 +127,7 @@ public class TrainSetBuilder {
                     }
                     feat.print(Future.arrayToString(s, ",") + ",");
 
-                    feat.print(Future.arrayToString(targets, ",") + "\n");
+                    feat.print(Future.arrayToString(targets, ",") + ",\"" + Arrays.toString(getDataCol(ds, measure.getValue())) + "\"\n");
 
                 }
 
@@ -149,13 +149,8 @@ public class TrainSetBuilder {
     }
 
     private static double[] computeTargets(DataSet ds, String measureValue) {
-        double[] data = ds.getDoubleColumn(measureValue);
-        if (data == null){
-            String name = measureValue.split("]\\.\\[")[1].replace("]", "");
-            data = ds.getDoubleColumn(name);
-        }
-        if (data == null)
-            return null;
+        double[] data = getDataCol(ds, measureValue);
+        if (data == null) return null;
 
         DescriptiveStatistics stats = new DescriptiveStatistics(data);
 
@@ -173,5 +168,16 @@ public class TrainSetBuilder {
         return ArrayUtils.addAll(new double[]{stats.getMean(), stats.getVariance(), stats.getSkewness(),
                 stats.getPercentile(0.25), stats.getPercentile(0.5), stats.getPercentile(0.75)},
                 gmm);
+    }
+
+    private static double[] getDataCol(DataSet ds, String measureValue) {
+        double[] data = ds.getDoubleColumn(measureValue);
+        if (data == null){
+            String name = measureValue.split("]\\.\\[")[1].replace("]", "");
+            data = ds.getDoubleColumn(name);
+        }
+        if (data == null)
+            return null;
+        return data;
     }
 }
