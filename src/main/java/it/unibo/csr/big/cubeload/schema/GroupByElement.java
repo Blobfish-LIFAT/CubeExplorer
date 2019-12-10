@@ -1,18 +1,23 @@
 package it.unibo.csr.big.cubeload.schema;
+
+import lombok.Getter;
+
 public class GroupByElement
 {
 	private String hierarchy;
+	@Getter
+	Hierarchy h;
 	private String level;
+	@Getter
+	Level l;
 	private boolean visible;
-	
-	/**
-	 * Class constructor
-	 */
-	public GroupByElement(String hierarchy, String level)
-	{
-		this.hierarchy = hierarchy;
-		this.level = level;
-		visible = true;
+
+
+	public GroupByElement(Hierarchy hierarchy, Level level){
+		this.hierarchy = hierarchy.getName();
+		h = hierarchy;
+		this.level = level.getName();
+		l = level;
 	}
 	
 	/**

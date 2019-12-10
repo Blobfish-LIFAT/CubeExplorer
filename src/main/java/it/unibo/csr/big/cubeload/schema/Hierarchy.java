@@ -1,5 +1,8 @@
 package it.unibo.csr.big.cubeload.schema;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +17,8 @@ public class Hierarchy
 {
 	private static final int SECOND_LAST_PADDING = 2;
 	private String name;
+	@Getter @Setter
+	private mondrian.olap.Hierarchy md;
 	private List<Level> levels = new ArrayList<Level>();
 	Random rand = new Random();
 	

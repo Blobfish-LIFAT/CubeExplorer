@@ -186,7 +186,7 @@ public class Profile
 			for (Hierarchy hie : cube.getHierarchies())
 			{
 				tempLevel = hie.getRandomLevel(true); // The level can be an ALL level
-				newQuery.addGroupByElement(hie.getName(), tempLevel.getName());
+				newQuery.addGroupByElement(hie, tempLevel);
 			}
 			
 			// The visibility of the query's Hierarchies is checked

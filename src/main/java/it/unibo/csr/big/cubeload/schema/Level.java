@@ -1,8 +1,9 @@
 package it.unibo.csr.big.cubeload.schema;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.*;
 
 /**
  * This class implements a hierarchy's level, and the methods
@@ -12,7 +13,9 @@ import java.util.Random;
  */
 public class Level {
     private String name;
-    private List<String> values = new ArrayList<String>();
+    private Set<String> values = new HashSet<String>();
+    @Getter @Setter
+    private mondrian.olap.Level md;
     Random rand = new Random();
 
     /**
@@ -64,9 +67,7 @@ public class Level {
      * @param value The value to be added.
      */
     public void addDistinctValues(String value) {
-        if (!values.contains(value)) {
-            values.add(value);
-        }
+        values.add(value);
     }
 
     /**
@@ -75,7 +76,11 @@ public class Level {
      * @return The randomly chosen value.
      */
     public String getRandomValue() {
-        return values.get(rand.nextInt(getValuesCount()));
+        int toGo = rand.nextInt(getValuesCount());
+        Iterator<String> it = values.iterator();
+        for (int i = 0; i != toGo; i++)
+            it.next();
+        return it.next();
     }
 
     /**

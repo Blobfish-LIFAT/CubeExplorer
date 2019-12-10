@@ -94,7 +94,7 @@ public class OlapGenerator {
 
             for (Hierarchy hie : cube.getHierarchies()) {
                 level = hie.getRandomLevel(true); // The level can be an ALL level
-                query.addGroupByElement(hie.getName(), level.getName());
+                query.addGroupByElement(hie, level);
             }
 
             // The visibility of the query's Hierarchies is checked
@@ -158,42 +158,35 @@ public class OlapGenerator {
     }
 
 
+    /**
+     * Fetches members from mondrian and the underlying database
+     * @param cube the cubeload cube struct
+     * @param utils matching cube utilities object
+     */
     private void getHInfoMondrian(Cube cube, CubeUtils utils) {
         for (Hierarchy hie : cube.getHierarchies()) {
-            mondrian.olap.Hierarchy mdHie = null;
 
-            for (mondrian.olap.Hierarchy candidate : utils.getHierarchies()){
-                if (candidate.getDimension().isMeasures())
-                    continue;
-
-                RolapHierarchy rh = (RolapHierarchy) candidate;
-                if (rh.getDimension().getName().equals(hie.getName())) {
-                    mdHie = candidate;
-                    break;
-                } else if (rh.getSubName().equals(hie.getName())){
-                    mdHie = candidate;
-                }
-            }
+            mondrian.olap.Hierarchy mdHie = getMDHierarchy(utils, hie);
+            hie.setMd(mdHie);
 
             List<Level> toDel = new ArrayList<>();
             for (Level l : hie.getLevels()) {
                 if (!l.isLeaf(hie)) {
-                    mondrian.olap.Level mdLevel = null;
+                    mondrian.olap.Level mdLevel = getMondrianLevel(l, mdHie);
 
-                    for (mondrian.olap.Level candidate : mdHie.getLevels()){
-                        if (candidate.getName().equals(l.getName()))
-                            mdLevel = candidate;
-                    }
                     // The level was probably wrongly inferred by cubeload remove it
                     if (mdLevel == null){
                         toDel.add(l);
                         continue;
                     }
+
                     //System.out.println(hie.getName() + "." + l.getName());
                     //System.out.println("  " + mdHie + mdLevel);
                     for (Member m : utils.fetchMembers(mdLevel)){
                         l.addDistinctValues(m.getName());
                     }
+
+                    l.setMd(mdLevel);
 
                 }
             }
@@ -244,7 +237,9 @@ public class OlapGenerator {
     public void generateWorkload() throws Exception {
         Cube cube = getCube(schemaPath, cubeName);
 
+        System.out.println("Hierarchy traversal start");
         getHierarchyInformation(cube, csvPath);
+        System.out.println("Hierarchy traversal done");
 
         // Creation of the surprising queries
         createSurprisingQueries(cube);
@@ -272,27 +267,39 @@ public class OlapGenerator {
                 numberOfSurprisingQueries,
                 profiles,
                 sessions);
-
-        /*
-        PrintWriter writer = new PrintWriter("Sessions.txt", "UTF-8");
-        int sessionCounter = 1;
-        for (Session s : sessions) {
-            writer.println("Session n." + sessionCounter++ + ", template: " + s.getTemplateName());
-            int queryCounter = 1;
-
-            for (Query q : s.getQueryList()) {
-                writer.println(queryCounter++);
-                writer.println(q.printQuery());
-            }
-
-            writer.println("-------------------------------");
-        }
-
-        writer.close();
-        */
     }
 
 	public List<Session> getSessions() {
 		return sessions;
 	}
+
+	public static mondrian.olap.Hierarchy getMDHierarchy(CubeUtils utils, Hierarchy hie){
+        mondrian.olap.Hierarchy mdHie = null;
+
+        for (mondrian.olap.Hierarchy candidate : utils.getHierarchies()){
+            if (candidate.getDimension().isMeasures())
+                continue;
+
+            RolapHierarchy rh = (RolapHierarchy) candidate;
+            if (rh.getDimension().getName().equals(hie.getName())) {
+                mdHie = candidate;
+                break;
+            } else if (rh.getSubName().equals(hie.getName())){
+                mdHie = candidate;
+            }
+        }
+
+        return mdHie;
+    }
+
+    public static mondrian.olap.Level getMondrianLevel(Level l, mondrian.olap.Hierarchy mdHie){
+        mondrian.olap.Level mdLevel = null;
+
+        for (mondrian.olap.Level candidate : mdHie.getLevels()){
+            if (candidate.getName().equals(l.getName()))
+                mdLevel = candidate;
+        }
+
+        return mdLevel;
+    }
 }
