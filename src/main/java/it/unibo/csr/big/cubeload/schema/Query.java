@@ -1,25 +1,47 @@
 package it.unibo.csr.big.cubeload.schema;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Query {
     /**
      * Class fields
      */
-    private List<GroupByElement> groupBySet = new ArrayList<GroupByElement>();
-    private List<Measure> measures = new ArrayList<Measure>();
-    private List<SelectionPredicate> predicates = new ArrayList<SelectionPredicate>();
+    private Set<GroupByElement> groupBySet;
+    private Set<Measure> measures;
+    private Set<SelectionPredicate> predicates;
     Random rand = new Random();
+
+    public Query() {
+        groupBySet = new HashSet<>();
+        measures = new HashSet<>();
+        predicates = new HashSet<>();
+    }
+
+    public Query(Query queryToClone){
+        this.groupBySet = new HashSet<>();
+        for (GroupByElement gb : queryToClone.getGroupBySet()) {
+            this.addGroupByElement(gb.h, gb.l);
+        }
+
+        this.measures = new HashSet<>(queryToClone.measures);
+        //for (Measure meas : queryToClone.getMeasures()) {
+        //    newQuery.addMeasure(meas);
+        //}
+
+        this.predicates = new HashSet<>(queryToClone.predicates);
+        //for (SelectionPredicate selPred : queryToClone.getPredicates()) {
+        //    newQuery.addSelectionPredicate(selPred);
+        //}
+    }
 
     /**
      * Getter method for this query's group-by set.
      *
      * @return The group-by set of the current query.
      */
-    public List<GroupByElement> getGroupBySet() {
+    public Set<GroupByElement> getGroupBySet() {
         return groupBySet;
     }
 
@@ -28,7 +50,7 @@ public class Query {
      *
      * @return The list of measures of this query.
      */
-    public List<Measure> getMeasures() {
+    public Set<Measure> getMeasures() {
         return measures;
     }
 
@@ -37,7 +59,7 @@ public class Query {
      *
      * @param measureList The list of measures we set for this query.
      */
-    public void setMeasures(List<Measure> measureList) {
+    public void setMeasures(Set<Measure> measureList) {
         this.measures = measureList;
     }
 
@@ -46,7 +68,7 @@ public class Query {
      *
      * @return The list of selection predicates of this query.
      */
-    public List<SelectionPredicate> getPredicates() {
+    public Set<SelectionPredicate> getPredicates() {
         return predicates;
     }
 
@@ -86,16 +108,13 @@ public class Query {
      * @return True if a selection predicate on the given hierarchy exists, False otherwise.
      */
     public boolean containsPredicateOn(String hierarchy) {
-        boolean present = false;
-
         for (SelectionPredicate sel : predicates) {
             if (sel.getHierarchy().equals(hierarchy)) {
-                present = true;
-                break;
+                return true;
             }
         }
 
-        return present;
+        return false;
     }
 
     /**
@@ -133,15 +152,10 @@ public class Query {
     private String buildGroupBy() {
         String finalString = "";
 
-        for (int i = 0; i < groupBySet.size(); ++i) {
-            GroupByElement gb = groupBySet.get(i);
+        for (GroupByElement gb : groupBySet) {
 
             if (gb.getVisible()) {
-                finalString = finalString + gb.getHierarchy() + "." + gb.getLevel();
-
-                if (i != groupBySet.size() - 1) {
-                    finalString = finalString + ", ";
-                }
+                finalString = finalString + gb.getHierarchy() + "." + gb.getLevel() + ", ";
             }
         }
 
@@ -157,12 +171,9 @@ public class Query {
     private String buildSelectionPredicates() {
         String finalString = "";
 
-        for (int i = 0; i < predicates.size(); ++i) {
-            finalString += predicates.get(i).getSelectionPredicate();
+        for (SelectionPredicate sp : predicates) {
+            finalString += sp.getSelectionPredicate() + ", ";
 
-            if (i != predicates.size() - 1) {
-                finalString += ", ";
-            }
         }
 
         return finalString;
@@ -176,12 +187,8 @@ public class Query {
     private String buildMeasures() {
         String finalString = "";
 
-        for (int i = 0; i < measures.size(); ++i) {
-            finalString += measures.get(i).getName();
-
-            if (i != measures.size() - 1) {
-                finalString += ", ";
-            }
+        for (Measure m : measures) {
+            finalString += m.getName() + " ";
         }
 
         return finalString;
@@ -458,7 +465,7 @@ public class Query {
      * @param measList The list of measures to compare with the current query's measure list.
      * @return True if the lists do not match, False otherwise.
      */
-    private boolean measuresMismatch(List<Measure> measList) {
+    private boolean measuresMismatch(Collection<Measure> measList) {
         for (Measure meas : this.measures) {
             if (!measList.contains(meas)) {
                 return true;
@@ -743,7 +750,7 @@ public class Query {
         // If no predicates exist, or there's only a segregation
         // predicate, a predicate must be added
         if (predicates.isEmpty() ||
-                predicates.size() == 1 && predicates.get(0).getSegregation()) {
+                predicates.size() == 1 && predicates.iterator().next().getSegregation()) {
             removable = false;
         }
 
@@ -804,7 +811,12 @@ public class Query {
             SelectionPredicate tempSel;
 
             do {
-                tempSel = predicates.get(rand.nextInt(predicates.size()));
+                int index = rand.nextInt(predicates.size());
+                Iterator<SelectionPredicate> iter = predicates.iterator();
+                for (int i = 0; i < index; i++) {
+                    iter.next();
+                }
+                tempSel = iter.next();
             } while (tempSel.getSegregation());
 
             predicates.remove(tempSel);
@@ -818,7 +830,8 @@ public class Query {
      * @param cube The object containing the cube's information and data.
      */
     private void changeMeasures(Cube cube) {
-        Measure oldMeasure = measures.get(rand.nextInt(measures.size()));
+        List<Measure> measuresL = new ArrayList<>(measures);
+        Measure oldMeasure = measuresL.get(rand.nextInt(measures.size()));
         measures.remove(oldMeasure);
 
         List<String> measureList = new ArrayList<String>();
@@ -938,7 +951,7 @@ public class Query {
      * @return The query generated modifying the current one.
      */
     public Query randomEvolution(Cube cube) {
-        Query newQuery = clone(this);
+        Query newQuery = new Query(this);
 
         int choice = rand.nextInt(3);
 
@@ -956,29 +969,6 @@ public class Query {
         return newQuery;
     }
 
-    /**
-     * This method generates a query identical to the given one (but with a different reference).
-     *
-     * @param queryToClone The query to replicate.
-     * @return The new query, identical to the given one.
-     */
-    public static Query clone(Query queryToClone) {
-        Query newQuery = new Query();
-
-        for (GroupByElement gb : queryToClone.getGroupBySet()) {
-            newQuery.addGroupByElement(gb.h, gb.l);
-        }
-
-        for (Measure meas : queryToClone.getMeasures()) {
-            newQuery.addMeasure(meas);
-        }
-
-        for (SelectionPredicate selPred : queryToClone.getPredicates()) {
-            newQuery.addSelectionPredicate(selPred);
-        }
-
-        return newQuery;
-    }
 
     @Override
     public int hashCode() {
@@ -1007,31 +997,6 @@ public class Query {
 
         Query other = (Query) obj;
 
-        if (groupBySet == null) {
-            if (other.groupBySet != null) {
-                return false;
-            }
-        } else {
-            List<GroupByElement> thisGroupBySet = new ArrayList<GroupByElement>();
-            List<GroupByElement> otherGroupBySet = new ArrayList<GroupByElement>();
-
-            // Consider only visible group-by elements
-            for (GroupByElement element : groupBySet) {
-                if (element.getVisible()) {
-                    thisGroupBySet.add(element);
-                }
-            }
-            for (GroupByElement element : other.groupBySet) {
-                if (element.getVisible()) {
-                    otherGroupBySet.add(element);
-                }
-            }
-
-            if (!(thisGroupBySet.containsAll(otherGroupBySet) && otherGroupBySet.containsAll(thisGroupBySet))) {
-                return false;
-            }
-        }
-
         if (measures == null) {
             if (other.measures != null) {
                 return false;
@@ -1047,6 +1012,22 @@ public class Query {
         } else if (!(predicates.containsAll(other.predicates) && other.predicates.containsAll(predicates))) {
             return false;
         }
+
+        // This is the most expensive ...should be done last
+        // -Alex
+        if (groupBySet == null) {
+            if (other.groupBySet != null) {
+                return false;
+            }
+        } else {
+            Set<GroupByElement> thisGroupBySet = groupBySet.stream().filter(GroupByElement::getVisible).collect(Collectors.toSet());
+            Set<GroupByElement> otherGroupBySet = other.groupBySet.stream().filter(GroupByElement::getVisible).collect(Collectors.toSet());
+
+            if (!(thisGroupBySet.containsAll(otherGroupBySet) && otherGroupBySet.containsAll(thisGroupBySet))) {
+                return false;
+            }
+        }
+
         return true;
     }
 

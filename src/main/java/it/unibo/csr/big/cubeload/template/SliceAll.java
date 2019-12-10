@@ -95,7 +95,7 @@ public class SliceAll implements Template
 		// Random shift of the distinct values
 		Collections.rotate(valuesList, rand.nextInt(valuesList.size()));
 		
-		Query query = Query.clone(queryList.get(0)); // I get the seed query
+		Query query = new Query(queryList.get(0)); // I get the seed query
 		
 		// If it contains a selection predicate, it is removed
 		if (query.containsPredicateOn(slicedHierarchy.getName()))
@@ -122,7 +122,7 @@ public class SliceAll implements Template
 		// The added selection predicate is replaced in every query
 		for (int count = 1; count < valuesList.size(); ++count)
 		{
-			query = Query.clone(queryList.get(queryList.size() - 1));
+			query = new Query(queryList.get(queryList.size() - 1));
 			replacePredicate(query, slicedHierarchy, valuesList.get(count));
 			queryList.add(query);			
 		}
@@ -131,7 +131,7 @@ public class SliceAll implements Template
 		if (queryList.size() < sessionLength)
 		{
 			// The last query generated will be the base for the next series
-			Query newQuery = Query.clone(queryList.get(queryList.size() - 1));
+			Query newQuery = new Query(queryList.get(queryList.size() - 1));
 			
 			// The selection predicate on the current hierarchy shall be removed
 			SelectionPredicate selPred = newQuery.getSelectionPredicate(slicedHierarchy.getName()); 
@@ -156,7 +156,7 @@ public class SliceAll implements Template
 			
 			for (int count = 1; count < valuesList.size(); ++count)
 			{
-				newQuery = Query.clone(queryList.get(queryList.size() - 1));
+				newQuery = new Query(queryList.get(queryList.size() - 1));
 				replacePredicate(newQuery, slicedHierarchy, valuesList.get(count));
 				queryList.add(newQuery);			
 			}

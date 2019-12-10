@@ -75,7 +75,7 @@ public class GoalOriented implements Template
 
 		do
 		{
-			newQuery = Query.clone(queryList.get(queryList.size() - 1));
+			newQuery = new Query(queryList.get(queryList.size() - 1));
 			altered = newQuery.convergeTo(finalQuery, cube);
 			
 			if (altered)
@@ -89,7 +89,7 @@ public class GoalOriented implements Template
 		{
 			// Avoid alterations near the end of the session
 			int position = rand.nextInt( (int)Math.floor(queryList.size() * 0.6) );
-			newQuery = Query.clone(queryList.get(position));
+			newQuery = new Query(queryList.get(position));
 			alteredQuery = newQuery.randomEvolution(cube);
 			
 			// Repetitions must be avoided

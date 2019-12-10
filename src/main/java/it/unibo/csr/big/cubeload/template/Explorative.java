@@ -82,7 +82,7 @@ public class Explorative implements Template
 		// Perform all the steps towards the surprising query, until it can't be improved
 		do
 		{
-			lastQuery = Query.clone(queryList.get(queryList.size() - 1));
+			lastQuery = new Query(queryList.get(queryList.size() - 1));
 			altered = lastQuery.convergeTo(surprisingQuery, cube);
 			
 			// Repetitions must be avoided
@@ -98,7 +98,7 @@ public class Explorative implements Template
 			
 			for (int count = 0; count < queryToAdd; ++count)
 			{
-				lastQuery = Query.clone(queryList.get(queryList.size() - 1));
+				lastQuery = new Query(queryList.get(queryList.size() - 1));
 				Query newQuery = lastQuery.randomEvolution(cube);
 				// Repetitions must be avoided
 				if (!queryList.contains(newQuery)) {

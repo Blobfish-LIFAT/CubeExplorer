@@ -1,8 +1,6 @@
 package it.unibo.csr.big.cubeload.schema;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * This class implements an OLAP cube, namely a set of
@@ -141,9 +139,9 @@ public class Cube
 	 * @param number The number of measures we need.
 	 * @return The list of distinct measures produced.
 	 */
-	public List<Measure> getRandomMeasures(int number)
+	public Set<Measure> getRandomMeasures(int number)
 	{
-		List<Measure> tempList = new ArrayList<Measure>();
+		Set<Measure> tempList = new HashSet<>();
 		Measure tempMeas;
 		
 		// Exactly 'number' Measures must be added

@@ -133,7 +133,7 @@ public class Profile
 		for (int count = 0; count < this.seedQueries.size(); ++count)
 		{
 			Query seedQuery = this.seedQueries.get(count);
-			Query currentQuery = Query.clone(seedQuery);
+			Query currentQuery = new Query(seedQuery);
 	
 			int distance;
 	
