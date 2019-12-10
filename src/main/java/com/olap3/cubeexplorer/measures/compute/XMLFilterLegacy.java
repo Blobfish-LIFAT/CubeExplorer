@@ -12,7 +12,7 @@ import java.util.List;
 
 public class XMLFilterLegacy {
     static String target = "Goal Oriented";
-    static String inputFile = "cubeload/Workload-1545151556.xml";
+    static String inputFile = "it/unibo/csr/big/cubeload/Workload-1545151556.xml";
     static String outfile = "data/falseto/goal_oriented.xml";
 
 
