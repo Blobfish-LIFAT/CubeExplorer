@@ -138,11 +138,11 @@ public class Compatibility {
 
         // ON ROWS
         switch (onRows.size()) {
-            case 1 -> {
+            case 1 :
                 mdx.append("{").append(onRows.iterator().next().getRepr()).append("} ON ROWS");
                 mdx.append(lsep);
-            }
-            default -> {
+                 break;
+            default :
                 mdx.append("{");
                 String rowsText = "";
                 for (int i = 0; i < onRows.size(); i++) {
@@ -155,7 +155,7 @@ public class Compatibility {
                 mdx.append(rowsText);
                 mdx.append("} ON ROWS");
                 mdx.append(lsep);
-            }
+
         }
 
         // FROM CLAUSE

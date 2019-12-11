@@ -2,9 +2,10 @@ package it.unibo.csr.big.cubeload.schema;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 public class GroupByElement
 {
-	private String hierarchy;
 	@Getter
 	Hierarchy h;
 	private String level;
@@ -14,9 +15,7 @@ public class GroupByElement
 
 
 	public GroupByElement(Hierarchy hierarchy, Level level){
-		this.hierarchy = hierarchy.getName();
 		h = hierarchy;
-		this.level = level.getName();
 		l = level;
 	}
 	
@@ -26,7 +25,7 @@ public class GroupByElement
 	 */
 	public String getHierarchy()
 	{
-		return hierarchy;
+		return h.getName();
 	}
 	
 	/**
@@ -70,46 +69,19 @@ public class GroupByElement
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((hierarchy == null) ? 0 : hierarchy.hashCode());
+				+ ((h == null) ? 0 : h.getName().hashCode());
 		result = prime * result + ((level == null) ? 0 : level.hashCode());
 		result = prime * result + (visible ? 1231 : 1237);
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof GroupByElement)) {
-			return false;
-		}
-		
-		GroupByElement other = (GroupByElement) obj;
-		
-		if (hierarchy == null) {
-			if (other.hierarchy != null) {
-				return false;
-			}
-		} else if (!hierarchy.equals(other.hierarchy)) {
-			return false;
-		}
-		
-		if (level == null) {
-			if (other.level != null) {
-				return false;
-			}
-		} else if (!level.equals(other.level)) {
-			return false;
-		}
-		
-		if (visible != other.visible) {
-			return false;
-		}
-		
-		return true;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		GroupByElement that = (GroupByElement) o;
+		return visible == that.visible &&
+				Objects.equals(h, that.h) &&
+				Objects.equals(level, that.level);
 	}
 }

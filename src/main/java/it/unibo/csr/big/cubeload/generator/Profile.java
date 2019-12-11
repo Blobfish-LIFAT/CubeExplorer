@@ -391,6 +391,7 @@ public class Profile
 		int i = 0;
 		for (int j = 1; j <= numberOfSessions; ++j)
 		{
+			System.out.println("  Generating query n°" + j);
 			template = chooseTemplate();
 			sessionList.add(template.generateSession(name, j, minSessionLength, maxSessionLength,
 													 seedQueries.get(i), cube, surprisingQueries,
@@ -466,5 +467,10 @@ public class Profile
 												 level.getRandomValue(),
 												 true,
 												 false);
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }

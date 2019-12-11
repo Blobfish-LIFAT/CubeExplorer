@@ -71,7 +71,7 @@ public class XMLReader
 				
 				Hierarchy hierarchy = new Hierarchy(hieName);
 				
-				hierarchy.addLevel(new Level("ALL" + hieName));
+				hierarchy.addLevel(Level.newLevel("ALL" + hieName));
 				
 				NodeList levels = (NodeList) xPath.evaluate("./Level", hieNode, XPathConstants.NODESET);
 				
@@ -80,7 +80,7 @@ public class XMLReader
 					Node lvlNode = levels.item(k);
 					String lvlName = xPath.evaluate("./@name", lvlNode);
 
-					hierarchy.addLevel(new Level(lvlName));
+					hierarchy.addLevel(Level.newLevel(lvlName));
 				}
 				
 				hierarchy.getLevel(hierarchy.getLevelCount() - 1).addDistinctValues("ALL" + hieName);
@@ -149,7 +149,7 @@ public class XMLReader
 				
 				Hierarchy hierarchy = new Hierarchy(hieName);
 				
-				hierarchy.addLevel(new Level("ALL" + hieName));
+				hierarchy.addLevel(Level.newLevel("ALL" + hieName));
 				
 				NodeList levels = (NodeList) xPath.evaluate("./Level", hieNode, XPathConstants.NODESET);
 				
@@ -158,7 +158,7 @@ public class XMLReader
 					Node lvlNode = levels.item(k);
 					String lvlName = xPath.evaluate("./@name", lvlNode);
 
-					hierarchy.addLevel(new Level(lvlName));
+					hierarchy.addLevel(Level.newLevel(lvlName));
 				}
 				
 				hierarchy.getLevel(hierarchy.getLevelCount() - 1).addDistinctValues("ALL" + hieName);

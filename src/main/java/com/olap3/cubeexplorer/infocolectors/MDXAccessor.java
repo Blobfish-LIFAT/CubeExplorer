@@ -82,9 +82,9 @@ public class MDXAccessor extends DataAccessor {
                 Object[] line = new Object[cols.size()];
                 for (int i = 0; i < cols.size(); i++) {
                     switch (cols.get(i).right){
-                        case INTEGER -> line[i] = rs.getInt(cols.get(i).left);
-                        case REAL -> line[i] = rs.getDouble(cols.get(i).left);
-                        case STRING -> line[i] = rs.getString(cols.get(i).left);
+                        case INTEGER : line[i] = rs.getInt(cols.get(i).left); break;
+                        case REAL : line[i] = rs.getDouble(cols.get(i).left); break;
+                        case STRING : line[i] = rs.getString(cols.get(i).left); break;
                     }
                 }
                 cached.pushLine(line);

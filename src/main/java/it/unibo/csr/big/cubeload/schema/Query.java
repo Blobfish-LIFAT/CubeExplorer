@@ -1,5 +1,7 @@
 package it.unibo.csr.big.cubeload.schema;
 
+import it.unibo.csr.big.cubeload.generator.OlapGenerator;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,19 +10,18 @@ public class Query {
     /**
      * Class fields
      */
-    private Set<GroupByElement> groupBySet;
     private Set<Measure> measures;
     private Set<SelectionPredicate> predicates;
-    Random rand = new Random();
+
+    private HashMap<String, Boolean> visibilityMap = new HashMap<>();
+    private HashMap<String, GroupByElement> gbMap = new HashMap<>();
 
     public Query() {
-        groupBySet = new HashSet<>();
         measures = new HashSet<>();
         predicates = new HashSet<>();
     }
 
     public Query(Query queryToClone){
-        this.groupBySet = new HashSet<>();
         for (GroupByElement gb : queryToClone.getGroupBySet()) {
             this.addGroupByElement(gb.h, gb.l);
         }
@@ -42,7 +43,7 @@ public class Query {
      * @return The group-by set of the current query.
      */
     public Set<GroupByElement> getGroupBySet() {
-        return groupBySet;
+        return new HashSet<>(gbMap.values());
     }
 
     /**
@@ -79,7 +80,7 @@ public class Query {
      * @param level     The group-by element's level.
      */
     public void addGroupByElement(Hierarchy hierarchy, Level level) {
-        groupBySet.add(new GroupByElement(hierarchy, level));
+        gbMap.put(hierarchy.getName() ,new GroupByElement(hierarchy, level));
     }
 
     /**
@@ -152,9 +153,9 @@ public class Query {
     private String buildGroupBy() {
         String finalString = "";
 
-        for (GroupByElement gb : groupBySet) {
+        for (GroupByElement gb : gbMap.values()) {
 
-            if (gb.getVisible()) {
+            if (getVisibility(gb.getHierarchy())) {
                 finalString = finalString + gb.getHierarchy() + "." + gb.getLevel() + ", ";
             }
         }
@@ -202,13 +203,15 @@ public class Query {
      * @return The current query's level on the given hierarchy.
      */
     public String findLevel(String hierarchy) {
-        for (GroupByElement gb : this.groupBySet) {
+        return gbMap.get(hierarchy).getLevel();
+        /*
+        for (GroupByElement gb : this.gbMap.values()) {
             if (gb.getHierarchy().equals(hierarchy)) {
                 return gb.getLevel();
             }
         }
 
-        return null;
+        return null;*/
     }
 
     /**
@@ -218,7 +221,7 @@ public class Query {
      * @param level     The name of the level we set on the hierarchy;
      */
     public void setLevel(String hierarchy, String level) {
-        for (GroupByElement gb : this.groupBySet) {
+        for (GroupByElement gb : this.gbMap.values()) {
             if (gb.getHierarchy().equals(hierarchy)) {
                 gb.setLevel(level);
             }
@@ -232,13 +235,13 @@ public class Query {
      * @return The visibility of the given hierarchy.
      */
     public boolean getVisibility(String hierarchy) {
+        return visibilityMap.getOrDefault(hierarchy, false);
+        /*
         for (GroupByElement gb : this.groupBySet) {
             if (gb.getHierarchy().equals(hierarchy)) {
                 return gb.getVisible();
             }
-        }
-
-        return false;
+        }*/
     }
 
     /**
@@ -248,11 +251,13 @@ public class Query {
      * @param value     The flag we're setting for the given hierarchy.
      */
     private void setVisibility(String hierarchy, boolean value) {
+        visibilityMap.put(hierarchy, value);
+        /*
         for (GroupByElement gb : this.groupBySet) {
             if (gb.getHierarchy().equals(hierarchy)) {
                 gb.setVisible(value);
             }
-        }
+        }*/
     }
 
     /**
@@ -407,7 +412,8 @@ public class Query {
                 } else {
                     currentLevel = this.findLevel(hie.getName());
                     position = hie.findPosition(currentLevel);
-                    reportSize *= hie.getLevel(position).getValuesCount();
+                    if(position != -1)
+                        reportSize *= hie.getLevel(position).getValuesCount();
                 }
             }
         }
@@ -432,7 +438,7 @@ public class Query {
 
         // The distance increases for every inequality
         // between the queries' hierarchy levels
-        for (GroupByElement gb : this.groupBySet) {
+        for (GroupByElement gb : this.gbMap.values()) {
             hierarchyName = gb.getHierarchy();
 
             if (this.getVisibility(hierarchyName) &&
@@ -556,7 +562,7 @@ public class Query {
      */
     public boolean convergeTo(Query queryToConverge, Cube cube) {
         // "choice" will decide the alteration: 0 for group-by set/predicates, 1 for measures
-        int choice = rand.nextInt(2);
+        int choice = OlapGenerator.rand.nextInt(2);
         boolean modified = false, equalMeasures = false, equalGroupBy = false;
         SelectionPredicate currentPredicate, matchPredicate;
 
@@ -588,7 +594,7 @@ public class Query {
         } else {
             if (choice == 0) // Group-by set/predicates change
             {
-                Hierarchy hie = modifiableHierarchies.get(rand.nextInt(modifiableHierarchies.size()));
+                Hierarchy hie = modifiableHierarchies.get(OlapGenerator.rand.nextInt(modifiableHierarchies.size()));
                 String hieName = hie.getName();
 
                 String levelToSet = queryToConverge.findLevel(hieName);
@@ -717,7 +723,7 @@ public class Query {
         }
 
         // Getting a random modifiable hierarchy
-        Hierarchy hie = modifiableHierarchies.get(rand.nextInt(modifiableHierarchies.size()));
+        Hierarchy hie = modifiableHierarchies.get(OlapGenerator.rand.nextInt(modifiableHierarchies.size()));
 
         if (!isDescendible(hie)) // Minimum aggregation
         {
@@ -727,7 +733,7 @@ public class Query {
             descendHierarchy(hie); // => drill-down
         } else // Hierarchy's level is intermediate
         {
-            if (rand.nextBoolean()) // Random choice
+            if (OlapGenerator.rand.nextBoolean()) // Random choice
             {
                 ascendHierarchy(hie); // => roll-up
             } else {
@@ -781,7 +787,7 @@ public class Query {
         // Based on the previous conditions, the 'choice' is set
         if (removable && addable) // I can both remove and add a predicate, choice is randomly set
         {
-            choice = rand.nextBoolean();
+            choice = OlapGenerator.rand.nextBoolean();
         } else if (removable && !addable) // I can only remove a predicate
         {
             choice = false;
@@ -795,7 +801,7 @@ public class Query {
 
         if (choice) // A selection predicate is added
         {
-            Hierarchy hierarchy = selectableHierarchies.get(rand.nextInt(selectableHierarchies.size()));
+            Hierarchy hierarchy = selectableHierarchies.get(OlapGenerator.rand.nextInt(selectableHierarchies.size()));
             String queryLevel = this.findLevel(hierarchy.getName());
             int position = hierarchy.findPosition(queryLevel);
             Level level = hierarchy.getLevel(hierarchy.getValidPredicatePosition(position));
@@ -811,7 +817,7 @@ public class Query {
             SelectionPredicate tempSel;
 
             do {
-                int index = rand.nextInt(predicates.size());
+                int index = OlapGenerator.rand.nextInt(predicates.size());
                 Iterator<SelectionPredicate> iter = predicates.iterator();
                 for (int i = 0; i < index; i++) {
                     iter.next();
@@ -831,7 +837,7 @@ public class Query {
      */
     private void changeMeasures(Cube cube) {
         List<Measure> measuresL = new ArrayList<>(measures);
-        Measure oldMeasure = measuresL.get(rand.nextInt(measures.size()));
+        Measure oldMeasure = measuresL.get(OlapGenerator.rand.nextInt(measures.size()));
         measures.remove(oldMeasure);
 
         List<String> measureList = new ArrayList<String>();
@@ -843,7 +849,7 @@ public class Query {
         Measure newMeasure;
 
         do {
-            newMeasure = cube.getMeasure(rand.nextInt(cube.getMeasureCount()));
+            newMeasure = cube.getMeasure(OlapGenerator.rand.nextInt(cube.getMeasureCount()));
         } while (newMeasure.getName().equals(oldMeasure.getName()) ||
                 measureList.contains(newMeasure.getName()));
 
@@ -937,7 +943,7 @@ public class Query {
             }
         } else // There are no selection predicates
         {
-            match = (position_1 == position_2 ? true : false);
+            match = (position_1 == position_2);
         }
 
         return match;
@@ -953,7 +959,7 @@ public class Query {
     public Query randomEvolution(Cube cube) {
         Query newQuery = new Query(this);
 
-        int choice = rand.nextInt(3);
+        int choice = OlapGenerator.rand.nextInt(3);
 
         if (choice == 0) // Group-by change
         {
@@ -975,7 +981,7 @@ public class Query {
         final int prime = 31;
         int result = 1;
         result = prime * result
-                + ((groupBySet == null) ? 0 : groupBySet.hashCode());
+                + ((gbMap == null) ? 0 : gbMap.hashCode());
         result = prime * result
                 + ((measures == null) ? 0 : measures.hashCode());
         result = prime * result
@@ -1015,13 +1021,15 @@ public class Query {
 
         // This is the most expensive ...should be done last
         // -Alex
-        if (groupBySet == null) {
-            if (other.groupBySet != null) {
+        if (gbMap == null) {
+            if (other.gbMap != null) {
                 return false;
             }
         } else {
-            Set<GroupByElement> thisGroupBySet = groupBySet.stream().filter(GroupByElement::getVisible).collect(Collectors.toSet());
-            Set<GroupByElement> otherGroupBySet = other.groupBySet.stream().filter(GroupByElement::getVisible).collect(Collectors.toSet());
+            Set<GroupByElement> thisGroupBySet = gbMap.values().stream()
+                    .filter(gb -> visibilityMap.getOrDefault(gb.getHierarchy(), false)).collect(Collectors.toSet());
+            Set<GroupByElement> otherGroupBySet = other.gbMap.values().stream()
+                    .filter(gb -> visibilityMap.getOrDefault(gb.getHierarchy(), false)).collect(Collectors.toSet());
 
             if (!(thisGroupBySet.containsAll(otherGroupBySet) && otherGroupBySet.containsAll(thisGroupBySet))) {
                 return false;

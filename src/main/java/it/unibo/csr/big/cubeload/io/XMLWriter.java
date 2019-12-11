@@ -137,7 +137,7 @@ public class XMLWriter {
                     query.appendChild(groupBy);
 
                     for (GroupByElement gb : currentQuery.getGroupBySet()) {
-                        if (gb.getVisible()) {
+                        if (currentQuery.getVisibility(gb.getHierarchy())) {
                             Element element = doc.createElement("Element");
                             groupBy.appendChild(element);
 

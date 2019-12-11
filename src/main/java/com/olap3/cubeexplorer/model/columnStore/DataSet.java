@@ -44,9 +44,9 @@ public class DataSet {
         typeMap = new int[width];
         for (int i = 0; i < columnsDef.size(); i++) {
             switch (columnsDef.get(i).right){
-                case REAL -> typeMap[i] = 0;
-                case INTEGER -> typeMap[i] = 1;
-                case STRING -> typeMap[i] = 2;
+                case REAL : typeMap[i] = 0; break;
+                case INTEGER : typeMap[i] = 1; break;
+                case STRING : typeMap[i] = 2; break;
             }
         }
 
@@ -109,9 +109,9 @@ public class DataSet {
         Object[] res = new Object[width];
         for (int j = 0; j < width; j++) {
             switch (typeMap[j]){
-                case 0 -> res[j] = dataReal[posReal.get(lineOrder.get(j))][line];
-                case 1 -> res[j] = dataInt[posInt.get(lineOrder.get(j))][line];
-                case 2 -> res[j] = dataStr[posString.get(lineOrder.get(j))][line];
+                case 0 : res[j] = dataReal[posReal.get(lineOrder.get(j))][line]; break;
+                case 1 : res[j] = dataInt[posInt.get(lineOrder.get(j))][line]; break;
+                case 2 : res[j] = dataStr[posString.get(lineOrder.get(j))][line]; break;
             }
         }
         return res;
@@ -124,15 +124,15 @@ public class DataSet {
         for (int i = 0; i < width; i++) {
             //System.out.println(typeMap[i]);
             switch (typeMap[i]){
-                case 0 -> {
+                case 0 : {
                     try {
                         dataReal[posReal.get(lineOrder.get(i))][row_index] = (double) input[i];
                     }catch (NullPointerException e){
                         e.printStackTrace();
                     }
-                }
-                case 1 -> dataInt[posInt.get(lineOrder.get(i))][row_index] = (int) input[i];
-                case 2 -> dataStr[posString.get(lineOrder.get(i))][row_index] = (String) input[i];
+                } break;
+                case 1 : dataInt[posInt.get(lineOrder.get(i))][row_index] = (int) input[i]; break;
+                case 2 : dataStr[posString.get(lineOrder.get(i))][row_index] = (String) input[i]; break;
             }
         }
     }
@@ -154,9 +154,9 @@ public class DataSet {
             Predicate p = predicates.get(i);
             boolean[] vec = new boolean[sel.length];
             switch (typeMap[lineOrder.indexOf(p.getCol())]) {
-                case 0 -> vec = p.getBinaryVector(getDoubleColumn(p.getCol()));
-                case 1 -> vec = p.getBinaryVector(getIntColumn(p.getCol()));
-                case 2 -> vec = p.getBinaryVector(getStringColumn(p.getCol()));
+                case 0 : vec = p.getBinaryVector(getDoubleColumn(p.getCol())); break;
+                case 1 : vec = p.getBinaryVector(getIntColumn(p.getCol())); break;
+                case 2 : vec = p.getBinaryVector(getStringColumn(p.getCol())); break;
             }
             for (int j = 0; j < vec.length; j++) {
                 sel[j] = sel[j] && vec[j];

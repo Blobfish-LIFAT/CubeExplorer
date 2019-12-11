@@ -1,5 +1,6 @@
 package it.unibo.csr.big.cubeload.schema;
 
+import it.unibo.csr.big.cubeload.generator.OlapGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,19 +13,26 @@ import java.util.*;
  * @author Luca Spadazzi
  */
 public class Level {
+    private static final HashMap<String, Level> backingMap = new HashMap<>();
+
     private String name;
     private Set<String> values = new HashSet<String>();
+
     @Getter @Setter
     private mondrian.olap.Level md;
-    Random rand = new Random();
+
 
     /**
      * Class constructor.
      *
      * @param name The name of the level.
      */
-    public Level(String name) {
+    private Level(String name) {
         this.name = name;
+    }
+
+    public static Level newLevel(String name){
+        return backingMap.computeIfAbsent(name, Level::new);
     }
 
     /**
@@ -76,12 +84,13 @@ public class Level {
      * @return The randomly chosen value.
      */
     public String getRandomValue() {
-        int toGo = rand.nextInt(getValuesCount());
+        int toGo = OlapGenerator.rand.nextInt(getValuesCount());
         Iterator<String> it = values.iterator();
         for (int i = 0; i != toGo; i++)
             it.next();
         return it.next();
     }
+
 
     /**
      * This method checks if the current level is a leaf in the given hierarchy.
@@ -101,5 +110,18 @@ public class Level {
      */
     public boolean isRoot(Hierarchy hierarchy) {
         return (hierarchy.findPosition(this.name) == 0 ? true : false);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Level level = (Level) o;
+        return Objects.equals(name, level.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

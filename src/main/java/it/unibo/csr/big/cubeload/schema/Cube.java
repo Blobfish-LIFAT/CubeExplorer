@@ -15,6 +15,9 @@ public class Cube
 	private List<Dimension> dimensions= new ArrayList<Dimension>();
 	private List<Measure> measures = new ArrayList<Measure>();
 	Random rand = new Random();
+
+	// F**** cache
+	List<Hierarchy> hierarchies = null;
 	
 	/**
 	 * Class constructor
@@ -203,15 +206,15 @@ public class Cube
 	 * Getter method for the cube's hierarchies.
 	 * @return The list of total hierarchies in the cube. 
 	 */
-	public List<Hierarchy> getHierarchies()
-	{
-		List<Hierarchy> hierarchies = new ArrayList<Hierarchy>();
-		
-		for (Dimension dim : dimensions)
-		{
+	public List<Hierarchy> getHierarchies() {
+		if (hierarchies != null)
+			return hierarchies;
+
+		hierarchies = new ArrayList<>();
+		for (Dimension dim : dimensions) {
 			hierarchies.addAll(dim.getHierarchies());
 		}
-		
+
 		return hierarchies;
 	}
 	

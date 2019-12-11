@@ -37,7 +37,7 @@ public class MakeTriplets {
         CubeUtils utils = new CubeUtils(olap, cubeName);
         CubeUtils.setDefault(utils);
 
-        int maxMeasures = 4, minReportSize = 5, maxReportSize = 30, surprisingQueries = 2;
+        int maxMeasures = 4, minReportSize = 5, maxReportSize = 50, surprisingQueries = 2;
 
         System.out.println("Starting generation");
         OlapGenerator og = new OlapGenerator(1,

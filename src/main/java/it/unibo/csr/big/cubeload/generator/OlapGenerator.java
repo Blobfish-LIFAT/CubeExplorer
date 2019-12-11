@@ -39,7 +39,7 @@ public class OlapGenerator {
     List<Session> sessions;
 
     private List<Query> surprisingQueries = new ArrayList<Query>();
-    Random rand = new Random();
+    public static Random rand = new Random();
 
     /**
      * Class constructor.
@@ -248,6 +248,7 @@ public class OlapGenerator {
         sessions = new ArrayList<Session>();
 
         for (Profile profile : profiles) {
+            System.out.println("Generating queries for " + profiles);
             sessions.addAll(profile.getSessions(cube,
                     maxMeasures,
                     minReportSize,
