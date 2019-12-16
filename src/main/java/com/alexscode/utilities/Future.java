@@ -37,6 +37,21 @@ public final class Future {
         return sb.toString();
     }
 
+    public static String arrayToString(boolean[] a, String sep){
+        if (a == null)
+            return "null";
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; i<a.length; i++) {
+            b.append(a[i] ? 1 : 0);
+            if (i == a.length - 1)
+                return b.toString();
+            b.append(sep);
+        }
+
+        return "";
+    }
+
     public static String arrayToString(int[] a, String sep){
         if (a == null)
             return "null";

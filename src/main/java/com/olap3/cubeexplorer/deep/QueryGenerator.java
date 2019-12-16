@@ -148,17 +148,17 @@ public class QueryGenerator {
             feat.print(id + ","); // Query id
 
             //measure encoding
-            int[] m = new int[measures.size()];
-            Arrays.fill(m, 0);
+            boolean[] m = new boolean[measures.size()];
+            Arrays.fill(m, false);
             int mind = getMeasureIndex(measures, measure);
-            m[mind] = 1;
+            m[mind] = true;
             feat.print(Future.arrayToString(m, ",") + ",");
 
             //projection encoding
-            int[] p = new int[projections.size()];
-            Arrays.fill(p, 0);
+            boolean[] p = new boolean[projections.size()];
+            Arrays.fill(p, false);
             for (ProjectionFragment proj : triplet.getAttributes()){
-                p[projections.indexOf(proj.getLevel().getUniqueName())] = 1;
+                p[projections.indexOf(proj.getLevel().getUniqueName())] = true;
             }
             feat.print(Future.arrayToString(p, ",") + ",");
 
