@@ -141,7 +141,7 @@ public class QueryGenerator {
             return;
         }
         for (MeasureFragment measure : triplet.getMeasures()){
-            double[] targets = TrainSetBuilder.computeTargets(ds, measure.getAttribute().getName());
+            double[] targets = TrainSetBuilder.computeTargets(ds, measure.getAttribute().getUniqueName());
             if (targets == null)
                 continue;
 
