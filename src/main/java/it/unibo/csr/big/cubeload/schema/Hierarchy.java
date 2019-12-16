@@ -150,7 +150,7 @@ public class Hierarchy {
      * @return True if this level is the leaf, False otherwise.
      */
     public boolean isMaxLevel(String level) {
-        return (findPosition(level) == getLevelCount() - 1 ? true : false);
+        return (findPosition(level) == getLevelCount() - 1);
     }
 
     /**

@@ -253,7 +253,13 @@ public class Compatibility {
 
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[i].length; j++) {
-                List<String> coords = getCrossTabPos(rows.get(i));
+                List<String> coords = null;
+                try {
+                    coords = getCrossTabPos(rows.get(i));
+                } catch (ArrayIndexOutOfBoundsException e)
+                {
+                    System.out.println("deug");
+                }
                 coords.addAll(getCrossTabPos(cols.get(j)));
                 Object[] line = new Object[coords.size()+1];
                 System.arraycopy(coords.toArray(), 0, line, 0, coords.size());

@@ -21,7 +21,7 @@ public class Query {
         predicates = new HashSet<>();
     }
 
-    public Query(Query queryToClone){
+    public Query(Query queryToClone) {
         for (GroupByElement gb : queryToClone.getGroupBySet()) {
             this.addGroupByElement(gb.h, gb.l);
         }
@@ -80,7 +80,9 @@ public class Query {
      * @param level     The group-by element's level.
      */
     public void addGroupByElement(Hierarchy hierarchy, Level level) {
-        gbMap.put(hierarchy.getName() ,new GroupByElement(hierarchy, level));
+        if (level == null)
+            System.out.println("flag");
+        gbMap.put(hierarchy.getName(), new GroupByElement(hierarchy, level));
     }
 
     /**
@@ -296,7 +298,6 @@ public class Query {
      * @return True if the roll-up is possible, False otherwise.
      */
     public boolean isAscendable(Hierarchy hierarchy) {
-        boolean ascendable = false;
         String hierarchyName = hierarchy.getName();
 
         String queryLevel = findLevel(hierarchy.getName());
@@ -304,7 +305,7 @@ public class Query {
 
         if (hierarchy.isMaxLevel(queryLevel)) // Maximum aggregation, can't be ascended
         {
-            ascendable = false;
+            return false;
         } else // Aggregation level not maximum
         {
             if (containsPredicateOn(hierarchyName)) // A selection predicate exists
@@ -316,19 +317,13 @@ public class Query {
 
                 // If at least an attribute exists between the query's
                 // hierarchy level and the selection predicate level
-                if (queryPosition < predicatePosition - 1) {
-                    ascendable = true;
-                } else // No room for aggregation
-                {
-                    ascendable = false;
-                }
+                // No room for aggregation
+                return queryPosition < predicatePosition - 1;
             } else // No selection predicate on the hierarchy, can be ascended
             {
-                ascendable = true;
+                return true;
             }
         }
-
-        return ascendable;
     }
 
     /**
@@ -411,9 +406,10 @@ public class Query {
                     reportSize *= (int) (distinctValues / selectiveDistinctValues);
                 } else {
                     currentLevel = this.findLevel(hie.getName());
-                    position = hie.findPosition(currentLevel);
-                    if(position != -1)
-                        reportSize *= hie.getLevel(position).getValuesCount();
+                    //position = hie.findPosition(currentLevel);
+                    //if (position != -1)
+                        //reportSize *= hie.getLevel(position).getValuesCount();
+                        reportSize *= hie.getLevel(currentLevel).getValuesCount();
                 }
             }
         }
@@ -736,6 +732,7 @@ public class Query {
             if (OlapGenerator.rand.nextBoolean()) // Random choice
             {
                 ascendHierarchy(hie); // => roll-up
+
             } else {
                 descendHierarchy(hie); // => drill-down
             }

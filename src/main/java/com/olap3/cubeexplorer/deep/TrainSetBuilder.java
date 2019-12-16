@@ -139,7 +139,7 @@ public class TrainSetBuilder {
         feat.close();
     }
 
-    private static int getMeasureIndex(List<String> measures, QueryPart measure) {
+    public static int getMeasureIndex(List<String> measures, QueryPart measure) {
         int index = measures.indexOf(measure.getValue());
         if (index != -1)
             return index;
@@ -148,7 +148,7 @@ public class TrainSetBuilder {
         return measures.indexOf(name);
     }
 
-    private static double[] computeTargets(DataSet ds, String measureValue) {
+    public static double[] computeTargets(DataSet ds, String measureValue) {
         double[] data = getDataCol(ds, measureValue);
         if (data == null) return null;
 
@@ -170,7 +170,7 @@ public class TrainSetBuilder {
                 gmm);
     }
 
-    private static double[] getDataCol(DataSet ds, String measureValue) {
+    public static double[] getDataCol(DataSet ds, String measureValue) {
         double[] data = ds.getDoubleColumn(measureValue);
         if (data == null){
             String name = measureValue.split("]\\.\\[")[1].replace("]", "");

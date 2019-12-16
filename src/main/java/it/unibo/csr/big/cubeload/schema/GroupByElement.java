@@ -17,6 +17,7 @@ public class GroupByElement
 	public GroupByElement(Hierarchy hierarchy, Level level){
 		h = hierarchy;
 		l = level;
+		this.level = level.getName();
 	}
 	
 	/**

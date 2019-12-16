@@ -103,7 +103,14 @@ public class HeaderTree {
 
     public static List<HeaderTree> getLeaves(HeaderTree treeNode){
         HeaderTree root = getRoot(treeNode);
-        return recGetLeaves(root);
+        List<HeaderTree> raw = recGetLeaves(root);
+        List<HeaderTree> out = new ArrayList<>();
+        for (HeaderTree tree : raw){
+            for (int i = 0; i < tree.span; i++) {
+                out.add(tree);
+            }
+        }
+        return out;
     }
 
     private static List<HeaderTree> recGetLeaves(HeaderTree node){
