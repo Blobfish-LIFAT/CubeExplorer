@@ -38,7 +38,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.olap3.cubeexplorer.Dev</mainClass>
+                            <mainClass>com.olap3.cubeexplorer.deep.QueryGenerator</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
