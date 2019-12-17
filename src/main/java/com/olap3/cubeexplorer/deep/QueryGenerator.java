@@ -7,6 +7,8 @@ import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.*;
+import net.razorvine.pyro.serializer.PickleSerializer;
+import net.razorvine.pyro.serializer.PyroSerializer;
 import org.olap4j.OlapConnection;
 import org.olap4j.OlapException;
 import org.olap4j.OlapStatement;
@@ -23,7 +25,7 @@ public class QueryGenerator {
                             muSelect = 2, sigmaSelect = 1;
     public static int queryNb = 10;
     public static Random rand = new Random(42);
-    public static String outfile = "./data/stats/bigFatTrainset.csv";
+    public static String outfile = "./data/stats/bigFatTrainset.pickle";
     public static boolean testing = false;
 
     public static void main(String[] args) throws Exception{
@@ -58,15 +60,19 @@ public class QueryGenerator {
             selections.add(projection + "$CountMembers");
         }
 
-        PrintWriter feat = new PrintWriter(new FileOutputStream(new File(outfile), false));
+        FileOutputStream out = new FileOutputStream(new File(outfile));
+        PyroSerializer serializer = new PickleSerializer();
+        //PrintWriter feat = new PrintWriter(new FileOutputStream(new File(outfile), false));
 
         //Building header
-        feat.print("queryID,");
-        feat.print(Future.join(measures, ",") + ",");
-        feat.print(Future.join(projections, ",") + ",");
-        feat.print(Future.join(selections, ",") + ",");
-        feat.print("avg,variance,skewness,1stq,median,3rdq,mu1,sigma1,pi1,mu2,sigma2,pi2,mu3,sigma3,pi3,raw\n");
-        feat.flush();
+        StringBuilder header = new StringBuilder();
+        header.append("queryID,");
+        header.append(Future.join(measures, ",") + ",");
+        header.append(Future.join(projections, ",") + ",");
+        header.append(Future.join(selections, ",") + ",");
+        header.append("avg,variance,skewness,1stq,median,3rdq,mu1,sigma1,pi1,mu2,sigma2,pi2,mu3,sigma3,pi3,raw\n");
+
+        out.write(serializer.serializeData(header));
 
         java.sql.Connection connection = java.sql.DriverManager.getConnection(MondrianConfig.getURL());
         OlapWrapper wrapper = (OlapWrapper) connection;
@@ -123,7 +129,9 @@ public class QueryGenerator {
             System.out.println("--- --- --- --- --- --- --- ---");
             System.out.println(triplet);
             System.out.println(Compatibility.QfsetToMDX(triplet));
-            runQueryAndWriteStats(feat, String.valueOf(i), olapConnection, triplet, measures, projections, selections);
+
+            //FIXME
+            runQueryAndWriteStats(null, String.valueOf(i), olapConnection, triplet, measures, projections, selections);
         }
     }
 
