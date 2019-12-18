@@ -2,6 +2,7 @@ package com.olap3.cubeexplorer;
 
 import com.alexscode.utilities.collection.Pair;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Lists;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 import com.olap3.cubeexplorer.data.cubeloadBeans.*;
@@ -65,7 +66,7 @@ public class CubeLoad {
 
     static Logger LOGGER = Logger.getLogger(CubeLoad.class.getName());
     private static String dataDir = "data/ssb_converted/",
-        outputFile = "data/stats/res_ssb_3.csv";
+        outputFile = "data/stats/res_ssb_demo.csv";
     static CubeUtils utils;
     private static PrintWriter out;
     static Connection olap;
@@ -105,7 +106,7 @@ public class CubeLoad {
         out = new PrintWriter(new FileOutputStream(new File(outputFile)));
         AprioriMetric im = new IMMetric(interest);
 
-        out.printf("session,candidateSize,budget,algo,planSize,executedSize,im,avgDist,optiTime,execTime,reoptGood,reoptBad,imOfOPT%n");
+        System.out.printf("session,candidateSize,budget,algo,planSize,executedSize,im,avgDist,optiTime,execTime,reoptGood,reoptBad,imOfOPT%n");
         for (Session s : learning){
             if (s.length() < 2){
                 continue; //skip useless sessions
@@ -115,10 +116,10 @@ public class CubeLoad {
             Qfset firstTriplet = Compatibility.QPsToQfset(firstQuery, utils);
 
             for (int i = 1; i <= 10; i++){
-                int budget = 1000 * i;
+                int budget = 500 * i;
 
                 System.out.println("Running OPT budget " + budget/1000 + "s");
-                Pair<TAPStats, Set<List<InfoCollector>>> raw = runOptimal(firstTriplet, budget, im);
+                Pair<TAPStats, Set<List<InfoCollector>>> raw = runOptimalWithOracle(firstTriplet, budget, im);
                 TAPStats optimal = raw.left;
                 System.out.println("Running NAIVE budget " + budget/1000 + "s");
                 TAPStats naive = runTAPHeuristic(firstTriplet, budget, im, 0.005, false);
@@ -128,15 +129,26 @@ public class CubeLoad {
                 int optSize = optimal.finalPlan.size();
                 int naiveSize = naive.finalPlan.size();
                 int tapSize = tapReopt.finalPlan.size();
+
+                System.out.printf("--- Optimal IM:%s D:%s TIME:%s TimeEst:%s---%n",
+                        optimal.im, optimal.dist/((double)optSize), optimal.execTime.elapsed(TimeUnit.MICROSECONDS)/10e3d,
+                        optimal.reoptGood);
+                System.out.println(optimal.finalPlan);
+                System.out.printf("--- Naive IM:%s D:%s TIME:%s---%n", naive.im, naive.dist/((double)naiveSize), (naive.execTime.elapsed(TimeUnit.MICROSECONDS)/10e3d)+(naive.optTime.elapsed(TimeUnit.MICROSECONDS)/10e3d));
+                System.out.println(naive.finalPlan);
+                System.out.printf("--- ReOpt IM:%s D:%s TIME:%s---%n", tapReopt.im, tapReopt.dist/((double)tapSize), (tapReopt.execTime.elapsed(TimeUnit.MICROSECONDS)/10e3d) + (tapReopt.optTime.elapsed(TimeUnit.MICROSECONDS)/10e3d));
+                System.out.println(tapReopt.finalPlan);
+                System.exit(0);
+
                 if(optSize>0){
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,1%n", s.getFilename(), optimal.candidatesNb, budget,
+                System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,1%n", s.getFilename(), optimal.candidatesNb, budget,
                         "OPT", optSize, optSize, optimal.im, optimal.dist/((double)optSize), optimal.optTime.elapsed(TimeUnit.MILLISECONDS),
                         optimal.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0);
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), naive.candidatesNb, budget,
+                System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), naive.candidatesNb, budget,
                         "NAIVE", naive.candidatesNb, naiveSize, naive.im, naive.dist/((double)naiveSize), naive.optTime.elapsed(TimeUnit.MICROSECONDS)/10e3d,
                         naive.execTime.elapsed(TimeUnit.MILLISECONDS), 0, 0,
                         raw.right.stream().mapToDouble(set -> naive.im/set.stream().mapToDouble(im::rate).sum()).average());
-                out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
+                System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", s.getFilename(), tapReopt.candidatesNb, budget,
                         "TAP", tapSize, tapReopt.candidatesNb, tapReopt.im, tapReopt.dist/((double)tapSize), tapReopt.optTime.elapsed(TimeUnit.MILLISECONDS),
                         tapReopt.execTime.elapsed(TimeUnit.MILLISECONDS), tapReopt.reoptGood, tapReopt.reoptBad,
                         raw.right.stream().mapToDouble(set -> tapReopt.im/set.stream().mapToDouble(im::rate).sum()).average());
@@ -265,6 +277,60 @@ public class CubeLoad {
                 dist, 0, 0), otherSolutions);
     }
 
+    public static Pair<TAPStats,Set<List<InfoCollector>>> runOptimalWithOracle(Qfset q0, int budgetms, AprioriMetric interestingness){
+        Stopwatch genTime = Stopwatch.createStarted();
+        Set<InfoCollector> candidates = new HashSet<>(generateCandidates(q0));
+        genTime.stop();
+
+        // Oh magic mirror tell me ho long my queries will take to run !
+        for (InfoCollector ic : candidates){
+            Stopwatch magic = Stopwatch.createStarted();
+            runQuery(ic);
+            long time = magic.stop().elapsed(TimeUnit.MILLISECONDS);
+            ic.setTime_estimate(time);
+        }
+
+        Stopwatch optTime = Stopwatch.createStarted();
+        ExecutionPlan plan;
+        Set<List<InfoCollector>> otherSolutions = null;
+        int tmpTime = 0;
+        try {
+            otherSolutions = OptimalSolver.optimalSolver(candidates, interestingness, budgetms);
+            List<List<InfoCollector>> solutions = new ArrayList<>(otherSolutions);
+            solutions.sort(Comparator.comparing(s -> s.stream().mapToDouble(ic -> interestingness.rate(ic)).sum()));
+            solutions = Lists.reverse(solutions);
+            tmpTime = (int) solutions.get(0).stream().mapToDouble(ic -> interestingness.rate(ic)).sum();
+            plan = new ExecutionPlan(solutions.get(0));
+        } catch (NoSuchElementException e){
+            System.err.println("No optimal found try higher budget than " + budgetms + " ms");
+            return new Pair<>(new TAPStats(q0, genTime, optTime.stop(), Stopwatch.createUnstarted(), new ArrayList<>(), candidates.size(), 0, 0, 0, 0), otherSolutions);
+        }
+        optTime.stop();
+
+        //Exec phase
+        List<Qfset> executed = new ArrayList<>();
+        Stopwatch execTime = Stopwatch.createUnstarted();
+
+        //Main execution Loop (Algorithm 2 line 5)
+        for (;plan.hasNext();) {
+            InfoCollector ic = plan.next();
+            execTime.start();
+            runQuery(ic);
+            plan.setExecuted(ic);
+            execTime.stop();
+            executed.add(ic.getDataSource().getInternal());
+        }
+        double dist = 0d;
+        List<InfoCollector> ics = new ArrayList<>(plan.getExecuted());
+        for (int i = 0; i < ics.size() - 1; i++) {
+            dist += 1 - Jaccard.similarity(ics.get(i).getDataSource().getInternal(), ics.get(i+1).getDataSource().getInternal());
+        }
+
+        return new Pair<>(new TAPStats(q0, genTime,optTime, execTime, executed, candidates.size(),
+                plan.getExecuted().stream().mapToDouble(interestingness::rate).sum(),
+                dist, tmpTime, 0), otherSolutions);
+    }
+
     private static Map<QueryPart, Double> getInterestingness(List<Session> sessions) {
         System.out.println("Building topology graph...");
         MutableValueGraph<QueryPart, Double> topoGraph = ValueGraphBuilder.directed().allowsSelfLoops(true).build();
@@ -377,22 +443,27 @@ public class CubeLoad {
         int reoptGood = 0, reoptBad = 0;
 
         //Main execution Loop (Algorithm 2 line 5)
+        Stopwatch self = Stopwatch.createStarted();
         for (;plan.hasNext();) {
             InfoCollector ic = plan.next();
+
             execTime.start();
             runQuery(ic);
+            execTime.stop();
             executed.add(new Pair<>(ic.getDataSource().getInternal(), null));
             plan.setExecuted(ic);
-            execTime.stop();
+
+
             if (!reoptEnabled)
                 continue;
             optTime.start();
-            if(DOLAP.reoptRoutine(plan, candidates, runTime, budgetms, ks))
+            if(DOLAP.reoptRoutine(plan, candidates, optTime.elapsed(TimeUnit.MILLISECONDS) + execTime.elapsed(TimeUnit.MILLISECONDS), budgetms, ks))
                 reoptGood++;
             else
                 reoptBad++;
             optTime.stop();
         }
+        System.out.println("SELF REOPT = " + self.elapsed(TimeUnit.MILLISECONDS) + " EXEC = " + execTime.elapsed(TimeUnit.MILLISECONDS));
 
 
         //Ordering phase
@@ -429,6 +500,7 @@ public class CubeLoad {
             MDXAccessor data = (MDXAccessor) ic.getDataSource();
             SQLFactory factory = new SQLFactory(utils);
             String query = factory.getStarJoin(data.getInternal());
+            query = query.replace("SELECT", "SELECT SQL_NO_CACHE");
             Statement planON = con.createStatement();
 
             ResultSet rs = planON.executeQuery(query);

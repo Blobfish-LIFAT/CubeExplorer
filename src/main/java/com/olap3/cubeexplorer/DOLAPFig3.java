@@ -171,7 +171,7 @@ public class DOLAPFig3 {
             if (!reoptEnabled)
                 continue;
             optTime.start();
-            if(DOLAP.reoptRoutine(plan, candidates, runTime, budgetms, ks))
+            if(DOLAP.reoptRoutine(plan, candidates, runTime.elapsed(TimeUnit.MILLISECONDS), budgetms, ks))
                 reoptGood++;
             else
                 reoptBad++;

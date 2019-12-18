@@ -12,6 +12,7 @@ public abstract class InfoCollector {
     Qfset q0;
     DataAccessor dataSource;
     MLModel model;
+    @Setter
     private long time_estimate = -1;
     @Getter
     private boolean executed;

@@ -200,7 +200,7 @@ public class DOLAP {
             if (!reoptEnabled)
                 continue;
             optTime.start();
-            reoptRoutine(plan, candidates, runTime, budgetms, ks);
+            reoptRoutine(plan, candidates, runTime.elapsed(TimeUnit.MILLISECONDS), budgetms, ks);
             optTime.stop();
         }
 
@@ -256,8 +256,9 @@ public class DOLAP {
      * @param budget the original time budget
      * @param bm A Budget Manager to perform the re-optimization
      */
-    static boolean reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, Stopwatch runTime, long budget, BudgetManager bm) {
-        long left = budget - runTime.elapsed(TimeUnit.MILLISECONDS);
+    static boolean reoptRoutine(ExecutionPlan plan, List<InfoCollector> candidates, long runTime, long budget, BudgetManager bm) {
+        long left = budget - runTime;
+        System.out.println(left);
 
         // Case one we OUTATIME
         if (left < 1){
@@ -266,7 +267,11 @@ public class DOLAP {
             return false;
         }
 
-        long predictedRunTime = plan.getLeft().stream().mapToLong(InfoCollector::estimatedTime).sum();
+        long predictedRunTime = 0;
+        for (InfoCollector ic : plan.getLeft()){
+            predictedRunTime += ic.estimatedTime();
+        }
+        System.out.println(predictedRunTime);
 
         // Case two less time left than anticipated
         if (predictedRunTime > left){

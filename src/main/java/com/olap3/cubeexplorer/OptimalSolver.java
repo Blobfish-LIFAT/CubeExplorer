@@ -45,6 +45,10 @@ public class OptimalSolver {
         Sets.powerSet(candidates).stream()
                 .filter(s -> s.size() > 0)
                 .filter(s -> s.stream().mapToLong(InfoCollector::estimatedTime).sum() <= timebudget)
+                .peek(s -> {
+                    if(s.size()== candidates.size())
+                        System.out.println("\n!!! DEBUG !!!\n");
+                })
                 .forEach(s -> {
                     var tmp = new ArrayList<>(s);
                     StreamedPermutation.generatePerm(tmp)
@@ -122,6 +126,12 @@ public class OptimalSolver {
 
             return returnValue;
         }
+    }
+
+    public static void main(String[] args) {
+        List<Integer> ints = new ArrayList<>(List.of(1,2,3,4));
+        Sets.powerSet(new HashSet<>(ints)).forEach(s -> System.out.println(s));
+        System.out.println(StreamedPermutation.generatePerm(ints));
     }
 
 }

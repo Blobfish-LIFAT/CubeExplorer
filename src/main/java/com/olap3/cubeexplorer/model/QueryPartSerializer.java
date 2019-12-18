@@ -1,6 +1,6 @@
 package com.olap3.cubeexplorer.model;
 
-import com.google.gson.*;
+import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
@@ -51,10 +51,10 @@ public class QueryPartSerializer extends TypeAdapter<QueryPart> {//implements Js
 
         QueryPart qp;
         switch (t) {
-            case 0 -> qp = QueryPart.newDimension(val);
-            case 1 -> qp = QueryPart.newFilter(val);
-            case 2 -> qp = QueryPart.newMeasure(val);
-            default -> qp = null;
+            case 0 : qp = QueryPart.newDimension(val); break;
+            case 1 : qp = QueryPart.newFilter(val); break;
+            case 2 : qp = QueryPart.newMeasure(val); break;
+            default : qp = null;
         }
         return qp;
     }
