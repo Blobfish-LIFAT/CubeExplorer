@@ -1,5 +1,6 @@
 package com.olap3.cubeexplorer.data;
 
+import com.olap3.cubeexplorer.Similarity.Session.CompareSessions;
 import com.olap3.cubeexplorer.model.MeasureFragment;
 import com.olap3.cubeexplorer.model.ProjectionFragment;
 import com.olap3.cubeexplorer.model.Qfset;
@@ -11,13 +12,14 @@ import mondrian.olap.Connection;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class IpumsLoader {
@@ -103,6 +105,8 @@ public class IpumsLoader {
     }
 
     public static void main(String[] args) throws IOException{
+        PrintWriter out = new PrintWriter(new FileOutputStream(new File("data/sim_ipums.csv")));
+
         MondrianConfig.defaultConfigFile = args[0];
         Connection olap = MondrianConfig.getMondrianConnection();
         if (olap == null)
@@ -115,6 +119,42 @@ public class IpumsLoader {
         QuerySession sq = loader.loadFile(Paths.get("data/ipumsLogs/01_Benjamin_1_5_74969_06-06-2014-11-08-16.txt"));
         //System.out.println(sq);
 
-        loader.loadDir();
+        List<QuerySession> sessions = loader.loadDir();
+        sessions.sort(Comparator.comparing(QuerySession::getId));
+        double[][] smatrix = new double[sessions.size()][];
+        for (int i = 0; i < smatrix.length; i++) {
+            smatrix[i] = new double[sessions.size()];
+        }
+
+        System.out.println("--- Sim matrix ---");
+        var header = sessions.stream().map(qs -> qs.getId()).collect(Collectors.toList());
+        for (int i = 0; i < header.size(); i++) {
+            String s = header.get(i);
+            out.print(s);
+            if (i != header.size() - 1)
+                out.print(";");
+        }
+        out.print("\n");
+
+        for (int i = 0; i < sessions.size(); i++) {
+            QuerySession s1 = sessions.get(i);
+            smatrix[i][i] = 0;
+            for (int j = i + 1; j < sessions.size(); j++) {
+                QuerySession s2 = sessions.get(j);
+
+                CompareSessions compare = new CompareSessions(s1, s2);
+                double s = 1 - compare.compareTwoSessionsBySW();
+                smatrix[i][j] = s;
+                smatrix[j][i] = s;
+            }
+        }
+
+        System.out.println(Arrays.deepToString(smatrix));
+        for (double[] line : smatrix){
+            var tmp = Arrays.toString(line);
+            out.println(Arrays.toString(line).substring(1, tmp.length()-1).replace(", ", ";"));
+        }
+
+        out.close();
     }
 }
