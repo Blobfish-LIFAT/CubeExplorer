@@ -20,6 +20,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Qfset implements java.io.Serializable, Measurable<Qfset> {
+    /**
+     * Score assigned to the query for future recommendation
+     */
+    @Getter
+    protected double score = 0;
+    /**
+     * Describes the alignment of the query with other queries. For debug
+     * purpose only).
+     */
+    @Getter
+    protected String alignment = "";
 
     mondrian.olap.Query mondrianQuery;
 
@@ -1058,6 +1069,18 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
         result.addAllReferencesPerDimension(referencesPerDimension);
         return result;
+    }
+
+    public void addScore(double score) {
+        this.score += score;
+    }
+
+    public void resetScore() {
+        this.score = 0;
+    }
+
+    public void addAlignment(String alignment) {
+        this.alignment += alignment;
     }
 
 
