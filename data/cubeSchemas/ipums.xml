@@ -22,10 +22,10 @@
       </Hierarchy>
     </Dimension>
 
-    <Dimension name="YEAR" foreignKey="YEARDIM">
+    <Dimension name="YEAR" foreignKey="YEAR">
       <Hierarchy name="YEAR" hasAll="true" primaryKey="IDYEAR" allLevelName="ALLYEAR" allMemberName="All">
         <Table name="DIMYEAR"/>
-        <Level name="YEAR" column="YEARDIM" type="String" uniqueMembers="true"/>
+        <Level name="YEAR" column="YEAR" type="String" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
 
