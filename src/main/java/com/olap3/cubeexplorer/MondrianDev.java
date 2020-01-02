@@ -1,12 +1,5 @@
 package com.olap3.cubeexplorer;
 
-import com.olap3.cubeexplorer.data.DopanLoader;
-import com.olap3.cubeexplorer.infocolectors.ICCorrelate;
-import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
-import com.olap3.cubeexplorer.model.Compatibility;
-import com.olap3.cubeexplorer.model.ECube;
-import com.olap3.cubeexplorer.model.Qfset;
-import com.olap3.cubeexplorer.model.Query;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
@@ -16,7 +9,6 @@ import org.olap4j.OlapWrapper;
 
 import java.sql.DriverManager;
 
-import static com.olap3.cubeexplorer.dolap.DOLAPFig3.testData;
 
 public class MondrianDev {
     public static void main(String[] args) throws Exception{
@@ -35,17 +27,7 @@ public class MondrianDev {
         OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
         OlapStatement statement = olapConnection.createStatement();
 
-        var sessions = DopanLoader.loadDir(testData);
 
-        Query q = sessions.stream().filter(s -> s.getFilename().equals("2-08.json")).findFirst().get().queries.get(3);
-        Qfset qf = Compatibility.QPsToQfset(q, utils);
-
-        ICCorrelate icc = new ICCorrelate(new MDXAccessor(qf),"Nombre de voitures des menages (moyenne)");
-        //DataSet ds = Compatibility.cellSetToDataSet(cs, true);
-        ECube ec = icc.execute();
-
-
-        System.out.println(ec.getExplProperties().get("corr_matrix"));
 
 
     }

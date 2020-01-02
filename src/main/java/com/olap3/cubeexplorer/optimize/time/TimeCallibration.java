@@ -1,8 +1,6 @@
 package com.olap3.cubeexplorer.optimize.time;
 
 import com.google.common.base.Stopwatch;
-import com.olap3.cubeexplorer.dolap.CubeLoad;
-import com.olap3.cubeexplorer.dolap.DOLAP;
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.evaluate.SQLFactory;
 import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
@@ -35,7 +33,7 @@ import java.util.regex.Pattern;
 public class TimeCallibration implements CostModel {
 
 
-    private static final Logger LOGGER = Logger.getLogger(DOLAP.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TimeCallibration.class.getName());
     static final String testData = "./data/ssb_converted/";
     static final String outCSV = "./data/stats/timed_queries_ssb.csv";
     private static String[] cubeloadProfiles = new String[]{"explorative", "goal_oriented", "slice_all", "slice_and_drill"};
@@ -55,7 +53,7 @@ public class TimeCallibration implements CostModel {
         List<Session> learning = new ArrayList<>();
         Map<String, List<Session>> profiles = new HashMap<>();
         for (String cubeloadProfile : cubeloadProfiles) {
-            List<Session> profile = CubeLoad.loadCubeloadXML(testData + cubeloadProfile + ".xml", olap, "SSB").subList(0,10);
+            List<Session> profile = new ArrayList<>();//CubeLoad.loadCubeloadXML(testData + cubeloadProfile + ".xml", olap, "SSB").subList(0,10);
             profiles.put(cubeloadProfile, profile);
             learning.addAll(profile);
         }

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -19,10 +20,31 @@ import java.util.stream.Collectors;
 
 public class CEDTests {
     public static void main(String[] args) throws IOException {
+        String arg0 = args[0];
 
+        //runIPUMS(arg0);
+        runCubeLoad("data/ssb.properties");
+    }
+
+    public static void  runCubeLoad(String dbConfigFile) throws IOException{
+        PrintWriter out = new PrintWriter(new FileOutputStream(new File("data/sim_cubeload.csv")));
+
+        MondrianConfig.defaultConfigFile = dbConfigFile;
+        Connection olap = MondrianConfig.getMondrianConnection();
+        if (olap == null)
+            System.exit(1); //Crash the app can't do anything w/o mondrian
+        CubeUtils utils = new CubeUtils(olap, "SSB");
+        CubeUtils.setDefault(utils);
+        MondrianConfig.setMondrianConnection(olap);
+
+        List<QuerySession> sessions = CubeLoadTextLogLoader.loadFile(Paths.get("./data/ssb_converted/cubeload-log1.txt"), utils);
+        computeSim(out, sessions);
+    }
+
+    public static void runIPUMS(String dbConfigFile) throws IOException{
         PrintWriter out = new PrintWriter(new FileOutputStream(new File("data/sim_ipums.csv")));
 
-        MondrianConfig.defaultConfigFile = args[0];
+        MondrianConfig.defaultConfigFile = dbConfigFile;
         Connection olap = MondrianConfig.getMondrianConnection();
         if (olap == null)
             System.exit(1); //Crash the app can't do anything w/o mondrian
@@ -33,6 +55,10 @@ public class CEDTests {
         IpumsLoader loader = new IpumsLoader(utils, "data/ipumsLogs");
 
         List<QuerySession> sessions = loader.loadDir();
+        computeSim(out, sessions);
+    }
+
+    private static void computeSim(PrintWriter out, List<QuerySession> sessions) {
         sessions.sort(Comparator.comparing(QuerySession::getId));
         double[][] smatrix = new double[sessions.size()][];
         for (int i = 0; i < smatrix.length; i++) {
@@ -69,8 +95,5 @@ public class CEDTests {
         }
 
         out.close();
-
-
-
     }
 }
