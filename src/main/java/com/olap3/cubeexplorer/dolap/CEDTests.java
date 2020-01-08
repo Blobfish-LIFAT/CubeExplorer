@@ -1,17 +1,19 @@
 package com.olap3.cubeexplorer.dolap;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.olap3.cubeexplorer.Similarity.Session.CompareSessions;
 import com.olap3.cubeexplorer.data.IpumsLoader;
+import com.olap3.cubeexplorer.model.Qfset;
 import com.olap3.cubeexplorer.model.julien.QuerySession;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +25,33 @@ public class CEDTests {
         String arg0 = args[0];
 
         //runIPUMS(arg0);
-        runCubeLoad("data/ssb.properties");
+
+        //runCubeLoad("data/ssb.properties");
+
+        String filePath = "data/02-01-2020-01-42-41log_intra3_inter10_session30PerCluster.txt";
+        runLogGen("data/ipums.properties", filePath);
+    }
+
+    private static void runLogGen(String dbConfigFile, String filePath) throws FileNotFoundException {
+        PrintWriter out = new PrintWriter(new FileOutputStream(new File("data/sim_loggen_2.csv")));
+
+        MondrianConfig.defaultConfigFile = dbConfigFile;
+        Connection olap = MondrianConfig.getMondrianConnection();
+        if (olap == null)
+            System.exit(1); //Crash the app can't do anything w/o mondrian
+        CubeUtils utils = new CubeUtils(olap, "IPUMS");
+        CubeUtils.setDefault(utils);
+        MondrianConfig.setMondrianConnection(olap);
+
+        Gson gson = new GsonBuilder().create();
+        List<List<Qfset>> queries = gson.fromJson(new FileReader(filePath), new TypeToken<List<List<Qfset>>>(){}.getType());
+        List<QuerySession> sessions = new ArrayList<>(queries.size());
+        int i = 0;
+        for (List<Qfset> qfsets : queries){
+            QuerySession session = new QuerySession(qfsets, String.valueOf(i++));
+            sessions.add(session);
+        }
+        computeSim(out, sessions);
     }
 
     public static void  runCubeLoad(String dbConfigFile) throws IOException{

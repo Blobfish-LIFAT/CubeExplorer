@@ -1,8 +1,11 @@
 package com.olap3.cubeexplorer.model;
 
+import com.google.gson.annotations.JsonAdapter;
+
 /**
  * The class for fragments (so far only a string)
  */
+@JsonAdapter(FragmentAdapter.class)
 public abstract class Fragment implements java.io.Serializable {
 
     private String the_fragment;

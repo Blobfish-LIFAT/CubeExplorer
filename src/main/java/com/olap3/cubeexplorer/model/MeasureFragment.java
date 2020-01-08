@@ -1,9 +1,11 @@
 package com.olap3.cubeexplorer.model;
 
+import com.google.gson.annotations.JsonAdapter;
 import mondrian.olap.Member;
 
 import java.util.HashMap;
 
+@JsonAdapter(FragmentAdapter.class)
 public class MeasureFragment extends Fragment implements java.io.Serializable {
 
     private Member attribute;
