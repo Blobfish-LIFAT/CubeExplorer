@@ -8,6 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.olap3.cubeexplorer.data.DopanLoader;
+import com.olap3.cubeexplorer.data.FrontEndFormatter;
+import com.olap3.cubeexplorer.data.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
+import com.olap3.cubeexplorer.data.castor.session.User;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.evaluate.QueryStats;
 import com.olap3.cubeexplorer.infocolectors.ICView;
@@ -67,7 +71,7 @@ public class DOLAPFig3 {
     private static final Logger LOGGER = Logger.getLogger(DOLAPFig3.class.getName());
 
     public static final String testData = "./data/import_ideb",
-            resultFile = "./data/stats/res_dopan_low_time_reopt.csv";
+            resultFile = "./data/stats/res_dopan_devnull.csv";
     private static CubeUtils utils;
     private static MemoryManager mem = Nd4j.getMemoryManager();
     private static Gson gson = new GsonBuilder()
@@ -130,10 +134,25 @@ public class DOLAPFig3 {
                         naive.optTime.elapsed(TimeUnit.MILLISECONDS), naive.execTime.elapsed(TimeUnit.MILLISECONDS), naive.candidatesNb, naive.finalPlan.size(), naive.reoptGood, naive.reoptBad);
                 res.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",s.getFilename(), budget, "TAP", reopt.im, reopt.dist,
                         reopt.optTime.elapsed(TimeUnit.MILLISECONDS), reopt.execTime.elapsed(TimeUnit.MILLISECONDS), reopt.candidatesNb, reopt.finalPlan.size(), reopt.reoptGood, reopt.reoptBad);
+
+                if (s.getFilename().equals("1-02.json") && budget == 1000){
+                    List<QueryRequest> qrs = new ArrayList<>();
+                    int i = 0;
+                    for (Qfset q : reopt.finalPlan){
+                        QueryRequest qr = new QueryRequest(i++);
+                        qr.setQuery(q.toMDXString());
+                        qrs.add(qr);
+                    }
+                    CrSession demoSess = new CrSession(new User("42","TAP","Bots"), utils.getCube().getName(), "Auto generated session using TAPP", "This sessions was generated using TAP !");
+                    demoSess.setQueries(qrs);
+                    String toSave = FrontEndFormatter.buildJson(demoSess);
+                    Files.write(Paths.get("data/tap_demo.json"), toSave.getBytes());
+                }
             }
 
-        }
 
+
+        }
 
 
         //stats.flush(); stats.close();
