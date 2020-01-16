@@ -1,10 +1,12 @@
 package com.olap3.cubeexplorer.model;
 
+import com.google.gson.annotations.JsonAdapter;
 import mondrian.olap.Hierarchy;
 import mondrian.olap.Level;
 
 import java.util.HashMap;
 
+@JsonAdapter(FragmentAdapter.class)
 public class ProjectionFragment extends Fragment implements java.io.Serializable {
 
     private Level attribute;

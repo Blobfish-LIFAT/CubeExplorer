@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.model;
+package com.olap3.cubeexplorer.model.legacy;
 
 
 import com.google.gson.annotations.JsonAdapter;

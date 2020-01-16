@@ -2,7 +2,7 @@ package com.olap3.cubeexplorer.measures;
 
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 import com.olap3.cubeexplorer.model.Compatibility;
-import com.olap3.cubeexplorer.model.QueryPart;
+import com.olap3.cubeexplorer.model.legacy.QueryPart;
 import com.olap3.cubeexplorer.optimize.AprioriMetric;
 
 import java.util.Map;

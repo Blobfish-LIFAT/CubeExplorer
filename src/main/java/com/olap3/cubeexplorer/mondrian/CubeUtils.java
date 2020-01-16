@@ -87,6 +87,14 @@ public class CubeUtils {
         return null;
     }
 
+    public Member getMember(Level level, String memberName){
+        for (Member m : fetchMembers(level)){
+            if (m.getName().equals(memberName))
+                return m;
+        }
+        return null;
+    }
+
     /**
      * Forces the building of the full member cache of the cube
      */

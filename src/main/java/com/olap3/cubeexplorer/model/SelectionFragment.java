@@ -1,10 +1,12 @@
 package com.olap3.cubeexplorer.model;
 
+import com.google.gson.annotations.JsonAdapter;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 
 import java.util.HashMap;
 
+@JsonAdapter(FragmentAdapter.class)
 public class SelectionFragment extends Fragment {
 
     private Level attribute;

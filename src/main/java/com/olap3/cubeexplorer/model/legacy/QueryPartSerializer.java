@@ -1,4 +1,4 @@
-package com.olap3.cubeexplorer.model;
+package com.olap3.cubeexplorer.model.legacy;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

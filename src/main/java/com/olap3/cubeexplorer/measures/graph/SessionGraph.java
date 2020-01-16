@@ -3,9 +3,9 @@ package com.olap3.cubeexplorer.measures.graph;
 
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
-import com.olap3.cubeexplorer.model.Query;
-import com.olap3.cubeexplorer.model.QueryPart;
-import com.olap3.cubeexplorer.model.Session;
+import com.olap3.cubeexplorer.model.legacy.Query;
+import com.olap3.cubeexplorer.model.legacy.QueryPart;
+import com.olap3.cubeexplorer.model.legacy.Session;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;

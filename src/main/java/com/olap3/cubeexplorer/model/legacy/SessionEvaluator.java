@@ -1,9 +1,11 @@
-package com.olap3.cubeexplorer.model;
+package com.olap3.cubeexplorer.model.legacy;
 
 import com.alexscode.utilities.Logger;
 import com.alexscode.utilities.Nd4jUtils;
 import com.alexscode.utilities.collection.Pair;
-import com.google.common.graph.*;
+import com.google.common.graph.EndpointPair;
+import com.google.common.graph.MutableValueGraph;
+import com.google.common.graph.ValueGraphBuilder;
 import com.olap3.cubeexplorer.measures.compute.PageRank;
 import com.olap3.cubeexplorer.measures.graph.Graphs;
 import org.nd4j.linalg.api.ndarray.INDArray;

@@ -1,10 +1,9 @@
 package com.olap3.cubeexplorer.data;
 
 import com.google.gson.Gson;
-import com.olap3.cubeexplorer.model.Query;
-import com.olap3.cubeexplorer.model.QueryPart;
-import com.olap3.cubeexplorer.model.Session;
-
+import com.olap3.cubeexplorer.model.legacy.Query;
+import com.olap3.cubeexplorer.model.legacy.QueryPart;
+import com.olap3.cubeexplorer.model.legacy.Session;
 
 import java.io.IOException;
 import java.nio.file.Files;

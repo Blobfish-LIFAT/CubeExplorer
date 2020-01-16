@@ -10,9 +10,10 @@ import com.olap3.cubeexplorer.model.columnStore.DataSet;
 import com.olap3.cubeexplorer.model.columnStore.Datatype;
 import com.olap3.cubeexplorer.model.columnStore.Predicate;
 import com.olap3.cubeexplorer.model.columnStore.StringEqPredicate;
+import com.olap3.cubeexplorer.model.legacy.MdxToTripletConverter;
+import com.olap3.cubeexplorer.model.legacy.Session;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import mondrian.olap.Query;
 import mondrian.olap.*;
 
 import java.util.*;
@@ -276,8 +277,8 @@ public class Compatibility {
      * @param q a triplet
      * @return the query with all parts from the triplet
      */
-    public static Set<QueryPart> partsFromQfset(Qfset q){
-        Set<QueryPart> parts = new HashSet<>();
+    public static Set<com.olap3.cubeexplorer.model.legacy.QueryPart> partsFromQfset(Qfset q){
+        Set<com.olap3.cubeexplorer.model.legacy.QueryPart> parts = new HashSet<>();
 
         // Handle projections
         parts.addAll(q.getAttributes().stream().map(Compatibility::projectionToDimensionQP).collect(Collectors.toSet()));
@@ -315,40 +316,40 @@ public class Compatibility {
      * @param pf a Projection fragment to be converted
      * @return a dimension type QP
      */
-    public static QueryPart projectionToDimensionQP(ProjectionFragment pf){
+    public static com.olap3.cubeexplorer.model.legacy.QueryPart projectionToDimensionQP(ProjectionFragment pf){
         var dim = pf.toString();//.replace("].[", "");
         //dim = dim.substring(1, dim.length()-1);
         //System.out.println(dim);
-        return QueryPart.newDimension(dim);
+        return com.olap3.cubeexplorer.model.legacy.QueryPart.newDimension(dim);
     }
 
-    public static QueryPart selectionToFilterQP(SelectionFragment sf){
+    public static com.olap3.cubeexplorer.model.legacy.QueryPart selectionToFilterQP(SelectionFragment sf){
         var member = sf.getValue().toString(); //TODO unify format
         //System.out.println(member);
-        return QueryPart.newFilter(member, sf.getLevel().getUniqueName());
+        return com.olap3.cubeexplorer.model.legacy.QueryPart.newFilter(member, sf.getLevel().getUniqueName());
     }
 
-    public static QueryPart measureToMeasureQP(MeasureFragment mf){
+    public static com.olap3.cubeexplorer.model.legacy.QueryPart measureToMeasureQP(MeasureFragment mf){
         var measure = mf.getAttribute().getUniqueName(); //TODO unify format
-        return QueryPart.newMeasure(measure);
+        return com.olap3.cubeexplorer.model.legacy.QueryPart.newMeasure(measure);
     }
 
-    public static Qfset QPsToQfset(com.olap3.cubeexplorer.model.Query query, CubeUtils utils) {
+    public static Qfset QPsToQfset(com.olap3.cubeexplorer.model.legacy.Query query, CubeUtils utils) {
         var proj = new HashSet<ProjectionFragment>();
         var sel = new HashSet<SelectionFragment>();
         var meas = new HashSet<MeasureFragment>();
 
-        for(QueryPart dim : query.getDimensions()){
+        for(com.olap3.cubeexplorer.model.legacy.QueryPart dim : query.getDimensions()){
             Level l = utils.getLevel(dim.getValue());
             if (l == null)
                 System.out.printf("call debugger");
             proj.add(ProjectionFragment.newInstance(l));
         }
 
-        for (QueryPart filter : query.getFilters())
+        for (com.olap3.cubeexplorer.model.legacy.QueryPart filter : query.getFilters())
             sel.add(selFragFromFilter(filter, utils));
 
-        for (QueryPart measure : query.getMeasures()){
+        for (com.olap3.cubeexplorer.model.legacy.QueryPart measure : query.getMeasures()){
             Member m = utils.getMeasure(measure.getValue());
             meas.add(MeasureFragment.newInstance(m));
         }
@@ -356,12 +357,12 @@ public class Compatibility {
         return new Qfset(proj, sel, meas);
     }
 
-    public static SelectionFragment selFragFromFilter(QueryPart filter, CubeUtils utils){
+    public static SelectionFragment selFragFromFilter(com.olap3.cubeexplorer.model.legacy.QueryPart filter, CubeUtils utils){
         //Attempt more efficient conversion
-        if (filter.level != null){
-            Level l = utils.getLevel(filter.level);
+        if (filter.getLevel()!= null){
+            Level l = utils.getLevel(filter.getLevel());
             for (Member candidate : utils.fetchMembers(l)){
-                if (candidate.getName().equals(filter.value) || candidate.getUniqueName().equals(filter.value)){
+                if (candidate.getName().equals(filter.getLevel()) || candidate.getUniqueName().equals(filter.getLevel())){
                     return SelectionFragment.newInstance(candidate);
                 }
             }
@@ -373,9 +374,9 @@ public class Compatibility {
         ArrayList<Session> outSess = new ArrayList<>(sessions.size());
 
         for (CrSession in : sessions){
-            ArrayList<com.olap3.cubeexplorer.model.Query> queries = new ArrayList<>(in.getQueries().size());
+            ArrayList<com.olap3.cubeexplorer.model.legacy.Query> queries = new ArrayList<>(in.getQueries().size());
             for (QueryRequest qr : in.getQueries()){
-                queries.add(new com.olap3.cubeexplorer.model.Query(Compatibility.partsFromQfset(Compatibility.QfsetFromMDX(qr.getQuery()))));
+                queries.add(new com.olap3.cubeexplorer.model.legacy.Query(Compatibility.partsFromQfset(Compatibility.QfsetFromMDX(qr.getQuery()))));
             }
             Session current = new Session(queries, in.getUser().getName(), in.getTitle());
             outSess.add(current);

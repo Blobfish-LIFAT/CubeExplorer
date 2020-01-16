@@ -1,7 +1,7 @@
 package com.olap3.cubeexplorer.measures.graph;
 
 import com.google.common.graph.MutableValueGraph;
-import com.olap3.cubeexplorer.model.QueryPart;
+import com.olap3.cubeexplorer.model.legacy.QueryPart;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import mondrian.olap.Hierarchy;
 import mondrian.olap.Level;

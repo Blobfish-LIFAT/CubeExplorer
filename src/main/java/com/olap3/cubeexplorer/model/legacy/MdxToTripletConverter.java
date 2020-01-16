@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.olap3.cubeexplorer.model;
+package com.olap3.cubeexplorer.model.legacy;
 
+import com.olap3.cubeexplorer.model.MeasureFragment;
+import com.olap3.cubeexplorer.model.ProjectionFragment;
+import com.olap3.cubeexplorer.model.Qfset;
+import com.olap3.cubeexplorer.model.SelectionFragment;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
-import mondrian.olap.*;
 import mondrian.olap.Query;
+import mondrian.olap.*;
 
 import java.util.HashSet;
 import java.util.Set;

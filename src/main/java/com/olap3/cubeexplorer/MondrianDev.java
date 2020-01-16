@@ -6,7 +6,7 @@ import com.olap3.cubeexplorer.infocolectors.MDXAccessor;
 import com.olap3.cubeexplorer.model.Compatibility;
 import com.olap3.cubeexplorer.model.ECube;
 import com.olap3.cubeexplorer.model.Qfset;
-import com.olap3.cubeexplorer.model.Query;
+import com.olap3.cubeexplorer.model.legacy.Query;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 import com.olap3.cubeexplorer.mondrian.MondrianConfig;
 import mondrian.olap.Connection;
