@@ -24,7 +24,8 @@ import java.util.List;
  * SQL datatype : https://www.tutorialspoint.com/java-resultsetmetadata-getcolumntype-method-with-example
  */
 public class MDXAccessor extends DataAccessor {
-    DataSet cached = null;
+    private DataSet cached = null;
+    private CellSet cachedCS;
     @Setter
     long mesuredTime;
 
@@ -39,13 +40,13 @@ public class MDXAccessor extends DataAccessor {
     @Override
     public DataSet execute() {
         try {
-            java.sql.Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
+            //java.sql.Connection connection = DriverManager.getConnection(MondrianConfig.getURL());
             OlapWrapper wrapper = (OlapWrapper) connection;
             OlapConnection olapConnection = wrapper.unwrap(OlapConnection.class);
             OlapStatement statement = olapConnection.createStatement();
             //CellSet cs = new CellSet(statement.executeOlapQuery(internal.toMDXString()));
-            CellSet cs = new CellSet(statement.executeOlapQuery(Compatibility.QfsetToMDX(internal)));
-            return Compatibility.cellSetToDataSet(cs, true);
+            cachedCS = new CellSet(statement.executeOlapQuery(Compatibility.QfsetToMDX(internal)));
+            return Compatibility.cellSetToDataSet(cachedCS, true);
 
         } catch (SQLException e){
             e.printStackTrace();

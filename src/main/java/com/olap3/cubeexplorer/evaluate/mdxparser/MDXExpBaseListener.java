@@ -1,5 +1,5 @@
 // Generated from /home/alex/IdeaProjects/CubeExplorer/src/main/antlr4/MDXExp.g4 by ANTLR 4.7.2
-package com.olap3.cubeexplorer.mdxparser;
+package com.olap3.cubeexplorer.evaluate.mdxparser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
