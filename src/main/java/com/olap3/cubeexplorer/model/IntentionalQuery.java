@@ -1,5 +1,8 @@
 package com.olap3.cubeexplorer.model;
 
+/**
+ * An intentional query over a cube represented by it's starting point q0
+ */
 public class IntentionalQuery {
     Qfset start;
     String cube;

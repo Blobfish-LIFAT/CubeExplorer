@@ -5,10 +5,9 @@
 package com.olap3.cubeexplorer.measures;
 
 /**
- *
  * @author Julien
  */
-public abstract class Similarity {
+abstract class Similarity {
 
     protected double similarity;
 

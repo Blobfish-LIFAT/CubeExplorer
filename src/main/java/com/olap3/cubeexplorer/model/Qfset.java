@@ -863,6 +863,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     /**
      * Method to drilldown an attribute to another attribute
+     * @return true of drill down was possible and performed
      */
     public boolean drillDownLevel(Level attribute, int level) {
 

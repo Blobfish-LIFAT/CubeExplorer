@@ -25,7 +25,7 @@ import static com.olap3.cubeexplorer.data.HeaderTree.getLevelDescriptors;
 
 /**
  * @author Alex
- * Various conversion functions to go between data formats for queries and parts
+ * Various conversion functions to go between data formats for queries and parts, this ensures compatibility with {@link com.olap3.cubeexplorer.model.legacy}
  */
 public class Compatibility {
 

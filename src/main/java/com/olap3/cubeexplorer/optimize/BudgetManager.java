@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public interface BudgetManager {
     /**
      * Time budget is an integer in milliseconds (simpler to solve)
-     * @param candidates
-     * @param timeBudget
-     * @return
+     * @param candidates candidates ICs that could be run
+     * @param timeBudget the budget in milliseconds
+     * @return an execution plan compliant with the budget
      */
     public ExecutionPlan findBestPlan(List<InfoCollector> candidates, int timeBudget);
 
@@ -27,9 +27,6 @@ public interface BudgetManager {
      * Given an existing solution and a search space of info collectors find all equivalent solution by swapping 'identical'
      * items in the solution.
      * 'identical' is defined using time estimation and the metric, two ic are considered equal if they have equal time and metric value
-     * @param solution
-     * @param metric
-     * @return
      */
     static Set<Set<InfoCollector>> expandToEqSolutions(List<InfoCollector> serchSpace, Set<InfoCollector> solution, AprioriMetric metric){
 

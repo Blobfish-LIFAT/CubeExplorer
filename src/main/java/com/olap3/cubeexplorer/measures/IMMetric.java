@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 
 import static com.alexscode.utilities.math.Distribution.log2;
 
+/**
+ * Interestingness metric store has to be fed a pre computed map using page rank
+ */
 public class IMMetric implements AprioriMetric {
     //static Pattern qpF = Pattern.compile("\\.\\[([^\\]]*)\\]$");
     static Pattern qpF = Pattern.compile(".*\\.\\[([^]]*)]");

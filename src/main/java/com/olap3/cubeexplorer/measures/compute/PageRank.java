@@ -10,6 +10,10 @@ import org.nd4j.linalg.factory.Nd4j;
 
 import java.util.HashMap;
 
+/**
+ * Page rank on graph of query parts
+ * @author Ben Crulis
+ */
 public class PageRank {
     private PageRank(){}
 

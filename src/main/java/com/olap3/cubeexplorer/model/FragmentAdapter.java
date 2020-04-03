@@ -8,6 +8,9 @@ import mondrian.olap.Level;
 
 import java.io.IOException;
 
+/**
+ * Handles the serialisation of {@link Fragment} to a JSON format.
+ */
 public class FragmentAdapter extends TypeAdapter<Fragment> {
     public static final int SELECTION = 1, PROJECTION = 0, MEASURE = 2;
 

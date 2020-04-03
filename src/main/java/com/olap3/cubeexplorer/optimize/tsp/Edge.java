@@ -17,8 +17,8 @@ public class Edge implements Comparable<Edge> {
     
     /**
      * Constructor that takes the two endpoints id
-     * @param int the id of the first endpoint
-     * @param int the id of the second endpoint
+     * @param a the id of the first endpoint
+     * @param b the id of the second endpoint
      */
     public Edge(int a, int b) {
         this.endPoint1 = Math.max(a, b);
@@ -27,7 +27,6 @@ public class Edge implements Comparable<Edge> {
 
     /**
      * Getter that returns the first endpoint id
-     * @param None
      * @return the first endpoint id
      */
     public int get1() {
@@ -36,7 +35,6 @@ public class Edge implements Comparable<Edge> {
 
     /**
      * Getter that returns the second endpoint id
-     * @param None
      * @return the second endpoint id
      */
     public int get2() {
@@ -45,8 +43,7 @@ public class Edge implements Comparable<Edge> {
 
     /**
      * Method that compares two edges, here to make this class Comparable
-     * @see java.util.Comparable
-     * @param Edge the edge that is going to be compared against this one
+     * @param e2 the edge that is going to be compared against this one
      * @return int will return -1 if less, 0 if equal, and 1 if greater
      */
     public int compareTo(Edge e2) {
@@ -62,8 +59,7 @@ public class Edge implements Comparable<Edge> {
 
     /**
      * Method that compares two edges, here to make this class Comparable
-     * @see java.util.Comparable
-     * @param Edge the edge that is going to be compared against this one
+     * @param e2 the edge that is going to be compared against this one
      * @return boolean true if both share the same endpoints, false otherwise
      */
     public boolean equals(Edge e2) {

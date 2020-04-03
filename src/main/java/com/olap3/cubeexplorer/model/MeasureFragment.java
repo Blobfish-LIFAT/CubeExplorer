@@ -5,6 +5,9 @@ import mondrian.olap.Member;
 
 import java.util.HashMap;
 
+/**
+ * The measure parts of a query.
+ */
 @JsonAdapter(FragmentAdapter.class)
 public class MeasureFragment extends Fragment implements java.io.Serializable {
 

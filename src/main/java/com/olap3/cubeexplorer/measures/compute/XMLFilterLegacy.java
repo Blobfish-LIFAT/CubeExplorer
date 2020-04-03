@@ -10,6 +10,9 @@ import java.io.FileOutputStream;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * Filtering of cubeload sessions by type
+ */
 public class XMLFilterLegacy {
     static String target = "Goal Oriented";
     static String inputFile = "it/unibo/csr/big/cubeload/Workload-1545151556.xml";

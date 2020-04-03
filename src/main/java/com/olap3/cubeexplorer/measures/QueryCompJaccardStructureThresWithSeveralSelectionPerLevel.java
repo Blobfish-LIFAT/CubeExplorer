@@ -19,7 +19,6 @@ import java.util.List;
 
 
 /**
- *
  * @author Elisa
  */
 public class QueryCompJaccardStructureThresWithSeveralSelectionPerLevel{

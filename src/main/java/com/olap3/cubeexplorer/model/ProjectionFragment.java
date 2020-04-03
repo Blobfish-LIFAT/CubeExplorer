@@ -6,6 +6,9 @@ import mondrian.olap.Level;
 
 import java.util.HashMap;
 
+/**
+ * A projection fragment, it's not strictly necessary to specify default levels they are handled by the mondrian engine based on the cube schema
+ */
 @JsonAdapter(FragmentAdapter.class)
 public class ProjectionFragment extends Fragment implements java.io.Serializable {
 
