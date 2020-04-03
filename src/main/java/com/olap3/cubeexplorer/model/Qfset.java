@@ -357,7 +357,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     /**
      * Add the default members when a dimension is not specify in the list of
-     * projections {@link #projections}
+     * projections
      */
     public void complete() {
         HashSet<Hierarchy> thisHiers = new HashSet<Hierarchy>();
@@ -642,7 +642,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     /**
      * Test if a fragment is contained in the list of projections
-     * {@link #projections}
      *
      * @param f the fragment
      * @return true if the fragment is contained, false otherwise.
@@ -653,7 +652,6 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     /**
      * Test if a fragment is contained in the list of selections
-     * {@link #selections}
      *
      * @param f the fragment
      * @return true if the fragment is contained, false otherwise.
@@ -863,6 +861,8 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     /**
      * Method to drilldown an attribute to another attribute
+     * @param attribute .
+     * @param  level .
      * @return true of drill down was possible and performed
      */
     public boolean drillDownLevel(Level attribute, int level) {

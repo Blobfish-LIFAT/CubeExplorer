@@ -6,7 +6,6 @@ import java.util.List;
  * This class is the json object used by the <i>CASTOR</i> client as an input to display all the intentional analytics
  * model's results of a user session.
  *
- * @see scripts.BuildDemoJsonScript BuildDemoJsonScript
  */
 public class CastorJsonResponse {
 

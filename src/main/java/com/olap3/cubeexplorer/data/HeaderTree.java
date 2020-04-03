@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * <p>Table header, used for building graphical table. It's modeled like a tree structure, with root node always named
  * "root"</p>
- *<p>Don't forget to call {@link HeaderTree#updateSpanAndTrimChildren()} after building the tree to compute span value
+ *<p>Don't forget to call {@link HeaderTree#updateSpanAndTrimChildren(HeaderTree)} after building the tree to compute span value
  * and remove empty children list.</p>
  */
 public class HeaderTree {

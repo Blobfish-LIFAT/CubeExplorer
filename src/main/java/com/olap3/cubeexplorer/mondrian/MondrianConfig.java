@@ -11,7 +11,7 @@ import java.util.Properties;
 
 /**
  * This allows to quickly connect to a mondrian cube using a config file referencing both schema and database connection.
- * It's a singleton but you can always {@see com.olap3.cubeexplorer.mondrian.MondrianConfig#getSeparateConnection}
+ * It's a singleton but you can always {@link com.olap3.cubeexplorer.mondrian.MondrianConfig#getSeparateConnection(String)}
  */
 public class MondrianConfig {
     private static Connection mondrianConnection;

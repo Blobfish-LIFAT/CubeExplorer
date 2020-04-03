@@ -27,11 +27,15 @@ public interface BudgetManager {
      * Given an existing solution and a search space of info collectors find all equivalent solution by swapping 'identical'
      * items in the solution.
      * 'identical' is defined using time estimation and the metric, two ic are considered equal if they have equal time and metric value
+     * @param searchSpace .
+     * @param  solution .
+     * @param metric .
+     * @return  .
      */
-    static Set<Set<InfoCollector>> expandToEqSolutions(List<InfoCollector> serchSpace, Set<InfoCollector> solution, AprioriMetric metric){
+    static Set<Set<InfoCollector>> expandToEqSolutions(List<InfoCollector> searchSpace, Set<InfoCollector> solution, AprioriMetric metric){
 
-        serchSpace.sort(Comparator.comparingDouble(metric::rate));
-        Map<Double, List<InfoCollector>> groups = serchSpace.stream().collect(Collectors.groupingBy(metric::rate));
+        searchSpace.sort(Comparator.comparingDouble(metric::rate));
+        Map<Double, List<InfoCollector>> groups = searchSpace.stream().collect(Collectors.groupingBy(metric::rate));
 
         //TODO look for swapping candidates within groups ...
 

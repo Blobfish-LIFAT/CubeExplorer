@@ -1,8 +1,8 @@
 package com.olap3.cubeexplorer.data;
 
 import com.alexscode.utilities.Future;
-import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.data.castor.session.CrSession;
+import com.olap3.cubeexplorer.data.castor.session.QueryRequest;
 import com.olap3.cubeexplorer.data.castor.session.User;
 
 import java.io.IOException;
@@ -96,9 +96,8 @@ public class StudentParser {
         }
     }
 
-    /**
-     * Test code
-     */
+
+    // Test code
     public static void main(String[] args) throws Exception{
         var sessions = loadDir("data/studentSessions");
         for (var session : sessions) {

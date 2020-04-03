@@ -52,6 +52,9 @@ public class QueryCompJaccardStructureThresWithSeveralSelectionPerLevel{
      * query. The similarity is computed by using these criteria: -Measure:
      * |Intersection(M1,M2)|/Max(|M1|,|M2|) (or Min(|M1|,|M2|)) -Group by set:
      * -Selection criteria:
+     * @param q1 .
+     * @param q2 .
+     * @return .
      */
     public static Similarity computeSimilarity(Qfset q1, Qfset q2) {
         if (!init)

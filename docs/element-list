@@ -2,7 +2,6 @@ com.olap3.cubeexplorer
 com.olap3.cubeexplorer.data
 com.olap3.cubeexplorer.data.castor.response
 com.olap3.cubeexplorer.data.castor.session
-com.olap3.cubeexplorer.data.cubeloadBeans
 com.olap3.cubeexplorer.deep
 com.olap3.cubeexplorer.dolap
 com.olap3.cubeexplorer.evaluate
