@@ -44,9 +44,7 @@ public class MondrianDev {
         //DataSet ds = Compatibility.cellSetToDataSet(cs, true);
         ECube ec = icc.execute();
 
-
         System.out.println(ec.getExplProperties().get("corr_matrix"));
-
 
     }
 

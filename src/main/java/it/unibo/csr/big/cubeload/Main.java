@@ -139,7 +139,7 @@ public class Main extends javax.swing.JFrame
 
         numSessionLabel.setText("Number of sessions:");
 
-        yearPromptLabel.setText("Fraction of seed queries with year prompt [0 ÷ 1]:");
+        yearPromptLabel.setText("Fraction of seed queries with year prompt [0 / 1]:");
 
         segregationLabel.setText("Segregation predicate:");
 

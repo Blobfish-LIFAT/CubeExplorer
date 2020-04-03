@@ -10,6 +10,10 @@ import lombok.Data;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Optimal solutions for TAP
+ * WARNiNG: this runs worst case in O(n!)
+ */
 public class OptimalSolver implements BudgetManager{
     public static enum ResType{
         RANDOM, METRIC, DISTANCE, BALANCED

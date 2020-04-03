@@ -3,9 +3,15 @@ package com.olap3.cubeexplorer.optimize;
 import com.olap3.cubeexplorer.evaluate.ExecutionPlan;
 import com.olap3.cubeexplorer.infocolectors.InfoCollector;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This is the interface for the interestingness vs runtime part of the TAP heuristics
+ */
 public interface BudgetManager {
     /**
      * Time budget is an integer in milliseconds (simpler to solve)

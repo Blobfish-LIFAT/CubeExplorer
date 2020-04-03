@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * Implementation of the knapsack heuristic for solving part of TAP heuristic
+ */
 public class KnapsackManager implements BudgetManager {
     Logger LOGGER = Logger.getLogger(KnapsackManager.class.getName());
     AprioriMetric metric;
