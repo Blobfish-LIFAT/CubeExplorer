@@ -1,11 +1,3 @@
-com.alexscode.utilities
-com.alexscode.utilities.collection
-com.alexscode.utilities.context
-com.alexscode.utilities.dao
-com.alexscode.utilities.dataset
-com.alexscode.utilities.http
-com.alexscode.utilities.json
-com.alexscode.utilities.math
 com.olap3.cubeexplorer
 com.olap3.cubeexplorer.data
 com.olap3.cubeexplorer.data.castor.response
@@ -31,9 +23,3 @@ com.olap3.cubeexplorer.optimize.stats
 com.olap3.cubeexplorer.optimize.time
 com.olap3.cubeexplorer.optimize.time.xmlutil
 com.olap3.cubeexplorer.optimize.tsp
-it.unibo.csr.big.cubeload
-it.unibo.csr.big.cubeload.generator
-it.unibo.csr.big.cubeload.io
-it.unibo.csr.big.cubeload.schema
-it.unibo.csr.big.cubeload.template
-JavaMI
