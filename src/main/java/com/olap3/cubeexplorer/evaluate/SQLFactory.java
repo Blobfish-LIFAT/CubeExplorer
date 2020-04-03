@@ -24,6 +24,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Allows to build star join queries over a mondrian schema and runs it directly on the database bypassing the MDX layer
+ */
 public class SQLFactory {
     CubeUtils cube;
 

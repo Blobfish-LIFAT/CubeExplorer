@@ -29,6 +29,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * work in progress of a cache aware evaluator exploiting rollup relations between queries to leverage mondrian cell cache
+ */
 public class CacheAwareEvaluator implements Evaluator {
     Map<DataAccessor, List<MLModel>> algos;
     Set<DataAccessor> reoptAfter;

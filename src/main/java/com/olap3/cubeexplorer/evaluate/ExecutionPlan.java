@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.*;
 
+/**
+ * An execution plan is a {@link Collection} of info collector, split between already executed and ready for execution
+ */
 public class ExecutionPlan implements Iterator<InfoCollector>{
     @Getter
     Set<InfoCollector> executed;

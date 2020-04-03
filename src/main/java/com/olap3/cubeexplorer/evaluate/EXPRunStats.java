@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.ToString;
 
 
+/**
+ * Data for experimental validation not necessary for normal operation
+ */
 @Data
 @AllArgsConstructor
 @ToString
