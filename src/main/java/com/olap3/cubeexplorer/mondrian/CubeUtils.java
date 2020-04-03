@@ -11,6 +11,11 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * The main entry point into a specific cube this allows manipulation of member hierarchies, dimensional hierarchy, measures, etc
+ * Dirty code relying on capturing internal mondrian structures should be kept here.
+ * Many things here are dangerous for one's sanity, don't pass null to any of this methods (In retrospect I should make them throw IllegalArgument exceptions ...) or things will go wrong.
+ */
 public class CubeUtils {
     private static final Logger LOGGER = Logger.getLogger( CubeUtils.class.getName() );
 

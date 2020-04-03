@@ -9,6 +9,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * This allows to quickly connect to a mondrian cube using a config file referencing both schema and database connection.
+ * It's a singleton but you can always {@see com.olap3.cubeexplorer.mondrian.MondrianConfig#getSeparateConnection}
+ */
 public class MondrianConfig {
     private static Connection mondrianConnection;
     private static java.sql.Connection jdbcConnection;

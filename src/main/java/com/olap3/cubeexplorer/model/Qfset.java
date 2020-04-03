@@ -19,6 +19,11 @@ import mondrian.rolap.RolapResult;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This is the cube query, it has lower expresion power than MDX but it can be translated into a star join and should be closed over the set of cuboids.
+ * This is based on Julien's original model for queries and query fragments but it has seen heavy changes. Deprecated methods are unpredictable and should be avoided.
+ * @author Julien Aligon, Aleandre Chanson
+ */
 public class Qfset implements java.io.Serializable, Measurable<Qfset> {
 
     mondrian.olap.Query mondrianQuery;
@@ -26,6 +31,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
     @Getter
     @Setter
     String sql;
+
     @Getter
     @Setter
     QueryStats stats;
@@ -731,6 +737,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         return "Measure={" + Future.join(mStr, "; ") + "}\nProjections={" + Future.join(pStr, "; ") + "}\nSelections={" + Future.join(sStr, "; ") + "}";
     }
 
+    @Deprecated
     public String toStringAttributes() {
         ArrayList<String> projectionSet = new ArrayList<String>();
         for (ProjectionFragment pf : this.attributes) {
@@ -751,6 +758,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         }
     }
 
+    @Deprecated
     public String toStringSelections() {
         ArrayList<String> selectionSet = new ArrayList<String>();
         for (SelectionFragment sf : this.selectionPredicates) {
@@ -771,6 +779,7 @@ public class Qfset implements java.io.Serializable, Measurable<Qfset> {
         }
     }
 
+    @Deprecated
     public String toStringMeasures() {
         List<String> mStr = this.measures.stream().map(mf -> mf.getAttribute().getName()).collect(Collectors.toList());
         if (mStr.size() == 0)

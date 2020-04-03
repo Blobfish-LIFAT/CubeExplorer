@@ -3,7 +3,10 @@ package com.olap3.cubeexplorer.model;
 import com.google.gson.annotations.JsonAdapter;
 
 /**
- * The class for fragments (so far only a string)
+ * The class for fragments (so far only a string). Those are often referred as 'Query Parts"
+ * Fragments should never be instantiated with a constructor, use 'newInstance' instead, this is done to avoid duplicates. This allows to compare fragment by addresses.
+ * Added JSON serialization
+ * @author Julien Aligon, Alexandre Chanson
  */
 @JsonAdapter(FragmentAdapter.class)
 public abstract class Fragment implements java.io.Serializable {

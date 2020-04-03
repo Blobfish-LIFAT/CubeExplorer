@@ -6,6 +6,9 @@ import mondrian.olap.Member;
 
 import java.util.HashMap;
 
+/**
+ * This is the filter fragment selective over a specific attribute of the facts (eg GEO.CONTINENT = "Europe")
+ */
 @JsonAdapter(FragmentAdapter.class)
 public class SelectionFragment extends Fragment {
 
