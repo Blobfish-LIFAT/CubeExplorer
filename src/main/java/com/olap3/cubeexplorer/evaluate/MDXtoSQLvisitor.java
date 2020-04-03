@@ -6,7 +6,7 @@ import com.olap3.cubeexplorer.model.MeasureFragment;
 import com.olap3.cubeexplorer.mondrian.CubeUtils;
 
 /**
- * Does the MDX -> SQL translation for calculated members
+ * Does the MDX -&gt; SQL translation for calculated members
  */
 class MDXtoSQLvisitor extends MDXExpBaseVisitor<String> {
     CubeUtils cube;

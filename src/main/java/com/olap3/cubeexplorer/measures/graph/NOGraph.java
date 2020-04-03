@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * Non oriented Graph class. When querying the graph with two nodes N1 and N2,
  * the smallest of the two according to Comparable is taken first to really
- * perform the query ( (N1,N2) if N1 < N2 else (N2,N1) ).
+ * perform the query ( (N1,N2) if N1 &lt; N2 else (N2,N1) ).
  * 
  * @param <E>
  *            type of edge values

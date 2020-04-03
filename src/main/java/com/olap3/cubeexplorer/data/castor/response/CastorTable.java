@@ -7,8 +7,7 @@ import com.olap3.cubeexplorer.data.HeaderTree;
 import java.util.List;
 
 /**
- * This class gather all information needed to display a table of the output of {@link AlgorithmOne AlgorithmOne}.
- * If you want to display.
+ * This class gather all information needed to display a table
  *
  * @see CastorJsonResponse
  */
