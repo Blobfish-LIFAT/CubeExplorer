@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-
+/**
+ * The info collector combines Data access and ML Model, it has two basic states 'apriori' before any execution, and executed.
+ */
 public abstract class InfoCollector {
     @Getter @Setter
     Qfset q0;
@@ -16,6 +18,7 @@ public abstract class InfoCollector {
     private long time_estimate = -1;
     @Getter
     private boolean executed;
+
     //For debugging only
     @Accessors
     String comment;

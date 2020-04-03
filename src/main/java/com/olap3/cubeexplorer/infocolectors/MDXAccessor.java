@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * The basic data accessor uses MDX on the current mondrian cube
  * SQL datatype : https://www.tutorialspoint.com/java-resultsetmetadata-getcolumntype-method-with-example
  */
 public class MDXAccessor extends DataAccessor {
